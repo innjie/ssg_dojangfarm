@@ -4,7 +4,7 @@
 DROP TABLE CommonJoin CASCADE CONSTRAINTS;
 DROP TABLE ImPur CASCADE CONSTRAINTS;
 DROP TABLE Refund CASCADE CONSTRAINTS;
-DROP TABLE Orderr CASCADE CONSTRAINTS;
+DROP TABLE OrderTable CASCADE CONSTRAINTS;
 DROP TABLE SBid CASCADE CONSTRAINTS;
 DROP TABLE Delivery CASCADE CONSTRAINTS;
 DROP TABLE Address CASCADE CONSTRAINTS;
@@ -17,12 +17,12 @@ DROP TABLE Cart CASCADE CONSTRAINTS;
 DROP TABLE Discount CASCADE CONSTRAINTS;
 DROP TABLE Message CASCADE CONSTRAINTS;
 DROP TABLE QnA CASCADE CONSTRAINTS;
-DROP TABLE Normall CASCADE CONSTRAINTS;
+DROP TABLE Normal CASCADE CONSTRAINTS;
 DROP TABLE Product CASCADE CONSTRAINTS;
 DROP TABLE Category CASCADE CONSTRAINTS;
 DROP TABLE Common CASCADE CONSTRAINTS;
 DROP TABLE CommonNotice CASCADE CONSTRAINTS;
-DROP TABLE Userr CASCADE CONSTRAINTS;
+DROP TABLE UserTable CASCADE CONSTRAINTS;
 
 
 
@@ -109,7 +109,7 @@ CREATE TABLE Common
 	price number check(price > 0),
 	count number check(number > 0),
 	deadline date DEFAULT SYSDATE,
-	minn number NOT NULL check(min > 0),
+	min number NOT NULL check(min > 0),
 	userNo number NOT NULL,
 	PRIMARY KEY (saleNo)
 );
@@ -171,7 +171,7 @@ CREATE TABLE item
 (
 	itemNo number NOT NULL,
 	quantity number DEFAULT 1,
-	selectt varchar2(1) DEFAULT '''0''',
+	selected varchar2(1) DEFAULT '''0''',
 	cartNo number NOT NULL,
 	PRIMARY KEY (itemNo)
 );
@@ -180,7 +180,7 @@ CREATE TABLE item
 CREATE TABLE Message
 (
 	msgNo number NOT NULL,
-	readd varchar2(1) DEFAULT '''0''',
+	read varchar2(1) DEFAULT '''0''',
 	title varchar2(50) NOT NULL,
 	sDate date DEFAULT SYSDATE,
 	content varchar2(1000),
@@ -193,7 +193,7 @@ CREATE TABLE Message
 );
 
 
-CREATE TABLE Normall
+CREATE TABLE Normal
 (
 	saleNo number NOT NULL,
 	saleType varchar2(10) NOT NULL,
@@ -211,7 +211,7 @@ CREATE TABLE Normall
 );
 
 
-CREATE TABLE Orderr
+CREATE TABLE OrderTable
 (
 	orderNo number NOT NULL,
 	dNo number NOT NULL,
@@ -280,7 +280,7 @@ CREATE TABLE SBid
 );
 
 
-CREATE TABLE Userr
+CREATE TABLE UserTable
 (
 	userNo number NOT NULL,
 	name varchar2(10) NOT NULL,
@@ -355,7 +355,7 @@ ALTER TABLE ImPur
 ;
 
 
-ALTER TABLE Orderr
+ALTER TABLE OrderTable
 	ADD FOREIGN KEY (dNo)
 	REFERENCES Delivery (dNo)
 ;
@@ -375,31 +375,31 @@ ALTER TABLE Message
 
 ALTER TABLE Discount
 	ADD FOREIGN KEY (saleNo)
-	REFERENCES Normall (saleNo)
+	REFERENCES Normal (saleNo)
 ;
 
 
 ALTER TABLE Message
 	ADD FOREIGN KEY (saleNo)
-	REFERENCES Normall (saleNo)
+	REFERENCES Normal (saleNo)
 ;
 
 
-ALTER TABLE Orderr
+ALTER TABLE OrderTable
 	ADD FOREIGN KEY (saleNo)
-	REFERENCES Normall (saleNo)
+	REFERENCES Normal (saleNo)
 ;
 
 
 ALTER TABLE QnA
 	ADD FOREIGN KEY (saleNo)
-	REFERENCES Normall (saleNo)
+	REFERENCES Normal (saleNo)
 ;
 
 
 ALTER TABLE Refund
 	ADD FOREIGN KEY (orderNo)
-	REFERENCES Orderr (orderNo)
+	REFERENCES OrderTable (orderNo)
 ;
 
 
@@ -415,7 +415,7 @@ ALTER TABLE ImPur
 ;
 
 
-ALTER TABLE Orderr
+ALTER TABLE OrderTable
 	ADD FOREIGN KEY (payNo)
 	REFERENCES Payment (payNo)
 ;
@@ -433,7 +433,7 @@ ALTER TABLE Auction
 ;
 
 
-ALTER TABLE Normall
+ALTER TABLE Normal
 	ADD FOREIGN KEY (pNo)
 	REFERENCES Product (pNo)
 ;
@@ -441,79 +441,79 @@ ALTER TABLE Normall
 
 ALTER TABLE Address
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE Auction
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE Bid
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE Card
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE Common
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE CommonJoin
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE CommonNotice
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE ImPur
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
-;
-
-
-ALTER TABLE Message
-	ADD FOREIGN KEY (rUserNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE Message
 	ADD FOREIGN KEY (sUserNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
-ALTER TABLE Normall
-	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+ALTER TABLE Message
+	ADD FOREIGN KEY (rUserNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
-ALTER TABLE Orderr
+ALTER TABLE Normal
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
+;
+
+
+ALTER TABLE OrderTable
+	ADD FOREIGN KEY (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 
 ALTER TABLE QnA
 	ADD FOREIGN KEY (userNo)
-	REFERENCES Userr (userNo)
+	REFERENCES UserTable (userNo)
 ;
 
 

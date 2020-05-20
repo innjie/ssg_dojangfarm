@@ -10,7 +10,7 @@ public class User implements Serializable{
 	private String id;
 	private String password;
 	private int point;
-	
+	 
 	
 	public int getUserNo() {
 		return userNo;

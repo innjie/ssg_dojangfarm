@@ -1,0 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>도장팜</title>
+</head>
+<body>
+<h2><a href="<c:url value='/' />" >도장팜</a>에 오시면 혜택이 팜팜</h2><br>
+	<%-- <c:if test=${session == null}> --%>
+		<a href="<c:url value='/user/login' />" >로그인</a>&nbsp;&nbsp;
+	<%-- </c:if> --%>
+	<%-- <c:if test=${session == null}> --%>
+		<a href="<c:url value='/user/createUser' />" >회원가입</a>&nbsp;&nbsp;
+	<%-- </c:if> --%>
+	<%-- <c:if test=${session != null}> --%>
+		<a href="<c:url value='/user/myPage' />" >마이페이지</a>&nbsp;&nbsp;
+	<%-- </c:if> --%>
+	<%-- <c:if test=${session != null}> --%>
+		<a href="<c:url value='/message/viewSendMessageList' />" >쪽지함</a>&nbsp;&nbsp;
+	<%-- </c:if> --%>
+		<%-- <c:if test=${session != null}> --%>
+		<a href="<c:url value='/' />" >로그아웃</a>&nbsp;&nbsp;
+	<%-- </c:if> --%>
+	<br><br><br>
+	
+	<a href="<c:url value='/'><c:param name="menu" value="click" /></c:url>">메뉴</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	<c:if test="${param.menu == 'click'}">
+		<a href="">과일</a>&nbsp;&nbsp;	
+		<a href="">채소</a>&nbsp;&nbsp;
+		<a href="">공동구매</a>&nbsp;&nbsp;	
+		<a href="<c:url value='/auction/viewAuctionList' />">경매</a>&nbsp;&nbsp;
+	</c:if>
+	
+</body>
+</html>

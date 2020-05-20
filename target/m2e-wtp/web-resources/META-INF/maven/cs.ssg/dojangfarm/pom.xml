@@ -165,6 +165,17 @@
 			        <showDeprecation>true</showDeprecation>
 			    </configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+		        <version>2.2</version>
+        		<configuration>
+        			<server>TomcatServer</server>
+	            	<url>http://202.20.119.117/manager/text</url> 
+	            <!--	<url>http://localhost:8080/manager/text</url>-->           	    <server>TomcatServer</server>
+			        <path>/ssd0205</path>
+		        </configuration>
+		     </plugin>
 		</plugins>
 	</build> 
 </project>

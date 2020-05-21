@@ -12,6 +12,22 @@
 <title>로그인</title>
 </head>
 <body>
+	<form:form modelAttribute="login" action='<c:url value="/user/login.do"/>' method="Post">	
+		<br>
 	
+		<form:errors path="userId" />
+		<br><br>
+		
+		<form:label path="userId">아이디 </form:label>
+		<form:input path="userId" />
+		<br>
+		
+		<form:label path="password">암호 </form:label>
+		<form:password path="password" />
+		<form:errors path="password" />
+		<br><br>
+		
+		<input type="submit" value="로그인" />
+	</form:form>
 </body>
 </html>

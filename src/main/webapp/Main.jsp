@@ -12,16 +12,16 @@
 <body>
 <h2><a href="<c:url value='/' />" >도장팜</a>에 오시면 혜택이 팜팜</h2><br>
 	<%-- <c:if test=${session == null}> --%>
-		<a href="<c:url value='/user/login' />" >로그인</a>&nbsp;&nbsp;
+		<a href="<c:url value='/user/login.do' />" >로그인</a>&nbsp;&nbsp;
 	<%-- </c:if> --%>
 	<%-- <c:if test=${session == null}> --%>
-		<a href="<c:url value='/user/createUser' />" >회원가입</a>&nbsp;&nbsp;
+		<a href="<c:url value='/user/createUser.do' />" >회원가입</a>&nbsp;&nbsp;
 	<%-- </c:if> --%>
 	<%-- <c:if test=${session != null}> --%>
-		<a href="<c:url value='/user/myPage' />" >마이페이지</a>&nbsp;&nbsp;
+		<a href="<c:url value='/user/myPage.do' />" >마이페이지</a>&nbsp;&nbsp;
 	<%-- </c:if> --%>
 	<%-- <c:if test=${session != null}> --%>
-		<a href="<c:url value='/message/viewSendMessageList' />" >쪽지함</a>&nbsp;&nbsp;
+		<a href="<c:url value='/message/viewSendMessageList.do' />" >쪽지함</a>&nbsp;&nbsp;
 	<%-- </c:if> --%>
 		<%-- <c:if test=${session != null}> --%>
 		<a href="<c:url value='/' />" >로그아웃</a>&nbsp;&nbsp;
@@ -33,7 +33,7 @@
 		<a href="">과일</a>&nbsp;&nbsp;	
 		<a href="">채소</a>&nbsp;&nbsp;
 		<a href="">공동구매</a>&nbsp;&nbsp;	
-		<a href="<c:url value='/auction/viewAuctionList' />">경매</a>&nbsp;&nbsp;
+		<a href="<c:url value='/auction/viewAuctionList.do' />">경매</a>&nbsp;&nbsp;
 	</c:if>
 	
 </body>

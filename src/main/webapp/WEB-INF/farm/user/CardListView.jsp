@@ -18,7 +18,7 @@
 			<td>은행</td>
 			<td>카드번호</td>
 		</tr>
-		<c:forEach var="c" items="${card}" varStatus="status">
+		<c:forEach var="c" items="${cardList}" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
 				<td>${c.bank}</td>

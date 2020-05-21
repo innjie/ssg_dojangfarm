@@ -19,12 +19,12 @@
 		<br>
 			
 		<form:label path="type">종류 </form:label>
-		<form:password path="type" />
+		<form:select path="type" />
 		<form:errors path="type" />
 		<br>
 		
 		<form:label path="cardPayNo">카드번호 </form:label>
-		<form:password path="cardPayNo" />
+		<form:input path="cardPayNo" />
 		<form:errors path="cardPayNo" />
 		<br>
 		

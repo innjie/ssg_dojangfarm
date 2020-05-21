@@ -18,7 +18,7 @@
 			<td>이름</td>
 			<td>주소</td>
 		</tr>
-		<c:forEach var="addr" items="${address}" varStatus="status">
+		<c:forEach var="addr" items="${addressList}" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
 				<td>

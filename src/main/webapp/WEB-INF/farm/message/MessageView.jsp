@@ -12,6 +12,61 @@
 <title>메세지 보기</title>
 </head>
 <body>
-	
+	<table border='1'>
+		<c:if test="${message.sUser.id != session.id}">
+			<tr>
+				<td>보낸사람</td>
+				<td>${message.sUser.id}</td>
+			</tr>
+		</c:if>
+		<c:if test="${message.rUser.id != session.id}">
+			<tr>
+				<td>받는사람</td>
+				<td>${message.rUser.id}</td>
+			</tr>
+		</c:if>
+		<tr>
+			<td>관련 상품</td>
+			<td>
+				<a href="<c:url value='/normal/view.do'>
+							<c:param name="saleNo" value="${message.normal.saleNo}"/>
+						</c:url>">
+					${message.normal.saleNo}</a>
+			</td>
+		</tr>
+		<c:if test="${message.rUser.id != session.id}">
+			<tr>
+				<td>읽음</td>
+				<td>${message.read}</td>
+			</tr>
+		</c:if>
+		<tr>
+			<td>제목</td>
+			<td>${message.title}</td>
+		</tr>
+		<tr>
+			<td>내용</td>
+			<td>
+				${message.content}
+				<c:if test="${message.cMsg != null}">
+					<br><br>
+					re: ${message.cMsg.content}
+				</c:if>
+			</td>
+		</tr>
+		<tr>
+			<td>보낸날짜</td>
+			<td>${address.detail}</td>
+		</tr>
+	</table>
+	<br><br>
+	<a href="<c:url value='/message/sendMsg.do'>
+				<c:param name='msgNo' value='${message.msgNo}' />
+			</c:url>">
+	답장</a>&nbsp;&nbsp;
+	<a href="<c:url value='/message/deleteMessage.do'>
+				<c:param name='msgNo' value='${message.msgNo}' />
+			</c:url>">
+	삭제</a>
 </body>
 </html>

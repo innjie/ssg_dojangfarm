@@ -12,6 +12,32 @@
 <title>나의 카드</title>
 </head>
 <body>
-	
+	<table border='1'>
+		<tr>
+			<td>은행</td>
+			<td>${card.bank}</td>
+		</tr>
+		<tr>
+			<td>종류</td>
+			<td>${card.type}</td>
+		</tr>
+		<tr>
+			<td>카드번호</td>
+			<td>${card.cardPayNo}</td>
+		</tr>
+		<tr>
+			<td>유효기간</td>
+			<td>${card.period}</td>
+		</tr>
+		<tr>
+			<td>cvc</td>
+			<td>${card.cvc}</td>
+		</tr>
+	</table>
+	<br><br>
+	<a href="<c:url value='/user/deleteCard.do'>
+				<c:param name='cardNo' value='${card.cardNo}' />
+			</c:url>">
+	삭제</a>
 </body>
 </html>

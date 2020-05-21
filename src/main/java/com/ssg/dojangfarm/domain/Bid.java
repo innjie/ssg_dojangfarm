@@ -8,9 +8,9 @@ public class Bid implements Serializable{
 	private int bidNo;
 	private Auction auction;
 	private User user;
-	private int cBidPrice;		//current
 	private int bidPrice;
 	private Date bidTime;
+	private String state;		//실패, 현재최고가, 성공
 	
 	
 	public int getBidNo() {
@@ -31,12 +31,6 @@ public class Bid implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public int getcBidPrice() {
-		return cBidPrice;
-	}
-	public void setcBidPrice(int cBidPrice) {
-		this.cBidPrice = cBidPrice;
-	}
 	public int getBidPrice() {
 		return bidPrice;
 	}
@@ -49,7 +43,12 @@ public class Bid implements Serializable{
 	public void setBidTime(Date bidTime) {
 		this.bidTime = bidTime;
 	}
-
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	
 	
 }

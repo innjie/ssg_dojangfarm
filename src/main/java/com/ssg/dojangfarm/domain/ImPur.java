@@ -35,6 +35,11 @@ public class ImPur implements Serializable{
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
-	
+	public Delivery getDelivery() {
+		return delivery;
+	}
+	public void setDelivery(Delivery delivery) {
+		this.delivery = delivery;
+	}
 	
 }

@@ -7,7 +7,7 @@ public class Item implements Serializable{
 	private int itemNo;
 	private Normal normal;
 	private int quantity;
-	private boolean select;
+	private boolean selected;
 	
 	
 	public int getItemNo() {
@@ -28,11 +28,11 @@ public class Item implements Serializable{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public boolean isSelect() {
-		return select;
+	public boolean isSelected() {
+		return selected;
 	}
-	public void setSelect(boolean select) {
-		this.select = select;
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	
 	

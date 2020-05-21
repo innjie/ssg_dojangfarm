@@ -15,8 +15,8 @@ public class Auction implements Serializable{
 	private Date deadline;
 	private Boolean imPurAva;		//imme Purchase Available
 	private int imPurPrice;		//imme Purchase
-	private String state;
-	
+	private Boolean finish;
+	private int bidPrice;
 	
 	public int getaNo() {
 		return aNo;
@@ -78,13 +78,18 @@ public class Auction implements Serializable{
 	public void setImPurPrice(int imPurPrice) {
 		this.imPurPrice = imPurPrice;
 	}
-	public void setState(String state) {
-		this.state = state;
+	public void setFinish(Boolean finish) {
+		this.finish = finish;
 	}
-	public String getState() {
-		return state;
+	public Boolean getFinish() {
+		return finish;
 	}
-	
+	public int getBidPrice() {
+		return bidPrice;
+	}
+	public void setBidPrice(int bidPrice) {
+		this.bidPrice = bidPrice;
+	}
 	
 	
 	

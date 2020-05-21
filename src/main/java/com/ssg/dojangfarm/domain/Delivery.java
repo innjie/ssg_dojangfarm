@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class Delivery implements Serializable{
 	private int dNo;
 	private Address address;
-	private Order order;
+	private String phone;
 	private String status;
 	
 	
@@ -22,11 +22,11 @@ public class Delivery implements Serializable{
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	public Order getOrder() {
-		return order;
+	public String getPhone() {
+		return phone;
 	}
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getStatus() {
 		return status;

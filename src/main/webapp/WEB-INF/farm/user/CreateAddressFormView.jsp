@@ -12,6 +12,30 @@
 <title>주소 추가</title>
 </head>
 <body>
-	
+	<form:form modelAttribute="address" action='<c:url value="/user/createAddress.do"/>'>
+		
+		<form:label path="address.aName">주소 이름 </form:label>
+		<form:input path="address.aName" />
+		<form:errors path="address.aName" />
+		<br>
+		
+		<form:label path="address.zipcode">우편번호 </form:label>
+		<form:input path="address.zipcode" />
+		<form:errors path="address.zipcode" />
+		<br>
+		
+		<form:label path="address.address">주소 </form:label>
+		<form:input path="address.address" />
+		<form:errors path="address.address" />
+		<br>
+		
+		<form:label path="address.detail">상세 </form:label>
+		<form:input path="address.detail" />
+		<form:errors path="address.detail" />
+		<br>
+		
+		<input type="submit" value="추가" />
+		
+	</form:form>
 </body>
 </html>

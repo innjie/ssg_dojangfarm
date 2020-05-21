@@ -10,6 +10,9 @@ public class Card implements Serializable{
 	private String bank;
 	private String cardPW;
 	private Date period;
+	private int cvc;
+	private String type;
+	private String cardPayNo;		//real card number
 	
 	
 	public int getCardNo() {
@@ -42,6 +45,22 @@ public class Card implements Serializable{
 	public void setPeriod(Date period) {
 		this.period = period;
 	}
-	
-	
+	public int getCvc() {
+		return cvc;
+	}
+	public void setCvc(int cvc) {
+		this.cvc = cvc;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getCardPayNo() {
+		return cardPayNo;
+	}
+	public void setCardPayNo(String cardPayNo) {
+		this.type = cardPayNo;
+	}
 }

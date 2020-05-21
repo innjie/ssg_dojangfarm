@@ -12,6 +12,32 @@
 <title>나의 카드</title>
 </head>
 <body>
-	
+	<table border="1">
+		<tr>
+			<td>순번</td>		<%-- not cardNo, not cardPayNo, just No --%>
+			<td>은행</td>
+			<td>카드번호</td>
+		</tr>
+		<c:forEach var="c" items="${card}" varStatus="status">
+			<tr>
+				<td>${status.count}</td>
+				<td>${c.bank}</td>
+				<td>
+					<a href="<c:url value='/user/viewCard.do'>
+								<c:param name='cardNo' value='${c.cardNo}' />
+							</c:url>">
+					${c.cardPayNo}</a>
+				</td>
+				<td>
+					<a href="<c:url value='/user/deleteCard.do'>
+								<c:param name='cardNo' value='${c.cardNo}' />
+							</c:url>">
+					삭제</a>
+				</td>	
+			</tr>
+		</c:forEach>
+	</table>
+	<br><br>
+	<a href="<c:url value='/user/insertCard.do' />">카드 추가</a>
 </body>
 </html>

@@ -24,7 +24,7 @@
 		<a href="<c:url value='/message/viewSendMessageList.do' />" >쪽지함</a>&nbsp;&nbsp;
 	<%-- </c:if> --%>
 		<%-- <c:if test=${session != null}> --%>
-		<a href="<c:url value='/' />" >로그아웃</a>&nbsp;&nbsp;
+		<a href="<c:url value='/user/logout.do' />" >로그아웃</a>&nbsp;&nbsp;
 	<%-- </c:if> --%>
 	<br><br><br>
 	

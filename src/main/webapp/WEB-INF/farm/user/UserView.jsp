@@ -12,6 +12,27 @@
 <title>나의 정보</title>
 </head>
 <body>
+	<table border='1'>
+		<tr>
+			<td>id</td>
+			<td>${user.id}</td>
+		</tr>
+		<tr>
+			<td>이름</td>
+			<td>${user.name}</td>
+		</tr>
+		<tr>
+			<td>전화번호</td>
+			<td>${user.phone}</td>
+		</tr>
+		<tr>
+			<td>포인트</td>
+			<td>${user.point}</td>
+		</tr>
+	</table>
+	<br><br>
+	<a href='<c:url value="/user/modifyUser.do" />'>수정</a>&nbsp;&nbsp;
+	<a href='<c:url value="/user/deleteUser.do" />'>탈퇴</a>
 	
 </body>
 </html>

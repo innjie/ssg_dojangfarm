@@ -12,6 +12,9 @@
 <title>받은 메세지</title>
 </head>
 <body>
+	<a href="<c:url value='/message/viewSendMessageList.do' />">전송함</a>&nbsp;
+	<a href="<c:url value='/message/viewReceiveMessageList.do' />">수신함</a>
+	<br><br>
 	<table border="1">
 		<tr>
 			<td>순번</td>		<%-- not cardNo, not cardPayNo, just No --%>

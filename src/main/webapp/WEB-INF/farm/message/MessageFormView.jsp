@@ -12,6 +12,32 @@
 <title>메세지 보내기</title>
 </head>
 <body>
-	
+	<form:form modelAttribute="message" action='<c:url value="/message/sendMsg.do"/>'>
+		<form:label path="rUser.id">받는사람 </form:label>
+		${rUser.id}
+		<br>
+		
+		<form:label path="normal.saleNo">관련 상품 </form:label>
+		${normal.saleNo}
+		<br>
+		
+		<form:label path="title">제목 </form:label>
+		<form:input path="title" />
+		<form:errors path="title" />
+		<br>
+		
+		<form:label path="content">내용 </form:label>
+		<c:if test="${cMsg != null}">
+			<br>
+			re: ${cMsg.content}
+		</c:if>
+		<br>
+		<form:textarea path="content" />
+		<form:errors path="content" />
+		<br>
+		
+		<input type="submit" value="추가" />
+		
+	</form:form>
 </body>
 </html>

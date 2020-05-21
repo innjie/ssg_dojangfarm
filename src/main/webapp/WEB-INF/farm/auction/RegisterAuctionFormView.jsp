@@ -32,7 +32,7 @@
 		<form:input path="minPrice" />
 		<form:errors path="minPrice" />
 		<br>
-		
+		 
 		<form:label path="deadline">기간 </form:label>
 		<form:input path="deadline" />
 		<form:errors path="deadline" />

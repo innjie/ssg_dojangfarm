@@ -12,6 +12,6 @@
 <title>회원 가입</title>
 </head>
 <body>
-	
+	 
 </body>
 </html>

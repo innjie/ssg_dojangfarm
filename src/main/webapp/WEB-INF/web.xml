@@ -27,8 +27,8 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>dispatcherServlet</servlet-name>
-    <url-pattern>/</url-pattern>
-    <url-pattern>*.do</url-pattern>
+<!--     <url-pattern>/</url-pattern>
+ -->    <url-pattern>*.do</url-pattern>
   </servlet-mapping>
   
   <!-- Encoding -->
@@ -46,6 +46,6 @@
   </filter-mapping>
   
   <welcome-file-list>
-    <welcome-file>index2.html</welcome-file>
+    <welcome-file>Main.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

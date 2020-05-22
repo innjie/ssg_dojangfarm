@@ -36,5 +36,6 @@
 		<a href="<c:url value='/auction/viewAuctionList.do' />">경매</a>&nbsp;&nbsp;
 	</c:if>
 	
+	
 </body>
 </html>

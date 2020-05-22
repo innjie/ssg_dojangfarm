@@ -29,7 +29,7 @@
 	<mvc:view-controller path="auction/viewMyBidList.do" view-name="auction/MyBidListView" />
 	<mvc:view-controller path="auction/viewMySBidList.do" view-name="auction/MySBidListView" />
 	<mvc:view-controller path="auction/viewMyImPurList.do" view-name="auction/MyImPurListView" />
-
+	<mvc:view-controller path="normal/viewNormal.do" view-name="normal/NormalView" />
 
 	
 	<bean id="viewResolver" 

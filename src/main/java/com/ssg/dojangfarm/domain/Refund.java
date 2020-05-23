@@ -10,6 +10,7 @@ public class Refund implements Serializable{
 	private String account;
 	private String name;
 	private String refundType;
+	private String refundDate;
 	
 	
 	public int getRefundNo() {
@@ -47,6 +48,12 @@ public class Refund implements Serializable{
 	}
 	public void setRefundType(String refundType) {
 		this.refundType = refundType;
+	}
+	public String getRefundDate() {
+		return refundDate;
+	}
+	public void setRefundDate(String refundDate) {
+		this.refundDate = refundDate;
 	}
 	
 	

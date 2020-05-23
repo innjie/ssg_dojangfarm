@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>°øµ¿±¸¸Å º¸±â</title>
+<title>ê³µë™êµ¬ë§¤ ë³´ê¸°</title>
 </head>
 <body>
  <table border="1" width="600" height="800">
@@ -17,20 +17,20 @@
 	</tr>
 
 	<tr >
-	<td rowspan="4">»çÁø</td>
+	<td rowspan="4">ì‚¬ì§„</td>
 	</tr>
 	
 	<tr>
-	<td>Ç°¸ñ</td>
+	<td>í’ˆëª©</td>
 	<td>${common.product.pName }</td>
-	<td>°¡°Ý</td>
+	<td>ê°€ê²©</td>
 	<td>${ common.price}</td>
 	</tr>
 	
 	<tr>
-	<td>ÃÖ¼ÒÀÎ¿ø</td>
+	<td>ìµœì†Œì¸ì›</td>
 	<td>${common.min }</td>
-	<td>¸¶°¨ÀÏ½Ã</td>
+	<td>ë§ˆê°ì¼ì‹œ</td>
 	<td>${common.daedline }</td>
 	</tr>
 
@@ -38,10 +38,10 @@
 	<td colspan="4">${common.info }</td>
 	</tr>
 </table>
-<a href="CommonListView" >[ÀÌÀü ´Ü°è·Î]</a>
-<!-- <c:if test="${(common.state== \"ÆÇ¸ÅÁß\") && (session.id != common.user.id)}"> 
-¾î¶»°Ô Â¥¾ßÇÒÁö... syntex error ¹ß»ýÇÔ --> 
-<input type="button" value="½ÅÃ»"/>	
+<a href="CommonListView" >[ì´ì „ ë‹¨ê³„ë¡œ]</a>
+
+<!--  c:if test="${common.state == "íŒë§¤ì¤‘" : ë¬¸ìžì—´ ì—ëŸ¬ë‚¨..,, -->
+<input type="button" value="ì‹ ì²­"/>	
 
 </body>
 </html>

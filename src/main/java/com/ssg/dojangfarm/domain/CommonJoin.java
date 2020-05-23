@@ -10,6 +10,7 @@ public class CommonJoin implements Serializable{
 	private String cjState;
 	private Delivery delivery;
 	private Payment payment;
+	private String count;
 	
 	
 	public int getCjNo() {
@@ -47,6 +48,12 @@ public class CommonJoin implements Serializable{
 	}
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+	public String getCount() {
+		return count;
+	}
+	public void setCount(String count) {
+		this.count = count;
 	}
 	
 	

@@ -34,6 +34,7 @@
 	<td colspan="3">${normal.info }</td>
 	</tr>
 </table>
+<a href="NormalListView" >[이전 단계로]</a>
 <input type="button" value="장바구니"/>	
 </body>
 </html>

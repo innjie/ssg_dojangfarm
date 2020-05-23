@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>일반판매 수정 폼</title>
 </head>
 <body>
 	<form:form modelAttriute="normal"

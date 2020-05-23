@@ -24,7 +24,7 @@
 						<c:param name='saleNo' value='${normal.saleNo}'/>
 						</c:url>">${normal.title}</a>
 	</td>
-	<td>${normal.user}</td>
+	<td>${normal.user.name}</td>
 	</tr>
 </c:forEach>
 </table>

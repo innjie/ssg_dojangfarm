@@ -17,7 +17,7 @@
 	</tr>
 
 	<tr >
-	<td>사진</td>
+	<td rowspan="2">사진</td>
 	<td></td>
 	</tr>
 	

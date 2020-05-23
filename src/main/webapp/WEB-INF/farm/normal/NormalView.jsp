@@ -17,7 +17,7 @@
 	</tr>
 
 	<tr >
-	<td>사진</td>
+	<td rowspan="2">사진</td>
 	<td></td>
 	</tr>
 	
@@ -35,6 +35,8 @@
 	</tr>
 </table>
 <a href="NormalListView" >[이전 단계로]</a>
+	<!-- c:if test="${(normal.state == "판매중지") && (session.id != auction.user.id)}">
+	문자열 에러... -->
 <input type="button" value="장바구니"/>	
 </body>
 </html>

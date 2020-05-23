@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일반판매 추가</title>
+<title></title>
 </head>
 <body>
 

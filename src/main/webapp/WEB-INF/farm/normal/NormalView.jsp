@@ -13,22 +13,28 @@
 <body>
  <table border="1" width="600" height="800">
 	<tr>
-	<td  colspan="3">제목</td>
+	<td  colspan="3">${normal.title }</td>
 	</tr>
 
 	<tr >
-	<td rowspan="2">사진</td>
-	<td>품명</td>
+	<td>사진</td>
+	<td></td>
+	</tr>
+	
+	<tr >
+	<td>품목</td>
+	<td>${normal.product.pName }</td>
 	</tr>
 	
 	<tr>
-	<td>가격</td>
+	<td>${ normal.price}</td>
 	</tr>
 
 	<tr>
-	<td colspan="3">설명</td>
+	<td colspan="3">${normal.info }</td>
 	</tr>
 </table>
+<a href="NormalListView" >[이전 단계로]</a>
 <input type="button" value="장바구니"/>	
 </body>
 </html>

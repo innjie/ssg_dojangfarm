@@ -12,35 +12,35 @@
 <title>메세지 보내기</title>
 </head>
 <body>
-	<form:form modelAttribute="message" action='<c:url value="/message/sendMsg.do"/>'>
-		<form:label path="rUser.id">받는사람 </form:label>
-		${rUser.id}
-		<br>
-		
-		<form:label path="normal.saleNo">관련 상품 </form:label>
-		${normal.saleNo}
-		<br>
-		
-		<form:label path="title">제목 </form:label>
-		<form:input path="title" />
-		<form:errors path="title" />
-		<br>
-		
-		<form:label path="content">내용 </form:label>
-		<c:if test="${cMsg != null}">
-			<br>
-			re: ${cMsg.content}
+	<form action='<c:url value="/message/sendMsg.do"/>' method="post">
+		받는사람&nbsp;
+		<c:if test="${cMsg != null}">	<!-- first message -->
+			${cMsg.rUser.id}<br>
 		</c:if>
-		<br>
-		<form:textarea path="content" />
-		<form:errors path="content" />
+		<c:if test="${normal != null}">	<!-- reply message -->
+			${normal.user.id}<br>
+		</c:if>
+		관련 상품&nbsp;
+		<c:if test="${cMsg != null}">	<!-- first message -->
+			${cMsg.normal.saleNo}<br>
+		</c:if>
+		<c:if test="${normal != null}">	<!-- reply message -->
+			${normal.saleNo}<br>
+		</c:if>
+		제목&nbsp; 
+		<input type="text" name="title" /><br>
+		내용&nbsp; 
+		<textarea name="content">
+			<c:if test="${cMsg != null}">
+				<br>
+				re: ${cMsg.content}
+			</c:if>
+		</textarea>
 		<br>
 		
-		<form:hidden path="cMsg" />
-		<form:hidden path="normal.saleNo" />
-		<form:hidden path="rUser.userNo" />
-		<input type="submit" value="추가" />
-		
-	</form:form>
+		<input type="hidden" name="cMsg" value="${cMsg}" />
+		<input type="hidden" name="normal" value="${normal}" />
+		<input type="submit" value="보내기" />	
+	</form>
 </body>
 </html>

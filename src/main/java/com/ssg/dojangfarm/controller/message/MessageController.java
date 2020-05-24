@@ -10,14 +10,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Message;
+import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-public class ViewSendMessageListController { 
+public class MessageController { 
 	private static final String FORMMESSAGE = "message/MessageFormView";
 	private static final String VIEWMESSAGE = "message/MessageView";
 	private static final String LISTRECEIVEMESSAGE = "message/ReceiveMessageListView";
@@ -189,46 +191,56 @@ public class ViewSendMessageListController {
 	}
 
 //	//send message ... view message form
-//	@RequestMapping("/message/sendMsg.do")
+//	@RequestMapping(value = "/message/sendMsg.do",  method = RequestMethod.GET)
 //	public ModelAndView messageForm(
-//			@RequestParam("saleNo") int saleNo,
-//			@RequestParam("msgNo") int msgNo) throws Exception {
+//			@RequestParam(value = "saleNo", defaultValue="-1") int saleNo,
+//			@RequestParam(value = "msgNo", defaultValue="-1") int msgNo) throws Exception {
 //		
 //		//첫 메세지
-//		if(msgNo == null) {
+//		if(msgNo == -1) {
+//			Normal normal = this.farm.getNormalBySaleNo(saleNo)		//saleNo로 normal가져옴
 //			
+//			return new ModelAndView(FORMMESSAGE, "normal", normal);
 //		}
 //		//연관 메세지 있음 (답장)
 //		else {
+//			Message cMsg = this.farm.getMessageByMsgNo(msgNo);	//msgNo로 message가져옴
 //			
+//			return new ModelAndView(FORMMESSAGE, "cMsg", cMsg);
 //		}
-//	
-//	
-//		//이 메세지는 관련 메세지(답장 할)
-//		Message message = this.farm.getMessageByMsgNo(msgNo);	//message 가져옴
-//
-//		return new ModelAndView(FORMMESSAGE, "message", message);
 //	}
 	
-	//send message ... insert message 
-	@RequestMapping("/message/sendMsg.do")
-	public String sendMsg(
-			@RequestParam("rUserNo") int rUserNo,
-			@RequestParam("cMsg") Message cMsg,
-			@RequestParam("saleNo") int saleNo,
-			@RequestParam("title") String title,
-			@RequestParam("content") String content,
-			HttpServletRequest request) throws Exception {
-
-		HttpSession httpSession = request.getSession();
-		int userNo = (int) httpSession.getAttribute("userNo");
-
-		Message msg = new Message(userNo, rUserNo, cMsg.getMsgNo(), saleNo, title, content);
-		this.farm.sendMsg(msg);	
-
-		return "redirect:/message/viewMessage.do?msgNo=" + msg.getMsgNo();
-	
-	}
+//	//send message ... insert message 
+//	@RequestMapping(value = "/message/sendMsg.do",  method = RequestMethod.POST)
+//	public String sendMsg(
+//			@RequestParam(value = "cMsg", required = false) Message cMsg,
+//			@RequestParam(value = "normal", required = false) Normal normal,
+//			@RequestParam("title") String title,
+//			@RequestParam("content") String content,
+//			HttpServletRequest request) throws Exception {
+//
+//		HttpSession httpSession = request.getSession();
+//		int userNo = (int) httpSession.getAttribute("userNo");
+//		Message msg;
+//		int rUserNo;
+//		
+//		if(cMsg != null) {
+//			rUserNo = this.farm.getUserNoByMsgNo(cMsg.getMsgNo());	//add dao
+//			msg = new Message(userNo, rUserNo, title, content);
+//			msg.setcMsg(cMsg);
+//			msg.setNormal(cMsg.getNormal());
+//		}
+//		else {
+//			rUserNo = this.farm.getUserNoBySaleNo(normal.getSaleNo());	//add dao
+//			msg = new Message(userNo, rUserNo, title, content);
+//			msg.setNormal(normal);
+//		}
+//		
+//		this.farm.sendMsg(msg);	
+//
+//		return "redirect:/message/viewMessage.do?msgNo=" + msg.getMsgNo();
+//	
+//	}
 
 }
 

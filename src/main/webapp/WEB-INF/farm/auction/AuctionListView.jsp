@@ -48,7 +48,6 @@
 			<option value="pName">품목</option>
 		</select>
 		<input type="text" name="text">&nbsp;	<%-- text - title or pName --%>
-		<input type="hidden" name="type" value="receive">
 		<input type="submit" value="찾기">
 	</form>
 </body>

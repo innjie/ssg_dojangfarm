@@ -17,10 +17,9 @@ public class Message implements Serializable{
 	private Boolean deleteState;
 	
 	
-	public Message(int sUserNo, int rUserNo, int cMsgNo, int saleNo, String title, String content) {
+	public Message(int sUserNo, int rUserNo, String title, String content) {
 		this.sUser.setUserNo(sUserNo);
 		this.rUser.setUserNo(rUserNo);
-		this.normal.setSaleNo(saleNo);
 		this.title = title;
 		this.content = content;
 	}

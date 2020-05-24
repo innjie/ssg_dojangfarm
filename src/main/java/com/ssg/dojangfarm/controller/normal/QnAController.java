@@ -33,8 +33,8 @@ public class QnAController {
 	@RequestMapping("/normal/viewQnAList.do")
 	public String listQnA(
 			@RequestParam("saleNo") int saleNo,
-			@RequestParam("ques") int ques,
-			@RequestParam("quesNo") int quesNo,
+			@RequestParam(value = "ques", required=false) String ques,
+			@RequestParam(value = "quesNo", defaultValue="0") int quesNo,
 			ModelMap model) throws Exception {
 		PagedListHolder<QnA> qnaList = new PagedListHolder<QnA>(this.farm.getQnAList(saleNo));
 

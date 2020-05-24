@@ -31,6 +31,7 @@
 					<td>
 						<a href="<c:url value='/message/viewMessage.do'>
 									<c:param name='msgNo' value='${m.msgNo}' />
+									<c:param name='type' value='send' />
 								</c:url>">
 						$m.title}</a>
 					</td>

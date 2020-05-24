@@ -43,7 +43,7 @@
 						${q.quesstion}</a>
 					</td>
 					<%-- 질문 클릭하면 해당 질문 답변 나옴 --%>
-					<c:if test="${(param.ques == 'click') && (param.quesNo == q.qNo) }">
+					<c:if test="${(ques == 'click') && (quesNo == q.qNo) }">
 						${q.answer}
 					</c:if>
 					<%-- 답변 없고 판매자면 답변 버튼 생김 --%>

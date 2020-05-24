@@ -12,18 +12,16 @@
 <title>입찰</title>
 </head>
 <body>
-	<form action='<c:url value="/auction/bidAuction.do"/>' method="POST">
-		제목  ${auction.title}<br>	
-		품목  ${auction.product.pName}<br>	
-		최소 가격   ${auction.minPrice}<br>
-		현재 입찰 가격  ${auction.bidPrice}<br>
-		기간  ${auction.deadline}<br>
-		가격&nbsp;&nbsp;
-		<input type="text" name="bidPrice" />
-		<br>
+	<form action='<c:url value="/auction/viewMyBidList.do"/>'>
+		제목  ${bid.auction.title}<br>	
+		품목  ${bid.auction.product.pName}<br>	
+		최소 가격   ${bid.auction.minPrice}<br>
+		현재 입찰 가격  ${bid.auction.bidPrice}<br>
+		기간  ${bid.auction.deadline}<br>
+		가격  ${bid.bidPrice}<br>
+		입찰시간  ${bid.bidTime}<br>
 		
-		<input type="hidden" name="aNo" value="${auction.aNo}" />
-		<input type="submit" value="추가" />
+		<input type="submit" value="확인" />
 		
 	</form>
 </body>

@@ -66,6 +66,7 @@
 	답장</a>&nbsp;&nbsp;
 	<a href="<c:url value='/message/deleteMessage.do'>
 				<c:param name='msgNo' value='${message.msgNo}' />
+				<c:param name='type' value='${param.type}' />
 			</c:url>">
 	삭제</a>
 </body>

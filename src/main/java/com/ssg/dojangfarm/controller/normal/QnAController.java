@@ -22,21 +22,25 @@ public class QnAController {
 	private static final String LISTQNA = "normal/QnAListView";
 	private static final String ANSWERQNA = "member/AnswerQnAFormView";
 	
-	@Autowired
 	private FarmFacade farm;
 	
+	@Autowired
 	public void setFarm(FarmFacade  farm) {
 		this.farm = farm;
 	}
 
 	//view QnAList
 	@RequestMapping("/normal/viewQnAList.do")
-	public String handleRequest(
+	public String listQnA(
 			@RequestParam("saleNo") int saleNo,
+			@RequestParam("ques") int ques,
+			@RequestParam("quesNo") int quesNo,
 			ModelMap model) throws Exception {
 		PagedListHolder<QnA> qnaList = new PagedListHolder<QnA>(this.farm.getQnAList(saleNo));
 
 		qnaList.setPageSize(4);
+		model.put("ques", ques );
+		model.put("quesNo", quesNo );
 		model.put("qnaList", qnaList );
 		
 		return LISTQNA;   
@@ -44,7 +48,7 @@ public class QnAController {
 
 	//view QnAList by page
 	@RequestMapping("/normal/viewQnAList2.do")
-	public String handleRequest2(
+	public String listQnA2(
 			@RequestParam("page") String page,
 			@ModelAttribute("qnaList") PagedListHolder<QnA> qnaList,
 			BindingResult result) throws Exception {
@@ -76,7 +80,7 @@ public class QnAController {
 		QnA qna = new QnA(id, saleNo, question, secret);
 		this.farm.questionQnA(qna);
 
-		return "redirect:" + LISTQNA + "?saleNo=" + saleNo;
+		return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo;
 	}
 
 	//answer ... view answer form 
@@ -88,8 +92,8 @@ public class QnAController {
 			ModelMap model) throws Exception {
 
 		HttpSession httpSession = request.getSession();
-		//String id = (String) httpSession.getAttribute("id"); //No도 ok
 		int userNo = (int) httpSession.getAttribute("userNo");
+		//String id = (String) httpSession.getAttribute("id"); //No도 ok
 //		int saleUserNo = this.farm.getUserNoBySale(saleNo);	//saleNo로 userNo알아내기
 //		
 //		//어차피 c:if로 주인만 수정 버튼 나오기는 함
@@ -100,7 +104,7 @@ public class QnAController {
 //			return ANSWERQNA;
 //		}
 		
-		return "redirect:" + LISTQNA + "?saleNo=" + saleNo;
+		return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo;
 	}
 
 	//answer ... update QnA
@@ -116,7 +120,7 @@ public class QnAController {
 			this.farm.answerQnA(qNo, answer);
 		}
 
-		return "redirect:" + LISTQNA + "?saleNo=" + saleNo;
+		return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo;
 	}
 
 

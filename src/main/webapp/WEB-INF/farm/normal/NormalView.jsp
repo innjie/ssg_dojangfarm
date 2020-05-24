@@ -35,8 +35,8 @@
 	</tr>
 </table>
 <a href="NormalListView" >[이전 단계로]</a>
-	<!-- c:if test="${(normal.state == "판매중지") && (session.id != auction.user.id)}">
-	문자열 에러... -->
-<input type="button" value="장바구니"/>	
+	<c:if test="${(normal.state == '판매중지') && (session.id != normal.user.id)}">
+	</c:if>
+<input type="button" value="장바구니"/>
 </body>
 </html>

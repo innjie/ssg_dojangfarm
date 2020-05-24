@@ -36,6 +36,9 @@
 		<form:errors path="content" />
 		<br>
 		
+		<form:hidden path="cMsg" />
+		<form:hidden path="normal.saleNo" />
+		<form:hidden path="rUser.userNo" />
 		<input type="submit" value="추가" />
 		
 	</form:form>

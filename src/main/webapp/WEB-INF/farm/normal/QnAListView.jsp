@@ -50,6 +50,7 @@
 					<c:if test="${(q.answer == NULL) && (session.id == q.normal.user.id) }">
 						<td>
 							<a href="<c:url value='/normal/answerQnA.do'>
+										<c:param name='saleNo' value='${q.normal.saleNo}' />
 										<c:param name='qNo' value='${q.qNo}' />
 									</c:url>">
 							답변</a>

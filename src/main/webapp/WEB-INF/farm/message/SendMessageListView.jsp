@@ -23,7 +23,7 @@
 			<td>날짜</td>
 			<td>읽음</td>
 		</tr>
-		<c:forEach var="m" items="${messageList}" varStatus="status">
+		<c:forEach var="m" items="${sendMessageList}" varStatus="status">
 			<c:if test="${m.deleteState == false}">
 				<tr>
 					<td>${status.count}</td>	<%-- delete한거도 count될듯... --%>

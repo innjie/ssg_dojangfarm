@@ -34,6 +34,7 @@
 			</tr>
 		</table>
 		<br><br>
+		<input type="hidden" name="saleNo" value="${qna.normal.saleNo}">
 		<input type="hidden" name="qNo" value="${qna.qNo}">
 		<input type="submit" value="질문하기">
 	</form>

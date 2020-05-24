@@ -15,6 +15,13 @@ public class QnA implements Serializable{
 	private Boolean secret;
 	
 	
+	public QnA(String id, int saleNo, String question, Boolean secret) {
+		this.qUser.setId(id);
+		this.normal.setSaleNo(saleNo);
+		this.question = question;
+		this.secret = secret;
+		
+	}
 	public int getqNo() {
 		return qNo;
 	}

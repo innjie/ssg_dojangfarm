@@ -55,5 +55,13 @@ public class CommonNoticeController {
 		return "redirect:/commonNotice/list";
 	}
 	//공구공지 수정
-
+	@ModelAttribute("commonnotice")
+	@RequestMapping("/farm/commonNotice/update")
+	public String updateCN(@ModelAttribute("cn") CommonNotice commonnotice,
+			BindingResult resut) {
+		
+		//update 동작
+		//update 이후 리스트로 복귀
+		return "redirect:/commonNotice/list";
+	}
 }

@@ -4,16 +4,16 @@ import javax.validation.constraints.NotBlank;
 
 public class LoginCommand {
 	@NotBlank
-	private String userId;
+	private String id;
 	@NotBlank
 	private String password;
 
-	public String getUserId() {
-		return userId;
+	public String getId() {
+		return id;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getPassword() {

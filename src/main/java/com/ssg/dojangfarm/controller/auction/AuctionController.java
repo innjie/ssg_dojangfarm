@@ -32,7 +32,7 @@ public class AuctionController {
 		this.farm = farm;
 	}
 	
-	//LoginCommand 梓端 持失
+	//AuctionCommand 梓端 持失
 	@ModelAttribute("auction")
 	public AuctionCommand formBacking() {
 		return new AuctionCommand();

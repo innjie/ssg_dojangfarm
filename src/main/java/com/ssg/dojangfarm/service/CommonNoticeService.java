@@ -12,4 +12,5 @@ public interface CommonNoticeService {
 	public CommonNotice viewCommonNotice(CommonNotice cn);
 	public List<CommonNotice> getAllNoticeList();
 	public List<CommonNotice> getCNoticeListByUserNo(int userNo);
+	public CommonNotice getCN(String userId);
 }

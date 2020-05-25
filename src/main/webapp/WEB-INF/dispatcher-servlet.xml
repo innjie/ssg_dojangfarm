@@ -39,12 +39,12 @@
 	</bean>
 
  	<!-- set interceptors -->
-<!--  	<mvc:interceptors>
+ <!--  	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="" />  if need to use, write here
-			<bean class="midterm.spring.interceptor.MemberInterceptor" />
+			<mvc:mapping path="/user/login" />  if need to use, write here
+			<bean class="com.ssg.dojangfarm.controller.LoginInterceptor" />
 		</mvc:interceptor>
-	</mvc:interceptors>    -->
+	</mvc:interceptors>     -->
 	
 	<!-- set messageSource -->
 	<bean id="messageSource"

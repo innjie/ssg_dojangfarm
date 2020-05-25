@@ -9,8 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginInterceptor implements HandlerInterceptor{
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(
+			HttpServletRequest request, 
+			HttpServletResponse response, Object handler)throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -28,5 +29,9 @@ public class LoginInterceptor implements HandlerInterceptor{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+
+	
 
 }

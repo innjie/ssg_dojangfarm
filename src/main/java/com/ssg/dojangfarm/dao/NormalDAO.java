@@ -14,5 +14,5 @@ public interface NormalDAO {
 	List<Normal> getAllNormalList();
 	List<Normal> getNormalListByUserNo(int userNo);
 	List<Normal> searchNormal(String title);// throws DataAccessException;
-	int setSaleState(int saleNo);
+	int turnSaleState(int saleNo);
 }

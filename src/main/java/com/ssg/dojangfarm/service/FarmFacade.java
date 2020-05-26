@@ -97,9 +97,8 @@ public interface FarmFacade {
 	public Normal getNormalSale(int saleNo) ;
 	public List<Normal> getAllNormalList();
 	public List<Normal> getNormalListByUserNo(int userNo);
-	public int turnSaleOpen(int saleNo);
-	public int turnSaleClosed(int sale) ;
 	public List<Normal> searchNormal(String title);
+	int turnSaleState(int saleNo);
 	
 	//Payment
 	public Payment getPayment(int payNo);
@@ -109,4 +108,5 @@ public interface FarmFacade {
 	public int refundSale(int saleNo);
 	public Refund getRefund(int refundNo);
 	public List<Refund> getRefundList(int userNo);
+
 }

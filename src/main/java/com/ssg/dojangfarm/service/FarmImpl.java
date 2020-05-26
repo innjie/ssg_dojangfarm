@@ -405,15 +405,9 @@ public class FarmImpl implements FarmFacade{
 	}
 
 	@Override
-	public int turnSaleOpen(int saleNo) {
-		return normalDAO.turnSaleOpen(saleNo);
+	public int turnSaleState(int saleNo) {
+		return normalDAO.turnSaleState(saleNo);
 	}
-
-	@Override
-	public int turnSaleClosed(int sale) {
-		return normalDAO.turnSaleClosed(sale);
-	}
-
 	@Override
 	public List<Normal> searchNormal(String title) {
 		return normalDAO.searchNormal(title);

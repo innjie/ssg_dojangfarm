@@ -43,7 +43,7 @@ public class NormalServiceImpl implements NormalService {
 
 	@Override
 	public int turnSaleState(int saleNo) {
-		return normalDAO.setSaleState(saleNo);
+		return normalDAO.turnSaleState(saleNo);
 	}
 
 	@Override

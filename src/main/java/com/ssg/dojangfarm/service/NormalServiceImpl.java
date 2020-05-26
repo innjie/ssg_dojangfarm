@@ -42,13 +42,8 @@ public class NormalServiceImpl implements NormalService {
 	}
 
 	@Override
-	public int turnSaleOpen(int saleNo) {
-		return normalDAO.turnSaleOpen(saleNo);
-	}
-
-	@Override
-	public int turnSaleClosed(int sale) {
-		return normalDAO.turnSaleClosed(sale);
+	public int turnSaleState(int saleNo) {
+		return normalDAO.setSaleState(saleNo);
 	}
 
 	@Override

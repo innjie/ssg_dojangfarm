@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ssg.dojangfarm.domain.CommonNotice;
 import com.ssg.dojangfarm.service.CommonNoticeService;
 
-//공동구매 공지 컨트롤러
+//commonnotice controlelr
 @Controller
 public class CommonNoticeController {
 	@Autowired
 	private CommonNoticeService commonNoticeService;
 	
-	//메인으로
+	//go main
 	@RequestMapping("/index")
 	public String goMain(Model model) {
-		//확인 필요
-		return "/index";
+		//needs confirm
+		return "redirect:/index";
 	}
 
-	//리스트
+	//get CN List
 	@RequestMapping("/farm/commonNotice/list")
 	public String getCNList(Model model ) {
 		List<CommonNotice> cnList = commonNoticeService.getAllNoticeList();
 		model.addAttribute("cnList", cnList);
 		return "commonnotice/CommonNoticeListView";
 	}
-	//각 페이지 불러오기
+	//get CN view
 	@RequestMapping("/farm/commonNotice/{userId}")
 	public String getCN(@PathVariable String userId, Model  model) {
 		CommonNotice cn = commonNoticeService.getCN(userId);
@@ -44,24 +44,34 @@ public class CommonNoticeController {
 		return "commonNotice/CommonNoticeView";
 	}
 	
-	//공구공지 추가
+	//insert CN
 	@ModelAttribute("commonnotice")
 	@RequestMapping("/farm/commonNotice/insert")
 	public String insertCN(@ModelAttribute("cn") CommonNotice commonnotice,
 			BindingResult resut) {
 		
-		//insert 동작
-		//insert 이후 리스트로 복귀
+		//insert function
+		//insert -> list
 		return "redirect:/commonNotice/list";
 	}
-	//공구공지 수정
+	//update CN
 	@ModelAttribute("commonnotice")
 	@RequestMapping("/farm/commonNotice/update")
 	public String updateCN(@ModelAttribute("cn") CommonNotice commonnotice,
 			BindingResult resut) {
 		
-		//update 동작
-		//update 이후 리스트로 복귀
+		//update fuction
+		//update -> list
+		return "redirect:/commonNotice/list";
+	}
+	
+	//delete CN
+	@ModelAttribute("commonnotice")
+	@RequestMapping("/farm/commonNotice/delete")
+	public String deleteCN(@ModelAttribute("cn") CommonNotice commonnotice,
+			BindingResult result) {
+		//delete function
+		//after -> list
 		return "redirect:/commonNotice/list";
 	}
 }

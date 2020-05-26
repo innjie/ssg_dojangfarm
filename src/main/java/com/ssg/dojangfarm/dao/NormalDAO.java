@@ -13,7 +13,6 @@ public interface NormalDAO {
 	Normal getNormalSale(int saleNo) ;
 	List<Normal> getAllNormalList();
 	List<Normal> getNormalListByUserNo(int userNo);
-	int turnSaleOpen(int saleNo);
-	int turnSaleClosed(int sale) ;
 	List<Normal> searchNormal(String title);// throws DataAccessException;
+	int setSaleState(int saleNo);
 }

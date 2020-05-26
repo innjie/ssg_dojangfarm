@@ -11,7 +11,6 @@ public interface NormalService {
 	public Normal getNormalSale(int saleNo) ;
 	public List<Normal> getAllNormalList();
 	public List<Normal> getNormalListByUserNo(int userNo);
-	public int turnSaleOpen(int saleNo);
-	public int turnSaleClosed(int sale) ;
+	public int turnSaleState(int saleNo);
 	public List<Normal> searchNormal(String title);
 }

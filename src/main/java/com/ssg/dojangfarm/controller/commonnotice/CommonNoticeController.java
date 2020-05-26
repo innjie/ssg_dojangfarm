@@ -22,8 +22,8 @@ public class CommonNoticeController {
 	//go main
 	@RequestMapping("/index")
 	public String goMain(Model model) {
-		//확인 필요
-		return "/index";
+		//needs confirm
+		return "redirect:/index";
 	}
 
 	//get CN List

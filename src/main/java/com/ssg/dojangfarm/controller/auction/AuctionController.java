@@ -78,9 +78,9 @@ public class AuctionController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+//		User user = (User) httpSession.getAttribute("user");
 //
-//		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(userNo));
+//		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(user.getUserNo()));
 //
 //		auctionList.setPageSize(4);
 //		model.put("auctionList ", auctionList );
@@ -153,14 +153,14 @@ public class AuctionController {
 			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
-		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+		User user = (User) httpSession.getAttribute("user");
 //		int auctionUserNo = this.farm.getUserByAuction(aNo);	//add dao
 		
 		Auction auction = this.farm.getAuction(aNo);
 		model.put("auction", auction);
 		
 //		//check this user is auction's user
-//		if(userNo == auctionUserNo) {
+//		if(user.getUserNo() == auctionUserNo) {
 //			SBid sBid = this.farm.getSBidByAuction(aNo);	//add dao
 //			ImPur imPur = getImPurByAuction(aNo);	//add dao
 //			

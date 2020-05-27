@@ -19,7 +19,7 @@
 		</tr>
 		<tr>
 			<td>우편번호</td>
-			<td>${address.zipcode}</td>
+			<td>${address.zip}</td>
 		</tr>
 		<tr>
 			<td>주소</td>

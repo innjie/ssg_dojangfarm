@@ -16,7 +16,8 @@
 	
 	<mvc:default-servlet-handler />
 	
-	<mvc:view-controller path="user/loginForm.do" view-name="user/LoignView" />
+	<mvc:view-controller path="user/insertCardForm.do" view-name="user/InsertCardFormView" />
+	
 	
 	<mvc:view-controller path="user/createUser.do" view-name="user/CreateUserFormView" />
 	<mvc:view-controller path="user/myPage.do" view-name="user/MyPage" />

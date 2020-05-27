@@ -40,9 +40,9 @@ public class MessageController {
 			HttpServletRequest request) throws Exception {
 
 		HttpSession httpSession = request.getSession();
-		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+		User user = (User) httpSession.getAttribute("user");
 		
-		PagedListHolder<Message> sendMessageList= new PagedListHolder<Message>(this.farm.sendMessageList(userNo));
+		PagedListHolder<Message> sendMessageList= new PagedListHolder<Message>(this.farm.sendMessageList(user.getUserNo()));
 
 		sendMessageList.setPageSize(4);
 		model.put("sendMessageList", sendMessageList);
@@ -77,9 +77,9 @@ public class MessageController {
 			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
-		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+		User user = (User) httpSession.getAttribute("user");
 
-		PagedListHolder<Message> receiveMessageList = new PagedListHolder<Message>(this.farm.receiveMessageList(userNo));
+		PagedListHolder<Message> receiveMessageList = new PagedListHolder<Message>(this.farm.receiveMessageList(user.getUserNo()));
 
 		receiveMessageList.setPageSize(4);
 		model.put("receiveMessageList ", receiveMessageList );
@@ -169,7 +169,7 @@ public class MessageController {
 			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
-		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+		User user = (User) httpSession.getAttribute("user");
 		int msgUserNo;
 		
 		if(type.equals("receive")) {
@@ -179,7 +179,7 @@ public class MessageController {
 			//msgUserNo = this.farm.getSUserNo(msgNo);		//message.sUser.userNo 가져오는 dao
 		}
 		
-	//	if(userNo == msgUserNo) {
+	//	if(user.getUserNo() == msgUserNo) {
 			this.farm.deleteMsg(msgNo);	
 	//	}
 
@@ -221,19 +221,19 @@ public class MessageController {
 //			HttpServletRequest request) throws Exception {
 //
 //		HttpSession httpSession = request.getSession();
-//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+//		User user = (User) httpSession.getAttribute("user");
 //		Message msg;
 //		int rUserNo;
 //		
 //		if(cMsg != null) {
 //			rUserNo = this.farm.getUserNoByMsgNo(cMsg.getMsgNo());	//add dao
-//			msg = new Message(userNo, rUserNo, title, content);
+//			msg = new Message(user.getUserNo(), rUserNo, title, content);
 //			msg.setcMsg(cMsg);
 //			msg.setNormal(cMsg.getNormal());
 //		}
 //		else {
 //			rUserNo = this.farm.getUserNoBySaleNo(normal.getSaleNo());	//add dao
-//			msg = new Message(userNo, rUserNo, title, content);
+//			msg = new Message(user.getUserNo(), rUserNo, title, content);
 //			msg.setNormal(normal);
 //		}
 //		

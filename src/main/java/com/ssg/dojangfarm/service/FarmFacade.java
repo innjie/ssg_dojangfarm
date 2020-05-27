@@ -69,7 +69,7 @@ public interface FarmFacade {
 	public void deleteCard(int cardNo);
 	
 	//Common
-	public int insertSale(Common common);
+	public int insertSale(int userNo, Common common);
 	public int updateSale(Common common);
 	public Common getCommonSale(int saleNo);
 	public List<Common> getAllCommonList();
@@ -108,5 +108,6 @@ public interface FarmFacade {
 	public int refundSale(int saleNo);
 	public Refund getRefund(int refundNo);
 	public List<Refund> getRefundList(int userNo);
+	
 
 }

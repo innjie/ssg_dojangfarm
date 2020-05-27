@@ -19,8 +19,8 @@ public class CommonServiceEndpoint {
 
 	
 	@WebMethod
-	public int insertSale(Common common) {
-		return commonService.insertSale(common);
+	public int insertSale(int userNo, Common common) {
+		return commonService.insertSale(userNo, common);
 	}
 
 	@WebMethod

@@ -41,9 +41,9 @@ public class BidController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+//		User user = (User) httpSession.getAttribute("user");
 //
-//		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(this.farm.getMyBidList(userNo));	//add dao
+//		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(this.farm.getMyBidList(user.getUserNo()));	//add dao
 //
 //		bidList.setPageSize(4);
 //		model.put("bidList ", bidList );
@@ -78,9 +78,9 @@ public class BidController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+//		User user = (User) httpSession.getAttribute("user");
 //
-//		PagedListHolder<SBid> SBidList = new PagedListHolder<SBid>(this.farm.getMySBidList(userNo));	//add dao
+//		PagedListHolder<SBid> SBidList = new PagedListHolder<SBid>(this.farm.getMySBidList(user.getUserNo()));	//add dao
 //
 //		SBidList.setPageSize(4);
 //		model.put("SBidList ", SBidList );
@@ -139,10 +139,10 @@ public class BidController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();	
+//		User user = (User) httpSession.getAttribute("user");
 //		
 //		//시간 비교 + 시간추가, 가격비교
-//		Bid bid = new Bid(userNo, aNo, bidPrice);
+//		Bid bid = new Bid(user.getUserNo(), aNo, bidPrice);
 //		
 //		this.farm.bidAuction(bid);	
 //

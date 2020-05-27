@@ -12,7 +12,7 @@
 <body>
 <h2><a href="<c:url value='/' />" >도장팜</a>에 오시면 혜택이 팜팜</h2><br>
 	<%-- <c:if test=${session == null}> --%>
-		<a href="<c:url value='/user/loginForm.do' />" >로그인</a>&nbsp;&nbsp;
+		<a href="<c:url value='/user/login.do' />" >로그인</a>&nbsp;&nbsp;
 	<%-- </c:if> --%>
 	<%-- <c:if test=${session == null}> --%>
 		<a href="<c:url value='/user/createUser.do' />" >회원가입</a>&nbsp;&nbsp;

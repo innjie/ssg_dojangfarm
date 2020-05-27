@@ -19,9 +19,9 @@
 		<form:errors path="address.aName" />
 		<br>
 		
-		<form:label path="address.zipcode">우편번호 </form:label>
-		<form:input path="address.zipcode" />
-		<form:errors path="address.zipcode" />
+		<form:label path="address.zip">우편번호 </form:label>
+		<form:input path="address.zip" />
+		<form:errors path="address.zip" />
 		<br>
 		
 		<form:label path="address.address">주소 </form:label>

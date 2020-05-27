@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
+@RequestMapping("/user/login.do")
 public class LoginController {
 	private static final String LOGINFORM = "user/LoignView";
 	
@@ -29,11 +31,19 @@ public class LoginController {
 		return new LoginCommand();
 	}
 	
-	//login ... form -servlet.xml
-
+	//login ... form
+	@RequestMapping(method = RequestMethod.GET)
+	public String loginForm(
+			 @ModelAttribute("login") LoginCommand loginCommand,
+			 HttpServletRequest request) {
+		System.out.println("view loginform");
+				
+		return LOGINFORM;
+	}
+	
 	
 	//login
-//	@RequestMapping("/user/login.do")
+//	@RequestMapping(method = RequestMethod.POST)
 //	public ModelAndView handleRequest(
 //			HttpServletRequest request,
 //			@Valid @ModelAttribute("login") LoginCommand loginCommand,

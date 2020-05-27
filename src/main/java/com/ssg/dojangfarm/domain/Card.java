@@ -15,6 +15,16 @@ public class Card implements Serializable{
 	private String cardPayNo;		//real card number
 	
 	
+	public Card(User user, String bank, String cardPW, Date period, int cvc, String type, String cardPayNo) {
+		super();
+		this.user = user;
+		this.bank = bank;
+		this.cardPW = cardPW;
+		this.period = period;
+		this.cvc = cvc;
+		this.type = type;
+		this.cardPayNo = cardPayNo;
+	}
 	public int getCardNo() {
 		return cardNo;
 	}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.QnA;
+import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
@@ -71,9 +72,9 @@ public class QnAController {
 			HttpServletRequest request) throws Exception {
 
 		HttpSession httpSession = request.getSession();
-		String id = (String) httpSession.getAttribute("id");
+		User user = (User) httpSession.getAttribute("user");
 
-		QnA qna = new QnA(id, saleNo, question, secret);
+		QnA qna = new QnA(user.getId(), saleNo, question, secret);
 		this.farm.questionQnA(qna);
 
 		return "redirect:" + LISTQNA + "?saleNo=" + saleNo;
@@ -88,12 +89,11 @@ public class QnAController {
 			ModelMap model) throws Exception {
 
 		HttpSession httpSession = request.getSession();
-		//String id = (String) httpSession.getAttribute("id"); //No도 ok
-		int userNo = (int) httpSession.getAttribute("userNo");
+		User user = (User) httpSession.getAttribute("user");
 //		int saleUserNo = this.farm.getUserNoBySale(saleNo);	//saleNo로 userNo알아내기
 //		
 //		//어차피 c:if로 주인만 수정 버튼 나오기는 함
-//		if(saleUserNo == userNo) {  //판매번호로 판매 알아온다음 거기 저장된 번호 가져오기
+//		if(saleUserNo == user.getUserNo()) {  //판매번호로 판매 알아온다음 거기 저장된 번호 가져오기
 //			QnA qna = this.farm.getQnA(qNo);	//qNo로 QnA객체 반환하는 dao 필요함
 //			model.put("qna", qna);
 //			

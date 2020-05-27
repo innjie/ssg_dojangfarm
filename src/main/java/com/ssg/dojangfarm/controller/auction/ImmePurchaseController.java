@@ -33,9 +33,9 @@ public class ImmePurchaseController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
+//		User user = (User) httpSession.getAttribute("user");
 //
-//		PagedListHolder<ImPur> imPurList = new PagedListHolder<ImPur>(this.farm.getMyImPurList(userNo));	//add dao
+//		PagedListHolder<ImPur> imPurList = new PagedListHolder<ImPur>(this.farm.getMyImPurList(user.getUserNo()));	//add dao
 //
 //		imPurList.setPageSize(4);
 //		model.put("imPurList ", imPurList );

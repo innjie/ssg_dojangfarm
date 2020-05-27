@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Auction;
+import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
@@ -77,7 +78,7 @@ public class AuctionController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = (int) httpSession.getAttribute("userNo");
+//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 //
 //		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(userNo));
 //
@@ -152,7 +153,7 @@ public class AuctionController {
 			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
-		int userNo = (int) httpSession.getAttribute("userNo");
+		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 //		int auctionUserNo = this.farm.getUserByAuction(aNo);	//add dao
 		
 		Auction auction = this.farm.getAuction(aNo);

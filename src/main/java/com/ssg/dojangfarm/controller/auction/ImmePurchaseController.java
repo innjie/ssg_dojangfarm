@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssg.dojangfarm.domain.ImPur;
+import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
@@ -32,7 +33,7 @@ public class ImmePurchaseController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = (int) httpSession.getAttribute("userNo");
+//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 //
 //		PagedListHolder<ImPur> imPurList = new PagedListHolder<ImPur>(this.farm.getMyImPurList(userNo));	//add dao
 //

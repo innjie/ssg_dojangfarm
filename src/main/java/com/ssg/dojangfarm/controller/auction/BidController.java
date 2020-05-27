@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Bid;
 import com.ssg.dojangfarm.domain.SBid;
+import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
@@ -40,7 +41,7 @@ public class BidController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = (int) httpSession.getAttribute("userNo");
+//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 //
 //		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(this.farm.getMyBidList(userNo));	//add dao
 //
@@ -77,7 +78,7 @@ public class BidController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = (int) httpSession.getAttribute("userNo");
+//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 //
 //		PagedListHolder<SBid> SBidList = new PagedListHolder<SBid>(this.farm.getMySBidList(userNo));	//add dao
 //
@@ -138,7 +139,7 @@ public class BidController {
 //			HttpServletRequest request) throws Exception {
 //		
 //		HttpSession httpSession = request.getSession();
-//		int userNo = (int) httpSession.getAttribute("userNo");	
+//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();	
 //		
 //		//시간 비교 + 시간추가, 가격비교
 //		Bid bid = new Bid(userNo, aNo, bidPrice);

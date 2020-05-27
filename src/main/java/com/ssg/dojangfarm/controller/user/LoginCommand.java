@@ -7,7 +7,8 @@ public class LoginCommand {
 	private String id;
 	@NotBlank
 	private String password;
-
+	private String forwardAction;
+	
 	public String getId() {
 		return id;
 	}
@@ -23,5 +24,11 @@ public class LoginCommand {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getForwardAction() {
+		return forwardAction;
+	}
 
+	public void setForwardAction(String forwardAction) {
+		this.forwardAction = forwardAction;
+	}
 }

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Message;
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
@@ -39,7 +40,7 @@ public class MessageController {
 			HttpServletRequest request) throws Exception {
 
 		HttpSession httpSession = request.getSession();
-		int userNo = (int) httpSession.getAttribute("userNo");
+		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 		
 		PagedListHolder<Message> sendMessageList= new PagedListHolder<Message>(this.farm.sendMessageList(userNo));
 
@@ -76,7 +77,7 @@ public class MessageController {
 			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
-		int userNo = (int) httpSession.getAttribute("userNo");
+		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 
 		PagedListHolder<Message> receiveMessageList = new PagedListHolder<Message>(this.farm.receiveMessageList(userNo));
 
@@ -168,7 +169,7 @@ public class MessageController {
 			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
-		int userNo = (int) httpSession.getAttribute("userNo");
+		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 		int msgUserNo;
 		
 		if(type.equals("receive")) {
@@ -220,7 +221,7 @@ public class MessageController {
 //			HttpServletRequest request) throws Exception {
 //
 //		HttpSession httpSession = request.getSession();
-//		int userNo = (int) httpSession.getAttribute("userNo");
+//		int userNo = ((User) httpSession.getAttribute("userNo")).getUserNo();
 //		Message msg;
 //		int rUserNo;
 //		

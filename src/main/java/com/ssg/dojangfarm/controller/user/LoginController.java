@@ -1,7 +1,16 @@
 package com.ssg.dojangfarm.controller.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 public class LoginController {
@@ -14,11 +23,41 @@ public class LoginController {
 		this.farm = farm;
 	}
 	
-	//login ... form
-	//@RequestMapping(value="/user/login.do", method=RequestMethod.GET)
+	//LoginCommand 
+	@ModelAttribute("login")
+	public LoginCommand formBacking() {
+		return new LoginCommand();
+	}
+	
+	//login ... form -servlet.xml
 
 	
 	//login
-	//@RequestMapping(value="/user/login.do", method=RequestMethod.POST)
-
+//	@RequestMapping("/user/login.do")
+//	public ModelAndView handleRequest(
+//			HttpServletRequest request,
+//			@Valid @ModelAttribute("login") LoginCommand loginCommand,
+//			BindingResult result) throws Exception {
+//		
+//		User user = farm.getUser(loginCommand.getId(), loginCommand.getPassword());
+//		
+//		//validate
+//		if (result.hasErrors()) {
+//			return new ModelAndView(LOGINFORM);
+//		}
+//		
+//		if (user == null) {
+//			return new ModelAndView("Error", "message", 
+//					"Invalid username or password.  Signon failed.");
+//		}
+//		else {
+//			HttpSession httpSession = request.getSession();
+//			httpSession.setAttribute("user", user);
+//			
+//			if (loginCommand.getForwardAction() != null) 
+//				return new ModelAndView("redirect:" + loginCommand.getForwardAction());
+//			else 
+//				return new ModelAndView("index");
+//		}
+//	}
 }

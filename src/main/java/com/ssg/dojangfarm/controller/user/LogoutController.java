@@ -1,19 +1,17 @@
 package com.ssg.dojangfarm.controller.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpSession;
 
-import com.ssg.dojangfarm.service.FarmFacade;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 public class LogoutController {
-	private static final String LOGINFORM = "user/LoignView";
-	
-	private FarmFacade farm;
-	
-	@Autowired
-	public void setFarm(FarmFacade  farm) {
-		this.farm = farm;
-	}
-	
+
 	//logout
-	//@RequestMapping("/user/logout.do")
+	@RequestMapping("/user/logout.do")
+	public String handleRequest(HttpSession session) throws Exception {
+		session.removeAttribute("user");
+		session.invalidate();
+		return "Main";
+	}
 }

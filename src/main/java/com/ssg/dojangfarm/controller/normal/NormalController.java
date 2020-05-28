@@ -28,13 +28,7 @@ public class NormalController {
 	public void setNormalService(NormalService normalService) {
 		this.normalService = normalService;
 	}
-	//go main
-	/**
-	@RequestMapping("/index")
-	public String goMain(Model model) {
-		return "redirect:/index";
-	}
-	*/
+	
 	//insert form
 	@RequestMapping(value="/normal/insertForm.do", method = RequestMethod.GET)
 	public String insertForm(
@@ -43,7 +37,7 @@ public class NormalController {
 	}
 	
 	//insert normal
-	@RequestMapping("/farm/normal/insert.do")
+	@RequestMapping("/normal/insertNormal.do")
 	public String insertNormal(@ModelAttribute("normal") Normal normal,
 			BindingResult result, HttpServletRequest request) {
 		//insert action
@@ -63,23 +57,23 @@ public class NormalController {
 	}
 	
 	//search normal
-	@RequestMapping("/farm/normal/search.do")
+	@RequestMapping(value="/normal/searchNormal.do", method = RequestMethod.GET)
 	public ModelAndView searchNormal(HttpServletRequest request,
-			@RequestParam(value="title", required = false) String title) throws Exception {
+			@RequestParam(value="title", required = false) String word) throws Exception {
 		//search action
 		List<Normal> normalList = null;
-		if(title != null) {
-			if(!StringUtils.hasLength(title)) {
+		if(word != null) {
+			if(!StringUtils.hasLength(word)) {
 				return new ModelAndView("Error", "message", "enter keword");
 			}
-			normalList = normalService.searchNormal(title.toLowerCase());
+			normalList = normalService.searchNormal(word.toLowerCase());
 		}
 		//search -> list( or main)
 		return new ModelAndView("NormalListView", "normalList", normalList);
 	}
 	
 	//turn state off / on
-	@RequestMapping("/farm/normal/turn.do")
+	@RequestMapping("/normal/turn.do")
 	public ModelAndView sarchNormal(@ModelAttribute("normal") Normal normal, BindingResult result) {
 		//get normal
 		int res = normalService.turnSaleState(normal.getSaleNo());
@@ -98,7 +92,7 @@ public class NormalController {
 		return "normal/NormalUpdateFormView";
 	}
 	//update normal
-	@RequestMapping("/farm/normal/update.do")
+	@RequestMapping("/normal/updateNormal.do")
 	public ModelAndView updateNormal(@ModelAttribute("normal") Normal normal, BindingResult result) {
 		//update action
 		int res = normalService.updateSale(normal);
@@ -111,7 +105,7 @@ public class NormalController {
 	}
 	
 	//get all normal list
-	@RequestMapping("/farm/normal/list.do")
+	@RequestMapping("/normal/list.do")
 	public String getNormalList(Model model) {
 		//get list.do
 		List<Normal> normalList = normalService.getAllNormalList();
@@ -120,7 +114,7 @@ public class NormalController {
 	}
 	
 	//get normal view
-	@RequestMapping("/farm/normal/{saleNo}.do")
+	@RequestMapping("/normal/{saleNo}.do")
 	public String getNormal(@PathVariable int saleNo, Model model) {
 		Normal normal = normalService.getNormalSale(saleNo);
 		if(normal == null) {

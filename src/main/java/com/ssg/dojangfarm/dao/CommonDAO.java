@@ -4,6 +4,7 @@ package com.ssg.dojangfarm.dao;
 import java.util.List;
 
 import com.ssg.dojangfarm.domain.Common;
+import com.ssg.dojangfarm.domain.CommonJoin;
 
 
 public interface CommonDAO {
@@ -15,8 +16,9 @@ public interface CommonDAO {
 	List<Common> getCommonListByUserNo(int userNo);
 	List<Common> searchCommon(String title);
 	int insertCommonjoin(int userNo, int saleNo);  //CommonJoin commonJoin
-	int cancelCommonjoin(int userNo, int CJNo);
-	int updateCommonjoin(int userNo, int CJNo);
+	int cancelCommonjoin( int CJNo);
+	int updateCommonjoin(int CJNo);
+	CommonJoin getCommonJoin(int cjNo);
 
 }
 

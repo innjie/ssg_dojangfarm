@@ -76,8 +76,9 @@ public interface FarmFacade {
 	public List<Common> getCommonListByUserNo(int userNo);
 	public List<Common> searchCommon(String title);
 	public int insertCommonjoin(int userNo, int saleNo);  //CommonJoin commonJoin
-	public int cancelCommonjoin(int userNo, int CJNo);
-	public int updateCommonjoin(int userNo, int CJNo);
+	public int cancelCommonjoin( int CJNo);
+	public int updateCommonjoin(int CJNo);
+	public CommonJoin getCommonJoin(int CJNo);
 	
 	//CommonNotice
 	public int insertCommonNotice(CommonNotice cn);// throws dataAcception;
@@ -108,6 +109,7 @@ public interface FarmFacade {
 	public int refundSale(int saleNo);
 	public Refund getRefund(int refundNo);
 	public List<Refund> getRefundList(int userNo);
+	
 	
 
 }

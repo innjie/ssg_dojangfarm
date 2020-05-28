@@ -320,15 +320,18 @@ public class FarmImpl implements FarmFacade{
 	}
 
 	@Override
-	public int cancelCommonjoin(int userNo, int CJNo) {
-		return commonDAO.cancelCommonjoin(userNo, CJNo);
+	public int cancelCommonjoin( int CJNo) {
+		return commonDAO.cancelCommonjoin(CJNo);
 	}
 
 	@Override
-	public int updateCommonjoin(int userNo, int CJNo) {
-		return commonDAO.updateCommonjoin(userNo, CJNo);
+	public int updateCommonjoin( int CJNo) {
+		return commonDAO.updateCommonjoin( CJNo);
 	}
-	
+	@Override
+	public CommonJoin getCommonJoin(int CJNo) {
+		return commonDAO.getCommonJoin(CJNo);
+	}
 	//-------------------------------------------------------------------------
 	//CommonNotice
 	//-------------------------------------------------------------------------

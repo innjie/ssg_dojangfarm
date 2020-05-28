@@ -16,9 +16,12 @@ import com.ssg.dojangfarm.service.CommonNoticeService;
 //commonnotice controlelr
 @Controller
 public class CommonNoticeController {
-	@Autowired
 	private CommonNoticeService commonNoticeService;
 	
+	@Autowired
+	public void setCommonNoticeService(CommonNoticeService commonNoticeService) {
+		this.commonNoticeService = commonNoticeService;
+	}
 
 	//get CN List
 	@RequestMapping("/commonNotice/list.do")

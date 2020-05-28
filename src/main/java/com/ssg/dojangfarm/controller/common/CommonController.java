@@ -6,15 +6,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Common;
+import com.ssg.dojangfarm.domain.CommonJoin;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.CommonService;
 
@@ -82,6 +85,59 @@ public class CommonController {
 			return new ModelAndView("Error", "message", "update Failed");
 		} else { //success
 			return new ModelAndView("Success", "message", "update success");
+		}
+	}
+	
+	//insert CommonJoin
+	@RequestMapping("/commonjoin/join")
+	public ModelAndView insertCommonJoin(
+			@RequestParam HttpServletRequest request,
+			@ModelAttribute("Common") Common common,
+			BindingResult result) {
+		//insert join actioin
+		int userNo = (int)request.getAttribute("userNo");
+		int res = commonService.insertCommonjoin(userNo,common.getSaleNo());
+		
+		if(res == 0) {//failed
+			return new ModelAndView("Error", "message", "join Failed");
+		} else { //success
+			return new ModelAndView("Success", "message", "join success");
+		}
+	}
+	//updateCommonJoin
+	@RequestMapping("/commonJoin/update")
+	public ModelAndView updateCommonJoin(
+			@ModelAttribute("CommonJoin") CommonJoin cj, BindingResult result) {
+		int res = commonService.updateCommonjoin( cj.getCjNo());
+		
+		if(res == 0) {//failed
+			return new ModelAndView("Error", "message", "update join Failed");
+		} else { //success
+			return new ModelAndView("Success", "message", "update join success");
+		}
+	}
+	
+	//view CommonJoin
+	@RequestMapping("/commonJoin/view")
+	public String viewCommonJoin(@PathVariable int CJNo, Model model) {
+		CommonJoin cj = commonService.getCommonJoin(CJNo);
+		
+		if(cj == null) {
+			return "/commonJoin/CJNotFound";
+		}
+		model.addAttribute("commonJoin", cj);
+		return "commonJoin/CommonJoinView";
+	}
+	//cancel CommonJoin
+	@RequestMapping("/commonJoin/cancel")
+	public ModelAndView cancelCommonJoin(@PathVariable int CJNo, BindingResult result) {
+		//cancel action
+		int res = commonService.cancelCommonjoin( CJNo);
+		
+		if(res == 0)  {//failed
+			return new ModelAndView("Error", "message", "cancel failed");
+		} else { //success
+			return new ModelAndView("Success", "message", "cancel success");
 		}
 	}
 	

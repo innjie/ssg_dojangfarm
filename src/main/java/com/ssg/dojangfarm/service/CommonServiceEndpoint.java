@@ -54,13 +54,13 @@ public class CommonServiceEndpoint {
 	}
 
 	@WebMethod
-	public int cancelCommonjoin(int userNo, int CJNo) {
-		return commonService.cancelCommonjoin(userNo, CJNo);
+	public int cancelCommonjoin( int CJNo) {
+		return commonService.cancelCommonjoin( CJNo);
 	}
 
 	@WebMethod
-	public int updateCommonjoin(int userNo, int CJNo) {
-		return commonService.updateCommonjoin(userNo, CJNo);
+	public int updateCommonjoin( int CJNo) {
+		return commonService.updateCommonjoin(CJNo);
 	}
 
 }

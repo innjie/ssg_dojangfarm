@@ -44,7 +44,7 @@ public class LoginController {
 	
 	//login
 //	@RequestMapping(method = RequestMethod.POST)
-//	public ModelAndView handleRequest(
+//	public ModelAndView login(
 //			HttpServletRequest request,
 //			@Valid @ModelAttribute("login") LoginCommand loginCommand,
 //			BindingResult result) throws Exception {

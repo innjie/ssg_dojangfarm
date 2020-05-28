@@ -32,7 +32,7 @@ public class CardController {
 	
 	//view cardList
 	//@RequestMapping("/card/viewCardList.do")
-	public ModelAndView listMyAuction(
+	public ModelAndView listCard(
 			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
@@ -46,7 +46,7 @@ public class CardController {
 
 /*	//view cardList by page
 	@RequestMapping("/auction/viewMyAuctionList2.do")
-	public String listMyAuction2(
+	public String listCard2(
 			@RequestParam("page") String page,
 			@ModelAttribute("cardList") PagedListHolder<Card> cardList,
 			BindingResult result) throws Exception {
@@ -65,7 +65,7 @@ public class CardController {
 */
 	//view card
 	@RequestMapping("/card/viewCard.do")
-	public ModelAndView viewAuction(
+	public ModelAndView viewCard(
 			@RequestParam("cardNo") int cardNo) throws Exception {
 		
 		Card card = this.farm.getCard(cardNo);
@@ -106,7 +106,7 @@ public class CardController {
 
 	//delete card
 	@RequestMapping("/card/deleteCard.do")
-	public String register(
+	public String delete(
 			@RequestParam("cardNo") int cardNo) throws Exception {
 	
 		this.farm.deleteCard(cardNo);	

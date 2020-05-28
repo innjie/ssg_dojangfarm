@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
-   	<!-- scan midterm.spring package and make bean  -->
+   	<!-- scan package and make bean  -->
    <!--  <context:component-scan base-package="com.ssg.dojangfarm"/>   -->
 
 	<!-- make HandlerMapping bean -->
@@ -16,9 +16,12 @@
 	
 	<mvc:default-servlet-handler />
 	
+	<!-- really use -->
+	<mvc:view-controller path="index.do" view-name="Main" />
 	<mvc:view-controller path="user/insertCardForm.do" view-name="user/InsertCardFormView" />
 	
 	
+	<mvc:view-controller path="user/login.do" view-name="user/LoginView" />
 	<mvc:view-controller path="user/createUser.do" view-name="user/CreateUserFormView" />
 	<mvc:view-controller path="user/myPage.do" view-name="user/MyPage" />
 	<mvc:view-controller path="message/viewSendMessageList.do" view-name="message/SendMessageListView" />
@@ -41,12 +44,26 @@
 	</bean>
 
  	<!-- set interceptors -->
- <!--  	<mvc:interceptors>
+   	<mvc:interceptors>
+   		<!-- before approach, have to login -->
 		<mvc:interceptor>
-			<mvc:mapping path="/user/login" />  if need to use, write here
-			<bean class="com.ssg.dojangfarm.controller.LoginInterceptor" />
+			<mvc:mapping path="/user/myPage.do" />  
+			<mvc:mapping path="/message/*.do" />
+			<mvc:mapping path="/address/*.do" />  
+			<mvc:mapping path="/auction/viewMyAuctionList.do" />
+			<mvc:mapping path="/auction/registerAuction.do" />  
+			<mvc:mapping path="/auction/viewMyBidList.do" />
+			<mvc:mapping path="/auction/viewMySBidList.do" />  
+			<mvc:mapping path="/auction/bidAuction.do" />
+			<mvc:mapping path="/auction/viewMyImPurList.do" />  
+			<mvc:mapping path="/normal/questionQnA.do" />
+			<mvc:mapping path="/normal/answerQnA.do" />  
+			<mvc:mapping path="/user/getUser.do" />
+			<mvc:mapping path="/user/modifyUser.do" />
+			<mvc:mapping path="/user/deleteUser.do" />
+			<bean class="com.ssg.dojangfarm.controller.user.LoginInterceptor" />
 		</mvc:interceptor>
-	</mvc:interceptors>     -->
+	</mvc:interceptors>     
 	
 	<!-- set messageSource -->
 	<bean id="messageSource"

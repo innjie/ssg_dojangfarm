@@ -16,25 +16,22 @@ import com.ssg.dojangfarm.service.CommonNoticeService;
 //commonnotice controlelr
 @Controller
 public class CommonNoticeController {
-	@Autowired
 	private CommonNoticeService commonNoticeService;
 	
-	//go main
-	@RequestMapping("/index")
-	public String goMain(Model model) {
-		//needs confirm
-		return "redirect:/index";
+	@Autowired
+	public void setCommonNoticeService(CommonNoticeService commonNoticeService) {
+		this.commonNoticeService = commonNoticeService;
 	}
 
 	//get CN List
-	@RequestMapping("/farm/commonNotice/list")
+	@RequestMapping("/commonNotice/list.do")
 	public String getCNList(Model model ) {
 		List<CommonNotice> cnList = commonNoticeService.getAllNoticeList();
 		model.addAttribute("cnList", cnList);
 		return "commonnotice/CommonNoticeListView";
 	}
 	//get CN view
-	@RequestMapping("/farm/commonNotice/{userId}")
+	@RequestMapping("/commonNotice/{userId}")
 	public String getCN(@PathVariable String userId, Model  model) {
 		CommonNotice cn = commonNoticeService.getCN(userId);
 		if(cn == null) {
@@ -46,7 +43,7 @@ public class CommonNoticeController {
 	
 	//insert CN
 	@ModelAttribute("commonnotice")
-	@RequestMapping("/farm/commonNotice/insert")
+	@RequestMapping("/commonNotice/insert.do")
 	public String insertCN(@ModelAttribute("cn") CommonNotice commonnotice,
 			BindingResult resut) {
 		
@@ -56,7 +53,7 @@ public class CommonNoticeController {
 	}
 	//update CN
 	@ModelAttribute("commonnotice")
-	@RequestMapping("/farm/commonNotice/update")
+	@RequestMapping("/commonNotice/update.do")
 	public String updateCN(@ModelAttribute("cn") CommonNotice commonnotice,
 			BindingResult resut) {
 		
@@ -67,7 +64,7 @@ public class CommonNoticeController {
 	
 	//delete CN
 	@ModelAttribute("commonnotice")
-	@RequestMapping("/farm/commonNotice/delete")
+	@RequestMapping("/commonNotice/delete.do")
 	public String deleteCN(@ModelAttribute("cn") CommonNotice commonnotice,
 			BindingResult result) {
 		//delete function

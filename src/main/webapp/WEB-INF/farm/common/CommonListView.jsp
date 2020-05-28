@@ -11,6 +11,11 @@
 <title>공동구매 전체보기</title>
 </head>
 <body>
+<form:form action='<c:url value="/common/searchNormal.do"/>' method = "GET"">
+	<form:label path="word">검색</form:label>
+	<form:input path="word"/>
+	<form:errors path="word"/>
+</form:form>
 <table border="1">
 <tr>
 	<td>번호</td>

@@ -13,8 +13,8 @@
 <body>
 	<form:form modelAttriute="normal"
 		action='<c:url value="/normal/updateNormal.do"/>'>
-		<form:label path="title">제목</form:label>
-		<form:input path="title" value="${normal.title }" />
+		<form:label path="title" >제목</form:label>
+		<form:input path="title" value="${normal.title }" readonly/>
 		<form:errors path="title" />
 		<br>
 
@@ -24,7 +24,7 @@
 		<br>
 
 		<form:label path="product.pName">품목 </form:label>
-		<form:input path="product.pName" />
+		<form:input path="product.pName" readonly/>
 		<%-- select or radiobuttons --%>
 		<form:errors path="product.pName" />
 		<br>

@@ -40,7 +40,7 @@ public class AddressController {
 	
 	//view addressList
 	@RequestMapping("/address/getAddressList.do")
-	public ModelAndView listMyAuction(
+	public ModelAndView listAddress(
 			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
@@ -54,7 +54,7 @@ public class AddressController {
 	
 /*	//view cardList by page
 	@RequestMapping("/auction/viewMyAuctionList2.do")
-	public String listMyAuction2(
+	public String listAddress2(
 			@RequestParam("page") String page,
 			@ModelAttribute("addressList") PagedListHolder<Address> addressList,
 			BindingResult result) throws Exception {
@@ -74,7 +74,7 @@ public class AddressController {
 
 	//view address
 	@RequestMapping("/address/getAddress.do")
-	public ModelAndView viewAuction(
+	public ModelAndView viewAddress(
 			@RequestParam("addrNo") int addrNo) throws Exception {
 		
 		Address address = this.farm.getAddress(addrNo);
@@ -115,7 +115,7 @@ public class AddressController {
 	
 	//같은 커멘드객체 쓰는건가...
 	//update address ... form
-	//@RequestMapping(value="/address/modifyAddress.do", method=RequestMethod.GET)
+	@RequestMapping(value="/address/modifyAddress.do", method=RequestMethod.GET)
 	public String updateAddressForm(
 			 @ModelAttribute("addressCommand") AddressCommand addressCommand,
 			 HttpServletRequest request) {				
@@ -123,37 +123,8 @@ public class AddressController {
 	}
 	
 	//update address ... update
-	@RequestMapping(value="/address/modifyAddress.do", method=RequestMethod.POST)
-	public String update(
-			@RequestParam("bank") String bank,
-			@RequestParam("type") String type,
-			@RequestParam("cardPayNo") String cardPayNo,
-			@RequestParam("period") Date period,
-			@RequestParam("cvc") int cvc,
-			@RequestParam("cardPW") String cardPW,
-			HttpServletRequest request,
-			BindingResult result) throws Exception {
-
-		HttpSession httpSession = request.getSession();
-		User user = (User) httpSession.getAttribute("user");
-		
-		//cardPayNo is unique
-//		if(this.farm.checkCardPayNo(cardPayNo) != null) {
-//			result.rejectValue("cardPayNo", "invalidCardPayNo", new Object[] { request.getParameter("cardPayNo") }, null);
-//
-//			return CARDFORM;
-//		}
-		
-		Card card = new Card(user, bank, cardPW, period, cvc, type, cardPayNo);
-		
-		this.farm.insertCard(card);	
-
-		return "redirect:/card/viewCard.do?cardNo=" + card.getCardNo();
-	}
-	
-	//delete address
-//	@RequestMapping("/address/deleteAddress.do")
-//	public String register(
+//	@RequestMapping(value="/address/modifyAddress.do", method=RequestMethod.POST)
+//	public String update(
 //			@ModelAttribute("addressCommand") AddressCommand addressCommand, 
 //			BindingResult result) throws Exception {
 //		
@@ -168,5 +139,15 @@ public class AddressController {
 //
 //		return "redirect:/address/viewAddress.do?addrNo=" + aNo;
 //	}
+	
+	//delete address
+	@RequestMapping("/address/deleteAddress.do")
+	public String delete(
+			@RequestParam("addrNo") int addrNo) throws Exception {
+		
+		this.farm.deletAddress(addrNo);	
+
+		return "redirect:/address/getAddressList.do";
+	}
 	
 }

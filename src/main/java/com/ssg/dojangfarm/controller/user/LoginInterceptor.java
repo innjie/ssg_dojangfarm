@@ -27,10 +27,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			ModelAndView modelAndView = new ModelAndView("LoginView");
 			
 			if (query != null) {
-				modelAndView.addObject("signonForwardAction", url+"?"+query);
+				modelAndView.addObject("forwardAction", url+"?"+query);
 			}
 			else {
-				modelAndView.addObject("signonForwardAction", url);
+				modelAndView.addObject("forwardAction", url);
 			}
 			throw new ModelAndViewDefiningException(modelAndView);
 		}

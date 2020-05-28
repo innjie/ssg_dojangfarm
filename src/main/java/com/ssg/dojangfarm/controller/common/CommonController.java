@@ -35,7 +35,7 @@ public class CommonController {
 	}
 	
 	//insert common
-	@RequestMapping("/farm/common/insert.do")
+	@RequestMapping("/common/insertCommon.do")
 	public String insertCommon(@ModelAttribute("common") Common common,
 			BindingResult result, HttpServletRequest request) {
 		//insert action
@@ -51,7 +51,7 @@ public class CommonController {
 	}
 	
 	//search common
-	@RequestMapping("/farm/common/search.do")
+	@RequestMapping("/common/searchCommon.do")
 	public ModelAndView searchCommon(HttpServletRequest request,
 			@RequestParam(value="title", required = false) String title) throws Exception {
 		//search action
@@ -72,7 +72,7 @@ public class CommonController {
 		return "common/CommonUpdateFormView";
 	}
 	//update common
-	@RequestMapping("/farm/common/update.do")
+	@RequestMapping("/common/updateCommon.do")
 	public ModelAndView updateCommon(@ModelAttribute("common")Common common,
 			BindingResult result) {
 		//update action

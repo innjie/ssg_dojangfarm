@@ -37,6 +37,7 @@
 	</tr>
 	</c:forEach>
 </table>
+<!--  session확인해서 본인일 시 취소버튼 만들기 -->
 <a href="OrderListView" >[이전 단계로]</a>
 
 </body>

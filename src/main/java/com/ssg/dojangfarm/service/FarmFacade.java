@@ -60,7 +60,9 @@ public interface FarmFacade {
 	//Order
 	public Order getOrder(int orderNo);
 	public List<Order> getOrderList(int userNo);
-	public void CancelOrder(int orderNo);
+	public int CancelOrder(int orderNo);
+	public int insertOrder(int userNo, Order order);
+	public List<String> getOrderUserList(int orderNo);
 	
 	//Card
 	public Card getCard(int cardNo);

@@ -22,7 +22,17 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.getOrderList(userNo);
 	}
 	
-	public void CancelOrder(int orderNo) {
-		orderDAO.CancelOrder(orderNo);
+	public int CancelOrder(int orderNo) {
+		return orderDAO.CancelOrder(orderNo);
+	}
+
+	@Override
+	public int insertOrder(int userNo, Order order) {
+		return orderDAO.insertOrder(userNo, order);
+	}
+
+	@Override
+	public List<String> getUserList(int orderNo) {
+		return orderDAO.getOrderUserList(orderNo);
 	}
 }

@@ -18,7 +18,7 @@
 </tr>
 <c:forEach var="order" items="${orderList}" >
 	<tr>
-	<td><a href="<c:url value='/order/viewOrder.do'> 
+	<td><a href="<c:url value='/order/view.do'> 
 						<c:param name='order' value='${order.orderNo}'/>
 						</c:url>">${order.orderNo}</a>
 	</td>
@@ -26,5 +26,6 @@
 	</tr>
 </c:forEach>
 </table>
+<a href="/index" >[메인으로]</a>
 </body>
 </html>

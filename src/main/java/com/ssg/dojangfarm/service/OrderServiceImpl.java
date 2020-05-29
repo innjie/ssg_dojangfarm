@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<String> getUserList(int orderNo) {
+	public List<Order> getUserList(int orderNo) {
 		return orderDAO.getOrderUserList(orderNo);
 	}
 

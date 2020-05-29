@@ -77,11 +77,12 @@ public class OrderController {
 		return "order/orderListView";
 	}
 	//viewOrderUserList
-	@RequestMapping("/order/userView")
+	//command ??
+	@RequestMapping("/order/userView.do")
 	public String orderList(@PathVariable("orderNo") int orderNo, Model model) {
 		//get list
-		List<String> userNames = orderService.getUserList(orderNo);
-		model.addAttribute("userNames", userNames);
+		List<Order> orderUserList = orderService.getUserList(orderNo);
+		model.addAttribute("orderUserList", orderUserList);
 		return "order/OrderUserView";
 	}
 	//view refund list
@@ -94,7 +95,7 @@ public class OrderController {
 		return "refund/RefundListView";
 	}
 	//view refund
-	@RequestMapping("/refund/view")
+	@RequestMapping("/refund/view.do")
 	public String getRefund(@PathVariable int refundNo, Model model) {
 		Refund refund = orderService.getRefund(refundNo);
 		if(refund == null) {

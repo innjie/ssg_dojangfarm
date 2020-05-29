@@ -114,7 +114,7 @@ public class NormalController {
 	}
 	
 	//get normal view
-	@RequestMapping("/normal/{saleNo}.do")
+	@RequestMapping("/normal/viewNormal.do")
 	public String getNormal(@PathVariable int saleNo, Model model) {
 		Normal normal = normalService.getNormalSale(saleNo);
 		if(normal == null) {

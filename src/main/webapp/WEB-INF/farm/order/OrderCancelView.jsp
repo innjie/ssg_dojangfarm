@@ -13,6 +13,6 @@
 <h3>주문이 취소되었습니다.</h3>
 주문번호 : ${order.orderNo }
 
-<a href="OrderListView" >[이전 단계로]</a>
+<a href="/index" >[메인으로]</a>
 </body>
 </html>

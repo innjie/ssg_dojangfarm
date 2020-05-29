@@ -44,7 +44,7 @@ public class CommonController {
 		//insert action
 		//get session -> user id
 		int userNo = (int) request.getSession().getAttribute("userNo");
-		//insert normal
+		//insert common
 		int res = commonService.insertSale(userNo, common);
 		if(res == 0) { //false
 			return "common/CommonInsertFormView";
@@ -87,9 +87,25 @@ public class CommonController {
 			return new ModelAndView("Success", "message", "update success");
 		}
 	}
-	
+	//common list
+	@RequestMapping("/common/list.do")
+	public String getCommonList(Model model) {
+		//get list.do
+		List<Common> commonList = commonService.getAllCommonList();
+		model.addAttribute("commonList", commonList);
+		return "common/CommonListView";
+	}
+	@RequestMapping("/common/{saleNo}.do")
+	public String getCommon(@PathVariable int saleNo, Model model) {
+		Common common = commonService.getCommonSale(saleNo);
+		if(common == null) {
+			return "common/CommonNotFound";
+		}
+		model.addAttribute("common", common);
+		return "common/CommonView";
+	}
 	//insert CommonJoin
-	@RequestMapping("/commonjoin/join")
+	@RequestMapping("/commonjoin/join.do")
 	public ModelAndView insertCommonJoin(
 			@RequestParam HttpServletRequest request,
 			@ModelAttribute("Common") Common common,
@@ -105,7 +121,7 @@ public class CommonController {
 		}
 	}
 	//updateCommonJoin
-	@RequestMapping("/commonJoin/update")
+	@RequestMapping("/commonJoin/update.do")
 	public ModelAndView updateCommonJoin(
 			@ModelAttribute("CommonJoin") CommonJoin cj, BindingResult result) {
 		int res = commonService.updateCommonjoin( cj.getCjNo());
@@ -118,7 +134,7 @@ public class CommonController {
 	}
 	
 	//view CommonJoin
-	@RequestMapping("/commonJoin/view")
+	@RequestMapping("/commonJoin/view.do")
 	public String viewCommonJoin(@PathVariable int CJNo, Model model) {
 		CommonJoin cj = commonService.getCommonJoin(CJNo);
 		
@@ -129,7 +145,7 @@ public class CommonController {
 		return "commonJoin/CommonJoinView";
 	}
 	//cancel CommonJoin
-	@RequestMapping("/commonJoin/cancel")
+	@RequestMapping("/commonJoin/cancel.do")
 	public ModelAndView cancelCommonJoin(@PathVariable int CJNo, BindingResult result) {
 		//cancel action
 		int res = commonService.cancelCommonjoin( CJNo);

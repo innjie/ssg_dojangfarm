@@ -28,7 +28,7 @@ public class OrderController {
 	}
 	//refund sale
 	//cancelOrder 의문있음
-	@RequestMapping("/order/cancel")
+	@RequestMapping("/order/cancel.do")
 	public ModelAndView cancelOrder(@PathVariable int orderNo, BindingResult result) {
 		//cancel action
 		int orderRes = orderService.CancelOrder(orderNo);
@@ -41,7 +41,7 @@ public class OrderController {
 		}
 	}
 	//insertOrder
-	@RequestMapping("/order/insert")
+	@RequestMapping("/order/insert.do")
 	public ModelAndView insertOrder(
 			@RequestParam HttpServletRequest request,
 			@ModelAttribute("Order") Order order,
@@ -57,7 +57,7 @@ public class OrderController {
 		}
 	}
 	//view Order
-	@RequestMapping("/order/view")
+	@RequestMapping("/order/view.do")
 	public String orderView(@PathVariable int orderNo, Model model) {
 		Order order = orderService.getOrder(orderNo);
 		
@@ -68,7 +68,7 @@ public class OrderController {
 		return "order/OrderView";
 	}
 	//ViewOrderList
-	@RequestMapping("/order/list")
+	@RequestMapping("/order/list.do")
 	public String orderList(@RequestParam HttpServletRequest request, Model model) {
 		//get list
 		int userNo =(int) request.getAttribute("userNo");
@@ -85,7 +85,7 @@ public class OrderController {
 		return "order/OrderUserView";
 	}
 	//view refund list
-	@RequestMapping("/refund/list")
+	@RequestMapping("/refund/list.do")
 	public String getRefundList(@RequestParam HttpServletRequest request, Model model) {
 		//get list
 		int userNo = (int)request.getSession().getAttribute("userNo");

@@ -21,7 +21,7 @@
 
 		<form:label path="price">가격</form:label>
 		<form:input path="price" />
-		<form:error path="price" />
+		<form:errors path="price" />
 		<br>
 
 		<form:label path="product.pName">품목 </form:label>
@@ -32,7 +32,7 @@
 
 		<form:label path="info">설명</form:label>
 		<form:input path="info" />
-		<form:error path="info" />
+		<form:errors path="info" />
 		<br>
 
 		<input type="submit" value="추가" />

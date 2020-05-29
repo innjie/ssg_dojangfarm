@@ -8,6 +8,6 @@
 <body>
 
 게시글이 존재하지 않습니다.
-
+<a href="/index" >[이전 단계로]</a>
 </body>
 </html>

@@ -9,18 +9,17 @@
 <body>
 <table border="1">
 <tr>
-	<td>번호</td>
-	<td>제목</td>
-	<td>작성자</td>
+	<td>환불번호</td>
 </tr>
 <c:forEach var="refund" items="${refundList}" >
 	<tr>
 	<td>${refund.refundNo}</td>
-	<td><a href="<c:url value='/refund/viewRefund.do'> 
+	<td><a href="<c:url value='/refund/view.do'> 
 						<c:param name='refundNo' value='${refund.refundNo}'/>
 						</c:url>">${refund.refundNo}</a>
 	</td>
 	</tr>
+
 </c:forEach>
 </table>
 </body>

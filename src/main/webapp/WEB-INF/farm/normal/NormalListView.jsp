@@ -33,5 +33,6 @@
 	</tr>
 </c:forEach>
 </table>
+<a href="/index" >[메인으로]</a>
 </body>
 </html>

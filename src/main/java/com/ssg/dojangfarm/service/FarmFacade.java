@@ -62,7 +62,7 @@ public interface FarmFacade {
 	public List<Order> getOrderList(int userNo);
 	public int CancelOrder(int orderNo);
 	public int insertOrder(int userNo, Order order);
-	public List<String> getOrderUserList(int orderNo);
+	public List<Order> getOrderUserList(int orderNo);
 	
 	//Card
 	public Card getCard(int cardNo);

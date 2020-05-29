@@ -260,7 +260,7 @@ public class FarmImpl implements FarmFacade{
 		return orderDAO.insertOrder(userNo, order);
 	}
 	@Override
-	public List<String> getOrderUserList(int orderNo) {
+	public List<Order> getOrderUserList(int orderNo) {
 		return orderDAO.getOrderUserList(orderNo);
 	}
 

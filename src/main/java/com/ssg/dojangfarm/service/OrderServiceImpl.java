@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssg.dojangfarm.dao.OrderDAO;
 import com.ssg.dojangfarm.domain.Order;
+import com.ssg.dojangfarm.domain.Refund;
 
 @Service("orderServiceImpl")
 public class OrderServiceImpl implements OrderService {
@@ -34,5 +35,15 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<String> getUserList(int orderNo) {
 		return orderDAO.getOrderUserList(orderNo);
+	}
+
+	@Override
+	public List<Refund> getRefundList(int userNo) {
+		return orderDAO.getRefundList(userNo);
+	}
+
+	@Override
+	public Refund getRefund(int refundNo) {
+		return orderDAO.getRefund(refundNo);
 	}
 }

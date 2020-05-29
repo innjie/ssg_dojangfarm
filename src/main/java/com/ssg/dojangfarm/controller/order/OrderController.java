@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Order;
+import com.ssg.dojangfarm.domain.Refund;
 import com.ssg.dojangfarm.service.OrderService;
 
 @Controller
@@ -25,16 +26,17 @@ public class OrderController {
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
 	}
-	
-	//cancelOrder
+	//refund sale
+	//cancelOrder 의문있음
 	@RequestMapping("/order/cancel")
 	public ModelAndView cancelOrder(@PathVariable int orderNo, BindingResult result) {
 		//cancel action
-		int res = orderService.CancelOrder(orderNo);
+		int orderRes = orderService.CancelOrder(orderNo);
 		
-		if(res == 0)  {//failed
+		if(orderRes == 0)  {//failed
 			return new ModelAndView("Error", "message", "cancel failed");
-		} else { //success
+		} else { //success 
+			// ???
 			return new ModelAndView("Success", "message", "cancel success");
 		}
 	}
@@ -81,5 +83,24 @@ public class OrderController {
 		List<String> userNames = orderService.getUserList(orderNo);
 		model.addAttribute("userNames", userNames);
 		return "order/OrderUserView";
+	}
+	//view refund list
+	@RequestMapping("/refund/list")
+	public String getRefundList(@RequestParam HttpServletRequest request, Model model) {
+		//get list
+		int userNo = (int)request.getSession().getAttribute("userNo");
+		List<Refund> refundList = orderService.getRefundList(userNo);
+		model.addAttribute("refundList", refundList);
+		return "refund/RefundListView";
+	}
+	//view refund
+	@RequestMapping("/refund/view")
+	public String getRefund(@PathVariable int refundNo, Model model) {
+		Refund refund = orderService.getRefund(refundNo);
+		if(refund == null) {
+			return "refund/RefundNotFound";
+		}
+		model.addAttribute("refund", refund);
+		return "refund/RefundView";
 	}
 }

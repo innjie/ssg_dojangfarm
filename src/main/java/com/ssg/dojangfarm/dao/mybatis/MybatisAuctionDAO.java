@@ -28,10 +28,10 @@ public class MybatisAuctionDAO implements AuctionDAO{
 		auctionMapper.registerAuction(auction);
 	}		
 	public List<Auction> findAuctionByTitle(String title) {
-		return auctionMapper.findAuctionByTitle(title);
+		return auctionMapper.findAuctionByTitle("%" + title + "%");
 	}
 	public List<Auction> findAuctionByProduct(String pName) {
-		return auctionMapper.findAuctionByProduct(pName);
+		return auctionMapper.findAuctionByProduct("%" + pName + "%");
 	}
 	public List<Auction> getMyAuctionList(int userNo) {
 		return auctionMapper.getMyAuctionList(userNo);

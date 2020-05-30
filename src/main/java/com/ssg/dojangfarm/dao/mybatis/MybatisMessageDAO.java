@@ -28,7 +28,7 @@ public class MybatisMessageDAO implements MessageDAO{
 		return messageMapper.receiveMessageList(userNo);
 	}	
 	public List<Message> findMsg(String title) {
-		return messageMapper.findMsg(title);
+		return messageMapper.findMsg("%" + title + "%");
 	}  
 	public Message checkMsg(int msgNo) {
 		return messageMapper.checkMsg(msgNo);

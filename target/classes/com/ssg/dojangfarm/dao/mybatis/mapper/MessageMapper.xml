@@ -4,7 +4,7 @@
   <cache />
   	<select id="sendMessageList" parameterType="int" resultType="Message">
     	SELECT 
-    		msgNo, title, sDate, read, deleteState, id AS rUser.id
+    		msgNo, title, sDate, read, deleteState, id AS "rUser.id"
     	FROM Message, User
     	WHERE 
     		rUserNo = User.userNo AND 
@@ -13,7 +13,7 @@
   	
   	<select id="receiveMessageList" parameterType="int" resultType="Message">
     	SELECT 
-    		msgNo, title, sDate, id AS sUser.id
+    		msgNo, title, sDate, id AS "sUser.id"
     	FROM Message, User
     	WHERE 
     		sUserNo = User.userNo AND 
@@ -23,7 +23,7 @@
   	<select id="findMsg" parameterType="String" resultType="Message">
     	SELECT 
     		msgNo, title, sDate, read, deleteState, 
-    		rUser.id AS rUser.id, sUser.id AS sUser.id
+    		rUser.id AS "rUser.id", sUser.id AS "sUser.id"
     	FROM Message, User rUser, User sUser
     	WHERE 
     		sUserNo = sUser.userNo AND 
@@ -35,7 +35,7 @@
   	<select id="checkMsg" parameterType="int" resultType="Message">
     	SELECT 
     		m.title, m.sDate, m.read, m.deleteState, m.content,
-    		rUser.id AS rUser.id, sUser.id AS sUser.id,
+    		rUser.id AS "rUser.id", sUser.id AS "sUser.id",
     		cm.content, Normal.saleNo, m.msgNo
     	FROM Message m, Message cm, User rUser, User sUser, Normal
     	WHERE 

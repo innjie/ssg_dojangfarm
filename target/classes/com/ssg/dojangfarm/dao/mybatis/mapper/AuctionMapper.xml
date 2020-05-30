@@ -74,7 +74,7 @@
   	
   	
   	
-  	<!-- 
+  	
   	<select id="getMyBidList" parameterType="int" resultType="Bid">
     	SELECT 
     		bidNo, bidPrice, state, deadline, title, Auction.aNo
@@ -190,5 +190,5 @@
     		(#{imPurNo}, #{user.userNo}, #{auction.aNo}, 
     		 #{delivery.dNo}, #{payment.payNo})
   	</insert>
-  	 --> 	
+  	
  </mapper>

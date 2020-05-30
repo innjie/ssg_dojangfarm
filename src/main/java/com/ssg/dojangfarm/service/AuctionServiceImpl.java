@@ -10,6 +10,7 @@ import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Bid;
 import com.ssg.dojangfarm.domain.ImPur;
 import com.ssg.dojangfarm.domain.SBid;
+import com.ssg.dojangfarm.domain.User;
 
 @Service("AuctionServiceImpl")
 public class AuctionServiceImpl implements AuctionService{
@@ -47,6 +48,46 @@ public class AuctionServiceImpl implements AuctionService{
 
 	public void immePurchase(ImPur imPur) {
 		auctionDAO.immePurchase(imPur);
+	}
+
+	public Bid getBid(int bidNo) {
+		return auctionDAO.getBid(bidNo);
+	}
+
+	public List<Auction> getMyAuctionList(int userNo) {
+		return auctionDAO.getMyAuctionList(userNo);
+	}
+
+	public SBid getSBidByAuction(int aNo) {
+		return auctionDAO.getSBidByAuction(aNo);
+	}
+
+	public ImPur getImPurByAuction(int aNo) {
+		return auctionDAO.getImPurByAuction(aNo);
+	}
+
+	public List<Bid> getMyBidList(int userNo) {
+		return auctionDAO.getMyBidList(userNo);
+	}
+
+	public List<SBid> getMySBidList(int userNo) {
+		return auctionDAO.getMySBidList(userNo);
+	}
+
+	public SBid getMySBid(int sBidNo) {
+		return auctionDAO.getMySBid(sBidNo);
+	}
+
+	public List<ImPur> getMyImPurList(int userNo) {
+		return auctionDAO.getMyImPurList(userNo);
+	}
+
+	public ImPur getMyImPur(int imPurNo) {
+		return auctionDAO.getMyImPur(imPurNo);
+	}
+
+	public User getUserByAuction(int aNo) {
+		return auctionDAO.getUserNoByAuction(aNo);
 	}
 
 }

@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
 		userDAO.createUser(user);
 	}
 
-	public void modifyUser(int userNo, String id, String password, String name, String phone) {
-		userDAO.modifyUser(userNo, id, password, name, phone);
+	public void modifyUser(User user) {
+		userDAO.modifyUser(user);
 	}
 
 	public void deleteUser(int userNo) {
@@ -36,14 +36,14 @@ public class UserServiceImpl implements UserService {
 		return userDAO.existingPhone(phone);
 	}
 	
-	public boolean checkIdPw(String id, String password) {
+	public User checkIdPw(String id, String password) {
 		return userDAO.checkIdPw(id, password);
 	}
-	public void login() {
-		userDAO.login();
+
+	@Override
+	public boolean confirmPassword(String password, String cPassword) {
+		return userDAO.confirmPassword(password, cPassword);
 	}
-	public void logout() {
-		userDAO.logout();
-	}
+
 
 }

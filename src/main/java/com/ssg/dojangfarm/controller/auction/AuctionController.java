@@ -154,15 +154,15 @@ public class AuctionController {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
-//		int auctionUserNo = this.farm.getUserByAuction(aNo);	//add dao
+//		int auctionUserNo = this.farm.getUserNoByAuction(aNo);	
 		
 		Auction auction = this.farm.getAuction(aNo);
 		model.put("auction", auction);
 		
 //		//check this user is auction's user
 //		if(user.getUserNo() == auctionUserNo) {
-//			SBid sBid = this.farm.getSBidByAuction(aNo);	//add dao
-//			ImPur imPur = getImPurByAuction(aNo);	//add dao
+//			SBid sBid = this.farm.getSBidByAuction(aNo);	
+//			ImPur imPur = getImPurByAuction(aNo);	
 //			
 //			model.put("sBid", sBid);
 //			model.put("imPur", imPur);

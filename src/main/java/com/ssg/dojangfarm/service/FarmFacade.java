@@ -18,6 +18,8 @@ public interface FarmFacade {
 	public List<Message> receiveMessageList(int userNo);
 	public List<Message> findMsg(String title);
 	public Message checkMsg(int msgNo);
+	public int getRUserNo(int msgNo);
+	public int getSUserNo(int msgNo);
 	
 	//QnA
 	public List<QnA> getQnAList(int saleNo);
@@ -33,22 +35,31 @@ public interface FarmFacade {
 	public void bidAuction(Bid bid);
 	public void successBid(SBid sBid);
 	public void immePurchase(ImPur imPur);
+	public Bid getBid(int bidNo);
+	public List<Auction> getMyAuctionList(int userNo);
+	public SBid getSBidByAuction(int aNo);
+	public ImPur getImPurByAuction(int aNo);
+	public List<Bid> getMyBidList(int userNo);
+	public List<SBid> getMySBidList(int userNo);
+	public SBid getMySBid(int sBidNo);
+	public List<ImPur> getMyImPurList(int userNo);
+	public ImPur getMyImPur(int imPurNo);
+	public User getUserByAuction(int aNo);
 	
 	//User
 	public void createUser(User user);
-	public void modifyUser(int userNo, String id, String password, String name, String phone);
+	public void modifyUser(User user);
 	public void deleteUser(int userNo);
 	public User getUser(int userNo);
 	public boolean existingId(String id);
 	public boolean existingPhone(String phone);
-	public boolean checkIdPw(String id, String password);
-	public void login();
-	public void logout();
+	public User checkIdPw(String id, String password);
+	public boolean confirmPassword(String password, String cPassword);
 	
 	//Address
 	public Address getAddress(int addrNo);
 	public void createAddress(Address address);
-	public void modifyAddress(int addrNo, String addr, int zip, String detail);
+	public void modifyAddress(Address address);
 	public void deletAddress(int addrNo);
 	public List<Address> getAddressList(int userNo);
 	

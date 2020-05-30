@@ -114,7 +114,7 @@ public class BidController {
 //			@RequestParam("sBidNo") int sBidNo,
 //			ModelMap model) throws Exception {
 //			
-//		SBid sBid = this.farm.getMySBid(sBidNo);	//add dao
+//		SBid sBid = this.farm.getMySBid(sBidNo);	
 //		model.put("sBid", sBid);
 //			
 //		return VIEWSBID;

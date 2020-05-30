@@ -49,7 +49,7 @@ public class LoginController {
 //			@Valid @ModelAttribute("login") LoginCommand loginCommand,
 //			BindingResult result) throws Exception {
 //		
-//		User user = farm.getUser(loginCommand.getId(), loginCommand.getPassword());
+//		User user = farm.checkIdPw(loginCommand.getId(), loginCommand.getPassword());
 //		
 //		//validate
 //		if (result.hasErrors()) {
@@ -57,7 +57,7 @@ public class LoginController {
 //		}
 //		
 //		if (user == null) {
-//			return new ModelAndView("Error", "message", 
+//			return new ModelAndView(LOGINFORM, "message", 
 //					"Invalid username or password.  Signon failed.");
 //		}
 //		else {

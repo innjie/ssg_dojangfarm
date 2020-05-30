@@ -56,7 +56,7 @@
 		</tr>
 		<tr>
 			<td>보낸날짜</td>
-			<td>${address.detail}</td>
+			<td>${message.sDate}</td>
 		</tr>
 	</table>
 	<br><br>

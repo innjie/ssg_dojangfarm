@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.ssg.dojangfarm.dao.mybatis.mapper.QnAMapper">
+  <cache />
+  	<select id="getQnAList" parameterType="int" resultType="QnA">
+    	SELECT 
+    		qNo, question, qDate, answer, secret, User.id
+    	FROM QnA, Normal, User
+    	WHERE 
+    		QnA.slaeNo = Normal.saleNo AND 
+    		QnA.userNo = User.userNo AND 
+    		QnA.saleNo = #{saleNo}
+  	</select>
+  	
+  	<insert id="questionQnA" parameterType="QnA">
+    	INSERT INTO QnA 
+    		(qNo, question, qDate, secret, saleNo, userNo)
+    	VALUES 
+    		(#{qNo}, #{question}, #{qDate}, #{secret}, #{normal.saleNo}, #{user.userNo})
+  	</insert>
+  	
+  	<update id="answerQnA" parameterType="QnA">
+    	UPDATE QnA SET 
+    		answer = #{answer}
+    	WHERE qNo = #{qNo}
+  	</update>
+  	
+  	<select id="getQnA" parameterType="int" resultType="QnA">
+    	SELECT 
+    		qNo, question, qDate, answer, secret, User.id
+    	FROM QnA, Normal, User
+    	WHERE 
+    		QnA.slaeNo = Normal.saleNo AND 
+    		QnA.userNo = User.userNo AND 
+    		QnA.qNo = #{qNo}
+  	</select>
+ </mapper>

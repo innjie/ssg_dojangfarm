@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.ssg.dojangfarm.dao.mybatis.mapper.UserMapper">
+  <cache />
+
+  	<select id="getUser" parameterType="int" resultType="User">
+    	SELECT 
+    		userNo, name, phone, id, password
+    	FROM User
+    	WHERE 
+    		userNo = #{userNo}
+  	</select>
+  	
+  	<insert id="createUser" parameterType="User">
+    	INSERT INTO User 
+    		(userNo, name, phone, id, password)
+    	VALUES 
+    		(#{userNo}, #{name}, #{phone}, #{id}, #{password})
+  	</insert>
+  	
+  	<update id="modifyUser" parameterType="User">
+    	UPDATE User SET 
+    		name = #{name},
+    		phone = #{phone},
+    		password = #{password}
+    	WHERE userNo = #{userNo}
+  	</update>
+  	
+  	<delete id="deleteUser" parameterType="int">
+    	DELETE FROM User  
+    	WHERE userNo = #{userNo}
+  	</delete>
+  	
+  	<select id="existingId" parameterType="String" resultType="User">
+    	SELECT 
+    		userNo, name, phone, id, password
+    	FROM User
+    	WHERE 
+    		id = #{id}
+  	</select>
+
+	<select id="existingPhone" parameterType="String" resultType="User">
+    	SELECT 
+    		userNo, name, phone, id, password
+    	FROM User
+    	WHERE 
+    		phone = #{phone}
+  	</select>
+  	
+  	<select id="checkIdPw" resultType="User">
+    	SELECT 
+    		userNo, name, phone, id, password
+    	FROM User
+    	WHERE 
+    		id = #{id}
+    		password = #{password}
+  	</select>
+
+ </mapper>

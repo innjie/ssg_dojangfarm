@@ -6,6 +6,7 @@ import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Bid;
 import com.ssg.dojangfarm.domain.ImPur;
 import com.ssg.dojangfarm.domain.SBid;
+import com.ssg.dojangfarm.domain.User;
 
 public interface AuctionDAO {
 	List<Auction> getAuctionList();	
@@ -30,4 +31,5 @@ public interface AuctionDAO {
 	List<ImPur> getMyImPurList(int userNo);
 	ImPur getMyImPur(int imPurNo);
 
+	User getUserNoByAuction(int aNo);
 }

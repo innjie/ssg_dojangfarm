@@ -173,10 +173,10 @@ public class MessageController {
 		int msgUserNo;
 		
 		if(type.equals("receive")) {
-			//msgUserNo = this.farm.getRUserNo(msgNo);	//message.rUser.userNo 가져오는 dao
+			msgUserNo = this.farm.getRUserNo(msgNo);	
 		}
 		else {
-			//msgUserNo = this.farm.getSUserNo(msgNo);		//message.sUser.userNo 가져오는 dao
+			msgUserNo = this.farm.getSUserNo(msgNo);		
 		}
 		
 	//	if(user.getUserNo() == msgUserNo) {
@@ -205,7 +205,7 @@ public class MessageController {
 //		}
 //		//연관 메세지 있음 (답장)
 //		else {
-//			Message cMsg = this.farm.getMessageByMsgNo(msgNo);	//msgNo로 message가져옴
+//			Message cMsg = this.farm.checkMsg(msgNo);	
 //			
 //			return new ModelAndView(FORMMESSAGE, "cMsg", cMsg);
 //		}
@@ -226,13 +226,13 @@ public class MessageController {
 //		int rUserNo;
 //		
 //		if(cMsg != null) {
-//			rUserNo = this.farm.getUserNoByMsgNo(cMsg.getMsgNo());	//add dao
+//			rUserNo = this.farm.getRUserNo(cMsg.getMsgNo());	
 //			msg = new Message(user.getUserNo(), rUserNo, title, content);
 //			msg.setcMsg(cMsg);
 //			msg.setNormal(cMsg.getNormal());
 //		}
 //		else {
-//			rUserNo = this.farm.getUserNoBySaleNo(normal.getSaleNo());	//add dao
+//			rUserNo = this.farm.getUserBySaleNo(normal.getSaleNo()).getUserNo();	//add dao
 //			msg = new Message(user.getUserNo(), rUserNo, title, content);
 //			msg.setNormal(normal);
 //		}

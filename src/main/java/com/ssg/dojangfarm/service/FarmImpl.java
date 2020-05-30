@@ -94,7 +94,14 @@ public class FarmImpl implements FarmFacade{
 	public Message checkMsg(int msgNo) {
 		return messageDAO.checkMsg(msgNo);
 	}
-
+	@Override
+	public int getRUserNo(int msgNo) {
+		return messageDAO.getRUserNo(msgNo);
+	}
+	@Override
+	public int getSUserNo(int msgNo) {
+		return messageDAO.getSUserNo(msgNo);
+	}
 	
 	
 	//-------------------------------------------------------------------------
@@ -151,7 +158,45 @@ public class FarmImpl implements FarmFacade{
 	public void immePurchase(ImPur imPur) {
 		auctionDAO.immePurchase(imPur);
 	}
+	public Bid getBid(int bidNo) {
+		return auctionDAO.getBid(bidNo);
+	}
 
+	public List<Auction> getMyAuctionList(int userNo) {
+		return auctionDAO.getMyAuctionList(userNo);
+	}
+
+	public SBid getSBidByAuction(int aNo) {
+		return auctionDAO.getSBidByAuction(aNo);
+	}
+
+	public ImPur getImPurByAuction(int aNo) {
+		return auctionDAO.getImPurByAuction(aNo);
+	}
+
+	public List<Bid> getMyBidList(int userNo) {
+		return auctionDAO.getMyBidList(userNo);
+	}
+
+	public List<SBid> getMySBidList(int userNo) {
+		return auctionDAO.getMySBidList(userNo);
+	}
+
+	public SBid getMySBid(int sBidNo) {
+		return auctionDAO.getMySBid(sBidNo);
+	}
+
+	public List<ImPur> getMyImPurList(int userNo) {
+		return auctionDAO.getMyImPurList(userNo);
+	}
+
+	public ImPur getMyImPur(int imPurNo) {
+		return auctionDAO.getMyImPur(imPurNo);
+	}
+
+	public User getUserByAuction(int aNo) {
+		return auctionDAO.getUserNoByAuction(aNo);
+	}
 	
 	//-------------------------------------------------------------------------
 	//User
@@ -162,8 +207,8 @@ public class FarmImpl implements FarmFacade{
 		userDAO.createUser(user);
 	}
 	@Override
-	public void modifyUser(int userNo, String id, String password, String name, String phone) {
-		userDAO.modifyUser(userNo, id, password, name, phone);
+	public void modifyUser(User user) {
+		userDAO.modifyUser(user );
 	}
 	@Override
 	public void deleteUser(int userNo) {
@@ -182,16 +227,12 @@ public class FarmImpl implements FarmFacade{
 		return userDAO.existingPhone(phone);
 	}
 	@Override
-	public boolean checkIdPw(String id, String password) {
+	public User checkIdPw(String id, String password) {
 		return userDAO.checkIdPw(id, password);
 	}
 	@Override
-	public void login() {
-		userDAO.login();
-	}
-	@Override
-	public void logout() {
-		userDAO.logout();
+	public boolean confirmPassword(String password, String cPassword) {
+		return userDAO.confirmPassword(password, cPassword);
 	}
 	
 	
@@ -208,8 +249,8 @@ public class FarmImpl implements FarmFacade{
 		addressDAO.createAddress(address);
 	}
 	@Override
-	public void modifyAddress(int addrNo, String addr, int zip, String detail) {
-		addressDAO.modifyAddress(addrNo, addr, zip, detail);
+	public void modifyAddress(Address address) {
+		addressDAO.modifyAddress(address);
 	}
 	@Override
 	public void deletAddress(int addrNo) {

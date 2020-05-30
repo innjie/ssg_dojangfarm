@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ssg.dojangfarm.domain.Message;
+import com.ssg.dojangfarm.domain.User;
 
 @Component
 @WebService(serviceName="MessageService") 
@@ -44,5 +45,15 @@ public class MessageServiceEndpoint {
 	@WebMethod
 	public Message checkMsg(int msgNo){
 		return messageService.checkMsg(msgNo);
+	}
+	
+	@WebMethod
+	public int getRUserNo(int msgNo) {
+		return messageService.getRUserNo(msgNo);
+	}
+
+	@WebMethod
+	public int getSUserNo(int msgNo) {
+		return messageService.getSUserNo(msgNo);
 	}
 }

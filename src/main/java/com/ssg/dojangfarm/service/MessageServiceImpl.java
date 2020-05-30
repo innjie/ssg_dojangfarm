@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssg.dojangfarm.dao.MessageDAO;
 import com.ssg.dojangfarm.domain.Message;
+import com.ssg.dojangfarm.domain.User;
 
 @Service("MessageServiceImpl")
 public class MessageServiceImpl implements MessageService{
@@ -36,6 +37,14 @@ public class MessageServiceImpl implements MessageService{
 
 	public Message checkMsg(int msgNo) {
 		return messageDAO.checkMsg(msgNo);
+	}
+
+	public int getRUserNo(int msgNo) {
+		return messageDAO.getRUserNo(msgNo);
+	}
+
+	public int getSUserNo(int msgNo) {
+		return messageDAO.getSUserNo(msgNo);
 	}
 
 }

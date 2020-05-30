@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.ssg.dojangfarm.dao.mybatis.mapper.AddressMapper">
+  <cache />
+  	<select id="getAddressList" parameterType="int" resultType="Address">
+    	SELECT 
+    		addrNo, address, aName
+    	FROM Address
+    	WHERE 
+    		userNo = #{userNo}
+  	</select>
+  	
+  	<insert id="createAddress" parameterType="Address">
+    	INSERT INTO Address 
+    		(addrNo, address, zip, detail, aName, userNo)
+    	VALUES 
+    		(#{addrNo}, #{address}, #{zip}, #{detail}, #{aName}, #{user.userNo})
+  	</insert>
+  	
+  	<update id="modifyAddress" parameterType="Address">
+    	UPDATE Address SET 
+    		address = #{address},
+    		zip = #{zip},
+    		detail = #{detail},
+    		aName = #{aName},
+    	WHERE addrNo = #{addrNo}
+  	</update>
+  	
+  	<delete id="deletAddress" parameterType="int">
+    	DELETE FROM Address  
+    	WHERE addrNo = #{addrNo}
+  	</delete>
+  	
+  	<select id="getAddress" parameterType="int" resultType="Address">
+    	SELECT 
+    		addrNo, address, zip, detail, aName
+    	FROM Address
+    	WHERE 
+    		addrNo = #{addrNo}
+  	</select>
+ </mapper>

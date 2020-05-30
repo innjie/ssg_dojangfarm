@@ -26,8 +26,8 @@ public class AddressServiceEndpoint {
 	}
 
 	@WebMethod
-	public void modifyAddress(int addrNo, String addr, int zip, String detail) {
-		addressService.modifyAddress(addrNo, addr, zip, detail);
+	public void modifyAddress(Address address) {
+		addressService.modifyAddress(address);
 	}
 
 	@WebMethod

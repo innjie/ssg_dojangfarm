@@ -94,7 +94,7 @@ public class QnAController {
 //		
 //		//어차피 c:if로 주인만 수정 버튼 나오기는 함
 //		if(saleUserNo == user.getUserNo()) {  //판매번호로 판매 알아온다음 거기 저장된 번호 가져오기
-//			QnA qna = this.farm.getQnA(qNo);	//qNo로 QnA객체 반환하는 dao 필요함
+//			QnA qna = this.farm.getQnA(qNo);	
 //			model.put("qna", qna);
 //			
 //			return ANSWERQNA;

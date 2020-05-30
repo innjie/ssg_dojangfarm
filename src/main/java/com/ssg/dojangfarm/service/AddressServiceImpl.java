@@ -22,8 +22,8 @@ public class AddressServiceImpl implements AddressService {
 		addressDAO.createAddress(address);
 	}
 
-	public void modifyAddress(int addrNo, String addr, int zip, String detail) {
-		addressDAO.modifyAddress(addrNo, addr, zip, detail);
+	public void modifyAddress(Address address) {
+		addressDAO.modifyAddress(address);
 	}
 
 	public void deletAddress(int addrNo) {

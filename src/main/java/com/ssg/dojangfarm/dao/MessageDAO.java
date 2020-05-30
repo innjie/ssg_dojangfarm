@@ -3,6 +3,7 @@ package com.ssg.dojangfarm.dao;
 import java.util.List;
 
 import com.ssg.dojangfarm.domain.Message;
+import com.ssg.dojangfarm.domain.User;
 
 public interface MessageDAO {
 	void sendMsg(Message msg);	//send Message
@@ -11,5 +12,7 @@ public interface MessageDAO {
 	List<Message> receiveMessageList(int userNo);	
 	List<Message> findMsg(String title);  //find Message by title
 	Message checkMsg(int msgNo);  //check Message == get
-
+	
+	int getRUserNo(int msgNo);
+	int getSUserNo(int msgNo);
 }

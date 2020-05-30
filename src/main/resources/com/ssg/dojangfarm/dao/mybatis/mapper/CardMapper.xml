@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.ssg.dojangfarm.dao.mybatis.mapper.CardMapper">
+  <cache />
+  	<select id="getCardList" parameterType="int" resultType="Card">
+    	SELECT 
+    		cardNo, cardPayNo, bank
+    	FROM Card
+    	WHERE 
+    		userNo = #{userNo}
+  	</select>
+  	
+  	<insert id="insertCard" parameterType="Card">
+    	INSERT INTO Card 
+    		(cardNo, bank, cardPW, period, cvc, type, cardPayNo, userNo)
+    	VALUES 
+    		(#{cardNo}, #{bank}, #{cardPW}, #{period}, #{cvc}, 
+    		#{type}), #{cardPayNo}, #{user.userNo})
+  	</insert>
+  	
+  	<delete id="deleteCard" parameterType="int">
+    	DELETE FROM QnA  
+    	WHERE cardNo = #{cardNo}
+  	</delete>
+  	
+  	<select id="getCard" parameterType="int" resultType="Card">
+    	SELECT 
+    		cardNo, cardPayNo, bank, period, cvc, type
+    	FROM Card
+    	WHERE 
+    		cardNo = #{cardNo}
+  	</select>
+ </mapper>

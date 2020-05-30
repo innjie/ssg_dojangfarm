@@ -69,7 +69,7 @@ public class ImmePurchaseController {
 //			@RequestParam("imPurNo") int imPurNo,
 //			ModelMap model) throws Exception {
 //			
-//		ImPur imPur = this.farm.getMyImPur(imPurNo);	//add dao
+//		ImPur imPur = this.farm.getMyImPur(imPurNo);	
 //		model.put("imPur", imPur);
 //			
 //		return VIEWIMPUR;

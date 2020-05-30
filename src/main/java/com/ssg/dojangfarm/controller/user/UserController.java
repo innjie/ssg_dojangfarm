@@ -63,15 +63,19 @@ public class UserController {
 			return USERFORM;
 		}
 		
-//		if(exist id){
-//			result.rejectValue("id", "existUserId", new Object[] {userCommand.getId()}, null);
-//			return USERFORM;
-//		}
+		if(this.farm.existingId(userCommand.getId())){
+			result.rejectValue("id", "existUserId", new Object[] {userCommand.getId()}, null);
+			return USERFORM;
+		}
+		if(this.farm.existingPhone(userCommand.getPhone())){
+			result.rejectValue("phone", "existingPhone", new Object[] {userCommand.getPhone()}, null);
+			return USERFORM;
+		}
 		
-//		if(!this.farm.confirmPassword(userCommand.getPassword(), userCommand.getConfirmPassword())) {  //add DAO
-//			result.rejectValue("confirmPassword", "notSame");
-//			return USERFORM;
-//		}
+		if(!this.farm.confirmPassword(userCommand.getPassword(), userCommand.getConfirmPassword())) {  //add DAO
+			result.rejectValue("confirmPassword", "notSame");
+			return USERFORM;
+		}
 		
 		//目盖靛按眉 - 角力按眉 ?????????
 		User user = new User();
@@ -104,13 +108,13 @@ public class UserController {
 			return UPDATEUSERFORM;
 		}
 		
-//		if(!this.farm.confirmPassword(userCommand.getPassword(), userCommand.getConfirmPassword())) {  //add DAO
-//		result.rejectValue("confirmPassword", "notSame");
-//		return USERFORM;
-//	}
+		if(!this.farm.confirmPassword(userCommand.getPassword(), userCommand.getConfirmPassword())) {  //add DAO
+		result.rejectValue("confirmPassword", "notSame");
+		return USERFORM;
+	}
 		
 		//目盖靛按眉 - 角力按眉 ?????????	
-		this.farm.modifyUser(user.getUserNo(), userCommand.getId(), userCommand.getPassword(), userCommand.getName(), userCommand.getPhone());
+		this.farm.modifyUser(user);
 
 		return "redirect:/user/getUser.do";
 	}
@@ -119,10 +123,13 @@ public class UserController {
 	@RequestMapping("/user/deleteUser.do")
 	public String delete(
 			HttpServletRequest request) throws Exception {
-		HttpSession httpSession = request.getSession();
-		User user = (User) httpSession.getAttribute("user");
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
 		
-		this.farm.deleteUser(user.getUserNo());		//in DAO, delete session too
+		this.farm.deleteUser(user.getUserNo());		
+		
+		session.removeAttribute("user");
+		session.invalidate();
 		
 		return "redirect:/index.do";
 	}

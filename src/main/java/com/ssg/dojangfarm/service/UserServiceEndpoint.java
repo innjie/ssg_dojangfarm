@@ -20,8 +20,8 @@ public class UserServiceEndpoint {
 	}
 
 	@WebMethod
-	public void modifyUser(int userNo, String id, String password, String name, String phone) {
-		userService.modifyUser(userNo, id, password, name, phone);
+	public void modifyUser(User user) {
+		userService.modifyUser(user );
 	}
 
 	@WebMethod
@@ -45,18 +45,13 @@ public class UserServiceEndpoint {
 	}
 	
 	@WebMethod
-	public boolean checkIdPw(String id, String password) {
+	public User checkIdPw(String id, String password) {
 		return userService.checkIdPw(id, password);
 	}
 	
 	@WebMethod
-	public void login() {
-		userService.login();
-	}
-	
-	@WebMethod
-	public void logout() {
-		userService.logout();
+	public boolean confirmPassword(String password, String cPassword) {
+		return userService.confirmPassword(password, cPassword);
 	}
 
 }

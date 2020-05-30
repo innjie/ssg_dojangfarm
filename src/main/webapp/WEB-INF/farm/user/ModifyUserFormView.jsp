@@ -14,8 +14,7 @@
 <body>
 	<form:form modelAttribute="user" action='<c:url value="/user/modifyUser.do"/>'>
 		<form:label path="id">ID</form:label>
-		<form:input path="id" />
-		<form:errors path="id" />
+		${id}
 		<br>
 		
 		<form:label path="name">이름 </form:label>

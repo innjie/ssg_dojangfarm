@@ -135,7 +135,7 @@ public class AddressController {
 //		
 //		//커맨드객체 - 실제객체 ?????????	
 //		//aNo를 리퀘스트.파람으로 받을 것인가 커맨드객체에 담을 것인가.....
-//		this.farm.modifyAddress(aNo, addressCommand.getaName(), addressCommand.getAddress(), addressCommand.getZip(), addressCommand.getDetail());
+//		this.farm.modifyAddress(address);
 //
 //		return "redirect:/address/viewAddress.do?addrNo=" + aNo;
 //	}

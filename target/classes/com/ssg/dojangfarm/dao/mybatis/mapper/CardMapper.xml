@@ -11,6 +11,9 @@
   	</select>
   	
   	<insert id="insertCard" parameterType="Card">
+  		<selectKey keyProperty="cardNo" resultType="int" order="BEFORE">
+        	SELECT CardSeq.nextval AS "cardNo" FROM DUAL
+     	</selectKey>
     	INSERT INTO Card 
     		(cardNo, bank, cardPW, period, cvc, type, cardPayNo, userNo)
     	VALUES 

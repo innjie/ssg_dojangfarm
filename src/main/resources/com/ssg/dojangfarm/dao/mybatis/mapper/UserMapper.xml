@@ -6,20 +6,23 @@
   	<select id="getUser" parameterType="int" resultType="User">
     	SELECT 
     		userNo, name, phone, id, password
-    	FROM User
+    	FROM UserTable
     	WHERE 
     		userNo = #{userNo}
   	</select>
   	
   	<insert id="createUser" parameterType="User">
-    	INSERT INTO User 
+  		<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
+        	SELECT UserSeq.nextval AS "userNo" FROM DUAL
+     	</selectKey>
+    	INSERT INTO UserTable 
     		(userNo, name, phone, id, password)
     	VALUES 
     		(#{userNo}, #{name}, #{phone}, #{id}, #{password})
   	</insert>
   	
   	<update id="modifyUser" parameterType="User">
-    	UPDATE User SET 
+    	UPDATE UserTable SET 
     		name = #{name},
     		phone = #{phone},
     		password = #{password}
@@ -27,14 +30,14 @@
   	</update>
   	
   	<delete id="deleteUser" parameterType="int">
-    	DELETE FROM User  
+    	DELETE FROM UserTable  
     	WHERE userNo = #{userNo}
   	</delete>
   	
   	<select id="existingId" parameterType="String" resultType="User">
     	SELECT 
     		userNo, name, phone, id, password
-    	FROM User
+    	FROM UserTable
     	WHERE 
     		id = #{id}
   	</select>
@@ -42,7 +45,7 @@
 	<select id="existingPhone" parameterType="String" resultType="User">
     	SELECT 
     		userNo, name, phone, id, password
-    	FROM User
+    	FROM UserTable
     	WHERE 
     		phone = #{phone}
   	</select>
@@ -50,7 +53,7 @@
   	<select id="checkIdPw" resultType="User">
     	SELECT 
     		userNo, name, phone, id, password
-    	FROM User
+    	FROM UserTable
     	WHERE 
     		id = #{id}
     		password = #{password}

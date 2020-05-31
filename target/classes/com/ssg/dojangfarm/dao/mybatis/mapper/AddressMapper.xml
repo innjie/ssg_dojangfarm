@@ -11,6 +11,9 @@
   	</select>
   	
   	<insert id="createAddress" parameterType="Address">
+    	<selectKey keyProperty="addrNo" resultType="int" order="BEFORE">
+        	SELECT AddressSeq.nextval AS "addrNo" FROM DUAL
+     	</selectKey>
     	INSERT INTO Address 
     		(addrNo, address, zip, detail, aName, userNo)
     	VALUES 

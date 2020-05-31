@@ -48,14 +48,17 @@
     		aNo, title, detail, minPrice, deadline,
     		imPurAva, imPurPrice, finish, 
     		Auction.userNo, id, Auction.pNo, pName
-    	FROM Auction, Product, User
+    	FROM Auction, Product, UserTable
     	WHERE 
     		Auction.pNo = Product.pNo AND
-    		Auction.userNo = User.userNo AND
+    		Auction.userNo = UserTable.userNo AND
     		aNo = #{aNo}
   	</select>
   	
   	<insert id="registerAuction" parameterType="Auction">
+  		<selectKey keyProperty="aNo" resultType="int" order="BEFORE">
+        	SELECT AuctionSeq.nextval AS "aNo" FROM DUAL
+     	</selectKey>
     	INSERT INTO Auction 
     		(aNo, title, detail, minPrice, deadline,
     		imPurAva, imPurPrice, userNo, pNo)
@@ -84,7 +87,7 @@
     		userNo = #{userNo}
   	</select>
   	
-  	???
+  	
   	<select id="getBid" parameterType="int" resultType="Bid">
     	SELECT 
     		bidNo, bidPrice, state, deadline, title, Auction.aNo
@@ -95,6 +98,9 @@
   	</select>
   	
   	<insert id="bidAuction" parameterType="Bid">
+  		<selectKey keyProperty="bidNo" resultType="int" order="BEFORE">
+        	SELECT BidSeq.nextval AS "bidNo" FROM DUAL
+     	</selectKey>
     	INSERT INTO Bid 
     		(bidNo, bidPrice, userNo, aNo)
     	VALUES 
@@ -131,16 +137,19 @@
   	
   	<select id="getSBidByAuction" parameterType="int" resultType="Auction">
     	SELECT 
-    		sBidNo, Auction.aNo, title, imPurPrice, User.userNo, Bid.bidNo, id
-    	FROM SBid, Bid, User, Auction
+    		sBidNo, Auction.aNo, title, imPurPrice, UserTable.userNo, Bid.bidNo, id
+    	FROM SBid, Bid, UserTable, Auction
     	WHERE 
     		Bid.bidNo = SBid.bidNo AND
     		Auction.aNo = Bid.aNo AND
-    		Bid.userNo = User.userNo
+    		Bid.userNo = UserTable.userNo
     		userNo = #{userNo}
   	</select>
   	
   	<insert id="successBid" parameterType="SBid">
+  		<selectKey keyProperty="sBidNo" resultType="int" order="BEFORE">
+        	SELECT SBidSeq.nextval AS "sBidNo" FROM DUAL
+     	</selectKey>
     	INSERT INTO ImPur 
     		(sBidNo, bidNo, dNo, payNo)
     	VALUES 
@@ -175,15 +184,18 @@
   	
   	<select id="getImPurByAuction" parameterType="int" resultType="Auction">
     	SELECT 
-    		imPurNo, Auction.aNo, title, imPurPrice, User.userNo, id
-    	FROM ImPur, Auction, User
+    		imPurNo, Auction.aNo, title, imPurPrice, UserTable.userNo, id
+    	FROM ImPur, Auction, UserTable
     	WHERE 
     		Auction.aNo = ImPur.aNo AND
-    		User.userNo = ImPur.userNo AND
+    		UserTable.userNo = ImPur.userNo AND
     		userNo = #{userNo}
   	</select>
   	
   	<insert id="immePurchase" parameterType="ImPur">
+  		<selectKey keyProperty="imPurNo" resultType="int" order="BEFORE">
+        	SELECT ImPurSeq.nextval AS "imPurNo" FROM DUAL
+     	</selectKey>
     	INSERT INTO ImPur 
     		(imPurNo, userNo, aNo, dNo, payNo)
     	VALUES 

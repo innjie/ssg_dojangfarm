@@ -5,18 +5,18 @@
   	<select id="sendMessageList" parameterType="int" resultType="Message">
     	SELECT 
     		msgNo, title, sDate, read, deleteState, id AS "rUser.id"
-    	FROM Message, User
+    	FROM Message, UserTable
     	WHERE 
-    		rUserNo = User.userNo AND 
+    		rUserNo = UserTable.userNo AND 
     		sUserNo = #{userNo}
   	</select>
   	
   	<select id="receiveMessageList" parameterType="int" resultType="Message">
     	SELECT 
     		msgNo, title, sDate, id AS "sUser.id"
-    	FROM Message, User
+    	FROM Message, UserTable
     	WHERE 
-    		sUserNo = User.userNo AND 
+    		sUserNo = UserTable.userNo AND 
     		rUserNo = #{userNo}
   	</select>
   	
@@ -24,7 +24,7 @@
     	SELECT 
     		msgNo, title, sDate, read, deleteState, 
     		rUser.id AS "rUser.id", sUser.id AS "sUser.id"
-    	FROM Message, User rUser, User sUser
+    	FROM Message, UserTable rUser, UserTable sUser
     	WHERE 
     		sUserNo = sUser.userNo AND 
     		rUserNo = rUser.userNo AND 
@@ -37,7 +37,7 @@
     		m.title, m.sDate, m.read, m.deleteState, m.content,
     		rUser.id AS "rUser.id", sUser.id AS "sUser.id",
     		cm.content, Normal.saleNo, m.msgNo
-    	FROM Message m, Message cm, User rUser, User sUser, Normal
+    	FROM Message m, Message cm, UserTable rUser, UserTable sUser, Normal
     	WHERE 
     		m.sUserNo = sUser.userNo AND 
     		m.rUserNo = rUser.userNo AND 
@@ -48,6 +48,9 @@
   	
   	
   	<insert id="sendMsg" parameterType="Message">
+  		<selectKey keyProperty="msgNo" resultType="int" order="BEFORE">
+        	SELECT MessageSeq.nextval AS "msgNo" FROM DUAL
+     	</selectKey>
     	INSERT INTO Message 
     		(msgNo, title, content, sDate, cMsgNo, saleNo, sUserNo, rUserNo)
     	VALUES 

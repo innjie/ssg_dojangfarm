@@ -30,7 +30,7 @@ public class NormalController {
 	}
 	
 	//insert form
-	@RequestMapping(value="/normal/insertForm.do", method = RequestMethod.GET)
+	@RequestMapping("/normal/insertForm.do")
 	public String insertForm(
 			@ModelAttribute("normal") Normal normal) throws Exception {
 		return "normal/NormalInsertFormView";
@@ -86,7 +86,7 @@ public class NormalController {
 		}
 
 	}
-	@RequestMapping(value="/normal/updateForm.do", method = RequestMethod.GET)
+	@RequestMapping(value="/normal/updateForm.do")
 	public String updateForm(
 			@ModelAttribute("normal") Normal normal) throws Exception {
 		return "normal/NormalUpdateFormView";

@@ -31,7 +31,7 @@ public class CommonController {
 	}
 	
 	//insert form
-	@RequestMapping(value="/common/insertForm.do", method = RequestMethod.GET)
+	@RequestMapping("/common/insertForm.do")
 	public String insertForm(
 			@ModelAttribute("common") Common common) throws Exception {
 		return "common/CommonInsertFormView";
@@ -69,7 +69,7 @@ public class CommonController {
 		return new ModelAndView("CommonListView", "commonList", commonList);
 	}
 	
-	@RequestMapping(value="/common/updateForm.do", method = RequestMethod.GET)
+	@RequestMapping("/common/updateForm.do")
 	public String UpdateForm(
 			@ModelAttribute("common") Common common) throws Exception {
 		return "common/CommonUpdateFormView";

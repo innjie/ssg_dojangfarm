@@ -30,14 +30,14 @@
  SELECT
  saleNo, title, User.userNo, regiDate
  From Normal, User
- Where
+ WHERE
  Normal.userNo = User.userNo
  </select>
  
  <select id="getNormalListByUserNo" resultType = "Normal">
  SELECT saleNo, title, User.userNo, regiDate
  From Normal, User
- Where Normal.userNo = User.userNo AND Normal.userNo=#{userNo}
+ WHERE Normal.userNo = User.userNo AND Normal.userNo=#{userNo}
  </select>
  
  <select id = "searchNormal" resultType = "Normal">
@@ -51,4 +51,6 @@
  UPDATE Normal
  SET saleState = #{saleState}
  </update>
+ 
+
 </mapper>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.NormalService;
 
 //Normal Controller
@@ -110,7 +111,7 @@ public class NormalController {
 		//get list.do
 		List<Normal> normalList = normalService.getAllNormalList();
 		model.addAttribute("normalList", normalList);
-		return "normal/normalListView";
+		return "normal/NormalListView";
 	}
 	
 	//get normal view
@@ -122,5 +123,15 @@ public class NormalController {
 		}
 		model.addAttribute("normal", normal);
 		return "normal/NormalView";
+	}
+	//get userNormal List
+	@RequestMapping("/normal/userList.do")
+	public String getNormalListByUserNo(HttpServletRequest request, Model model) {
+		User user = (User) request.getAttribute("User");
+		int userNo = user.getUserNo();
+		//get list.do
+		List<Normal> normalList = normalService.getNormalListByUserNo(userNo);
+		model.addAttribute("normalList", normalList);
+		return "normal/NormalUserListView";
 	}
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.ssg.dojangfarm.dao.mybatis.mapper.CommonMapper">'
+<cache/>
+
+	 <insert id="insertSale" resultType="int">
+ 	<selectKey keyProperty="saleNo"  resultType="int" order="BEFORE">
+ 	SELECT CommonSeq.nextval AS "saleNo" FROM DUAL
+ 	</selectKey>
+ 	 INSERT INTO Common
+ 	 (saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo, regiDate, deadline, min)
+ 	 VALUES
+ 	 (#{saleNo}, #{saleType}, #{title}, #{saleState}, #{info}, #{price}, #{count}, 
+ 	 #{state}, #{product.pNo}, #{user.userNo}, #{regiDate}, #{deadline}, #{min})
+ </insert>
+  <update id="updateSale" resultType="int">
+ UPDATE Common
+ SET info = #{info}, price = #{price}, count = #{regiDate}, deadline = #{deadline}, min = #{min}
+ 
+ </update>
+  <select id="getCommonSale" parameterType="int" resultType="Common">
+ SELECT
+ 	(saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo, regiDate, deadline, min)
+ FROM Common
+ WHERE saleNo = #{saleNo}
+ </select>
+ 
+ <select id="getAllCommonList" resultType="Common">
+ SELECT
+ saleNo, title, User.userNo, regiDate
+ FROM Common, User
+ WHERE
+ Common.userNo = User.userNo
+ </select>
+  <select id="getCommonListByUserNo" resultType = "Common">
+ SELECT saleNo, title, User.userNo, regiDate
+ From Common, User
+ WHERE Common.userNo = User.userNo AND Common.userNo=#{userNo}
+ </select>
+ 
+  <select id = "searchCommon" resultType = "Common">
+ SELECT saleNo, title, User.userNo, regiDate
+ FROM Common, User
+ WHERE Common.userNo = User.userNo 
+ AND Common.userNo=#{userNo}
+ AND title LIKE '%#{word}%'
+ </select>
+ 
+ <insert id="insertCommonjoin" resultType = "int">
+ <selectKey keyProperty="CJNo" resultType="int"  order="BEFORE">
+ SELECT CommonJoinSeq.nextval as "CJNo" FROM DUAL
+ </selectKey>
+ INSERT INTO CommonJoin
+ (CJNo, userNo, saleNo, cjState, dNo, payNo, count)
+VALUES
+(#{CJNo}, #{userNo}, #{saleNo}, wait, null, null)
+
+ </insert>
+ 
+ <delete id = "cancelCommonjoin" resultType="int">
+ DELETE FROM CommonJoin
+ WHERE CJNo = #{CJNo}
+ </delete>
+ 
+ <update id = "updateCommonjoin" resutType = "int">
+ UPDATE CommonJoin
+ SET count=#{count}
+ </update>
+ <!--
+ getCJList, getCJListByUserNo 추가 예정  
+  -->
+ <select id = "getCommonJoin" resultType = "CommonJoin">
+ SELECT ()CJNo, userNo, saleNo, cjState, dNo, payNo, count)
+ FROM CommonJoin
+ WHERE CJNo = #{CJNo}
+ </select>
+ </mapper>

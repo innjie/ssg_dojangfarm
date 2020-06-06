@@ -25,7 +25,7 @@ public class OrderServiceEndpoint {
 	}
 	
 	public void CancelOrder(int orderNo) {
-		orderService.CancelOrder(orderNo);
+		orderService.cancelOrder(orderNo);
 	}
 }
 

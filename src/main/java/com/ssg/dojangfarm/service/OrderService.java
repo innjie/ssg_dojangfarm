@@ -8,9 +8,7 @@ import com.ssg.dojangfarm.domain.Refund;
 public interface OrderService {
 	public Order getOrder(int orderNo);
 	public List<Order> getOrderList(int userNo);
-	public int CancelOrder(int orderNo);
+	public int cancelOrder(int orderNo);
 	public int insertOrder(int userNo, Order order);
-	public List<Order> getUserList(int orderNo);
-	public List<Refund> getRefundList(int userNo);
-	public Refund getRefund(int refundNo);
+	public List<Order> getOrderUserList(int orderNo);
 }

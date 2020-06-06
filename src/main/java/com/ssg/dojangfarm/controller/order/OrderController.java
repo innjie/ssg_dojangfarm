@@ -17,21 +17,26 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ssg.dojangfarm.domain.Order;
 import com.ssg.dojangfarm.domain.Refund;
 import com.ssg.dojangfarm.service.OrderService;
+import com.ssg.dojangfarm.service.RefundService;
 
 @Controller
 public class OrderController {
 	private OrderService orderService;
-	
+	private RefundService refundService;
 	@Autowired
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
+	}
+	@Autowired
+	public void setRefundService(RefundService refundService) {
+		this.refundService = refundService;
 	}
 	//refund sale
 	//cancelOrder 의문있음
 	@RequestMapping("/order/cancel.do")
 	public ModelAndView cancelOrder(@PathVariable int orderNo, BindingResult result) {
 		//cancel action
-		int orderRes = orderService.CancelOrder(orderNo);
+		int orderRes = orderService.cancelOrder(orderNo);
 		
 		if(orderRes == 0)  {//failed
 			return new ModelAndView("Error", "message", "cancel failed");
@@ -81,7 +86,7 @@ public class OrderController {
 	@RequestMapping("/order/userView.do")
 	public String orderList(@PathVariable("orderNo") int orderNo, Model model) {
 		//get list
-		List<Order> orderUserList = orderService.getUserList(orderNo);
+		List<Order> orderUserList = orderService.getOrderUserList(orderNo);
 		model.addAttribute("orderUserList", orderUserList);
 		return "order/OrderUserView";
 	}
@@ -90,14 +95,14 @@ public class OrderController {
 	public String getRefundList(@RequestParam HttpServletRequest request, Model model) {
 		//get list
 		int userNo = (int)request.getSession().getAttribute("userNo");
-		List<Refund> refundList = orderService.getRefundList(userNo);
+		List<Refund> refundList = refundService.getRefundList(userNo);
 		model.addAttribute("refundList", refundList);
 		return "refund/RefundListView";
 	}
 	//view refund
 	@RequestMapping("/refund/view.do")
 	public String getRefund(@PathVariable int refundNo, Model model) {
-		Refund refund = orderService.getRefund(refundNo);
+		Refund refund = refundService.getRefund(refundNo);
 		if(refund == null) {
 			return "refund/RefundNotFound";
 		}

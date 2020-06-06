@@ -1,40 +1,42 @@
-package com.ssg.dojangfarm.service;
+package com.ssg.dojangfarm.dao.mybatis;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.ssg.dojangfarm.dao.OrderDAO;
+import com.ssg.dojangfarm.dao.mybatis.mapper.OrderMapper;
 import com.ssg.dojangfarm.domain.Order;
 import com.ssg.dojangfarm.domain.Refund;
 
-@Service("orderServiceImpl")
-public class OrderServiceImpl implements OrderService {
-
+public class MybatisOrderDAO implements OrderDAO{
 	@Autowired
-	private OrderDAO orderDAO;
+	private OrderMapper orderMapper;
 
+	@Override
 	public Order getOrder(int orderNo) {
-		return orderDAO.getOrder(orderNo);
+		return orderMapper.getOrder(orderNo);
 	}
-	
+
+	@Override
 	public List<Order> getOrderList(int userNo) {
-		return orderDAO.getOrderList(userNo);
+		return orderMapper.getOrderList(userNo);
 	}
-	
+
+	@Override
 	public int cancelOrder(int orderNo) {
-		return orderDAO.cancelOrder(orderNo);
+		return orderMapper.cancelOrder(orderNo);
 	}
 
 	@Override
 	public int insertOrder(int userNo, Order order) {
-		return orderDAO.insertOrder(userNo, order);
+		return orderMapper.insertOrder(userNo, order);
 	}
 
 	@Override
 	public List<Order> getOrderUserList(int orderNo) {
-		return orderDAO.getOrderUserList(orderNo);
+		return orderMapper.getOrderUserList(orderNo);
 	}
 
+	
 }

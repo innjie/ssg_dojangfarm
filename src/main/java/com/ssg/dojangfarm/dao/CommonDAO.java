@@ -19,6 +19,7 @@ public interface CommonDAO {
 	int cancelCommonjoin( int CJNo);
 	int updateCommonjoin(int CJNo);
 	CommonJoin getCommonJoin(int cjNo);
-
+	List<CommonJoin> getCJList(int saleNo);
+	List<CommonJoin> getCJListByUserNo(int userNo);
 }
 

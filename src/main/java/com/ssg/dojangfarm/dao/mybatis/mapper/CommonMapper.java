@@ -16,4 +16,6 @@ public interface CommonMapper {
 	public int cancelCommonjoin(int userNo);
 	public int updateCommonjoin(int CJNo);
 	public CommonJoin getCommonJoin(int cjNo);
+	public List<CommonJoin> getCJList(int saleNo);
+	public List<CommonJoin> getCJListByUserNo(int userNo);
 }

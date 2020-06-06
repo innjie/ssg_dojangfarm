@@ -64,4 +64,14 @@ public class CommonServiceImpl implements CommonService {
 	public CommonJoin getCommonJoin(int CJNo) {
 		return commonDAO.getCommonJoin(CJNo);
 	}
+
+	@Override
+	public List<CommonJoin> getCJList(int saleNo) {
+		return commonDAO.getCJList(saleNo);
+	}
+
+	@Override
+	public List<CommonJoin> getCJListByUserNo(int userNo) {
+		return commonDAO.getCJListByUserNo(userNo);
+	}
 }

@@ -23,8 +23,8 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.getOrderList(userNo);
 	}
 	
-	public int CancelOrder(int orderNo) {
-		return orderDAO.CancelOrder(orderNo);
+	public int cancelOrder(int orderNo) {
+		return orderDAO.cancelOrder(orderNo);
 	}
 
 	@Override
@@ -37,13 +37,6 @@ public class OrderServiceImpl implements OrderService {
 		return orderDAO.getOrderUserList(orderNo);
 	}
 
-	@Override
-	public List<Refund> getRefundList(int userNo) {
-		return orderDAO.getRefundList(userNo);
-	}
+	
 
-	@Override
-	public Refund getRefund(int refundNo) {
-		return orderDAO.getRefund(refundNo);
-	}
 }

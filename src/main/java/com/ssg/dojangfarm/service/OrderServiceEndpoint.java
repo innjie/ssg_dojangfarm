@@ -24,8 +24,8 @@ public class OrderServiceEndpoint {
 		return orderService.getOrderList(userNo);
 	}
 	
-	public void CancelOrder(int orderNo) {
-		orderService.CancelOrder(orderNo);
+	public void cancelOrder(int orderNo) {
+		orderService.cancelOrder(orderNo);
 	}
 }
 

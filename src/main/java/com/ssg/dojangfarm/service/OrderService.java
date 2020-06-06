@@ -10,5 +10,7 @@ public interface OrderService {
 	public List<Order> getOrderList(int userNo);
 	public int cancelOrder(int orderNo);
 	public int insertOrder(int userNo, Order order);
+	public List<Order> getUserList(int orderNo);
 	public List<Order> getOrderUserList(int orderNo);
+
 }

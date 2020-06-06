@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.ssg.dojangfarm.dao.mybatis.mapper.OrderMapper">
+<cache/>
+<select id="getOrder" resultType="Order">
+SELECT
+	(orderNo, dNo, payNo, quantity, saleNo, userNo)
+FROM Order
+WHERE orderNo = #{orderNo}
+</select>
+<select id = "getOrderList" resultType = "Order">
+SELECT
+	(orderNo, quantity, saleNo, userNo)
+FROM Order
+WHERE Order.userNo = User.userNo AND Order.saleNo = #{saleNo}
+</select>
+
+<delete id = "cancelOrder" resultType = "int">
+DELETE FROM Order
+WHERE orderNo = #{orderNo}
+</delete>
+
+<select id = "insertOrder" resultType = "int">
+	<selectKey keyProperty = "orderNo" resultType = "int" order = "BEFORE">
+	SELECT OrderSeq.nextval AS "orderNo" FROM DUAL
+	</selectKey>
+INSERT INTO Order
+(orderNo, dNo, payNo, quantity, saleNo, userNo)
+VALUES (#{orderNo}, #{dNo}, #{payNo}, #{quantity}, #{saleNo}, #{userNo})
+</select>
+
+<select id = "getOrderUserList" resultType = "Order">
+SELECT (orderNo, quantity, saleNo, userNo)
+FROM Order
+WHERE Order.userNo = #{userNO}
+</select>
+
+</mapper>

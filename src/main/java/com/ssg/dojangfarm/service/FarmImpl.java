@@ -293,7 +293,8 @@ public class FarmImpl implements FarmFacade{
 		return orderDAO.getOrderList(userNo);
 	}
 	@Override
-	public int CancelOrder(int orderNo) {
+	public int cancelOrder(int orderNo) {
+
 		return orderDAO.cancelOrder(orderNo);
 	}
 	@Override

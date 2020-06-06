@@ -23,7 +23,7 @@ import com.ssg.dojangfarm.service.RefundService;
 public class OrderController {
 	private OrderService orderService;
 	private RefundService refundService;
-	
+  
 	@Autowired
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
@@ -87,7 +87,7 @@ public class OrderController {
 	@RequestMapping("/order/userView.do")
 	public String orderList(@PathVariable("orderNo") int orderNo, Model model) {
 		//get list
-		List<Order> orderUserList = orderService.getUserList(orderNo);
+		List<Order> orderUserList = orderService.getOrderUserList(orderNo);
 		model.addAttribute("orderUserList", orderUserList);
 		return "order/OrderUserView";
 	}

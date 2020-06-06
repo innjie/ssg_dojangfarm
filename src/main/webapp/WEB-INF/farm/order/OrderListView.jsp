@@ -14,6 +14,8 @@
 <table border="1">
 <tr>
 	<td>주문번호</td>
+	<td>수량</td>
+	<td>상품번호</td>
 	<td>주문자</td>
 </tr>
 <c:forEach var="order" items="${orderList}" >
@@ -22,6 +24,8 @@
 						<c:param name='order' value='${order.orderNo}'/>
 						</c:url>">${order.orderNo}</a>
 	</td>
+	<td>${order.quantity }</td>
+	<td>${order.saleNo} </td>
 	<td>${order.user.name}</td>
 	</tr>
 </c:forEach>

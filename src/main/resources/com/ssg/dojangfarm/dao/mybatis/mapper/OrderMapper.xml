@@ -5,35 +5,35 @@
 	<select id="getOrder" resultType="Order">
 		SELECT
 		(orderNo, dNo, payNo, quantity, saleNo, userNo)
-		FROM Order
+		FROM OrderTable
 		WHERE orderNo = #{orderNo}
 	</select>
 	<select id="getOrderList" resultType="Order">
 		SELECT
 		(orderNo, quantity, saleNo, userNo)
-		FROM Order
-		WHERE Order.userNo = User.userNo AND Order.saleNo = #{saleNo}
+		FROM OrderTable
+		WHERE OrderTable.userNo = User.userNo AND OrderTable.saleNo = #{saleNo}
 	</select>
 
 	<delete id="cancelOrder" resultType="int">
-		DELETE FROM Order
+		DELETE FROM OrderTable
 		WHERE orderNo = #{orderNo}
 	</delete>
 
 	<select id="insertOrder" resultType="int">
 		<selectKey keyProperty="orderNo" resultType="int"
 			order="BEFORE">
-			SELECT OrderSeq.nextval AS "orderNo" FROM DUAL
+			SELECT OrderTableSeq.nextval AS "orderNo" FROM DUAL
 		</selectKey>
-		INSERT INTO Order
+		INSERT INTO OrderTable
 		(orderNo, dNo, payNo, quantity, saleNo, userNo)
 		VALUES (#{orderNo}, #{dNo}, #{payNo}, #{quantity}, #{saleNo}, #{userNo})
 	</select>
 
 	<select id="getOrderUserList" resultType="Order">
 		SELECT (orderNo, quantity, saleNo, userNo)
-		FROM Order
-		WHERE Order.userNo = #{userNO}
+		FROM OrderTable
+		WHERE OrderTable.userNo = #{userNO}
 	</select>
 
 </mapper>

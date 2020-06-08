@@ -31,8 +31,8 @@ public class MybateisCommonDAO implements CommonDAO{
 	public List<Common> searchCommon(String title) {
 		return commonMapper.searchCommon(title);
 	}
-	public int insertCommonjoin(int userNo, int saleNo) {
-		return commonMapper.insertCommonjoin(userNo, saleNo);
+	public int insertCommonjoin(CommonJoin commonJoin) {
+		return commonMapper.insertCommonjoin(commonJoin);
 	}
 	public int cancelCommonjoin(int userNo) {
 		return commonMapper.cancelCommonjoin(userNo);

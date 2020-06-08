@@ -365,8 +365,8 @@ public class FarmImpl implements FarmFacade{
 	}
 
 	@Override
-	public int insertCommonjoin(int userNo, int saleNo) {
-		return commonDAO.insertCommonjoin(userNo, saleNo);
+	public int insertCommonjoin(CommonJoin commonJoin) {
+		return commonDAO.insertCommonjoin(commonJoin);
 	}
 
 	@Override

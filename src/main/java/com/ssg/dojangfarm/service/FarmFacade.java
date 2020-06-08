@@ -88,15 +88,15 @@ public interface FarmFacade {
 	public List<Common> getAllCommonList();
 	public List<Common> getCommonListByUserNo(int userNo);
 	public List<Common> searchCommon(String title);
-	public int insertCommonjoin(int userNo, int saleNo);  //CommonJoin commonJoin
+	public int insertCommonjoin(CommonJoin commonJoin);  
 	public int cancelCommonjoin( int CJNo);
 	public int updateCommonjoin(int CJNo);
 	public CommonJoin getCommonJoin(int CJNo);
 	
 	//CommonNotice
-	public int insertCommonNotice(CommonNotice cn);// throws dataAcception;
-	public void updateCommonNotice(CommonNotice cn);// throws dataAcception;
-	public void deleteCommonNotice(CommonNotice cn);// throws dataAcception;
+	public int insertCommonNotice(CommonNotice cn);
+	public void updateCommonNotice(CommonNotice cn);
+	public void deleteCommonNotice(CommonNotice cn);
 	public CommonNotice viewCommonNotice(CommonNotice cn);
 	public List<CommonNotice> getAllNoticeList();
 	public List<CommonNotice> getCNoticeListByUserNo(int userNo);

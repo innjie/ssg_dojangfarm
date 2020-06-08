@@ -15,7 +15,7 @@ public interface CommonDAO {
 	List<Common> getAllCommonList();
 	List<Common> getCommonListByUserNo(int userNo);
 	List<Common> searchCommon(String title);
-	int insertCommonjoin(int userNo, int saleNo);  //CommonJoin commonJoin
+	int insertCommonjoin(CommonJoin commonJoin);  
 	int cancelCommonjoin( int CJNo);
 	int updateCommonjoin(int CJNo);
 	CommonJoin getCommonJoin(int cjNo);

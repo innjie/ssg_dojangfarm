@@ -13,7 +13,7 @@ public interface CommonService {
 	public List<Common> getAllCommonList();
 	public List<Common> getCommonListByUserNo(int userNo);
 	public List<Common> searchCommon(String title);
-	public int insertCommonjoin(int userNo, int saleNo);  //CommonJoin commonJoin
+	public int insertCommonjoin(CommonJoin commonJoin);  //
 	public int cancelCommonjoin(int userNo);
 	public int updateCommonjoin(int CJNo);
 	public CommonJoin getCommonJoin(int cjNo);

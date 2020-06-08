@@ -5,7 +5,7 @@ import java.util.List;
 import com.ssg.dojangfarm.domain.Normal;
 
 public interface NormalMapper {
-	int insertSale(int userNo, Normal normal);
+	int insertSale(Normal normal);
 	int updateSale(Normal normal);
 	Normal getNormalSale(int saleNo) ;
 	List<Normal> getAllNormalList();

@@ -7,7 +7,7 @@ import com.ssg.dojangfarm.domain.CommonJoin;
 import com.ssg.dojangfarm.domain.CommonNotice;
 
 public interface CommonService {
-	public int insertSale(int userNo, Common common);
+	public int insertSale(Common common);
 	public int updateSale(Common common);
 	public Common getCommonSale(int saleNo);
 	public List<Common> getAllCommonList();

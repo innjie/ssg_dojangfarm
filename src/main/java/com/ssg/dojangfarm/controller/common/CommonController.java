@@ -44,8 +44,11 @@ public class CommonController {
 		//insert action
 		//get session -> user id
 		int userNo = (int) request.getSession().getAttribute("userNo");
+		User user = new User();
+		user.setUserNo(userNo);
+		common.setUser(user);
 		//insert common
-		int res = commonService.insertSale(userNo, common);
+		int res = commonService.insertSale(common);
 		if(res == 0) { //false
 			return "common/CommonInsertFormView";
 		}

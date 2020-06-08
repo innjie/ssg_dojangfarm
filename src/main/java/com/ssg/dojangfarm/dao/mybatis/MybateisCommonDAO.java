@@ -13,8 +13,8 @@ public class MybateisCommonDAO implements CommonDAO{
 	@Autowired
 	private CommonMapper commonMapper;
 	
-	public int insertSale(int userNo, Common common) {
-		return commonMapper.insertSale(userNo, common);
+	public int insertSale(Common common) {
+		return commonMapper.insertSale(common);
 	}
 	public int updateSale(Common common) {
 		return commonMapper.updateSale(common);

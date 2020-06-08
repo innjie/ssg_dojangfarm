@@ -82,7 +82,7 @@ public interface FarmFacade {
 	public void deleteCard(int cardNo);
 	
 	//Common
-	public int insertSale(int userNo, Common common);
+	public int insertSale( Common common);
 	public int updateSale(Common common);
 	public Common getCommonSale(int saleNo);
 	public List<Common> getAllCommonList();
@@ -106,7 +106,7 @@ public interface FarmFacade {
 	public void deleteDiscount(int saleNo);
 	
 	//Normal
-	public int insertSale(int userNo, Normal normal);
+	public int insertSale( Normal normal);
 	public int updateSale(Normal normal);
 	public Normal getNormalSale(int saleNo) ;
 	public List<Normal> getAllNormalList();

@@ -6,7 +6,7 @@ import com.ssg.dojangfarm.domain.Address;
 import com.ssg.dojangfarm.domain.Normal;
 
 public interface NormalService {
-	public int insertSale(int userNo, Normal normal);
+	public int insertSale(Normal normal);
 	public int updateSale(Normal normal);
 	public Normal getNormalSale(int saleNo) ;
 	public List<Normal> getAllNormalList();

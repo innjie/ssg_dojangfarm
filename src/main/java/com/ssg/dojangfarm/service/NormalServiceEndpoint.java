@@ -18,8 +18,8 @@ public class NormalServiceEndpoint {
 	NormalService normalService; // inject NormalServiceImpl
 
 	@WebMethod
-	public int insertSale(int userNo, Normal normal) {
-		return normalService.insertSale(userNo, normal);
+	public int insertSale(Normal normal) {
+		return normalService.insertSale(normal);
 	}
 
 	@WebMethod

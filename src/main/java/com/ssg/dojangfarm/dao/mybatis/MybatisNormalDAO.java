@@ -12,8 +12,8 @@ public class MybatisNormalDAO implements NormalDAO{
 	@Autowired
 	private NormalMapper normalMapper;
 	
-	public int insertSale(int userNo, Normal normal) {
-		return normalMapper.insertSale(userNo, normal);
+	public int insertSale( Normal normal) {
+		return normalMapper.insertSale(normal);
 	}
 	public int updateSale(Normal normal) {
 		return normalMapper.updateSale(normal);

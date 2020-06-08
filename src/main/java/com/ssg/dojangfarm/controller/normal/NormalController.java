@@ -47,7 +47,10 @@ public class NormalController {
 		int userNo = (int)request.getSession().getAttribute("userNo");
 		
 		//insert normal
-		int res = normalService.insertSale(userNo, normal);
+		User user = new User();
+		user.setUserNo(userNo);
+		normal.setUser(user);
+		int res = normalService.insertSale( normal);
 		if(res == 0) { //false
 			//return fail page
 		} else { //success

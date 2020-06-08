@@ -44,8 +44,11 @@ public class CommonController {
 		//insert action
 		//get session -> user id
 		int userNo = (int) request.getSession().getAttribute("userNo");
+		User user = new User();
+		user.setUserNo(userNo);
+		common.setUser(user);
 		//insert common
-		int res = commonService.insertSale(userNo, common);
+		int res = commonService.insertSale(common);
 		if(res == 0) { //false
 			return "common/CommonInsertFormView";
 		}
@@ -108,11 +111,14 @@ public class CommonController {
 	@RequestMapping("/commonjoin/join.do")
 	public ModelAndView insertCommonJoin(
 			@RequestParam HttpServletRequest request,
-			@ModelAttribute("Common") Common common,
+			@ModelAttribute("CommonJoin") CommonJoin commonJoin,
 			BindingResult result) {
 		//insert join actioin
 		int userNo = (int)request.getAttribute("userNo");
-		int res = commonService.insertCommonjoin(userNo,common.getSaleNo());
+		User user = new User();
+		user.setUserNo(userNo);
+		commonJoin.setUser(user);
+		int res = commonService.insertCommonjoin(commonJoin);
 		
 		if(res == 0) {//failed
 			return new ModelAndView("Error", "message", "join Failed");

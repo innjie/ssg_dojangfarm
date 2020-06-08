@@ -335,8 +335,8 @@ public class FarmImpl implements FarmFacade{
 	//-------------------------------------------------------------------------
 		
 	@Override
-	public int insertSale(int userNo, Common common) {
-		return commonDAO.insertSale(userNo, common);
+	public int insertSale(Common common) {
+		return commonDAO.insertSale( common);
 	}
 
 	@Override
@@ -365,8 +365,8 @@ public class FarmImpl implements FarmFacade{
 	}
 
 	@Override
-	public int insertCommonjoin(int userNo, int saleNo) {
-		return commonDAO.insertCommonjoin(userNo, saleNo);
+	public int insertCommonjoin(CommonJoin commonJoin) {
+		return commonDAO.insertCommonjoin(commonJoin);
 	}
 
 	@Override
@@ -433,8 +433,8 @@ public class FarmImpl implements FarmFacade{
 	//-------------------------------------------------------------------------
 		
 	@Override
-	public int insertSale(int userNo, Normal normal) {
-		return normalDAO.insertSale(userNo, normal);
+	public int insertSale( Normal normal) {
+		return normalDAO.insertSale(normal);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ssg.dojangfarm.domain.Address;
 import com.ssg.dojangfarm.domain.Common;
+import com.ssg.dojangfarm.domain.CommonJoin;
 
 @Component
 @WebService(serviceName="CommonService")
@@ -19,8 +20,8 @@ public class CommonServiceEndpoint {
 
 	
 	@WebMethod
-	public int insertSale(int userNo, Common common) {
-		return commonService.insertSale(userNo, common);
+	public int insertSale( Common common) {
+		return commonService.insertSale(common);
 	}
 
 	@WebMethod
@@ -49,8 +50,8 @@ public class CommonServiceEndpoint {
 	}
 
 	@WebMethod
-	public int insertCommonjoin(int userNo, int saleNo) {
-		return commonService.insertCommonjoin(userNo, saleNo);
+	public int insertCommonjoin(CommonJoin commonJoin) {
+		return commonService.insertCommonjoin(commonJoin);
 	}
 
 	@WebMethod

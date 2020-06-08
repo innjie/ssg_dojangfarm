@@ -17,8 +17,8 @@ public class CommonServiceImpl implements CommonService {
 	private CommonDAO commonDAO;
 
 	@Override
-	public int insertSale(int userNo, Common common) {
-		return commonDAO.insertSale(userNo, common);
+	public int insertSale(Common common) {
+		return commonDAO.insertSale(common);
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	@Override
-	public int insertCommonjoin(int userNo, int saleNo) {
-		return commonDAO.insertCommonjoin(userNo, saleNo);
+	public int insertCommonjoin(CommonJoin commonJoin) {
+		return commonDAO.insertCommonjoin(commonJoin);
 	}
 
 	@Override

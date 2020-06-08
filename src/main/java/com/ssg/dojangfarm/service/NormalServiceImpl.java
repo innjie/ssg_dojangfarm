@@ -17,8 +17,8 @@ public class NormalServiceImpl implements NormalService {
 	private NormalDAO normalDAO;
 
 	@Override
-	public int insertSale(int userNo, Normal normal) {
-		return normalDAO.insertSale(userNo, normal);
+	public int insertSale( Normal normal) {
+		return normalDAO.insertSale(normal);
 	}
 
 	@Override

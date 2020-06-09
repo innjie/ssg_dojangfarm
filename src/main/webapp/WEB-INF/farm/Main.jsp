@@ -30,7 +30,7 @@
 	
 	<a href="<c:url value='/'><c:param name="menu" value="click" /></c:url>">메뉴</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<c:if test="${param.menu == 'click'}">
-		<a href="">과일</a>&nbsp;&nbsp;	
+		<a href="<c:url value='normal/list.do'/>">과일</a>&nbsp;&nbsp;	
 		<a href="">채소</a>&nbsp;&nbsp;
 		<a href="">공동구매</a>&nbsp;&nbsp;	
 		<a href="<c:url value='/auction/viewAuctionList.do' />">경매</a>&nbsp;&nbsp;

@@ -44,7 +44,7 @@ public class CardController {
 		PagedListHolder<Card> cardList = new PagedListHolder<Card>(this.farm.getCardList(user.getUserNo()));
 		cardList.setPageSize(4);
 		
-		return new ModelAndView(LISTCARD, "cardList ", cardList);
+		return new ModelAndView(LISTCARD, "cardList ", cardList.getSource());
 	}	
 
 /*	//view cardList by page

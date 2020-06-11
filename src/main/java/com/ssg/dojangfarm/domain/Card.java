@@ -14,6 +14,9 @@ public class Card implements Serializable{
 	private String type;
 	private String cardPayNo;		//real card number
 	
+	public Card() {
+		super();
+	}
 	
 	public Card(User user, String bank, String cardPW, Date period, int cvc, String type, String cardPayNo) {
 		super();

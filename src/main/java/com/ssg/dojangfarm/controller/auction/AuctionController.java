@@ -47,7 +47,7 @@ public class AuctionController {
 		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getAuctionList());
 
 		auctionList.setPageSize(4);
-		model.put("auctionList ", auctionList );
+		model.put("auctionList ", auctionList.getSource() );
 		return LISTAUCTION;
 	}
 
@@ -83,7 +83,7 @@ public class AuctionController {
 //		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(user.getUserNo()));
 //
 //		auctionList.setPageSize(4);
-//		model.put("auctionList ", auctionList );
+//		model.put("auctionList ", auctionList.getSource() );
 //		return LISTMYAUCTION;
 //	}	
 
@@ -123,7 +123,7 @@ public class AuctionController {
 		}
 
 		auctionList.setPageSize(4);
-		model.put("auctionList", auctionList);
+		model.put("auctionList", auctionList.getSource());
 		return LISTAUCTION;
 	}
 

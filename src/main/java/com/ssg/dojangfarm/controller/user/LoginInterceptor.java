@@ -23,17 +23,22 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		User user = 
 			(User) WebUtils.getSessionAttribute(request, "user");
 		
+		ModelAndView modelAndView = new ModelAndView("user/LoginView", "login", login);
+		
 		if (user == null) {
 			String url = request.getRequestURL().toString(); 
 			String query = request.getQueryString();
-			ModelAndView modelAndView = new ModelAndView("user/LoginView", "login", login);
 			
 			if (query != null) {
+				System.out.println("aaa " + url+"?"+query);
 				login.setForwardAction(url+"?"+query);
 			}
 			else {
+				System.out.println("aaa " + url);
 				login.setForwardAction(url);
 			}
+			
+			
 			throw new ModelAndViewDefiningException(modelAndView);
 		}
 		else {

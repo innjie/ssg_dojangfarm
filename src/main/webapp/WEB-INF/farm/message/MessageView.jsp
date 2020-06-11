@@ -13,13 +13,13 @@
 </head>
 <body>
 	<table border='1'>
-		<c:if test="${message.sUser.id != session.id}">
+		<c:if test="${message.sUser.id != user.id}">
 			<tr>
 				<td>보낸사람</td>
 				<td>${message.sUser.id}</td>
 			</tr>
 		</c:if>
-		<c:if test="${message.rUser.id != session.id}">
+		<c:if test="${message.rUser.id != user.id}">
 			<tr>
 				<td>받는사람</td>
 				<td>${message.rUser.id}</td>
@@ -34,7 +34,7 @@
 					${message.normal.saleNo}</a>
 			</td>
 		</tr>
-		<c:if test="${message.rUser.id != session.id}">
+		<c:if test="${message.rUser.id != user.id}">
 			<tr>
 				<td>읽음</td>
 				<td>${message.read}</td>
@@ -64,7 +64,7 @@
 				<c:param name='msgNo' value='${message.msgNo}' />
 			</c:url>">
 	답장</a>&nbsp;&nbsp;
-	<a href="<c:url value='/message/deleteMessage.do'>
+	<a href="<c:url value='/message/deleteMsg.do'>
 				<c:param name='msgNo' value='${message.msgNo}' />
 				<c:param name='type' value='${param.type}' />
 			</c:url>">

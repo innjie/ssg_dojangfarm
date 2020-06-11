@@ -46,7 +46,7 @@ public class BidController {
 //		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(this.farm.getMyBidList(user.getUserNo()));	//add dao
 //
 //		bidList.setPageSize(4);
-//		model.put("bidList ", bidList );
+//		model.put("bidList ", bidList.getSource() );
 //		return LISTBID;
 //	}
 	
@@ -83,7 +83,7 @@ public class BidController {
 //		PagedListHolder<SBid> SBidList = new PagedListHolder<SBid>(this.farm.getMySBidList(user.getUserNo()));	//add dao
 //
 //		SBidList.setPageSize(4);
-//		model.put("SBidList ", SBidList );
+//		model.put("SBidList ", SBidList.getSource() );
 //		return LISTSBID;
 //	}
 	

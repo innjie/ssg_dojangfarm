@@ -14,7 +14,11 @@
 <body>
 	<a href="<c:url value='/message/viewSendMessageList.do' />">전송함</a>&nbsp;
 	<a href="<c:url value='/message/viewReceiveMessageList.do' />">수신함</a>
-	<br><br>
+	<br>
+	<c:if test="${title != null}">
+		검색 : ${title}
+	</c:if>
+	<br>
 	<table border="1">
 		<tr>
 			<td>순번</td>		<%-- not cardNo, not cardPayNo, just No --%>
@@ -23,7 +27,7 @@
 			<td>날짜</td>
 		</tr>
 		<c:forEach var="m" items="${receiveMessageList}" varStatus="status">
-			<c:if test="${m.deleteState == false}">
+			<c:if test="${m.sUser.id != user.id}">
 				<tr>
 					<td>${status.count}</td>	<%-- delete한거도 count될듯... --%>
 					<td>${m.sUser.id}</td>
@@ -32,7 +36,7 @@
 									<c:param name='msgNo' value='${m.msgNo}' />
 									<c:param name='type' value='receive' />
 								</c:url>">
-						$m.title}</a>
+						${m.title}</a>
 					</td>
 					<td>${m.sDate}</td>
 				</tr>

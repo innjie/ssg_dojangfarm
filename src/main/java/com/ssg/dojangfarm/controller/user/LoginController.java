@@ -51,7 +51,7 @@ public class LoginController {
 			@Valid @ModelAttribute("login") LoginCommand loginCommand,
 			BindingResult result) throws Exception {
 		
-		System.out.println("login");
+		System.out.println("login   " + loginCommand.getForwardAction());
 				
 		//validate
 		if (result.hasErrors()) {

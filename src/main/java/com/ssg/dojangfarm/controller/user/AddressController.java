@@ -51,7 +51,7 @@ public class AddressController {
 		PagedListHolder<Address> addressList = new PagedListHolder<Address>(this.farm.getAddressList(user.getUserNo()));
 		addressList.setPageSize(4);
 		
-		return new ModelAndView(LISTADDRESS, "addressList ", addressList);
+		return new ModelAndView(LISTADDRESS, "addressList ", addressList.getSource());
 	}
 	
 /*	//view cardList by page

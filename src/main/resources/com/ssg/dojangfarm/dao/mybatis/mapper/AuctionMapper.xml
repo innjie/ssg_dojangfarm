@@ -143,7 +143,7 @@
     	WHERE 
     		Bid.bidNo = SBid.bidNo AND
     		Auction.aNo = Bid.aNo AND
-    		Bid.userNo = UserTable.userNo
+    		Bid.userNo = UserTable.userNo AND
     		userNo = #{userNo}
   	</select>
   	

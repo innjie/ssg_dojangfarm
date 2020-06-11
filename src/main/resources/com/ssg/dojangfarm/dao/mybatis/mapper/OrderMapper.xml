@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.OrderMapper">
+	<cache />
+	<select id="getOrder" resultType="Order">
+		SELECT
+		(orderNo, dNo, payNo, quantity, saleNo, userNo)
+		FROM OrderTable
+		WHERE orderNo = #{orderNo}
+	</select>
+	<select id="getOrderList" resultType="Order">
+		SELECT
+		(orderNo, quantity, saleNo, userNo)
+		FROM OrderTable
+		WHERE OrderTable.userNo = User.userNo AND OrderTable.saleNo = #{saleNo}
+	</select>
+
+	<delete id="cancelOrder" parameterType="int">
+		DELETE FROM OrderTable
+		WHERE orderNo = #{orderNo}
+	</delete>
+
+	<insert id="insertOrder" parameterType="int">
+		<selectKey keyProperty="orderNo" resultType="int"
+			order="BEFORE">
+			SELECT OrderTableSeq.nextval AS "orderNo" FROM DUAL
+		</selectKey>
+		INSERT INTO OrderTable
+		(orderNo, dNo, payNo, quantity, saleNo, userNo)
+		VALUES (#{orderNo}, #{dNo}, #{payNo}, #{quantity}, #{saleNo}, #{userNo})
+	</insert>
+
+	<select id="getOrderUserList" resultType="Order">
+		SELECT (orderNo, quantity, saleNo, userNo)
+		FROM OrderTable
+		WHERE OrderTable.userNo = #{userNO}
+	</select>
+
+</mapper>

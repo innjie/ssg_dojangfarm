@@ -26,19 +26,19 @@ public class FarmImpl implements FarmFacade{
 	private AddressDAO addressDAO;
 	@Autowired
 	private OrderDAO orderDAO;
-	//@Autowired
+//	@Autowired
 	private DeliveryDAO deliveryDAO;
 	@Autowired
 	private CardDAO cardDAO;
 	@Autowired
 	private CommonDAO commonDAO;
-	//@Autowired
+	@Autowired
 	private CommonNoticeDAO commonNoticeDAO;
 //	@Autowired
 	private DiscountDAO discountDAO;
 	@Autowired
 	private NormalDAO normalDAO;
-	//@Autowired
+//	@Autowired
 	private PaymentDAO paymentDAO;
 	@Autowired
 	private RefundDAO refundDAO;
@@ -377,18 +377,18 @@ public class FarmImpl implements FarmFacade{
 	}
 
 	@Override
-	public void updateCommonNotice(CommonNotice cn) {
-		commonNoticeDAO.updateCommonNotice(cn);
+	public int updateCommonNotice(CommonNotice cn) {
+		return commonNoticeDAO.updateCommonNotice(cn);
 	}
 
 	@Override
-	public void deleteCommonNotice(CommonNotice cn) {
-		commonNoticeDAO.deleteCommonNotice(cn);
+	public int deleteCommonNotice(CommonNotice cn) {
+		return commonNoticeDAO.deleteCommonNotice(cn);
 	}
 
 	@Override
-	public CommonNotice viewCommonNotice(CommonNotice cn) {
-		return commonNoticeDAO.viewCommonNotice(cn);
+	public CommonNotice viewCommonNotice(int CNNo) {
+		return commonNoticeDAO.viewCommonNotice(CNNo);
 	}
 
 	@Override

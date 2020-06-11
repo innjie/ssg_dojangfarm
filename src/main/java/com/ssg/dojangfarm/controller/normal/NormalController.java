@@ -30,10 +30,17 @@ public class NormalController {
 		this.normalService = normalService;
 	}
 	
+	//Normal Command
+	@ModelAttribute("normal")
+	public NormalCommand formBacking() {
+		return new NormalCommand();
+	}
+	
 	//insert form
-	@RequestMapping("/normal/insertForm.do")
+	@RequestMapping( "/normal/insertForm.do")
 	public String insertForm(
-			@ModelAttribute("normal") Normal normal) throws Exception {
+			@ModelAttribute("normal") NormalCommand normalCommand) throws Exception {
+		
 		return "normal/NormalInsertFormView";
 	}
 	

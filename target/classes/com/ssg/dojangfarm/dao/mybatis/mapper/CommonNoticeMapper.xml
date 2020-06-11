@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssg.dojangfarm.dao.mybatis.mapper.CommonNoticeMapper">
+<insert id = "insertCommonNotice" parameterType = "CommonNotice">
+<selectKey keyProperty = "CNNo" resultType = "int" order="BEFORE">
+SELECT CommonNoticeSeq.nextval AS "CNNo" FROM DUAL
+</selectKey>
+INSERT INTO CommonNotice
+(CNNo, title, info, userNo)
+VALUES
+(#{CNNo}, #{title}, #{info}, #{userNo})
+</insert>
+
+<update id = "updateCommonNotice" parameterType = "CommonNotice">
+UPDATE CommonNotice
+SET title = #{title}, info = #{info}
+</update>
+
+<delete id = "deleteCommonNotice" parameterType = "CommonNotice">
+DELETE FROM CommonNotice
+WHERE CNNo = CommonNotice.CNNo
+</delete>
+
+<select id = "viewCommonNotice" parameterType = "int" resultType = "CommonNotice">
+SELECT
+(CNNo, title, info, userNo)
+FROM CommonNotice
+WHERE CNNo = #{CNNo}
+</select>
+
+<select id = "getAllNoticeList" resultType = "Normal">
+SELECT
+(CNNo, title, info, userNo)
+FROM CommonNotice
+</select>
+
+<select id = "getCNoticeListByUserNo" parameterType = "int" resultType = "CommonNotice">
+SELECT (CNNo, title, info, userNo)
+FROM CommonNotice
+WHERE userNo = #{userNo}
+</select>
+<select id = "getCN" parameterType = "int"  resultType = "CommonNotice">
+SELECT (CNNo, title, info, userNo)
+FROM CommonNotice
+WHERE userNo = #{userNo}
+</select>
+
+</mapper>

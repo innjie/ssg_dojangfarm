@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper
+	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.RefundMapper">
+	<cache />
+
+	<insert id="refundSale" parameterType="int">
+		<selectKey keyProperty="refundNo" resultType="int"
+			order="BEFORE">
+			SELECT RefundSeq.nextval AS "refundNo" FROM DUAL
+		</selectKey>
+		INSERT INTO Refund
+		(refundNo, account, bank, name, refundType, orderNo)
+		VALUES
+		(#{refundNo}, #{account}, #{bank}, #{name}, #{refundType}, #{orderNo})
+	</insert>
+
+	<select id="getRefund" resultType="Refund">
+		SELECT (refundNo, account, bank, name, refundType, orderNo)
+		FROM Refund
+		WHERE refundNo = #{refundNo}
+	</select>
+
+	<select id="getRefundList" resultType="Refund">
+		SELECT (refundNo, orderNo)
+		FROM Refund
+		WHERE userNo = #{userNo}
+	</select>
+
+</mapper>

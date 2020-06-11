@@ -93,9 +93,9 @@ public interface FarmFacade {
 	
 	//CommonNotice
 	public int insertCommonNotice(CommonNotice cn);
-	public void updateCommonNotice(CommonNotice cn);
-	public void deleteCommonNotice(CommonNotice cn);
-	public CommonNotice viewCommonNotice(CommonNotice cn);
+	public int updateCommonNotice(CommonNotice cn);
+	public int deleteCommonNotice(CommonNotice cn);
+	public CommonNotice viewCommonNotice(int CNNo);
 	public List<CommonNotice> getAllNoticeList();
 	public List<CommonNotice> getCNoticeListByUserNo(int userNo);
 	

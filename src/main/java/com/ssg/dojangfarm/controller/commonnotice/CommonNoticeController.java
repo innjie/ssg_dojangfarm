@@ -32,8 +32,8 @@ public class CommonNoticeController {
 	}
 	//get CN view
 	@RequestMapping("/commonNotice/{userId}")
-	public String getCN(@PathVariable String userId, Model  model) {
-		CommonNotice cn = commonNoticeService.getCN(userId);
+	public String getCN(@PathVariable int CNNo, Model  model) {
+		CommonNotice cn = commonNoticeService.viewCommonNotice(CNNo);
 		if(cn == null) {
 			return "commonnotice/CnNotFound";
 		}

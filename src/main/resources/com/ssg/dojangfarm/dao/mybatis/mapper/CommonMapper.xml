@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.CommonMapper">
+	<cache />
+	<insert id="insertSale" parameterType="Common">
+		<selectKey keyProperty="saleNo" resultType="int"
+			order="BEFORE">
+			SELECT CommonSeq.nextval AS "saleNo" FROM DUAL
+		</selectKey>
+		INSERT INTO Common
+		(saleNo, saleType, title, saleState, info, price,
+		count, state, pNo, userNo,
+		regiDate, deadline, min)
+		VALUES
+		(#{saleNo},
+		#{saleType}, #{title}, #{saleState}, #{info}, #{price}, #{count},
+		#{state}, #{product.pNo}, #{user.userNo}, #{regiDate}, #{deadline},
+		#{min})
+	</insert>
+
+	<update id="updateSale" parameterType="Common">
+		UPDATE Common
+		SET info =
+		#{info}, price = #{price}, count = #{regiDate}, deadline =
+		#{deadline}, min = #{min}
+
+	</update>
+	<select id="getCommonSale" parameterType="int"
+		resultType="Common">
+		SELECT
+		(saleNo, saleType, title, saleState, info, price,
+		count, state, pNo, userNo,
+		regiDate, deadline, min)
+		FROM Common
+		WHERE
+		saleNo = #{saleNo}
+	</select>
+	<select id="getAllCommonList" resultType="Common">
+		SELECT
+		saleNo, title,
+		User.userNo, regiDate
+		FROM Common, User
+		WHERE
+		Common.userNo = User.userNo
+	</select>
+	<select id="getCommonListByUserNo" resultType="Common">
+		SELECT saleNo,
+		title, User.userNo, regiDate
+		From Common, User
+		WHERE Common.userNo =
+		User.userNo AND Common.userNo=#{userNo}
+	</select>
+	<select id="searchCommon" resultType="Common">
+		SELECT saleNo, title,
+		User.userNo, regiDate
+		FROM Common, User
+		WHERE Common.userNo =
+		User.userNo
+		AND Common.userNo=#{userNo}
+		AND title LIKE '%#{word}%'
+	</select>
+	<insert id="insertCommonjoin" parameterType="CommonJoin">
+		<selectKey keyProperty="CJNo" resultType="int"
+			order="BEFORE">
+			SELECT CommonJoinSeq.nextval as "cjNo" FROM DUAL
+		</selectKey>
+		INSERT INTO CommonJoin
+		(cjNo, userNo, saleNo, cjState, dNo, payNo,
+		count)
+		VALUES
+		(#{cjNo}, #{userNo}, #{saleNo}, wait, null, null)
+
+	</insert>
+	<delete id="cancelCommonjoin" parameterType="int">
+		DELETE FROM
+		CommonJoin
+		WHERE cjNo = #{cjNo}
+	</delete>
+	<update id="updateCommonjoin" parameterType="int">
+		UPDATE CommonJoin
+		SET count=#{count}
+	</update>
+
+	<select id="getCommonJoin" resultType="CommonJoin">
+		SELECT (cjNo, userNo,
+		saleNo, cjState, dNo, payNo, count)
+		FROM CommonJoin
+		WHERE cjNo = #{cjNo}
+	</select>
+	<select id="getCJList" resultType="CommonJoin">
+		SELECT(cjNo, saleNo, userNo)
+		FROM CommonJoin
+		WHERE saleNo = #{saleNo}
+	</select>
+	<select id="getCJListByUserNo" resultType="CommonJoin">
+		SELECT (cjNo, saleNo,
+		userNo)
+		FROM CommonJoin
+		WHERE userNo = #[userNo}]
+	</select>
+
+</mapper>

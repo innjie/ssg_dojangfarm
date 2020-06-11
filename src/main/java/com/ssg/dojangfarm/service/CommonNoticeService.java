@@ -7,10 +7,9 @@ import com.ssg.dojangfarm.domain.CommonNotice;
 public interface CommonNoticeService {
 	
 	public int insertCommonNotice(CommonNotice cn);// throws dataAcception;
-	public void updateCommonNotice(CommonNotice cn);// throws dataAcception;
-	public void deleteCommonNotice(CommonNotice cn);// throws dataAcception;
-	public CommonNotice viewCommonNotice(CommonNotice cn);
+	public int updateCommonNotice(CommonNotice cn);// throws dataAcception;
+	public int deleteCommonNotice(CommonNotice cn);// throws dataAcception;
+	public CommonNotice viewCommonNotice(int CNNo);
 	public List<CommonNotice> getAllNoticeList();
 	public List<CommonNotice> getCNoticeListByUserNo(int userNo);
-	public CommonNotice getCN(String userId);
 }

@@ -12,30 +12,29 @@
 <title>회원 정보 수정</title>
 </head>
 <body>
-	<form:form modelAttribute="user" >
-		<form:label path="id">ID</form:label>
-		${id}
-		<br>
+	<form:form modelAttribute="userCommand" >
+		ID - ${userCommand.id}
+		<br><br>
 		
 		<form:label path="name">이름 </form:label>
 		<form:input path="name" />
 		<form:errors path="name" />
-		<br>
+		<br><br>
 		
 		<form:label path="password">암호 </form:label>
 		<form:password path="password" />
 		<form:errors path="password" />
-		<br>
+		<br><br>
 		
 		<form:label path="confirmPassword">암호 학인 </form:label>
 		<form:password path="confirmPassword" />
 		<form:errors path="confirmPassword" />
-		<br>
+		<br><br>
 		
 		<form:label path="phone">전화번호 </form:label>
 		<form:input path="phone" />
 		<form:errors path="phone" />
-		<br>
+		<br><br>
 		
 		<input type="submit" value="수정" />
 		

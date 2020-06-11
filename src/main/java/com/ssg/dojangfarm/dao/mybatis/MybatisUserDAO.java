@@ -25,28 +25,18 @@ public class MybatisUserDAO implements UserDAO{
 		return userMapper.getUser(userNo);
 	}
 	
-	public boolean existingId(String id) {
-		if(userMapper.existingId(id)) {
-			return true;
-		}
-		else {
-			return false;
-		}		
+	public User existingId(String id) {
+		return userMapper.existingId(id);
 	}
-	public boolean existingPhone(String phone) {
-		if(userMapper.existingPhone(phone)) {
-			return true;
-		}
-		else {
-			return false;
-		}	
+	public User existingPhone(String phone) {
+		return userMapper.existingPhone(phone);
 	}
 	public User checkIdPw(String id, String password) {
 		return userMapper.checkIdPw(id, password);
 	}
 	
 	public boolean confirmPassword(String password, String cPassword) {
-		if(password == cPassword) {
+		if(password.equals(cPassword)) {
 			return true;
 		}
 		else {

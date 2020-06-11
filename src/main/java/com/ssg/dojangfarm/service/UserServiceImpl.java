@@ -28,11 +28,11 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getUser(userNo);
 	}
 
-	public boolean existingId(String id) {
+	public User existingId(String id) {
 		return userDAO.existingId(id);
 	}
 
-	public boolean existingPhone(String phone) {
+	public User existingPhone(String phone) {
 		return userDAO.existingPhone(phone);
 	}
 	

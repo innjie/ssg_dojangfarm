@@ -19,9 +19,9 @@ public class ImmePurchaseController {
 	private static final String LISTIMPUR = "auction/MyImPurListView";
 	private static final String VIEWIMPUR = "auction/MyImPurView";
 	
+	@Autowired
 	private FarmFacade farm;
 	
-	@Autowired
 	public void setFarm(FarmFacade  farm) {
 		this.farm = farm;
 	}

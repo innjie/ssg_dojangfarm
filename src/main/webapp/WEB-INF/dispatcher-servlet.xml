@@ -8,11 +8,11 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
-   	<!-- scan package and make bean  -->
-   <!--  <context:component-scan base-package="com.ssg.dojangfarm"/>   -->
+   	<!-- scan package and make bean  -->   	
+    <context:component-scan base-package="com.ssg.dojangfarm.controller.*"/>   
 
 	<!-- make HandlerMapping bean -->
-	<!-- <mvc:annotation-driven /> -->
+	 <mvc:annotation-driven /> 
 	
 	<mvc:default-servlet-handler />
 	

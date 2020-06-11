@@ -23,18 +23,18 @@ public class CommonNoticeServiceEndpoint {
 	}
 
 	@WebMethod
-	public void updateCommonNotice(CommonNotice cn) {
-		commonNoticeService.updateCommonNotice(cn);
+	public int updateCommonNotice(CommonNotice cn) {
+		return commonNoticeService.updateCommonNotice(cn);
 	}
 
 	@WebMethod
-	public void deleteCommonNotice(CommonNotice cn) {
-		commonNoticeService.deleteCommonNotice(cn);
+	public int deleteCommonNotice(CommonNotice cn) {
+		return commonNoticeService.deleteCommonNotice(cn);
 	}
 
 	@WebMethod
-	public CommonNotice viewCommonNotice(CommonNotice cn) {
-		return commonNoticeService.viewCommonNotice(cn);
+	public CommonNotice viewCommonNotice(int CNNo) {
+		return commonNoticeService.viewCommonNotice(CNNo);
 	}
 
 	@WebMethod

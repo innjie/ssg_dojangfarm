@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.User;
@@ -29,10 +28,11 @@ public class AuctionController {
 	private FarmFacade farm;
 	
 	@Autowired
-	public void setFarm(FarmFacade  farm) {
+	public void setFarm(FarmFacade farm) {
 		this.farm = farm;
 	}
-	
+
+
 	//AuctionCommand °´Ã¼ »ý¼º
 	@ModelAttribute("auction")
 	public AuctionCommand formBacking() {

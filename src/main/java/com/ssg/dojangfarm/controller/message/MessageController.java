@@ -38,14 +38,16 @@ public class MessageController {
 	public String listSendMsg(
 			ModelMap model,
 			HttpServletRequest request) throws Exception {
-
+		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
-		
+
+		System.out.println("send message list " + user.getUserNo());
+
 		PagedListHolder<Message> sendMessageList= new PagedListHolder<Message>(this.farm.sendMessageList(user.getUserNo()));
 
 		sendMessageList.setPageSize(4);
-		model.put("sendMessageList", sendMessageList);
+		model.put("sendMessageList", sendMessageList.getSource());
 		return LISTSENDMESSAGE;   
 	}
 
@@ -82,7 +84,7 @@ public class MessageController {
 		PagedListHolder<Message> receiveMessageList = new PagedListHolder<Message>(this.farm.receiveMessageList(user.getUserNo()));
 
 		receiveMessageList.setPageSize(4);
-		model.put("receiveMessageList ", receiveMessageList );
+		model.put("receiveMessageList", receiveMessageList.getSource());
 		return LISTRECEIVEMESSAGE;
 	}
 
@@ -97,10 +99,10 @@ public class MessageController {
 			throw new IllegalStateException("Cannot find pre-loaded receive message list");
 		}
 		if ("next".equals(page)) { 
-			receiveMessageList .nextPage();
+			receiveMessageList.nextPage();
 		}
 		else if ("previous".equals(page)) { 
-			receiveMessageList .previousPage();
+			receiveMessageList.previousPage();
 		}
 		
 		return LISTRECEIVEMESSAGE;
@@ -122,24 +124,27 @@ public class MessageController {
 	}
 
 	//find Message
-	@RequestMapping("/message/viewFindMessageList.do")
+	@RequestMapping("/message/findMessageList.do")
 	public String findMsg(
 			@RequestParam("title") String title,
 			@RequestParam("type") String type,
 			ModelMap model) throws Exception {
-
-		PagedListHolder<Message> findMessageList= new PagedListHolder<Message>(this.farm.findMsg(title));
-
-		findMessageList.setPageSize(4);
-		model.put("findMessageList", findMessageList);
 		
+		PagedListHolder<Message> findMessageList = new PagedListHolder<Message>(this.farm.findMsg(title));
+		findMessageList.setPageSize(4);
+		model.put("title", title);
+
 		if(type.equals("receive")) {
+			model.put("receiveMessageList", findMessageList.getSource());
 			return LISTRECEIVEMESSAGE;
 		}
 		else {
+			model.put("sendMessageList", findMessageList.getSource());
 			return LISTSENDMESSAGE;
 		}
 	}
+	
+
 
 /*	//find Message by page
 	@RequestMapping("/message/viewFindMessageList2.do")
@@ -179,9 +184,9 @@ public class MessageController {
 			msgUserNo = this.farm.getSUserNo(msgNo);		
 		}
 		
-	//	if(user.getUserNo() == msgUserNo) {
+		if(user.getUserNo() == msgUserNo) {
 			this.farm.deleteMsg(msgNo);	
-	//	}
+		}
 
 		if(type.equals("receive")) {
 			return "redirect:/message/viewReceiveMessageList.do";
@@ -191,7 +196,7 @@ public class MessageController {
 		}
 	}
 
-//	//send message ... view message form
+	//send message ... view message form
 //	@RequestMapping(value = "/message/sendMsg.do",  method = RequestMethod.GET)
 //	public ModelAndView messageForm(
 //			@RequestParam(value = "saleNo", defaultValue="-1") int saleNo,

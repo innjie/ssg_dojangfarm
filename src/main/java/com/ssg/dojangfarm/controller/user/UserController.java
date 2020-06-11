@@ -18,7 +18,7 @@ import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
 public class UserController {
-	private static final String VIEWUSER = "user/UserView.jsp";
+	private static final String VIEWUSER = "user/UserView";
 	private static final String USERFORM = "user/CreateUserFormView";
 	private static final String UPDATEUSERFORM = "user/ModifyUserFormView";
 	

@@ -9,19 +9,22 @@
     	FROM Message, UserTable
     	WHERE 
     		rUserNo = UserTable.userNo AND 
-    		sUserNo = #{userNo}
+    		sUserNo = #{userNo} AND
+    		deleteState != '1'
   	</select>
   	
   	<select id="receiveMessageList" parameterType="int" resultType="Message">
     	SELECT 
-    		msgNo, title, sDate, id AS "sUser.id"
+    		msgNo, title, sDate, deleteState, id AS "sUser.id"
     	FROM Message, UserTable
     	WHERE 
     		sUserNo = UserTable.userNo AND 
-    		rUserNo = #{userNo}
+    		rUserNo = #{userNo} AND
+    		deleteState != '1'
   	</select>
   	
-  	<select id="findMsg" parameterType="String" resultType="Message">
+  	 
+  		<select id="findMsg" parameterType="String" resultType="Message">
     	SELECT 
     		msgNo, title, sDate, read, deleteState, 
     		rUser.id AS "rUser.id", sUser.id AS "sUser.id"
@@ -29,11 +32,25 @@
     	WHERE 
     		sUserNo = sUser.userNo AND 
     		rUserNo = rUser.userNo AND 
-    		Message.title = #{title}
+    		title LIKE #{paramValue} AND
+    		deleteState != '1'
     		
   	</select>
-  	
+ 
+ <!-- 여기에 판매관련된거 아래꺼보고 추가하기 -->
   	<select id="checkMsg" parameterType="int" resultType="Message">
+    	SELECT 
+    		m.title, m.sDate, m.read, m.deleteState, m.content,
+    		rUser.id AS "rUser.id", sUser.id AS "sUser.id",
+    		m.msgNo
+    	FROM Message m, UserTable rUser, UserTable sUser
+    	WHERE 
+    		m.sUserNo = sUser.userNo AND 
+    		m.rUserNo = rUser.userNo AND 
+    		m.msgNo = #{msgNo}
+  	</select>
+  	
+  	<select id="checkMsgWithCMsg" parameterType="int" resultType="Message">
     	SELECT 
     		m.title, m.sDate, m.read, m.deleteState, m.content,
     		rUser.id AS "rUser.id", sUser.id AS "sUser.id",
@@ -46,7 +63,6 @@
     		m.saleNo = Normal.saleNo AND
     		m.msgNo = #{msgNo}
   	</select>
-  	
   	
   	<insert id="sendMsg" parameterType="Message">
   		<selectKey keyProperty="msgNo" resultType="int" order="BEFORE">
@@ -65,7 +81,7 @@
     	WHERE msgNo = #{msgNo}
   	</update>
   	
-	<select id="getRUserNo" parameterType="int" resultType="User">
+	<select id="getRUserNo" parameterType="int" resultType="int">
     	SELECT 
     		rUserNo
     	FROM Message
@@ -73,7 +89,7 @@
     		msgNo = #{msgNo}
   	</select>
   	
-  	<select id="getSUserNo" parameterType="int" resultType="User">
+  	<select id="getSUserNo" parameterType="int" resultType="int">
     	SELECT 
     		sUserNo
     	FROM Message

@@ -14,9 +14,12 @@ public class Message implements Serializable{
 	private String title;
 	private String content;
 	private Date sDate;		//send
-	private Boolean deleteState;
+	private String deleteState;
 	
-	
+
+	public Message() {
+		super();
+	}
 	public Message(int sUserNo, int rUserNo, String title, String content) {
 		this.sUser.setUserNo(sUserNo);
 		this.rUser.setUserNo(rUserNo);
@@ -77,10 +80,10 @@ public class Message implements Serializable{
 	public void setsDate(Date sDate) {
 		this.sDate = sDate;
 	}
-	public Boolean getDeleteState() {
+	public String getDeleteState() {
 		return deleteState;
 	}
-	public void setDeleteState(Boolean deleteState) {
+	public void setDeleteState(String deleteState) {
 		this.deleteState = deleteState;
 	}
 	

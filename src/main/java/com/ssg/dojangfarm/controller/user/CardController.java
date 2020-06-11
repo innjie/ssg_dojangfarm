@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -75,10 +76,14 @@ public class CardController {
 		return new ModelAndView(VIEWCARD, "card", card);
 	}
 	
-	//create card ... form - servlet.xml
-
+	//create card ... 
+	@RequestMapping(value="/card/insertCard.do", method=RequestMethod.GET)
+	public String insertForm() {
+		return CARDFORM;
+	}
+	
 	//create card ... insert
-	@RequestMapping("/card/insertCard.do")
+	@RequestMapping(value="/card/insertCard.do", method=RequestMethod.POST)
 	public String insert(
 			@RequestParam("bank") String bank,
 			@RequestParam("type") String type,

@@ -13,31 +13,31 @@
 </head>
 <body>
 	<h1>도장팜 회원가입</h1>
-	<form:form modelAttribute="user" action='<c:url value="/user/createUser.do"/>'>
+	<form:form modelAttribute="userCommand" >
 		<form:label path="id">ID</form:label>
 		<form:input path="id" />
 		<form:errors path="id" />
-		<br>
+		<br><br>
 		
 		<form:label path="name">이름 </form:label>
 		<form:input path="name" />
 		<form:errors path="name" />
-		<br>
+		<br><br>
 		
 		<form:label path="password">암호 </form:label>
 		<form:password path="password" />
 		<form:errors path="password" />
-		<br>
+		<br><br>
 		
 		<form:label path="confirmPassword">암호 학인 </form:label>
 		<form:password path="confirmPassword" />
 		<form:errors path="confirmPassword" />
-		<br>
+		<br><br>
 		
 		<form:label path="phone">전화번호 </form:label>
 		<form:input path="phone" />
 		<form:errors path="phone" />
-		<br>
+		<br><br>
 		
 		<input type="submit" value="추가" />
 		

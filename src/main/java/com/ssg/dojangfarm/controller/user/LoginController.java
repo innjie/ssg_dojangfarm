@@ -73,7 +73,7 @@ public class LoginController {
 			if (loginCommand.getForwardAction() != null) 
 				return new ModelAndView("redirect:" + loginCommand.getForwardAction());
 			else 
-				return new ModelAndView("index");
+				return new ModelAndView("Main");
 		}
 	}
 }

@@ -56,8 +56,8 @@
     		userNo, name, phone, id, password
     	FROM UserTable
     	WHERE 
-    		id = #{param1}
-    		password = #{param2}
+    		id = #{id} AND
+    		password = #{password}
   	</select>
 
  </mapper>

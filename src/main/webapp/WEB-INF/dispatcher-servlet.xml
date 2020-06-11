@@ -21,22 +21,6 @@
 	<mvc:view-controller path="user/insertCardForm.do" view-name="user/InsertCardFormView" />
 	
 	
-	<mvc:view-controller path="user/login.do" view-name="user/LoginView" />
-	<mvc:view-controller path="user/createUser.do" view-name="user/CreateUserFormView" />
-	<mvc:view-controller path="user/myPage.do" view-name="user/MyPage" />
-	<mvc:view-controller path="message/viewSendMessageList.do" view-name="message/SendMessageListView" />
-	<mvc:view-controller path="message/viewReceiveMessageList.do" view-name="message/ReceiveMessageListView" />
-	<mvc:view-controller path="auction/viewAuctionList.do" view-name="auction/AuctionListView" />
-	<mvc:view-controller path="user/getUser.do" view-name="user/UserView" />
-	<mvc:view-controller path="user/getAddressList.do" view-name="user/AddressListView" />
-	<mvc:view-controller path="user/viewCardList.do" view-name="user/CardListView" />
-	<mvc:view-controller path="auction/viewMyAuctionList.do" view-name="auction/MyAuctionListView" />
-	<mvc:view-controller path="auction/viewMyBidList.do" view-name="auction/MyBidListView" />
-	<mvc:view-controller path="auction/viewMySBidList.do" view-name="auction/MySBidListView" />
-	<mvc:view-controller path="auction/viewMyImPurList.do" view-name="auction/MyImPurListView" />
-	<mvc:view-controller path="normal/viewNormal.do" view-name="normal/NormalView" />
-	<mvc:view-controller path="normal/list.do" view-name="normal/NormalListView"/>
-	<mvc:view-controller path="normal/insertForm.do" view-name= "normal/NormalInsertFormView"/>
 	
 	<bean id="viewResolver" 
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -12,7 +12,7 @@
 <title>회원 정보 수정</title>
 </head>
 <body>
-	<form:form modelAttribute="user" action='<c:url value="/user/modifyUser.do"/>'>
+	<form:form modelAttribute="user" >
 		<form:label path="id">ID</form:label>
 		${id}
 		<br>

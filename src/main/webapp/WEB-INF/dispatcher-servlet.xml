@@ -18,8 +18,7 @@
 	
 	<!-- really use -->
 	<mvc:view-controller path="index.do" view-name="Main" />
-	<mvc:view-controller path="user/insertCardForm.do" view-name="user/InsertCardFormView" />
-	
+	<mvc:view-controller path="user/myPage.do" view-name="user/MyPage" />
 	
 	
 	<bean id="viewResolver" 
@@ -30,7 +29,6 @@
 
  	<!-- set interceptors -->
    	<mvc:interceptors>
-   		<!-- before approach, have to login -->
 		<mvc:interceptor>
 			<mvc:mapping path="/user/myPage.do" />  
 			<mvc:mapping path="/message/*.do" />
@@ -49,7 +47,7 @@
 			<bean class="com.ssg.dojangfarm.controller.user.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>     
-	
+		
 	<!-- set messageSource -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">

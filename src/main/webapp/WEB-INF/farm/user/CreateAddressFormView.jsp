@@ -12,7 +12,7 @@
 <title>주소 추가</title>
 </head>
 <body>
-	<form:form modelAttribute="address" action='<c:url value="/user/createAddress.do"/>'>
+	<form:form modelAttribute="address" >
 		
 		<form:label path="address.aName">주소 이름 </form:label>
 		<form:input path="address.aName" />

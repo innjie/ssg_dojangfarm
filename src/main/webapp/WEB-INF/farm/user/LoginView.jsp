@@ -12,15 +12,15 @@
 <title>로그인</title>
 </head>
 <body>
-	<form:form modelAttribute="login" action='<c:url value="/user/login.do"/>' method="Post">	
+<c:set var="targetUrl"><c:url value="/user/login.do" /></c:set>
+
+	<form:form commandName="login" action="${targetUrl}">
 		<br>
-	
-		<form:errors path="userId" />
+			
+		<form:label path="id">아이디 </form:label>
+		<form:input path="id" />
+		<form:errors path="id" />
 		<br><br>
-		
-		<form:label path="userId">아이디 </form:label>
-		<form:input path="userId" />
-		<br>
 		
 		<form:label path="password">암호 </form:label>
 		<form:password path="password" />

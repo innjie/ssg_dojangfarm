@@ -3,11 +3,13 @@ package com.ssg.dojangfarm.dao.mybatis;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ssg.dojangfarm.dao.CommonNoticeDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.CommonNoticeMapper;
 import com.ssg.dojangfarm.domain.CommonNotice;
 
+@Repository
 public class MybatisCommonNoticeDAO implements CommonNoticeDAO {
 	@Autowired
 	private CommonNoticeMapper cnMapper;

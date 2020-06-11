@@ -3,12 +3,14 @@ package com.ssg.dojangfarm.dao.mybatis;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ssg.dojangfarm.dao.OrderDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.OrderMapper;
 import com.ssg.dojangfarm.domain.Order;
 import com.ssg.dojangfarm.domain.Refund;
 
+@Repository
 public class MybatisOrderDAO implements OrderDAO{
 	@Autowired
 	private OrderMapper orderMapper;

@@ -14,7 +14,7 @@ import com.ssg.dojangfarm.domain.Payment;
 @Component
 @WebService(serviceName="PaymentService")
 public class PaymentServiceEndpoint {
-	@Autowired
+	//@Autowired
 	PaymentService paymentService; // inject PaymentServiceImpl
 
 	@WebMethod

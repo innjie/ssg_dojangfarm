@@ -3,11 +3,13 @@ package com.ssg.dojangfarm.dao.mybatis;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ssg.dojangfarm.dao.NormalDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.NormalMapper;
 import com.ssg.dojangfarm.domain.Normal;
 
+@Repository
 public class MybatisNormalDAO implements NormalDAO{
 	@Autowired
 	private NormalMapper normalMapper;

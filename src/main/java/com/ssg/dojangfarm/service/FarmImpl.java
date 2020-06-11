@@ -15,8 +15,6 @@ import com.ssg.dojangfarm.domain.*;
 @Transactional
 public class FarmImpl implements FarmFacade{
 	@Autowired
-	private CategoryDAO categoryDAO;
-	@Autowired
 	private MessageDAO messageDAO;
 	@Autowired
 	private QnADAO qnaDAO;
@@ -28,7 +26,7 @@ public class FarmImpl implements FarmFacade{
 	private AddressDAO addressDAO;
 	@Autowired
 	private OrderDAO orderDAO;
-	@Autowired
+//	@Autowired
 	private DeliveryDAO deliveryDAO;
 	@Autowired
 	private CardDAO cardDAO;
@@ -36,11 +34,11 @@ public class FarmImpl implements FarmFacade{
 	private CommonDAO commonDAO;
 	@Autowired
 	private CommonNoticeDAO commonNoticeDAO;
-	@Autowired
+//	@Autowired
 	private DiscountDAO discountDAO;
 	@Autowired
 	private NormalDAO normalDAO;
-	@Autowired
+//	@Autowired
 	private PaymentDAO paymentDAO;
 	@Autowired
 	private RefundDAO refundDAO;
@@ -51,24 +49,6 @@ public class FarmImpl implements FarmFacade{
 	//-------------------------------------------------------------------------
 	// Operation methods, implementing the FarmFacade interface
 	//-------------------------------------------------------------------------
-	
-	
-	//-------------------------------------------------------------------------
-	//Category
-	//-------------------------------------------------------------------------
-	
-	public FarmImpl() {
-		super();
-	}
-	
-	@Override
-	public Category getCategory(int cateNo) {
-		return categoryDAO.getCategory(cateNo);
-	}
-	@Override
-	public List<Category> getCategoryList() {
-		return categoryDAO.getCategoryList();
-	}
 	
 	
 	//-------------------------------------------------------------------------

@@ -11,7 +11,7 @@ import com.ssg.dojangfarm.domain.Payment;
 @Service("PaymentServiceImpl")
 public class PaymentServiceImpl implements PaymentService {
 
-	@Autowired
+	//@Autowired
 	private PaymentDAO paymentDAO;
 
 	@Override

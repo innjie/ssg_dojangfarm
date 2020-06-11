@@ -3,11 +3,13 @@ package com.ssg.dojangfarm.dao.mybatis;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ssg.dojangfarm.dao.RefundDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.RefundMapper;
 import com.ssg.dojangfarm.domain.Refund;
 
+@Repository
 public class MybatisRefundDAO implements RefundDAO  {
 	@Autowired
 	private RefundMapper refundMapper;

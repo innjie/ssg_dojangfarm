@@ -3,12 +3,14 @@ package com.ssg.dojangfarm.dao.mybatis;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ssg.dojangfarm.dao.CommonDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.CommonMapper;
 import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonJoin;
 
+@Repository 
 public class MybateisCommonDAO implements CommonDAO{
 	@Autowired
 	private CommonMapper commonMapper;

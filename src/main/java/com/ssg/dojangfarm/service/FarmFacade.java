@@ -7,9 +7,7 @@ import com.ssg.dojangfarm.domain.*;
 //DojangFarm's central business interface. 
 
 public interface FarmFacade {
-	//Category
-	public Category getCategory(int cateNo);
-	public List<Category> getCategoryList();
+
 	
 	//Message
 	public void sendMsg(Message msg);

@@ -14,7 +14,7 @@ import com.ssg.dojangfarm.domain.CommonNotice;
 @Component
 @WebService(serviceName="CommonNoticeService")
 public class CommonNoticeServiceEndpoint {
-	@Autowired
+	//@Autowired
 	CommonNoticeService commonNoticeService; // inject CommonNoticeService
 
 	@WebMethod

@@ -11,7 +11,7 @@ import com.ssg.dojangfarm.domain.Delivery;
 @Component
 @WebService(serviceName="DeliveryService")
 public class DeliveryServiceEndpoint {
-	@Autowired
+	//@Autowired
 	DeliveryService deliveryService; // inject deliveryServiceImpl
 	
 	@WebMethod

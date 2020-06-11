@@ -11,7 +11,7 @@ import com.ssg.dojangfarm.domain.CommonNotice;
 @Service("CommonNoticeServiceImpl")
 public class CommonNoticeServiceImpl implements CommonNoticeService {
 
-	@Autowired
+	//@Autowired
 	private CommonNoticeDAO commonNoticeDAO;
 
 	@Override

@@ -9,7 +9,7 @@ import com.ssg.dojangfarm.domain.Delivery;
 @Service("addressServiceImpl")
 public class DeliveryServiceImpl {
 	
-	@Autowired
+	//@Autowired
 	private DeliveryDAO deliveryDAO;
 	
 	public Delivery getDelivery(int dNo) {

@@ -2,7 +2,7 @@
  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper
-	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.NormalMapper">
+	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.RefundMapper">
 	<cache />
 
 	<insert id="refundSale" parameterType="int">

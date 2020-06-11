@@ -1,4 +1,3 @@
-<!--
 <?xml version="1.0" encoding="UTF-8"?>
  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
@@ -6,7 +5,7 @@
 	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.NormalMapper">
 	<cache />
 
-	<insert id="refundSale" resultType="int">
+	<insert id="refundSale" parameterType="int">
 		<selectKey keyProperty="refundNo" resultType="int"
 			order="BEFORE">
 			SELECT RefundSeq.nextval AS "refundNo" FROM DUAL
@@ -30,4 +29,3 @@
 	</select>
 
 </mapper>
- -->

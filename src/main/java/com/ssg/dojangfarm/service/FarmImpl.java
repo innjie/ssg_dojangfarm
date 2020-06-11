@@ -397,18 +397,18 @@ public class FarmImpl implements FarmFacade{
 	}
 
 	@Override
-	public void updateCommonNotice(CommonNotice cn) {
-		commonNoticeDAO.updateCommonNotice(cn);
+	public int updateCommonNotice(CommonNotice cn) {
+		return commonNoticeDAO.updateCommonNotice(cn);
 	}
 
 	@Override
-	public void deleteCommonNotice(CommonNotice cn) {
-		commonNoticeDAO.deleteCommonNotice(cn);
+	public int deleteCommonNotice(CommonNotice cn) {
+		return commonNoticeDAO.deleteCommonNotice(cn);
 	}
 
 	@Override
-	public CommonNotice viewCommonNotice(CommonNotice cn) {
-		return commonNoticeDAO.viewCommonNotice(cn);
+	public CommonNotice viewCommonNotice(int CNNo) {
+		return commonNoticeDAO.viewCommonNotice(CNNo);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,14 +19,15 @@ import com.ssg.dojangfarm.domain.Card;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
+@Controller
 public class CardController {
 	private static final String LISTCARD = "card/CardListView";
 	private static final String VIEWCARD = "card/CardView";
 	private static final String CARDFORM = "card/InsertCardFormView";
 	
+	@Autowired
 	private FarmFacade farm;
 	
-	@Autowired
 	public void setFarm(FarmFacade  farm) {
 		this.farm = farm;
 	}

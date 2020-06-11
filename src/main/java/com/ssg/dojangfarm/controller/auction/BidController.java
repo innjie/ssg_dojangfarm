@@ -27,9 +27,9 @@ public class BidController {
 	private static final String BIDFORM = "auction/BidAuctionFormView.jsp";
 	private static final String BIDSUCCESS = "auction/BidSuccessView.jsp";
 
+	@Autowired
 	private FarmFacade farm;
 	
-	@Autowired
 	public void setFarm(FarmFacade  farm) {
 		this.farm = farm;
 	}

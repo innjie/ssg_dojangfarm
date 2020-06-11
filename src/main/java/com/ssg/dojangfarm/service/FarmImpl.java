@@ -46,6 +46,7 @@ public class FarmImpl implements FarmFacade{
 	private RefundDAO refundDAO;
 	
 	
+	 
 	
 	//-------------------------------------------------------------------------
 	// Operation methods, implementing the FarmFacade interface
@@ -55,6 +56,10 @@ public class FarmImpl implements FarmFacade{
 	//-------------------------------------------------------------------------
 	//Category
 	//-------------------------------------------------------------------------
+	
+	public FarmImpl() {
+		super();
+	}
 	
 	@Override
 	public Category getCategory(int cateNo) {

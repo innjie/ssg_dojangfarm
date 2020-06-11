@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +20,16 @@ import com.ssg.dojangfarm.domain.Card;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
+@Controller
 public class AddressController {
 	private static final String LISTADDRESS= "address/AddressListView";
 	private static final String VIEWADDRESS = "address/AddressView";
 	private static final String ADDADDRESSFORM = "address/CreateAddressFormView";
 	private static final String UPDATEADDRESSORM = "address/ModifyAddressFormView";
 	
+	@Autowired
 	private FarmFacade farm;
 	
-	@Autowired
 	public void setFarm(FarmFacade  farm) {
 		this.farm = farm;
 	}

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +16,13 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @RequestMapping("/user/login.do")
+@Controller
 public class LoginController {
 	private static final String LOGINFORM = "user/LoignView";
 	
+	@Autowired
 	private FarmFacade farm;
 	
-	@Autowired
 	public void setFarm(FarmFacade  farm) {
 		this.farm = farm;
 	}

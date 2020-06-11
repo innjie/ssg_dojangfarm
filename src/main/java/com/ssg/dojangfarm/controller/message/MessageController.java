@@ -26,9 +26,9 @@ public class MessageController {
 	private static final String LISTRECEIVEMESSAGE = "message/ReceiveMessageListView";
 	private static final String LISTSENDMESSAGE = "message/SendMessageListView";
 	
+	@Autowired
 	private FarmFacade farm;
 
-	@Autowired
 	public void setFarm(FarmFacade farm) {
 		this.farm = farm;
 	}

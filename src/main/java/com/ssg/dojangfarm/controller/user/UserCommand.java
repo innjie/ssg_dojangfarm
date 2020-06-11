@@ -6,17 +6,32 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class UserCommand {
-	@NotBlank
+	@NotBlank @Size(min=2)
 	private String id;
 	@NotEmpty	
 	private String name;
-	@NotBlank @Size(min=6)
+	@NotBlank @Size(min=4)
 	private String password;
 	@NotBlank
 	private String confirmPassword;
 	@NotEmpty @Pattern(regexp = "01[01679]-\\d{3,4}-\\d{4}")
 	private String phone;
+	private boolean newAccount;
 	
+	
+	
+	public UserCommand() {
+		super();
+		this.newAccount = true;
+	}
+	
+	public UserCommand(String id, String name, String phone) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.newAccount = false;
+	}
 	
 	public String getId() {
 		return id;
@@ -48,6 +63,8 @@ public class UserCommand {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+	public boolean isNewAccount() {
+		return newAccount;
+	}
 	
 }

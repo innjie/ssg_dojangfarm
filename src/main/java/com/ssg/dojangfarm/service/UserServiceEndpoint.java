@@ -35,12 +35,12 @@ public class UserServiceEndpoint {
 	}
 
 	@WebMethod
-	public boolean existingId(String id) {
+	public User existingId(String id) {
 		return userService.existingId(id);
 	}
 
 	@WebMethod
-	public boolean existingPhone(String phone) {
+	public User existingPhone(String phone) {
 		return userService.existingPhone(phone);
 	}
 	

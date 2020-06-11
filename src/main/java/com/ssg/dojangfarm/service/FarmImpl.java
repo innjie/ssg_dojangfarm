@@ -204,11 +204,11 @@ public class FarmImpl implements FarmFacade{
 		return userDAO.getUser(userNo);
 	}
 	@Override
-	public boolean existingId(String id) {
+	public User existingId(String id) {
 		return userDAO.existingId(id);
 	}
 	@Override
-	public boolean existingPhone(String phone) {
+	public User existingPhone(String phone) {
 		return userDAO.existingPhone(phone);
 	}
 	@Override

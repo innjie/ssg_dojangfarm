@@ -10,8 +10,11 @@ public class Normal implements Serializable{
 	private String title;
 	private User user;
 	private String state;
+	private String saleType;
 	private String info;
-	private Date RegiDate;
+	private Date regidDate;
+	private String saleState;
+	private int count;
 	
 	public int getSaleNo() {
 		return saleNo;
@@ -56,10 +59,28 @@ public class Normal implements Serializable{
 		this.info = info;
 	}
 	public Date getRegiDate() {
-		return RegiDate;
+		return regidDate;
 	}
 	public void setRegiDate(Date regiDate) {
-		RegiDate = regiDate;
+		regidDate = regiDate;
+	}
+	public String getSaleType() {
+		return saleType;
+	}
+	public void setSaleType(String saleType) {
+		this.saleType = saleType;
+	}
+	public String getSaleState() {
+		return saleState;
+	}
+	public void setSaleState(String saleState) {
+		this.saleState = saleState;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.ssg.dojangfarm.controller.normal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +61,16 @@ public class NormalController {
 			BindingResult result, HttpServletRequest request) {
 		//insert action
 		
+		System.out.println("normalCommand : " + "price: " + normalCommand.getPrice()
+		+ "title : " + normalCommand.getTitle()
+		+ "info : " + normalCommand.getInfo());
+		
 		//get session -> user id
-		int userNo = (int)request.getSession().getAttribute("userNo");
+		HttpSession httpSession = request.getSession();
+		User user = (User)httpSession.getAttribute("user");
 		
 		//validate
-		if(userNo <= 0) {
+		if(user == null) {
 			return new ModelAndView(insertNormaForm, "message", "Please LOGIN first");
 		}
 		if(result.hasErrors()) {
@@ -72,10 +78,25 @@ public class NormalController {
 		}
 		//insert normal
 		Normal normal = new Normal();
-		User user = new User();
-		user.setUserNo(userNo);
 		normal.setUser(user);
-		int res = farm.insertSale( normal);
+		normal.setPrice(normalCommand.getPrice());
+		normal.setTitle(normalCommand.getTitle());
+		normal.setInfo(normalCommand.getInfo());
+		normal.setSaleType("Normal");
+		normal.setProduct(normalCommand.getProduct());
+		normal.setSaleState("OPEN");
+		normal.setCount(normalCommand.getCount());
+		normal.setState("0");
+		
+		java.util.Date utilDate = new java.util.Date();
+		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+		normal.setRegiDate(sqlDate);
+		
+		System.out.println("Normal: price: " + normal.getPrice() + " title : " + normal.getTitle()
+				+ " info: " + normal.getInfo());
+		
+		
+		int res = this.farm.insertSale(normal);
 		System.out.println(res);
 		if(res == 0) { //false
 			return new ModelAndView(errorPage, "message", "insert Error");
@@ -83,7 +104,7 @@ public class NormalController {
 			//return success page
 		}
 		//insert -> list (or main)
-		return new ModelAndView( "redirect:" + normalList);
+		return new ModelAndView( "redirect:/normal/list.do");
 	}
 	
 	//search normal

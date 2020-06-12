@@ -15,11 +15,11 @@
   	<insert id="createAddress" parameterType="Address">
     	<selectKey keyProperty="addrNo" resultType="int" order="BEFORE">
         	SELECT AddressSeq.nextval AS "addrNo" FROM DUAL
-     	</selectKey>
+     	</selectKey>     	
     	INSERT INTO Address 
     		(addrNo, addr, zip, detail, aName, userNo)
     	VALUES 
-    		(#{addrNo}, #{addr}, #{zip}, #{detail}, #{aName}, #{user}.#{userNo})
+    		(#{addrNo}, #{addr}, #{zip}, #{detail}, #{aName}, #{user.userNo})
   	</insert>
   	
   	<update id="modifyAddress" parameterType="Address">
@@ -27,7 +27,7 @@
     		addr = #{addr},
     		zip = #{zip},
     		detail = #{detail},
-    		aName = #{aName},
+    		aName = #{aName}
     	WHERE addrNo = #{addrNo}
   	</update>
   	

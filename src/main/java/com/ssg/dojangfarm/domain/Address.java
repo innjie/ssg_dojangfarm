@@ -29,6 +29,7 @@ public class Address implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 	public int getZip() {
 		return zip;
 	}

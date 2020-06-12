@@ -14,9 +14,11 @@ public class AddressCommand {
 	private String detail;		//detail addr
 	private String aName;
 	private boolean newAddress;
+	private int addrNo;
 	
-	public AddressCommand(String addr, String zip, String detail, String aName) {
+	public AddressCommand(int addrNo, String addr, String zip, String detail, String aName) {
 		super();
+		this.addrNo = addrNo;
 		this.addr = addr;
 		this.zip = zip;
 		this.detail = detail;
@@ -29,6 +31,14 @@ public class AddressCommand {
 		this.newAddress = true;
 	}
 	
+	public int getAddrNo() {
+		return addrNo;
+	}
+
+	public void setAddrNo(int addrNo) {
+		this.addrNo = addrNo;
+	}
+
 	public String getAddr() {
 		return addr;
 	}

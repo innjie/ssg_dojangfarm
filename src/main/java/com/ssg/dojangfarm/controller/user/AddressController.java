@@ -48,7 +48,7 @@ public class AddressController {
 		
 		// edit address
 		if (address != null) {	
-			return new AddressCommand(address.getAddr(), String.valueOf(address.getZip()), address.getDetail(), address.getaName());
+			return new AddressCommand(address.getAddrNo(), address.getAddr(), String.valueOf(address.getZip()), address.getDetail(), address.getaName());
 		}
 		else {	// create new user
 			return new AddressCommand();
@@ -124,6 +124,7 @@ public class AddressController {
 		
 		//addressCommand to address
 		Address address = new Address();
+		address.setUser(user);
 		address.setAddr(addressCommand.getAddr());
 		address.setZip(Integer.parseInt(addressCommand.getZip()));
 		address.setaName(addressCommand.getaName());
@@ -131,7 +132,7 @@ public class AddressController {
 		
 		this.farm.createAddress(address);	
 
-		return "redirect:/address/viewAddress.do?addrNo=" + address.getAddrNo();
+		return "redirect:/address/getAddress.do?addrNo=" + address.getAddrNo();
 	}
 	
 	//update address ... form
@@ -162,7 +163,7 @@ public class AddressController {
 		
 		this.farm.modifyAddress(address);
 
-		return "redirect:/address/viewAddress.do?addrNo=" + address.getAddrNo();
+		return "redirect:/address/getAddress.do?addrNo=" + address.getAddrNo();
 	}
 	
 	//delete address

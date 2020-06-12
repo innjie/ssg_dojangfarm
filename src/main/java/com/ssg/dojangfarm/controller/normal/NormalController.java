@@ -3,6 +3,7 @@ package com.ssg.dojangfarm.controller.normal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,53 +19,71 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.User;
-import com.ssg.dojangfarm.service.NormalService;
+import com.ssg.dojangfarm.service.FarmFacade;
 
 //Normal Controller
 @Controller
 public class NormalController {
-	private NormalService normalService;
+	private static final String insertNormaForm = "normal/NormalInsertFormView";
+	private static final String normalList = "/normal/list";
+	private static final String errorPage = "/normal/Error";
 	
 	@Autowired
-	public void setNormalService(NormalService normalService) {
-		this.normalService = normalService;
+	private FarmFacade farm;
+	public void setFarm(FarmFacade farm) {
+		this.farm = farm;
 	}
-	
-	//Normal Command
+	/**
 	@ModelAttribute("normal")
-	public NormalCommand formBacking() {
+	public Normal formBacking() {
+		return new Normal();
+	}
+	**/
+	//Normal Command
+	@ModelAttribute("normalCommand")
+	public NormalCommand formBacking(HttpServletRequest request) {
 		return new NormalCommand();
 	}
 	
 	//insert form
-	@RequestMapping( "/normal/insertForm.do")
-	public String insertForm(
-			@ModelAttribute("normal") NormalCommand normalCommand) throws Exception {
+	@RequestMapping("/normal/insertForm.do")
+	public String insertForm(HttpServletRequest request,
+			 @ModelAttribute("normalCommand") NormalCommand normalCommand) throws Exception {
 		
-		return "normal/NormalInsertFormView";
+		return insertNormaForm;
 	}
 	
 	//insert normal
 	@RequestMapping("/normal/insertNormal.do")
-	public String insertNormal(@ModelAttribute("normal") Normal normal,
+	public ModelAndView insertNormal(
+			@Valid@ModelAttribute("normalCommand") NormalCommand normalCommand,
 			BindingResult result, HttpServletRequest request) {
 		//insert action
 		
 		//get session -> user id
 		int userNo = (int)request.getSession().getAttribute("userNo");
 		
+		//validate
+		if(userNo <= 0) {
+			return new ModelAndView(insertNormaForm, "message", "Please LOGIN first");
+		}
+		if(result.hasErrors()) {
+			return new ModelAndView(insertNormaForm);
+		}
 		//insert normal
+		Normal normal = new Normal();
 		User user = new User();
 		user.setUserNo(userNo);
 		normal.setUser(user);
-		int res = normalService.insertSale( normal);
+		int res = farm.insertSale( normal);
+		System.out.println(res);
 		if(res == 0) { //false
-			//return fail page
+			return new ModelAndView(errorPage, "message", "insert Error");
 		} else { //success
 			//return success page
 		}
 		//insert -> list (or main)
-		return "redirect:/normal/list";
+		return new ModelAndView( "redirect:" + normalList);
 	}
 	
 	//search normal
@@ -77,7 +96,7 @@ public class NormalController {
 			if(!StringUtils.hasLength(word)) {
 				return new ModelAndView("Error", "message", "enter keword");
 			}
-			normalList = normalService.searchNormal(word.toLowerCase());
+			normalList = farm.searchNormal(word.toLowerCase());
 		}
 		//search -> list( or main)
 		return new ModelAndView("NormalListView", "normalList", normalList);
@@ -87,7 +106,7 @@ public class NormalController {
 	@RequestMapping("/normal/turn.do")
 	public ModelAndView sarchNormal(@ModelAttribute("normal") Normal normal, BindingResult result) {
 		//get normal
-		int res = normalService.turnSaleState(normal.getSaleNo());
+		int res = farm.turnSaleState(normal.getSaleNo());
 		
 
 		if(res == 0) { //failed
@@ -106,7 +125,7 @@ public class NormalController {
 	@RequestMapping("/normal/updateNormal.do")
 	public ModelAndView updateNormal(@ModelAttribute("normal") Normal normal, BindingResult result) {
 		//update action
-		int res = normalService.updateSale(normal);
+		int res = farm.updateSale(normal);
 		
 		if(res == 0)  {//failed
 			return new ModelAndView("Error", "message", "update Failed");
@@ -119,7 +138,7 @@ public class NormalController {
 	@RequestMapping("/normal/list.do")
 	public String getNormalList(Model model) {
 		//get list.do
-		List<Normal> normalList = normalService.getAllNormalList();
+		List<Normal> normalList = farm.getAllNormalList();
 		model.addAttribute("normalList", normalList);
 		return "normal/NormalListView";
 	}
@@ -127,7 +146,7 @@ public class NormalController {
 	//get normal view
 	@RequestMapping("/normal/viewNormal.do")
 	public String getNormal(@PathVariable int saleNo, Model model) {
-		Normal normal = normalService.getNormalSale(saleNo);
+		Normal normal = farm.getNormalSale(saleNo);
 		if(normal == null) {
 			return "normal/NormalNotFound";
 		}
@@ -140,7 +159,7 @@ public class NormalController {
 		User user = (User) request.getAttribute("User");
 		int userNo = user.getUserNo();
 		//get list.do
-		List<Normal> normalList = normalService.getNormalListByUserNo(userNo);
+		List<Normal> normalList = farm.getNormalListByUserNo(userNo);
 		model.addAttribute("normalList", normalList);
 		return "normal/NormalUserListView";
 	}

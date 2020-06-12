@@ -12,15 +12,15 @@
 		</selectKey>
 		INSERT INTO Normal
 		(saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo,
-		regiDate)
+		regidDate)
 		VALUES
 		(#{saleNo}, #{saleType}, #{title}, #{saleState}, #{info}, #{price}, #{count},
-		#{state}, #{product.pNo}, #{user.userNo}, #{regiDate})
+		#{state}, #{product.pNo}, #{user.userNo}, #{regidDate})
 	</insert>
 
 	<update id="updateSale" parameterType="int">
 		UPDATE Normal
-		SET info = #{info}, price = #{price}, count = #{regiDate}
+		SET info = #{info}, price = #{price}, count = #{regidDate}
 
 	</update>
 	<select id="getNormalSale" parameterType="int"
@@ -35,22 +35,22 @@
 
 	<select id="getAllNormalList" resultType="Normal">
 		SELECT
-		saleNo, title, User.userNo, regiDate
-		From Normal, User
+		saleNo, title, UserTable.userNo, regidDate
+		From Normal, UserTable
 		WHERE
-		Normal.userNo = User.userNo
+		Normal.userNo = UserTable.userNo
 	</select>
 
 	<select id="getNormalListByUserNo" resultType="Normal">
-		SELECT saleNo, title, User.userNo, regiDate
-		From Normal, User
-		WHERE Normal.userNo = User.userNo AND Normal.userNo=#{userNo}
+		SELECT saleNo, title, UserTable.userNo, regidDate
+		From Normal, UserTable
+		WHERE Normal.userNo = UserTable.userNo AND Normal.userNo=#{userNo}
 	</select>
 
 	<select id="searchNormal" resultType="Normal">
-		SELECT saleNo, title, User.userNo, regiDate
-		From Normal, User
-		WHERE Normal.userNo = User.userNo
+		SELECT saleNo, title, UserTable.userNo, regidDate
+		From Normal, UserTable
+		WHERE Normal.userNo = UserTable.userNo
 		AND Normal.userNo=#{userNo}
 		AND title LIKE '%#{word}%'
 	</select>

@@ -12,8 +12,10 @@
 <title>일반판매 추가</title>
 </head>
 <body>
-	<form:form modelAttriute="normal"
-		action='<c:url value="/normal/insertNormal.do"/>'>
+	<c:set var="targetUrI">
+		<c:url value="/normal/insertNormal.do" />
+	</c:set>
+	<form:form action="${targetUrI}" commandName="normalCommand">
 		<form:label path="title">제목</form:label>
 		<form:input path="title" />
 		<form:errors path="title" />
@@ -25,8 +27,11 @@
 		<br>
 
 		<form:label path="product.pName">품목 </form:label>
-		<form:input path="product.pName" />
-		<%-- select or radiobuttons --%>
+		<form:select path="product.pName">
+			<option value="과일">과일</option>
+			<option value="채소">채소</option>
+		</form:select>
+
 		<form:errors path="product.pName" />
 		<br>
 

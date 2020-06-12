@@ -12,14 +12,13 @@
     	ORDER BY aNo
   	</select>
   	
-  	<select id="findAuctionByTitle" parameterType="int" resultType="Auction">
+  	<select id="findAuctionByTitle" parameterType="String" resultType="Auction">
     	SELECT 
     		Auction.aNo, title, minPrice, deadline,
-    		imPurPrice, Auction.bidPrice 
-    	FROM Auction, Bid
+    		imPurPrice, bidPrice 
+    	FROM Auction
     	WHERE 
-    		Auction.aNo = Bid.aNo AND
-    		title = #{title}
+    		title LIKE #{paramValue}
     	ORDER BY Auction.aNo
   	</select>
   	
@@ -27,11 +26,10 @@
     	SELECT 
     		Auction.aNo, title, minPrice, deadline,
     		imPurPrice, Auction.bidPrice 
-    	FROM Auction, Bid, Product
+    	FROM Auction, Product
     	WHERE 
-    		Auction.aNo = Bid.aNo AND
     		Auction.pNo = Product.pNo AND
-    		Product.pName = #{pName}
+    		Product.pName LIKE #{paramValue}
     	ORDER BY Auction.aNo
     		
   	</select>

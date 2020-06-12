@@ -2,6 +2,7 @@ package com.ssg.dojangfarm.controller.auction;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -12,8 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Auction;
+import com.ssg.dojangfarm.domain.ImPur;
+import com.ssg.dojangfarm.domain.SBid;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
@@ -34,7 +38,7 @@ public class AuctionController {
 
 
 	//AuctionCommand 객체 생성
-	@ModelAttribute("auction")
+	@ModelAttribute("auctionCommand")
 	public AuctionCommand formBacking() {
 		return new AuctionCommand();
 	}
@@ -71,21 +75,21 @@ public class AuctionController {
 	}
 */	
 	
-//	//view  myAuctionList
-//	@RequestMapping("/auction/viewMyAuctionList.do")
-//	public String listMyAuction(
-//			ModelMap model,
-//			HttpServletRequest request) throws Exception {
-//		
-//		HttpSession httpSession = request.getSession();
-//		User user = (User) httpSession.getAttribute("user");
-//
-//		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(user.getUserNo()));
-//
-//		auctionList.setPageSize(4);
-//		model.put("auctionList ", auctionList.getSource() );
-//		return LISTMYAUCTION;
-//	}	
+	//view  myAuctionList
+	@RequestMapping("/auction/viewMyAuctionList.do")
+	public String listMyAuction(
+			ModelMap model,
+			HttpServletRequest request) throws Exception {
+		
+		HttpSession httpSession = request.getSession();
+		User user = (User) httpSession.getAttribute("user");
+
+		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(user.getUserNo()));
+
+		auctionList.setPageSize(4);
+		model.put("auctionList ", auctionList.getSource() );
+		return LISTMYAUCTION;
+	}	
 
 /*	//view myAuctionList by page
 	@RequestMapping("/auction/viewMyAuctionList2.do")
@@ -154,19 +158,19 @@ public class AuctionController {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
-//		int auctionUserNo = this.farm.getUserNoByAuction(aNo);	
+		int auctionUserNo = this.farm.getUserByAuction(aNo).getUserNo();	
 		
 		Auction auction = this.farm.getAuction(aNo);
 		model.put("auction", auction);
 		
-//		//check this user is auction's user
-//		if(user.getUserNo() == auctionUserNo) {
-//			SBid sBid = this.farm.getSBidByAuction(aNo);	
-//			ImPur imPur = getImPurByAuction(aNo);	
-//			
-//			model.put("sBid", sBid);
-//			model.put("imPur", imPur);
-//		}
+		//check this user is auction's user
+		if(user.getUserNo() == auctionUserNo) {
+			SBid sBid = this.farm.getSBidByAuction(aNo);	
+			ImPur imPur = this.farm.getImPurByAuction(aNo);	
+			
+			model.put("sBid", sBid);
+			model.put("imPur", imPur);
+		}
 		
 		return VIEWAUCTION;
 	}
@@ -180,19 +184,20 @@ public class AuctionController {
 	}
 
 	
-//	//register auction ... insert auction
-//	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.POST)
-//	public ModelAndView register(
-//			@ModelAttribute("auction") AuctionCommand auctionCommand) throws Exception {
-//		
-//		//커멘드객체타입으로 따로 정의해야하나...? - 근데 커멘드객체에 경매필드 다 안 들어 있기는 해
-//		//아니면 auction객체에 커맨드객체 값 set
-//		
-//		
-//		this.farm.registerAuction(auction);	
-//
-//		return new ModelAndView(VIEWAUCTION, "auction", auction);
-//	}
+	//register auction ... insert auction
+	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.POST)
+	public ModelAndView register(
+			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand) throws Exception {
+		
+		//auctionCommand to auction
+		Auction auction = new Auction();
+		
+		
+		
+		this.farm.registerAuction(auction);	
+
+		return new ModelAndView(VIEWAUCTION, "auction", auction);
+	}
 	
 	//confirm register auction
 	@RequestMapping("/auction/registerAuctionConfirm.do")

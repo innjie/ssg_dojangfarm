@@ -24,8 +24,8 @@ public class BidController {
 	private static final String LISTBID = "auction/MyBidListView";
 	private static final String LISTSBID = "auction/MySBidListView";
 	private static final String VIEWSBID = "auction/MySBidView";
-	private static final String BIDFORM = "auction/BidAuctionFormView.jsp";
-	private static final String BIDSUCCESS = "auction/BidSuccessView.jsp";
+	private static final String BIDFORM = "auction/BidAuctionFormView";
+	private static final String BIDSUCCESS = "auction/BidSuccessView";
 
 	@Autowired
 	private FarmFacade farm;
@@ -46,7 +46,7 @@ public class BidController {
 //		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(this.farm.getMyBidList(user.getUserNo()));	//add dao
 //
 //		bidList.setPageSize(4);
-//		model.put("bidList ", bidList.getSource() );
+//		model.put("bidList", bidList.getSource() );
 //		return LISTBID;
 //	}
 	
@@ -83,7 +83,7 @@ public class BidController {
 //		PagedListHolder<SBid> SBidList = new PagedListHolder<SBid>(this.farm.getMySBidList(user.getUserNo()));	//add dao
 //
 //		SBidList.setPageSize(4);
-//		model.put("SBidList ", SBidList.getSource() );
+//		model.put("SBidList", SBidList.getSource() );
 //		return LISTSBID;
 //	}
 	

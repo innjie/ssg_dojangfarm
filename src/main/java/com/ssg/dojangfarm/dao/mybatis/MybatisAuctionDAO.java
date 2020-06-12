@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssg.dojangfarm.dao.AuctionDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.AuctionMapper;
@@ -54,8 +55,9 @@ public class MybatisAuctionDAO implements AuctionDAO{
 		return auctionMapper.getMyImPur(imPurNo);
 	}
 	
-	
+	@Transactional	
 	public void bidAuction(Bid bid) {
+		auctionMapper.updateBidPrice(bid.getAuction().getaNo(), bid.getBidPrice());
 		auctionMapper.bidAuction(bid);
 	}  
 	public Bid getBid(int bidNo) {

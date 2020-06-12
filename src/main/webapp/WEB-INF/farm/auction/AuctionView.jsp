@@ -42,7 +42,7 @@
 	</table>
 	<br><br>
 	
-	<c:if test="${(auction.finish == false) && (session.id != auction.user.id)}">
+	<c:if test="${(auction.finish == false) && (user.id != auction.user.id)}">
 		<a href='<c:url value="/auction/bidAuction.do">
 					<c:param name="aNo" value="${auction.aNo}"/>
 				</c:url>'>
@@ -56,7 +56,7 @@
 	</c:if>
 	
 	<!-- 이 부분 처리하는 기능 컨트롤러에 추가 - 판매자일 때 낙찰/즉시구매자 정보 가져오기 -->
-	<c:if test="${(auction.finish == true) && (session.id != auction.user.id)}">
+	<c:if test="${(auction.finish == false) && (user.id != auction.user.id)}">
 		<table border='1'>
 			<c:if test="${sBid != null}">
 				<table border='1'>

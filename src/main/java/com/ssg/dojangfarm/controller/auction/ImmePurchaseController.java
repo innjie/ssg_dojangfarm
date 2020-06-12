@@ -38,7 +38,7 @@ public class ImmePurchaseController {
 //		PagedListHolder<ImPur> imPurList = new PagedListHolder<ImPur>(this.farm.getMyImPurList(user.getUserNo()));	//add dao
 //
 //		imPurList.setPageSize(4);
-//		model.put("imPurList ", imPurList.getSource() );
+//		model.put("imPurList", imPurList.getSource() );
 //		return LISTIMPUR;
 //	}
 	

@@ -34,7 +34,11 @@
 						${auc.title}</a>
 					</td>
 					<td>${auc.minPrice}</td>
-					<td>${auc.bidPrice}</td>
+					<td>
+						<c:if test="${auc.bidPrice != 0}">
+							${auc.bidPrice}
+						</c:if>
+					</td>
 					<td>${auc.imPurPrice}</td>
 					<td>${auc.deadline}</td>						
 				</tr>

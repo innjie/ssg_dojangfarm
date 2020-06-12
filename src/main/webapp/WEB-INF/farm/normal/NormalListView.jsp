@@ -11,7 +11,7 @@
 <title>일반판매 전체보기</title>
 </head>
 <body>
-<form action = "<c:url value = "/normal/searchNormal.do"/>'">
+<form action = "<c:url value = '/normal/searchNormal.do'/>">
 <input type = "text" name = "word"> &nbsp;
 <input type = "submit" value = "검색">
 </form>
@@ -24,16 +24,16 @@
 </tr>
 <c:forEach var="normal" items="${normalList}" >
 	<tr>
-	<td>${normal.saleNo}</td>
 	<td><a href="<c:url value='/normal/viewNormal.do'> 
 						<c:param name='saleNo' value='${normal.saleNo}'/>
-						</c:url>">${normal.title}</a>
+						</c:url>">${normal.saleNo}</a></td>
+	<td>${normal.title}
 	</td>
 	<td>${normal.user.name}</td>
 	</tr>
 </c:forEach>
 </table>
 <a href="<c:url value='/normal/insertForm.do'/>"> 등록</a> <br>
-<a href="index.do" >[메인으로]</a>
+<a href="/index.do" >[메인으로]</a>
 </body>
 </html>

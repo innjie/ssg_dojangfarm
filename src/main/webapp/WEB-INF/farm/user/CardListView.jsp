@@ -23,13 +23,13 @@
 				<td>${status.count}</td>
 				<td>${c.bank}</td>
 				<td>
-					<a href="<c:url value='/user/viewCard.do'>
+					<a href="<c:url value='/card/viewCard.do'>
 								<c:param name='cardNo' value='${c.cardNo}' />
 							</c:url>">
 					${c.cardPayNo}</a>
 				</td>
 				<td>
-					<a href="<c:url value='/user/deleteCard.do'>
+					<a href="<c:url value='/card/deleteCard.do'>
 								<c:param name='cardNo' value='${c.cardNo}' />
 							</c:url>">
 					삭제</a>
@@ -38,6 +38,6 @@
 		</c:forEach>
 	</table>
 	<br><br>
-	<a href="<c:url value='/user/insertCard.do' />">카드 추가</a>
+	<a href="<c:url value='/card/insertCard.do' />">카드 추가</a>
 </body>
 </html>

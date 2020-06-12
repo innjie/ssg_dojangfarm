@@ -12,8 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.ssg.dojangfarm.domain.User;
 
 public class CardCommand {
-	private int cardNo;
-	private User user;
 	@NotEmpty
 	private String bank;
 	@NotEmpty @Pattern(regexp="\\d{4}")
@@ -30,28 +28,7 @@ public class CardCommand {
 	public CardCommand() {
 		super();
 	}
-
-
-	public int getCardNo() {
-		return cardNo;
-	}
-
-
-	public void setCardNo(int cardNo) {
-		this.cardNo = cardNo;
-	}
-
-
-	public User getUser() {
-		return user;
-	}
-
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-
+	
 	public String getBank() {
 		return bank;
 	}

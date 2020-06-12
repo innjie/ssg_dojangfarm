@@ -35,7 +35,7 @@
 		</tr>
 	</table>
 	<br><br>
-	<a href="<c:url value='/user/deleteCard.do'>
+	<a href="<c:url value='/card/deleteCard.do'>
 				<c:param name='cardNo' value='${card.cardNo}' />
 			</c:url>">
 	삭제</a>

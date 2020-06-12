@@ -23,7 +23,7 @@
 		</tr>
 		<tr>
 			<td>주소</td>
-			<td>${address.address}</td>
+			<td>${address.addr}</td>
 		</tr>
 		<tr>
 			<td>상세</td>
@@ -31,11 +31,11 @@
 		</tr>
 	</table>
 	<br><br>
-	<a href="<c:url value='/user/modifyAddress.do'>
+	<a href="<c:url value='/address/modifyAddress.do'>
 				<c:param name='addrNo' value='${address.addrNo}' />
 			</c:url>">
 	수정</a>&nbsp;&nbsp;
-	<a href="<c:url value='/user/deleteAddress.do'>
+	<a href="<c:url value='/address/deleteAddress.do'>
 				<c:param name='addrNo' value='${address.addrNo}' />
 			</c:url>">
 	삭제</a>

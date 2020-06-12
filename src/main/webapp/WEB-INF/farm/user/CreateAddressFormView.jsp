@@ -24,9 +24,9 @@
 		<form:errors path="address.zip" />
 		<br>
 		
-		<form:label path="address.address">주소 </form:label>
-		<form:input path="address.address" />
-		<form:errors path="address.address" />
+		<form:label path="address.addr">주소 </form:label>
+		<form:input path="address.addr" />
+		<form:errors path="address.addr" />
 		<br>
 		
 		<form:label path="address.detail">상세 </form:label>

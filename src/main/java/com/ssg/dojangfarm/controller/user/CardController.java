@@ -54,7 +54,7 @@ public class CardController {
 	}
 	
 	//view cardList
-	@RequestMapping("/user/viewCardList.do")
+	@RequestMapping("/card/viewCardList.do")
 	public ModelAndView listCard(
 			HttpServletRequest request) throws Exception {
 		
@@ -68,7 +68,7 @@ public class CardController {
 	}	
 
 /*	//view cardList by page
-	@RequestMapping("/user/viewCardList2.do")
+	@RequestMapping("/card/viewCardList2.do")
 	public String listCard2(
 			@RequestParam("page") String page,
 			@ModelAttribute("cardList") PagedListHolder<Card> cardList,
@@ -87,7 +87,7 @@ public class CardController {
 	}	
 */
 	//view card
-	@RequestMapping("/user/viewCard.do")
+	@RequestMapping("/card/viewCard.do")
 	public ModelAndView viewCard(
 			@RequestParam("cardNo") int cardNo) throws Exception {
 		
@@ -97,13 +97,13 @@ public class CardController {
 	}
 	
 	//create card ... 
-	@RequestMapping(value="/user/insertCard.do", method=RequestMethod.GET)
+	@RequestMapping(value="/card/insertCard.do", method=RequestMethod.GET)
 	public String insertForm(@ModelAttribute("cardCommand") CardCommand cardCommand) {
 		return CARDFORM;
 	}
 	
 	//create card ... insert
-	@RequestMapping(value="/user/insertCard.do", method=RequestMethod.POST)
+	@RequestMapping(value="/card/insertCard.do", method=RequestMethod.POST)
 	public String insert(
 			HttpServletRequest request,
 			@Valid @ModelAttribute("cardCommand") CardCommand cardCommand,
@@ -135,17 +135,17 @@ public class CardController {
 		
 		this.farm.insertCard(card);	
 
-		return "redirect:/user/viewCard.do?cardNo=" + card.getCardNo();
+		return "redirect:/card/viewCard.do?cardNo=" + card.getCardNo();
 	}
 
 	//delete card
-	@RequestMapping("/user/deleteCard.do")
+	@RequestMapping("/card/deleteCard.do")
 	public String delete(
 			@RequestParam("cardNo") int cardNo) throws Exception {
 	
 		this.farm.deleteCard(cardNo);	
 
-		return "redirect:/user/viewCardList.do";
+		return "redirect:/card/viewCardList.do";
 	
 	}
 }

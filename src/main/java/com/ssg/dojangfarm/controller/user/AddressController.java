@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
 import com.ssg.dojangfarm.domain.Address;
 import com.ssg.dojangfarm.domain.Card;
@@ -22,10 +23,10 @@ import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
 public class AddressController {
-	private static final String LISTADDRESS= "address/AddressListView";
-	private static final String VIEWADDRESS = "address/AddressView";
-	private static final String ADDADDRESSFORM = "address/CreateAddressFormView";
-	private static final String UPDATEADDRESSORM = "address/ModifyAddressFormView";
+	private static final String LISTADDRESS= "user/AddressListView";
+	private static final String VIEWADDRESS = "user/AddressView";
+	private static final String ADDADDRESSFORM = "user/CreateAddressFormView";
+	private static final String UPDATEADDRESSORM = "user/ModifyAddressFormView";
 	
 	@Autowired
 	private FarmFacade farm;
@@ -33,11 +34,24 @@ public class AddressController {
 	public void setFarm(FarmFacade  farm) {
 		this.farm = farm;
 	}
-	
+		
 	//addressCommand 
 	@ModelAttribute("addressCommand")
-	public AddressCommand formBacking() {
-		return new AddressCommand();
+	public AddressCommand formBacking(HttpServletRequest request) {
+		Address address = null;
+		
+		if(request.getParameter("addrNo") != null) {
+			int addrNo = Integer.parseInt(request.getParameter("addrNo"));
+			address = this.farm.getAddress(addrNo);
+		}
+		
+		// edit address
+		if (address != null) {	
+			return new AddressCommand(address.getAddr(), String.valueOf(address.getZip()), address.getDetail(), address.getaName());
+		}
+		else {	// create new user
+			return new AddressCommand();
+		}
 	}
 	
 	//view addressList
@@ -55,7 +69,7 @@ public class AddressController {
 	}
 	
 /*	//view cardList by page
-	@RequestMapping("/auction/viewMyAuctionList2.do")
+	@RequestMapping("/address/getAddressList2.do")
 	public String listAddress2(
 			@RequestParam("page") String page,
 			@ModelAttribute("addressList") PagedListHolder<Address> addressList,

@@ -90,4 +90,7 @@ public class AuctionServiceImpl implements AuctionService{
 		return auctionDAO.getUserNoByAuction(aNo);
 	}
 
+	public int getPNoByPName(String pName) {
+		return auctionDAO.getPNoByPName(pName);
+	}
 }

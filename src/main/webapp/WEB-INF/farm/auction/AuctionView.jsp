@@ -18,6 +18,10 @@
 			<td>${auction.title}</td>
 		</tr>
 		<tr>
+			<td>품목</td>
+			<td>${auction.product.pName}</td>
+		</tr>
+		<tr>
 			<td>최소 가격</td>
 			<td>${auction.minPrice}</td>
 		</tr>

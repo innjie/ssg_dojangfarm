@@ -110,5 +110,8 @@ public class AuctionServiceEndpoint {
 		return auctionService.getUserByAuction(aNo);
 	}
 
-
+	@WebMethod
+	public int getPNoByPName(String pName) {
+		return auctionService.getPNoByPName(pName);
+	}
 }

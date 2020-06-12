@@ -43,6 +43,7 @@ public interface FarmFacade {
 	public List<ImPur> getMyImPurList(int userNo);
 	public ImPur getMyImPur(int imPurNo);
 	public User getUserByAuction(int aNo);
+	public int getPNoByPName(String pName);
 	
 	//User
 	public void createUser(User user);

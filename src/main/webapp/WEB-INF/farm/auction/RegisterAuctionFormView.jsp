@@ -19,7 +19,8 @@
 		<br>
 		
 		<form:label path="product.pName">품목 </form:label>
-		<form:input path="product.pName" />		<%-- select or radiobuttons --%>
+		<br>
+		<form:radiobuttons path="product.pName" items="${pName}"/>
 		<form:errors path="product.pName" />
 		<br>
 		

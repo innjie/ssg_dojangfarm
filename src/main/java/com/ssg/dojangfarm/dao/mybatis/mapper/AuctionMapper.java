@@ -35,4 +35,6 @@ public interface AuctionMapper {
 	
 	User getUserNoByAuction(int aNo);
 	void updateBidPrice(@Param("aNo") int aNo, @Param("bidPrice") int bidPrice);
+
+	int getPNoByPName(String pName);
 }

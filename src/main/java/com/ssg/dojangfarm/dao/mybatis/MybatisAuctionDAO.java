@@ -82,6 +82,8 @@ public class MybatisAuctionDAO implements AuctionDAO{
 	}
 	
 	
-	
+	public int getPNoByPName(String pName) {
+		return auctionMapper.getPNoByPName(pName);
+	}
 
 }

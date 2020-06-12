@@ -1,5 +1,8 @@
 package com.ssg.dojangfarm.controller.auction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -36,11 +39,39 @@ public class AuctionController {
 		this.farm = farm;
 	}
 
-
 	//AuctionCommand 객체 생성
 	@ModelAttribute("auctionCommand")
 	public AuctionCommand formBacking() {
 		return new AuctionCommand();
+	}
+	
+	//type value
+	@ModelAttribute("pName")
+	public List<String> referenceData() {
+		List<String> pName = new ArrayList<String>();
+		pName.add("기타과일");
+		pName.add("기타채소");
+		pName.add("사과");
+		pName.add("오렌지");
+		pName.add("수박");
+		pName.add("복숭아");
+		pName.add("토마토");
+		pName.add("배");
+		pName.add("감");
+		pName.add("포도");
+		pName.add("딸기");
+		pName.add("참외");
+		pName.add("배추");
+		pName.add("버섯");
+		pName.add("당근");
+		pName.add("오이");
+		pName.add("양파");
+		pName.add("마늘");
+		pName.add("무");
+		pName.add("고구마");
+		pName.add("감자");
+		
+		return pName;		
 	}
 	
 	//view auctionList
@@ -190,20 +221,6 @@ public class AuctionController {
 	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.POST)
 	public String register(
 			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			BindingResult result) throws Exception {
-		
-		//validate
-		if (result.hasErrors()) {
-			return AUCTIONFORM;
-		}
-		
-		return CONFIRMAUCTION;
-	}
-	
-	//confirm register auction
-	@RequestMapping("/auction/registerAuctionConfirm.do")
-	public String confirm(
-			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
 			BindingResult result,
 			HttpServletRequest request) throws Exception {
 		
@@ -211,12 +228,14 @@ public class AuctionController {
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-
+		
 		//validate
 		if (result.hasErrors()) {
 			System.out.println("register auction errror");
 			return AUCTIONFORM;
-		}		
+		}
+		
+		auctionCommand.getProduct().setpNo(this.farm.getPNoByPName(auctionCommand.getProduct().getpName()));;
 		
 		//auctionCommand to auction
 		Auction auction = new Auction();
@@ -228,10 +247,10 @@ public class AuctionController {
 		auction.setDeadline(auctionCommand.getDeadline());
 		auction.setImPurAva(auctionCommand.getImPurAva());
 		auction.setImPurPrice(auctionCommand.getImPurPrice());
-		
+				
 		this.farm.registerAuction(auction);	
-			
+					
 		return "redirect:/auction/viewAuction.do?aNo=" + auction.getaNo();
 	}
-
+	
 }

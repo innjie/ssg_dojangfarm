@@ -11,6 +11,7 @@
     		QnA.slaeNo = Normal.saleNo AND 
     		QnA.userNo = User.userNo AND 
     		QnA.saleNo = #{saleNo}
+    	ORDER BY qNo
   	</select>
   	
   	<insert id="questionQnA" parameterType="QnA">

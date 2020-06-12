@@ -17,19 +17,22 @@ import com.ssg.dojangfarm.domain.SBid;
 @Repository
 public class MybatisCardDAO implements CardDAO{
 	@Autowired
-	private CardMapper cardtMapper;
+	private CardMapper cardMapper;
 	
 	public Card getCard(int cardNo) {
-		return cardtMapper.getCard(cardNo);
+		return cardMapper.getCard(cardNo);
 	}
 	public List<Card> getCardList(int userNo) {
-		return cardtMapper.getCardList(userNo);
+		return cardMapper.getCardList(userNo);
 	}
 	public void insertCard(Card card) {
-		cardtMapper.insertCard(card);
+		cardMapper.insertCard(card);
 	}
 	public void deleteCard(int cardNo) {
-		cardtMapper.deleteCard(cardNo);
+		cardMapper.deleteCard(cardNo);
 	}
 
+	public Card checkCardPayNo(String cardPayNo) {
+		return cardMapper.checkCardPayNo(cardPayNo);
+	}
 }

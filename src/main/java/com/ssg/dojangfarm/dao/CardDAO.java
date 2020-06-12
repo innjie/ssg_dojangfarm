@@ -9,4 +9,5 @@ public interface CardDAO {
 	List<Card> getCardList(int userNo);
 	void insertCard(Card card);
 	void deleteCard(int cardNo);
+	Card checkCardPayNo(String cardPayNo);
 }

@@ -11,6 +11,7 @@
     		rUserNo = UserTable.userNo AND 
     		sUserNo = #{userNo} AND
     		deleteState != '1'
+    	ORDER BY msgNo
   	</select>
   	
   	<select id="receiveMessageList" parameterType="int" resultType="Message">
@@ -21,6 +22,7 @@
     		sUserNo = UserTable.userNo AND 
     		rUserNo = #{userNo} AND
     		deleteState != '1'
+    	ORDER BY msgNo
   	</select>
   	
   	 
@@ -34,6 +36,7 @@
     		rUserNo = rUser.userNo AND 
     		title LIKE #{paramValue} AND
     		deleteState != '1'
+    	ORDER BY msgNo
     		
   	</select>
  

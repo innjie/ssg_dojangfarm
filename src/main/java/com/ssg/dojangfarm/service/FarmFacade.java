@@ -120,6 +120,7 @@ public interface FarmFacade {
 	public int refundSale(int saleNo);
 	public Refund getRefund(int refundNo);
 	public List<Refund> getRefundList(int userNo);
+	public Card checkCardPayNo(String cardPayNo);
 	
 	
 

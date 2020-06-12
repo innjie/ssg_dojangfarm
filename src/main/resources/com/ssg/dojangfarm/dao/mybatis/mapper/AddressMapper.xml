@@ -9,6 +9,7 @@
     	FROM Address
     	WHERE 
     		userNo = #{userNo}
+    	ORDER BY addrNo
   	</select>
   	
   	<insert id="createAddress" parameterType="Address">

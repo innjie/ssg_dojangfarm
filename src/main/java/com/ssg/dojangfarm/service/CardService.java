@@ -10,6 +10,6 @@ public interface CardService {
 	public List<Card> getCardList(int userNo);
 	public void insertCard(Card card);
 	public void deleteCard(int cardNo);
-	
+	public Card checkCardPayNo(String cardPayNo);
 	
 }

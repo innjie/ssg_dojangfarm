@@ -2,6 +2,8 @@ package com.ssg.dojangfarm.dao.mybatis.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Bid;
 import com.ssg.dojangfarm.domain.ImPur;
@@ -32,5 +34,7 @@ public interface AuctionMapper {
 	ImPur getMyImPur(int imPurNo);
 	
 	User getUserNoByAuction(int aNo);
+	void updateBidPrice(@Param("aNo") int aNo, @Param("bidPrice") int bidPrice);
 
+	int getPNoByPName(String pName);
 }

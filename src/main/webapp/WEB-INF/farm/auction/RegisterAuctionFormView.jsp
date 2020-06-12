@@ -12,14 +12,15 @@
 <title>경매 등록</title>
 </head>
 <body>
-	<form:form modelAttribute="auctionCommand" action='<c:url value="/auction/registerAuctionConfirm.do"/>'>
+	<form:form modelAttribute="auctionCommand">
 		<form:label path="title">제목 </form:label>
 		<form:input path="title" />
 		<form:errors path="title" />
 		<br>
 		
 		<form:label path="product.pName">품목 </form:label>
-		<form:input path="product.pName" />		<%-- select or radiobuttons --%>
+		<br>
+		<form:radiobuttons path="product.pName" items="${pName}"/>
 		<form:errors path="product.pName" />
 		<br>
 		

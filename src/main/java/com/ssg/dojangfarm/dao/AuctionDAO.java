@@ -32,4 +32,6 @@ public interface AuctionDAO {
 	ImPur getMyImPur(int imPurNo);
 
 	User getUserNoByAuction(int aNo);
+
+	int getPNoByPName(String pName);
 }

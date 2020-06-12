@@ -33,4 +33,6 @@ public interface AuctionService{
 	ImPur getMyImPur(int imPurNo);
 
 	User getUserByAuction(int aNo);
+	
+	int getPNoByPName(String pName);
 }

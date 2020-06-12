@@ -11,7 +11,7 @@ import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonJoin;
 
 @Repository 
-public class MybateisCommonDAO implements CommonDAO{
+public class MybatisCommonDAO implements CommonDAO{
 	@Autowired
 	private CommonMapper commonMapper;
 	

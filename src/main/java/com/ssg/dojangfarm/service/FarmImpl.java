@@ -182,6 +182,9 @@ public class FarmImpl implements FarmFacade{
 	public User getUserByAuction(int aNo) {
 		return auctionDAO.getUserNoByAuction(aNo);
 	}
+	public int getPNoByPName(String pName) {
+		return auctionDAO.getPNoByPName(pName);
+	}
 	
 	//-------------------------------------------------------------------------
 	//User

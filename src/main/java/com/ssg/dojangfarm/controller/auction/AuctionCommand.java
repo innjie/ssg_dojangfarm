@@ -2,8 +2,11 @@ package com.ssg.dojangfarm.controller.auction;
 
 import java.util.Date;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ssg.dojangfarm.domain.Product;
 
@@ -14,7 +17,7 @@ public class AuctionCommand {
 	private String detail;
 	@Min(1000)
 	private int minPrice;
-	//날짜 값 검증
+	@Future @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deadline;
 	private Boolean imPurAva;		//imme Purchase Available
 	private int imPurPrice;		//imme Purchase

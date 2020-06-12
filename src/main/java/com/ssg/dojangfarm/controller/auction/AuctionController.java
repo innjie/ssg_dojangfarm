@@ -1,5 +1,8 @@
 package com.ssg.dojangfarm.controller.auction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -36,11 +39,39 @@ public class AuctionController {
 		this.farm = farm;
 	}
 
-
 	//AuctionCommand 객체 생성
 	@ModelAttribute("auctionCommand")
 	public AuctionCommand formBacking() {
 		return new AuctionCommand();
+	}
+	
+	//type value
+	@ModelAttribute("pName")
+	public List<String> referenceData() {
+		List<String> pName = new ArrayList<String>();
+		pName.add("기타과일");
+		pName.add("기타채소");
+		pName.add("사과");
+		pName.add("오렌지");
+		pName.add("수박");
+		pName.add("복숭아");
+		pName.add("토마토");
+		pName.add("배");
+		pName.add("감");
+		pName.add("포도");
+		pName.add("딸기");
+		pName.add("참외");
+		pName.add("배추");
+		pName.add("버섯");
+		pName.add("당근");
+		pName.add("오이");
+		pName.add("양파");
+		pName.add("마늘");
+		pName.add("무");
+		pName.add("고구마");
+		pName.add("감자");
+		
+		return pName;		
 	}
 	
 	//view auctionList
@@ -51,7 +82,7 @@ public class AuctionController {
 		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getAuctionList());
 
 		auctionList.setPageSize(4);
-		model.put("auctionList ", auctionList.getSource() );
+		model.put("auctionList", auctionList.getSource() );
 		return LISTAUCTION;
 	}
 
@@ -87,7 +118,7 @@ public class AuctionController {
 		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(user.getUserNo()));
 
 		auctionList.setPageSize(4);
-		model.put("auctionList ", auctionList.getSource() );
+		model.put("auctionList", auctionList.getSource() );
 		return LISTMYAUCTION;
 	}	
 
@@ -164,12 +195,14 @@ public class AuctionController {
 		model.put("auction", auction);
 		
 		//check this user is auction's user
-		if(user.getUserNo() == auctionUserNo) {
-			SBid sBid = this.farm.getSBidByAuction(aNo);	
-			ImPur imPur = this.farm.getImPurByAuction(aNo);	
-			
-			model.put("sBid", sBid);
-			model.put("imPur", imPur);
+		if(user != null) {
+			if(user.getUserNo() == auctionUserNo) {
+				SBid sBid = this.farm.getSBidByAuction(aNo);	
+				ImPur imPur = this.farm.getImPurByAuction(aNo);	
+				
+				model.put("sBid", sBid);
+				model.put("imPur", imPur);
+			}
 		}
 		
 		return VIEWAUCTION;
@@ -178,7 +211,7 @@ public class AuctionController {
 	//register auction ... auction form
 	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.GET)
 	public String auctionForm(
-			@ModelAttribute("auction") AuctionCommand auctionCommand) throws Exception {
+			@ModelAttribute("auctionCommand") AuctionCommand auctionCommand) throws Exception {
 
 		return AUCTIONFORM;
 	}
@@ -186,30 +219,38 @@ public class AuctionController {
 	
 	//register auction ... insert auction
 	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.POST)
-	public ModelAndView register(
-			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand) throws Exception {
+	public String register(
+			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
+			BindingResult result,
+			HttpServletRequest request) throws Exception {
+		
+		System.out.println("register auction!!");
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		
+		//validate
+		if (result.hasErrors()) {
+			System.out.println("register auction errror");
+			return AUCTIONFORM;
+		}
+		
+		auctionCommand.getProduct().setpNo(this.farm.getPNoByPName(auctionCommand.getProduct().getpName()));;
 		
 		//auctionCommand to auction
 		Auction auction = new Auction();
-		
-		
-		
+		auction.setUser(user);
+		auction.setProduct(auctionCommand.getProduct());
+		auction.setTitle(auctionCommand.getTitle());	
+		auction.setDetail(auctionCommand.getDetail());
+		auction.setMinPrice(auctionCommand.getMinPrice());	
+		auction.setDeadline(auctionCommand.getDeadline());
+		auction.setImPurAva(auctionCommand.getImPurAva());
+		auction.setImPurPrice(auctionCommand.getImPurPrice());
+				
 		this.farm.registerAuction(auction);	
-
-		return new ModelAndView(VIEWAUCTION, "auction", auction);
+					
+		return "redirect:/auction/viewAuction.do?aNo=" + auction.getaNo();
 	}
 	
-	//confirm register auction
-	@RequestMapping("/auction/registerAuctionConfirm.do")
-	public String confirm(
-			@ModelAttribute("auction") AuctionCommand auctionCommand,
-			BindingResult result) throws Exception {
-
-		if(result.hasErrors()) {
-			return AUCTIONFORM;
-		}		
-			
-		return CONFIRMAUCTION;
-	}
-
 }

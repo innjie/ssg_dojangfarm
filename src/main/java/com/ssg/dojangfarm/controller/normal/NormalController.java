@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,8 +27,9 @@ import com.ssg.dojangfarm.service.FarmFacade;
 @Controller
 public class NormalController {
 	private static final String insertNormaForm = "normal/NormalInsertFormView";
-	private static final String normalList = "/normal/list";
+	private static final String normalListView = "normal/NormalListView";
 	private static final String errorPage = "/normal/Error";
+	private static final String normalView = "normal/NormalView";
 	
 	@Autowired
 	private FarmFacade farm;
@@ -61,17 +63,13 @@ public class NormalController {
 			BindingResult result, HttpServletRequest request) {
 		//insert action
 		
-		System.out.println("normalCommand : " + "price: " + normalCommand.getPrice()
-		+ "title : " + normalCommand.getTitle()
-		+ "info : " + normalCommand.getInfo());
-		
 		//get session -> user id
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
 		
 		//validate
 		if(user == null) {
-			return new ModelAndView(insertNormaForm, "message", "Please LOGIN first");
+			return new ModelAndView(errorPage, "message", "Please LOGIN first");
 		}
 		if(result.hasErrors()) {
 			return new ModelAndView(insertNormaForm);
@@ -108,19 +106,29 @@ public class NormalController {
 	}
 	
 	//search normal
-	@RequestMapping(value="/normal/searchNormal.do", method = RequestMethod.GET)
+	@RequestMapping("/normal/searchNormal.do")
 	public ModelAndView searchNormal(HttpServletRequest request,
-			@RequestParam(value="title", required = false) String word) throws Exception {
+			@RequestParam(value="word", required = false) String word
+			) throws Exception {
+		
+		System.out.println(word);
 		//search action
 		List<Normal> normalList = null;
 		if(word != null) {
 			if(!StringUtils.hasLength(word)) {
-				return new ModelAndView("Error", "message", "enter keword");
+				return new ModelAndView(errorPage, "message", "enter keword");
 			}
-			normalList = farm.searchNormal(word.toLowerCase());
+			normalList = this.farm.searchNormal(word.toLowerCase());
+		}
+		
+		if(normalList == null) {
+			System.out.println("0");
+		} else {
+			System.out.println(normalList.size());
 		}
 		//search -> list( or main)
-		return new ModelAndView("NormalListView", "normalList", normalList);
+		
+		return new ModelAndView(normalListView, "normalList", normalList);
 	}
 	
 	//turn state off / on
@@ -166,13 +174,15 @@ public class NormalController {
 	
 	//get normal view
 	@RequestMapping("/normal/viewNormal.do")
-	public String getNormal(@PathVariable int saleNo, Model model) {
-		Normal normal = farm.getNormalSale(saleNo);
+	public String getNormal(@RequestParam("saleNo") int saleNo, Model model) {
+	
+		Normal normal = this.farm.getNormalSale(saleNo);
 		if(normal == null) {
 			return "normal/NormalNotFound";
 		}
+		
 		model.addAttribute("normal", normal);
-		return "normal/NormalView";
+		return normalView;
 	}
 	//get userNormal List
 	@RequestMapping("/normal/userList.do")

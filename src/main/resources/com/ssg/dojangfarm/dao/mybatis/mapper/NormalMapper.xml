@@ -24,8 +24,8 @@
 	<select id="getNormalSale" parameterType="int"
 		resultType="Normal">
 		SELECT
-		(saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo,
-		regiDate)
+		saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo,
+		regidDate
 		FROM Normal
 		WHERE saleNo = #{saleNo}
 	</select>
@@ -46,11 +46,9 @@
 	</select>
 
 	<select id="searchNormal" resultType="Normal">
-		SELECT saleNo, title, UserTable.userNo, regidDate
-		From Normal, UserTable
-		WHERE Normal.userNo = UserTable.userNo
-		AND Normal.userNo=#{userNo}
-		AND title LIKE '%#{word}%'
+		SELECT saleNo, title, userNo
+		From Normal
+		WHERE title LIKE #{title}
 	</select>
 	<update id="turnSaleState" parameterType="int">
 		UPDATE Normal

@@ -38,6 +38,6 @@
 		</c:forEach>
 	</table>
 	<br><br>
-	<a href="<c:url value='/user/insertCardForm.do' />">카드 추가</a>
+	<a href="<c:url value='/user/insertCard.do' />">카드 추가</a>
 </body>
 </html>

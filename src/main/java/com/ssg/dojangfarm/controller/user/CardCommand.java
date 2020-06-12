@@ -1,69 +1,115 @@
-package com.ssg.dojangfarm.domain;
+package com.ssg.dojangfarm.controller.user;
 
-import java.io.Serializable;
 import java.util.Date;
 
-@SuppressWarnings("serial")
-public class Card implements Serializable{
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.ssg.dojangfarm.domain.User;
+
+public class CardCommand {
 	private int cardNo;
 	private User user;
+	@NotEmpty
 	private String bank;
-	private int cardPW;
+	@NotEmpty @Pattern(regexp="\\d{4}")
+	private String cardPW;
+	@Future @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date period;
-	private int cvc;
+	@NotEmpty @Pattern(regexp="\\d{3,4}")
+	private String cvc;
 	private String type;
-	private String cardPayNo;		//real card number
+	@NotEmpty @Pattern(regexp = "(\\d{4}-\\d{4}-\\d{4}-\\d{4})|(\\d{4}-\\d{6}-\\d{5})") 
+	private String cardPayNo;
 	
-	public Card() {
+	
+	public CardCommand() {
 		super();
 	}
-	
+
+
 	public int getCardNo() {
 		return cardNo;
 	}
+
+
 	public void setCardNo(int cardNo) {
 		this.cardNo = cardNo;
 	}
+
+
 	public User getUser() {
 		return user;
 	}
+
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+
 	public String getBank() {
 		return bank;
 	}
+
+
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
-	public int getCardPW() {
+
+
+	public String getCardPW() {
 		return cardPW;
 	}
-	public void setCardPW(int cardPW) {
+
+
+	public void setCardPW(String cardPW) {
 		this.cardPW = cardPW;
 	}
+
+
 	public Date getPeriod() {
 		return period;
 	}
+
+
 	public void setPeriod(Date period) {
 		this.period = period;
 	}
-	public int getCvc() {
+
+
+	public String getCvc() {
 		return cvc;
 	}
-	public void setCvc(int cvc) {
+
+
+	public void setCvc(String cvc) {
 		this.cvc = cvc;
 	}
+
+
 	public String getType() {
 		return type;
 	}
+
+
 	public void setType(String type) {
 		this.type = type;
 	}
+
+
 	public String getCardPayNo() {
 		return cardPayNo;
 	}
+
+
 	public void setCardPayNo(String cardPayNo) {
 		this.cardPayNo = cardPayNo;
 	}
+	
+	
 }

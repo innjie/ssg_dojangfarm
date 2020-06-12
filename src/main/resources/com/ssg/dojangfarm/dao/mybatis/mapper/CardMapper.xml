@@ -9,6 +9,7 @@
     	FROM Card
     	WHERE 
     		userNo = #{userNo}
+    	ORDER BY cardNo
   	</select>
   	
   	<insert id="insertCard" parameterType="Card">
@@ -19,11 +20,11 @@
     		(cardNo, bank, cardPW, period, cvc, type, cardPayNo, userNo)
     	VALUES 
     		(#{cardNo}, #{bank}, #{cardPW}, #{period}, #{cvc}, 
-    		#{type}), #{cardPayNo}, #{user.userNo})
+    		#{type}, #{cardPayNo}, #{user.userNo})
   	</insert>
   	
   	<delete id="deleteCard" parameterType="int">
-    	DELETE FROM QnA  
+    	DELETE FROM Card  
     	WHERE cardNo = #{cardNo}
   	</delete>
   	
@@ -33,5 +34,13 @@
     	FROM Card
     	WHERE 
     		cardNo = #{cardNo}
+  	</select>
+  	
+  	<select id="checkCardPayNo" parameterType="String" resultType="Card">
+    	SELECT 
+    		cardNo, cardPayNo, bank, period, cvc, type
+    	FROM Card
+    	WHERE 
+    		cardPayNo = #{cardPayNo}
   	</select>
  </mapper>

@@ -13,16 +13,16 @@
 </head>
 <body>
 	다음 정보로 등록하시겠습니까?
-	<form:form modelAttribute="auctionCommand" action="/auction/registerAuction.do">
+	<form:form modelAttribute="auctionCommand" action="registerAuctionConfirm.do">
 		<ul>
-			<li>제목: ${auction.title}</li>
-			<li>품목: ${auction.product.pName}</li>
-			<li>상세 정보: ${auction.detail}</li>
-			<li>최소 가격: ${auction.minPrice}
-			<li>기간: ${auction.deadline}</li>
-			<li>즉시구매 가능여부: ${auction.imPurAva}</li>
-			<c:if test='${auction.imPurAva==true}'>
-				<li>즉시구매 가격: ${auction.imPurPrice}</li>
+			<li>제목: ${auctionCommand.title}</li>
+			<li>품목: ${auctionCommand.product.pName}</li>
+			<li>상세 정보: ${auctionCommand.detail}</li>
+			<li>최소 가격: ${auctionCommand.minPrice}
+			<li>기간: ${auctionCommand.deadline}</li>
+			<li>즉시구매 가능여부: ${auctionCommand.imPurAva}</li>
+			<c:if test="${auctionCommand.imPurAva==true}">
+				<li>즉시구매 가격: ${auctionCommand.imPurPrice}</li>
 			</c:if>
 		</ul> 	
 		<br><br>

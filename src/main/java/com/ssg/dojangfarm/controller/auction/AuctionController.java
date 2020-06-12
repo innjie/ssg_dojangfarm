@@ -197,21 +197,25 @@ public class AuctionController {
 			return AUCTIONFORM;
 		}
 		
-		return "redirect:/auction/registerAuctionConfirm.do";
+		return CONFIRMAUCTION;
 	}
 	
 	//confirm register auction
 	@RequestMapping("/auction/registerAuctionConfirm.do")
-	public ModelAndView confirm(
+	public String confirm(
 			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
 			BindingResult result,
 			HttpServletRequest request) throws Exception {
 		
+		System.out.println("register auction!!");
+		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 
-		if(result.hasErrors()) {
-			return new ModelAndView(AUCTIONFORM);
+		//validate
+		if (result.hasErrors()) {
+			System.out.println("register auction errror");
+			return AUCTIONFORM;
 		}		
 		
 		//auctionCommand to auction
@@ -227,7 +231,7 @@ public class AuctionController {
 		
 		this.farm.registerAuction(auction);	
 			
-		return new ModelAndView(VIEWAUCTION, "auction", auction);
+		return "redirect:/auction/viewAuction.do?aNo=" + auction.getaNo();
 	}
 
 }

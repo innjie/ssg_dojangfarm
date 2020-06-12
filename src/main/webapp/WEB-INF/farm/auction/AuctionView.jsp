@@ -36,9 +36,15 @@
 			<td>${auction.deadline}</td>
 		</tr>
 		<tr>
-			<td>종료</td>
-			<td>${auction.finish}</td>
+			<td>판매자</td>
+			<td>${auction.user.id}</td>
 		</tr>
+		<tr>
+			<td>내용</td>
+			<td>${auction.detail}</td>
+		</tr>
+
+		
 	</table>
 	<br><br>
 	

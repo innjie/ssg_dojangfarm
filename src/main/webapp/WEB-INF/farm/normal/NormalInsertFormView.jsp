@@ -25,11 +25,16 @@
 		<form:input path="price" />
 		<form:errors path="price" />
 		<br>
+		
+		<form:label path="count">개수</form:label>
+		<form:input path="count"/>
+		<form:errors path="count"/>
+		<br>
 
 		<form:label path="product.pName">품목 </form:label>
 		<form:select path="product.pName">
-			<option value="과일">과일</option>
-			<option value="채소">채소</option>
+			<option value="과일">사과</option>
+			<option value="채소">오렌지</option>
 		</form:select>
 
 		<form:errors path="product.pName" />

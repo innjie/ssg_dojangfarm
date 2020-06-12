@@ -5,14 +5,12 @@
 	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.NormalMapper">
 	<cache />
 
-	<insert id="insertSale" parameterType="int">
-		<selectKey keyProperty="saleNo" resultType="int"
-			order="BEFORE">
+	<insert id="insertSale" parameterType="Normal">
+		<selectKey keyProperty="saleNo" resultType="int" order="BEFORE">
 			SELECT NormalSeq.nextval AS "saleNo" FROM DUAL
 		</selectKey>
 		INSERT INTO Normal
-		(saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo,
-		regidDate)
+		(saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo, regidDate)
 		VALUES
 		(#{saleNo}, #{saleType}, #{title}, #{saleState}, #{info}, #{price}, #{count},
 		#{state}, #{product.pNo}, #{user.userNo}, #{regidDate})

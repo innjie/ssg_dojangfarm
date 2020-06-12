@@ -14,7 +14,11 @@ public class NormalCommand {
 	private String title;
 	private String state;
 	private String info;
-	private Date RegiDate;
+	private Date regidDate;
+	private String saleType;
+	private String saleState;
+	@Min(1)
+	private int count;
 	
 	public Product getProduct() {
 		return product;
@@ -47,10 +51,28 @@ public class NormalCommand {
 		this.info = info;
 	}
 	public Date getRegiDate() {
-		return RegiDate;
+		return regidDate;
 	}
 	public void setRegiDate(Date regiDate) {
-		RegiDate = regiDate;
+		regidDate = regiDate;
+	}
+	public String getSaleState() {
+		return saleState;
+	}
+	public void setSaleState(String saleState) {
+		this.saleState = saleState;
+	}
+	public String getSaleType() {
+		return saleType;
+	}
+	public void setSaleType(String saleType) {
+		this.saleType = saleType;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 }

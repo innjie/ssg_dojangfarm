@@ -15,4 +15,5 @@ public interface MessageMapper {
 
 	int getRUserNo(int msgNo);
 	int getSUserNo(int msgNo);
+	void changeReadState(int msgNo);
 }

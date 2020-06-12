@@ -18,19 +18,19 @@
 			<td>이름</td>
 			<td>주소</td>
 		</tr>
-		<c:forEach var="addr" items="${addressList}" varStatus="status">
+		<c:forEach var="a" items="${addressList}" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
 				<td>
-					<a href="<c:url value='/user/getAddress.do'>
-								<c:param name='addrNo' value='${addr.addrNo}' />
+					<a href="<c:url value='/address/getAddress.do'>
+								<c:param name='addrNo' value='${a.addrNo}' />
 							</c:url>">
-					${addr.name}</a>
+					${a.aName}</a>
 				</td>
-				<td>${addr.address}</td>
+				<td>${a.addr}</td>
 				<td>
-					<a href="<c:url value='/user/deleteAddress.do'>
-								<c:param name='addrNo' value='${addr.addrNo}' />
+					<a href="<c:url value='/address/deleteAddress.do'>
+								<c:param name='addrNo' value='${a.addrNo}' />
 							</c:url>">
 					삭제</a>
 				</td>	
@@ -38,6 +38,6 @@
 		</c:forEach>
 	</table>
 	<br><br>
-	<a href="<c:url value='/user/createAddress.do' />">주소 추가</a>
+	<a href="<c:url value='/address/createAddress.do' />">주소 추가</a>
 </body>
 </html>

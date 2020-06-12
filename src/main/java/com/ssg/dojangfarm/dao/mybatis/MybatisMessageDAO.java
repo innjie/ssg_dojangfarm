@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssg.dojangfarm.dao.MessageDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.MessageMapper;
@@ -30,7 +31,10 @@ public class MybatisMessageDAO implements MessageDAO{
 	public List<Message> findMsg(String title) {
 		return messageMapper.findMsg("%" + title + "%");
 	}  
+	
+	@Transactional
 	public Message checkMsg(int msgNo) {
+		messageMapper.changeReadState(msgNo);
 		return messageMapper.checkMsg(msgNo);
 	}
 	

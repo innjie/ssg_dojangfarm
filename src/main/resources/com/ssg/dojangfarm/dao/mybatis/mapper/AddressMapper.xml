@@ -5,7 +5,7 @@
   <cache />
   	<select id="getAddressList" parameterType="int" resultType="Address">
     	SELECT 
-    		addrNo, address, aName
+    		addrNo, addr, aName
     	FROM Address
     	WHERE 
     		userNo = #{userNo}
@@ -15,19 +15,19 @@
   	<insert id="createAddress" parameterType="Address">
     	<selectKey keyProperty="addrNo" resultType="int" order="BEFORE">
         	SELECT AddressSeq.nextval AS "addrNo" FROM DUAL
-     	</selectKey>
+     	</selectKey>     	
     	INSERT INTO Address 
-    		(addrNo, address, zip, detail, aName, userNo)
+    		(addrNo, addr, zip, detail, aName, userNo)
     	VALUES 
-    		(#{addrNo}, #{address}, #{zip}, #{detail}, #{aName}, #{user.userNo})
+    		(#{addrNo}, #{addr}, #{zip}, #{detail}, #{aName}, #{user.userNo})
   	</insert>
   	
   	<update id="modifyAddress" parameterType="Address">
     	UPDATE Address SET 
-    		address = #{address},
+    		addr = #{addr},
     		zip = #{zip},
     		detail = #{detail},
-    		aName = #{aName},
+    		aName = #{aName}
     	WHERE addrNo = #{addrNo}
   	</update>
   	
@@ -38,7 +38,7 @@
   	
   	<select id="getAddress" parameterType="int" resultType="Address">
     	SELECT 
-    		addrNo, address, zip, detail, aName
+    		addrNo, addr, zip, detail, aName
     	FROM Address
     	WHERE 
     		addrNo = #{addrNo}

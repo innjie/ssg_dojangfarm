@@ -5,7 +5,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Address implements Serializable{
 	private int addrNo;
-	private String address;	//address
+	private String addr;	//address
 	private User user;
 	private int zip;		//zip code
 	private String detail;		//detail addr
@@ -17,11 +17,11 @@ public class Address implements Serializable{
 	public void setAddrNo(int addrNo) {
 		this.addrNo = addrNo;
 	}
-	public String getAddress() {
-		return address;
+	public String getAddr() {
+		return addr;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 	public User getUser() {
 		return user;
@@ -29,6 +29,7 @@ public class Address implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
 	public int getZip() {
 		return zip;
 	}

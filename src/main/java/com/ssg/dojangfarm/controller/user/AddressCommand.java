@@ -7,28 +7,48 @@ import com.ssg.dojangfarm.domain.User;
 
 public class AddressCommand {
 	@NotEmpty
-	private String address;	//address
-	@Pattern(regexp="\\d{5}")
-	private int zip;		//zip code
+	private String addr;	//address
+	@NotEmpty @Pattern(regexp="\\d{5}")
+	private String zip;		//zip code
 	@NotEmpty
 	private String detail;		//detail addr
 	private String aName;
+	private boolean newAddress;
+	private int addrNo;
 	
+	public AddressCommand(int addrNo, String addr, String zip, String detail, String aName) {
+		super();
+		this.addrNo = addrNo;
+		this.addr = addr;
+		this.zip = zip;
+		this.detail = detail;
+		this.aName = aName;
+		this.newAddress = false;
+	}
 	
 	public AddressCommand() {
 		super();
+		this.newAddress = true;
 	}
 	
-	public String getAddress() {
-		return address;
+	public int getAddrNo() {
+		return addrNo;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+
+	public void setAddrNo(int addrNo) {
+		this.addrNo = addrNo;
 	}
-	public int getZip() {
+
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	public String getZip() {
 		return zip;
 	}
-	public void setZip(int zip) {
+	public void setZip(String zip) {
 		this.zip = zip;
 	}
 	public String getDetail() {
@@ -43,6 +63,8 @@ public class AddressCommand {
 	public void setaName(String aName) {
 		this.aName = aName;
 	}
-	
+	public boolean isNewAddress() {
+		return newAddress;
+	}
 	
 }

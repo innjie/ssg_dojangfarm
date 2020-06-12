@@ -16,8 +16,8 @@
 	<a href="<c:url value='/user/myPage.do'><c:param name="type" value="user" /></c:url>">회원 정보</a>&nbsp;&nbsp;&nbsp;&nbsp;		
 	<c:if test="${param.type == 'user'}">
 		<a href="<c:url value='/user/getUser.do' />">나의 정보</a>&nbsp;&nbsp;
-		<a href="<c:url value='/user/getAddressList.do' />">나의 주소록</a>&nbsp;&nbsp;
-		<a href="<c:url value='/user/viewCardList.do' />">나의 카드</a>&nbsp;&nbsp;
+		<a href="<c:url value='/address/getAddressList.do' />">나의 주소록</a>&nbsp;&nbsp;
+		<a href="<c:url value='/card/viewCardList.do' />">나의 카드</a>&nbsp;&nbsp;
 	</c:if>
 	<br><br>
 	<a href="<c:url value='/user/myPage.do'><c:param name="type" value="normal" /></c:url>">나의 일반 판매</a>&nbsp;&nbsp;&nbsp;&nbsp;

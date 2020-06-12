@@ -13,7 +13,7 @@
 </head>
 <body>
 	다음 정보로 등록하시겠습니까?
-	<form:form modelAttribute="auction" action="/auction/registerAuction.do">
+	<form:form modelAttribute="auctionCommand" action="/auction/registerAuction.do">
 		<ul>
 			<li>제목: ${auction.title}</li>
 			<li>품목: ${auction.product.pName}</li>

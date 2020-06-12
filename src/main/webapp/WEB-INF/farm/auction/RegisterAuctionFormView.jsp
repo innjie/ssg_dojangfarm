@@ -12,7 +12,7 @@
 <title>경매 등록</title>
 </head>
 <body>
-	<form:form modelAttribute="auction" action='<c:url value="/auction/registerAuctionConfirm.do"/>'>
+	<form:form modelAttribute="auctionCommand" action='<c:url value="/auction/registerAuctionConfirm.do"/>'>
 		<form:label path="title">제목 </form:label>
 		<form:input path="title" />
 		<form:errors path="title" />

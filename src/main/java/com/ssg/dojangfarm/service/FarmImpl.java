@@ -315,6 +315,11 @@ public class FarmImpl implements FarmFacade{
 		cardDAO.deleteCard(cardNo);
 	}
 	
+	@Override
+	public Card checkCardPayNo(String cardPayNo) {
+		return cardDAO.checkCardPayNo(cardPayNo);
+	}
+	
 	//-------------------------------------------------------------------------
 	//Common
 	//-------------------------------------------------------------------------

@@ -1,30 +1,33 @@
 package com.ssg.dojangfarm.controller.user;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Card;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
 public class CardController {
-	private static final String LISTCARD = "card/CardListView";
-	private static final String VIEWCARD = "card/CardView";
-	private static final String CARDFORM = "card/InsertCardFormView";
+	private static final String LISTCARD = "user/CardListView";
+	private static final String VIEWCARD = "user/CardView";
+	private static final String CARDFORM = "user/InsertCardFormView";
 	
 	@Autowired
 	private FarmFacade farm;
@@ -33,8 +36,25 @@ public class CardController {
 		this.farm = farm;
 	}
 	
+	//cardCommand 
+	@ModelAttribute("cardCommand")
+	public CardCommand formBacking(HttpServletRequest request) {
+		return new CardCommand();
+	}	
+	
+	//type value
+	@ModelAttribute("types")
+	public List<String> referenceData() {
+		List<String> types = new ArrayList<String>();
+		types.add("Visa");
+		types.add("MasterCard");
+		types.add("American Express");
+		
+		return types;		
+	}
+	
 	//view cardList
-	//@RequestMapping("/card/viewCardList.do")
+	@RequestMapping("/user/viewCardList.do")
 	public ModelAndView listCard(
 			HttpServletRequest request) throws Exception {
 		
@@ -43,12 +63,12 @@ public class CardController {
 
 		PagedListHolder<Card> cardList = new PagedListHolder<Card>(this.farm.getCardList(user.getUserNo()));
 		cardList.setPageSize(4);
-		
-		return new ModelAndView(LISTCARD, "cardList ", cardList.getSource());
+
+		return new ModelAndView(LISTCARD, "cardList", cardList.getSource());
 	}	
 
 /*	//view cardList by page
-	@RequestMapping("/auction/viewMyAuctionList2.do")
+	@RequestMapping("/user/viewCardList2.do")
 	public String listCard2(
 			@RequestParam("page") String page,
 			@ModelAttribute("cardList") PagedListHolder<Card> cardList,
@@ -67,7 +87,7 @@ public class CardController {
 	}	
 */
 	//view card
-	@RequestMapping("/card/viewCard.do")
+	@RequestMapping("/user/viewCard.do")
 	public ModelAndView viewCard(
 			@RequestParam("cardNo") int cardNo) throws Exception {
 		
@@ -77,48 +97,55 @@ public class CardController {
 	}
 	
 	//create card ... 
-	@RequestMapping(value="/card/insertCard.do", method=RequestMethod.GET)
-	public String insertForm() {
+	@RequestMapping(value="/user/insertCard.do", method=RequestMethod.GET)
+	public String insertForm(@ModelAttribute("cardCommand") CardCommand cardCommand) {
 		return CARDFORM;
 	}
 	
 	//create card ... insert
-	@RequestMapping(value="/card/insertCard.do", method=RequestMethod.POST)
+	@RequestMapping(value="/user/insertCard.do", method=RequestMethod.POST)
 	public String insert(
-			@RequestParam("bank") String bank,
-			@RequestParam("type") String type,
-			@RequestParam("cardPayNo") String cardPayNo,
-			@RequestParam("period") Date period,
-			@RequestParam("cvc") int cvc,
-			@RequestParam("cardPW") String cardPW,
 			HttpServletRequest request,
+			@Valid @ModelAttribute("cardCommand") CardCommand cardCommand,
 			BindingResult result) throws Exception {
 
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
+				
+		//validate
+		if (result.hasErrors()) {
+			return CARDFORM;
+		}
 		
 		//cardPayNo is unique
-//		if(this.farm.checkCardPayNo(cardPayNo) != null) {
-//			result.rejectValue("cardPayNo", "invalidCardPayNo", new Object[] { request.getParameter("cardPayNo") }, null);
-//
-//			return CARDFORM;
-//		}
+		if(this.farm.checkCardPayNo(cardCommand.getCardPayNo()) != null) {
+			result.rejectValue("cardPayNo", "invalidCardPayNo", new Object[] { request.getParameter("cardPayNo") }, null);
+
+			return CARDFORM;
+		}
 		
-		Card card = new Card(user, bank, cardPW, period, cvc, type, cardPayNo);
+		Card card = new Card();
+		card.setUser(user);
+		card.setBank(cardCommand.getBank());
+		card.setCardPW(Integer.parseInt(cardCommand.getCardPW()));
+		card.setPeriod(cardCommand.getPeriod());
+		card.setCvc(Integer.parseInt(cardCommand.getCvc()));
+		card.setType(cardCommand.getType());
+		card.setCardPayNo(cardCommand.getCardPayNo());
 		
 		this.farm.insertCard(card);	
 
-		return "redirect:/card/viewCard.do?cardNo=" + card.getCardNo();
+		return "redirect:/user/viewCard.do?cardNo=" + card.getCardNo();
 	}
 
 	//delete card
-	@RequestMapping("/card/deleteCard.do")
+	@RequestMapping("/user/deleteCard.do")
 	public String delete(
 			@RequestParam("cardNo") int cardNo) throws Exception {
 	
 		this.farm.deleteCard(cardNo);	
 
-		return "redirect:/card/viewCardList.do";
+		return "redirect:/user/viewCardList.do";
 	
 	}
 }

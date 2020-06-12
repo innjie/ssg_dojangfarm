@@ -37,4 +37,8 @@ public class CardServiceEndpoint {
 		cardService.deleteCard(cardNo);
 	}
 
+	@WebMethod
+	public Card checkCardPayNo(String cardPayNo) {
+		return cardService.checkCardPayNo(cardPayNo);
+	}
 }

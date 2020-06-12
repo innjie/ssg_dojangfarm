@@ -11,6 +11,7 @@
     	FROM Auction, Bid
     	WHERE 
     		Auction.aNo = Bid.aNo
+    	ORDER BY Auction.aNo
   	</select>
   	
   	<select id="findAuctionByTitle" parameterType="int" resultType="Auction">
@@ -21,6 +22,7 @@
     	WHERE 
     		Auction.aNo = Bid.aNo AND
     		title = #{title}
+    	ORDER BY Auction.aNo
   	</select>
   	
   	<select id="findAuctionByProduct" parameterType="String" resultType="Auction">
@@ -32,6 +34,7 @@
     		Auction.aNo = Bid.aNo AND
     		Auction.pNo = Product.pNo AND
     		Product.pName = #{pName}
+    	ORDER BY Auction.aNo
     		
   	</select>
   	
@@ -42,6 +45,7 @@
     	FROM Auction, Bid
     	WHERE 
     		Auction.aNo = Bid.aNo
+    	ORDER BY Auction.aNo
   	</select>
   	
   	<select id="getAuction" parameterType="int" resultType="Auction">
@@ -86,6 +90,7 @@
     	WHERE 
     		Auction.aNo = Bid.aNo AND
     		userNo = #{userNo}
+    	ORDER BY Bid.bidNo
   	</select>
   	
   	
@@ -120,6 +125,7 @@
     		Bid.bidNo = SBid.bidNo AND
     		Auction.aNo = Bid.aNo AND
     		SBid.userNo = #{userNo}
+    	ORDER BY SBid.sBidNo
   	</select>
   	
   	<select id="getMySBid" parameterType="int" resultType="Auction">
@@ -168,6 +174,7 @@
     	WHERE 
     		Auction.aNo = ImPur.aNo AND
     		ImPur.userNo = #{userNo}
+    	ORDER BY ImPur.imPurNo
   	</select>
   	
   	<select id="getMyImPur" parameterType="int" resultType="Auction">

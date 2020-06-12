@@ -34,4 +34,9 @@ public class CardServiceImpl implements CardService {
 	public void deleteCard(int cardNo) {
 		cardDAO.deleteCard(cardNo);
 	}
+	
+	@Override
+	public Card checkCardPayNo(String cardPayNo) {
+		return cardDAO.checkCardPayNo(cardPayNo);
+	}
 }

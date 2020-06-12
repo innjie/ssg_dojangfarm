@@ -14,7 +14,7 @@
 <body>
 <c:set var="targetUrl"><c:url value="/user/login.do" /></c:set>
 
-	<form:form commandName="login" action="${targetUrl}">
+	<form:form modelAttribute="login" action="${targetUrl}">
 		<br>
 			
 		<form:label path="id">아이디 </form:label>

@@ -31,9 +31,9 @@ public class UserController {
 		this.farm = farm;
 	}
 	
-	//addressCommand 
+	//userCommand 
 	@ModelAttribute("userCommand")
-	public UserCommand formBacking1(HttpServletRequest request) {
+	public UserCommand formBacking(HttpServletRequest request) {
 		
 		User user = (User)WebUtils.getSessionAttribute(request, "user");
 

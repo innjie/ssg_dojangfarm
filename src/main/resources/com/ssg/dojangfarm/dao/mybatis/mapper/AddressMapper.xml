@@ -19,7 +19,7 @@
     	INSERT INTO Address 
     		(addrNo, addr, zip, detail, aName, userNo)
     	VALUES 
-    		(#{addrNo}, #{addr}, #{zip}, #{detail}, #{aName}, #{user.userNo})
+    		(#{addrNo}, #{addr}, #{zip}, #{detail}, #{aName}, #{user}.#{userNo})
   	</insert>
   	
   	<update id="modifyAddress" parameterType="Address">

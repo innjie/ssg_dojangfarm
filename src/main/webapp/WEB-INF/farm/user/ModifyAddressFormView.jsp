@@ -12,26 +12,26 @@
 <title>주소 수정</title>
 </head>
 <body>
-	<form:form modelAttribute="address" >
+	<form:form modelAttribute="addressCommand" >
 		
-		<form:label path="address.aName">주소 이름 </form:label>
-		<form:input path="address.aName" />
-		<form:errors path="address.aName" />
+		<form:label path="aName">주소 이름 </form:label>
+		<form:input path="aName" />
+		<form:errors path="aName" />
 		<br>
 		
-		<form:label path="address.zip">우편번호 </form:label>
-		<form:input path="address.zip" />
-		<form:errors path="address.zip" />
+		<form:label path="zip">우편번호 </form:label>
+		<form:input path="zip" />
+		<form:errors path="zip" />
 		<br>
 		
-		<form:label path="address.addr">주소 </form:label>
-		<form:input path="address.addr" />
-		<form:errors path="address.addr" />
+		<form:label path="addr">주소 </form:label>
+		<form:input path="addr" />
+		<form:errors path="addr" />
 		<br>
 		
-		<form:label path="address.detail">상세 </form:label>
-		<form:input path="address.detail" />
-		<form:errors path="address.detail" />
+		<form:label path="detail">상세 </form:label>
+		<form:input path="detail" />
+		<form:errors path="detail" />
 		<br>
 		
 		<input type="submit" value="수정" />

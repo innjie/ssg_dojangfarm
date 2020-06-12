@@ -16,7 +16,7 @@
   	
   	<select id="receiveMessageList" parameterType="int" resultType="Message">
     	SELECT 
-    		msgNo, title, sDate, deleteState, id AS "sUser.id"
+    		msgNo, title, sDate, read, deleteState, id AS "sUser.id"
     	FROM Message, UserTable
     	WHERE 
     		sUserNo = UserTable.userNo AND 
@@ -81,6 +81,12 @@
   	<update id="deleteMsg" parameterType="int">
     	UPDATE Message SET 
     		deleteState = '1'
+    	WHERE msgNo = #{msgNo}
+  	</update>
+  	
+  	<update id="changeReadState" parameterType="int">
+    	UPDATE Message SET 
+    		read = '1'
     	WHERE msgNo = #{msgNo}
   	</update>
   	

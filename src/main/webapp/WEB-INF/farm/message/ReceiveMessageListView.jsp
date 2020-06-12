@@ -25,6 +25,7 @@
 			<td>보낸사람</td>
 			<td>제목</td>
 			<td>날짜</td>
+			<td>읽음</td>
 		</tr>
 		<c:forEach var="m" items="${receiveMessageList}" varStatus="status">
 			<c:if test="${m.sUser.id != user.id}">
@@ -39,6 +40,7 @@
 						${m.title}</a>
 					</td>
 					<td>${m.sDate}</td>
+					<td>${m.read}</td>
 				</tr>
 			</c:if>
 		</c:forEach>

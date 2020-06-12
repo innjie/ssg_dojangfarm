@@ -33,6 +33,7 @@
 			<mvc:mapping path="/user/myPage.do" />  
 			<mvc:mapping path="/message/*.do" />
 			<mvc:mapping path="/address/*.do" />  
+			<mvc:mapping path="/card/*.do" />  
 			<mvc:mapping path="/auction/viewMyAuctionList.do" />
 			<mvc:mapping path="/auction/registerAuction.do" />  
 			<mvc:mapping path="/auction/viewMyBidList.do" />

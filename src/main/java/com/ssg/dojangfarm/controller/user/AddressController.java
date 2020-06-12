@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -109,7 +110,7 @@ public class AddressController {
 	//create address ... insert
 	@RequestMapping(value="/address/createAddress.do", method=RequestMethod.POST)
 	public String insert(
-			@ModelAttribute("addressCommand") AddressCommand addressCommand, 
+			@Valid @ModelAttribute("addressCommand") AddressCommand addressCommand, 
 			BindingResult result,
 			HttpServletRequest request) throws Exception {
 
@@ -121,15 +122,18 @@ public class AddressController {
 			return ADDADDRESSFORM;
 		}
 		
-		//커맨드객체 - 실제객체 ?????????
+		//addressCommand to address
 		Address address = new Address();
+		address.setAddr(addressCommand.getAddr());
+		address.setZip(Integer.parseInt(addressCommand.getZip()));
+		address.setaName(addressCommand.getaName());
+		address.setDetail(addressCommand.getDetail());
 		
 		this.farm.createAddress(address);	
 
 		return "redirect:/address/viewAddress.do?addrNo=" + address.getAddrNo();
 	}
 	
-	//같은 커멘드객체 쓰는건가...
 	//update address ... form
 	@RequestMapping(value="/address/modifyAddress.do", method=RequestMethod.GET)
 	public String updateAddressForm(
@@ -139,22 +143,27 @@ public class AddressController {
 	}
 	
 	//update address ... update
-//	@RequestMapping(value="/address/modifyAddress.do", method=RequestMethod.POST)
-//	public String update(
-//			@ModelAttribute("addressCommand") AddressCommand addressCommand, 
-//			BindingResult result) throws Exception {
-//		
-//		//validate
-//		if (result.hasErrors()) {
-//			return ADDADDRESSFORM;
-//		}
-//		
-//		//커맨드객체 - 실제객체 ?????????	
-//		//aNo를 리퀘스트.파람으로 받을 것인가 커맨드객체에 담을 것인가.....
-//		this.farm.modifyAddress(address);
-//
-//		return "redirect:/address/viewAddress.do?addrNo=" + aNo;
-//	}
+	@RequestMapping(value="/address/modifyAddress.do", method=RequestMethod.POST)
+	public String update(
+			@Valid @ModelAttribute("addressCommand") AddressCommand addressCommand, 
+			BindingResult result) throws Exception {
+		
+		//validate
+		if (result.hasErrors()) {
+			return ADDADDRESSFORM;
+		}
+		
+		//addressCommand to address
+		Address address = new Address();
+		address.setAddr(addressCommand.getAddr());
+		address.setZip(Integer.parseInt(addressCommand.getZip()));
+		address.setaName(addressCommand.getaName());
+		address.setDetail(addressCommand.getDetail());
+		
+		this.farm.modifyAddress(address);
+
+		return "redirect:/address/viewAddress.do?addrNo=" + address.getAddrNo();
+	}
 	
 	//delete address
 	@RequestMapping("/address/deleteAddress.do")

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssg.dojangfarm.domain.Address;
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.Product;
 
 public interface NormalService {
 	public int insertSale(Normal normal);
@@ -11,6 +12,8 @@ public interface NormalService {
 	public Normal getNormalSale(int saleNo) ;
 	public List<Normal> getAllNormalList();
 	public List<Normal> getNormalListByUserNo(int userNo);
-	public int turnSaleState(int saleNo);
+	public int turnSaleState(int saleNo, String saleState);
 	public List<Normal> searchNormal(String title);
+	public String getSaleState(int saleNo);
+	public List<Product> getProductList();
 }

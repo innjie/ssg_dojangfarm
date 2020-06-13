@@ -6,25 +6,31 @@
 	<cache />
 
 	<insert id="insertSale" parameterType="Normal">
-		<selectKey keyProperty="saleNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="saleNo" resultType="int"
+			order="BEFORE">
 			SELECT NormalSeq.nextval AS "saleNo" FROM DUAL
 		</selectKey>
 		INSERT INTO Normal
-		(saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo, regidDate)
+		(saleNo, saleType, title, saleState, info, price,
+		count, state, pNo, userNo, regidDate)
 		VALUES
-		(#{saleNo}, #{saleType}, #{title}, #{saleState}, #{info}, #{price}, #{count},
-		#{state}, #{product.pNo}, #{user.userNo}, #{regidDate})
+		(#{saleNo}, #{saleType},
+		#{title}, #{saleState}, #{info}, #{price}, #{count},
+		#{state},
+		#{product.pNo}, #{user.userNo}, #{regidDate})
 	</insert>
 
 	<update id="updateSale" parameterType="int">
 		UPDATE Normal
-		SET info = #{info}, price = #{price}, count = #{regidDate}
+		SET info =
+		#{info}, price = #{price}, count = #{regidDate}
 
 	</update>
 	<select id="getNormalSale" parameterType="int"
 		resultType="Normal">
 		SELECT
-		saleNo, saleType, title, saleState, info, price, count, state, pNo, userNo,
+		saleNo, saleType, title, saleState, info, price,
+		count, state, pNo, userNo,
 		regidDate
 		FROM Normal
 		WHERE saleNo = #{saleNo}
@@ -33,31 +39,49 @@
 
 	<select id="getAllNormalList" resultType="Normal">
 		SELECT
-		saleNo, title, UserTable.userNo, regidDate
+		saleNo, title,
+		Usertable.name as "user.name", regidDate
 		From Normal, UserTable
 		WHERE
 		Normal.userNo = UserTable.userNo
+		AND saleState = 'OPEN'
 	</select>
 
 	<select id="getNormalListByUserNo" resultType="Normal">
-		SELECT saleNo, title, UserTable.userNo, regidDate
+		SELECT saleNo,
+		title, UserTable.name as "user.name", regidDate
 		From Normal, UserTable
-		WHERE Normal.userNo = UserTable.userNo AND Normal.userNo=#{userNo}
+		WHERE
+		Normal.userNo = UserTable.userNo AND Normal.userNo=#{userNo}
 	</select>
 
 	<select id="searchNormal" resultType="Normal">
-		SELECT saleNo, title, userNo
+		SELECT saleNo, title,
+		userNo
 		From Normal
-		WHERE title LIKE #{title}
+		WHERE title LIKE '%' || #{title} || '%'
 	</select>
-	<update id="turnSaleState" parameterType="int">
+
+	<update id="turnSaleState" parameterType="Normal">
 		UPDATE Normal
-		SET saleState = #{saleState}
+		SET
+		saleState = #{param2}
+		WHERE saleNo = #{param1}
 	</update>
 
-	<select id = "getUserByNormal" resultType = "int">
+	<select id="getSaleState" resultType = "String">
+		SELECT saleState
+		FROM Normal
+		WHERE saleNo = #{saleNo}
+	</select>
+	<select id="getUserByNormal" resultType="int">
 		SELECT userNo
 		FROM Normal
 		WHERE saleNo = #{saleNo}
+	</select>
+	
+	<select id = "getProductList" resultType = "Product">
+		SELECT pName, pNo
+		FROM Product
 	</select>
 </mapper>

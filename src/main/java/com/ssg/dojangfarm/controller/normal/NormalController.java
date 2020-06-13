@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.Product;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
@@ -28,6 +29,8 @@ public class NormalController {
 	private static final String normalListView = "normal/NormalListView";
 	private static final String errorPage = "/normal/Error";
 	private static final String normalView = "normal/NormalView";
+	private static final String normalUserListView = "normal/NormalUserListView";
+	private static final String successPage = "/normal/Success";
 	
 	@Autowired
 	private FarmFacade farm;
@@ -49,7 +52,12 @@ public class NormalController {
 	//insert form
 	@RequestMapping("/normal/insertForm.do")
 	public String insertForm(HttpServletRequest request,
-			 @ModelAttribute("normalCommand") NormalCommand normalCommand) throws Exception {
+			 @ModelAttribute("normalCommand") NormalCommand normalCommand,
+			 ModelMap model) throws Exception {
+		List<Product> pList = this.farm.getProductList();
+		model.addAttribute("product", pList);
+		
+		System.out.println(pList.get(5).getpNo());
 		
 		return insertNormaForm;
 	}
@@ -58,9 +66,10 @@ public class NormalController {
 	@RequestMapping("/normal/insertNormal.do")
 	public ModelAndView insertNormal(
 			@Valid@ModelAttribute("normalCommand") NormalCommand normalCommand,
-			BindingResult result, HttpServletRequest request) {
+			BindingResult result, HttpServletRequest request, ModelMap model) {
 		//insert action
-		
+		System.out.println("pNo : " + normalCommand.getProduct().getpNo());
+		System.out.println("pName : " + normalCommand.getProduct().getpName());
 		//get session -> user id
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
@@ -70,8 +79,12 @@ public class NormalController {
 			return new ModelAndView(errorPage, "message", "Please LOGIN first");
 		}
 		if(result.hasErrors()) {
+			List<Product> pList = this.farm.getProductList();
+			model.addAttribute("product", pList);
 			return new ModelAndView(insertNormaForm);
 		}
+		
+		
 		//insert normal
 		Normal normal = new Normal();
 		normal.setUser(user);
@@ -130,16 +143,24 @@ public class NormalController {
 	}
 	
 	//turn state off / on
-	@RequestMapping("/normal/turn.do")
-	public ModelAndView sarchNormal(@ModelAttribute("normal") Normal normal, BindingResult result) {
+	@RequestMapping("/normal/turnState.do")
+	public ModelAndView sarchNormal(@RequestParam("saleNo") int saleNo) {
 		//get normal
-		int res = farm.turnSaleState(normal.getSaleNo());
 		
+		String saleState = farm.getSaleState(saleNo);
+		System.out.println("current saleState : " + saleState);
+		if(saleState.equals( "OPEN")) {
+			saleState = "CLOSE";
+		} else {
+			saleState = "OPEN";
+		}
+		System.out.println("put saleState = " + saleState);
+		int res = farm.turnSaleState(saleNo, saleState);
 
 		if(res == 0) { //failed
-			return new ModelAndView("Error", "message", "state change failed");
+			return new ModelAndView(errorPage, "message", "state change failed");
 		} else { //success
-			return new ModelAndView("Success", "message", "state change success");
+			return new ModelAndView(successPage, "message", "state change success");
 		}
 
 	}
@@ -167,6 +188,7 @@ public class NormalController {
 		//get list.do
 		List<Normal> normalList = farm.getAllNormalList();
 		model.addAttribute("normalList", normalList);
+		
 		return "normal/NormalListView";
 	}
 	
@@ -178,7 +200,6 @@ public class NormalController {
 		User loginUser = (User) httpSession.getAttribute("user");
 		
 		int confUserNo = this.farm.getUserByNormal(saleNo);
-		System.out.println(confUserNo);
 		Normal normal = this.farm.getNormalSale(saleNo);
 		User normalUser = new User();
 		normalUser.setUserNo(confUserNo);
@@ -191,11 +212,12 @@ public class NormalController {
 	//get userNormal List
 	@RequestMapping("/normal/userList.do")
 	public String getNormalListByUserNo(HttpServletRequest request, Model model) {
-		User user = (User) request.getAttribute("User");
+		HttpSession httpSession = request.getSession();
+		User user = (User)httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
 		//get list.do
 		List<Normal> normalList = farm.getNormalListByUserNo(userNo);
 		model.addAttribute("normalList", normalList);
-		return "normal/NormalUserListView";
+		return normalUserListView;
 	}
 }

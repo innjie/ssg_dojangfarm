@@ -22,7 +22,7 @@
 	<br><br>
 	<a href="<c:url value='/user/myPage.do'><c:param name="type" value="normal" /></c:url>">나의 일반 판매</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<c:if test="${param.type == 'normal'}">
-		<a href="">나의 판매</a>&nbsp;&nbsp;
+		<a href="<c:url value='/normal/userList.do'/>">나의 판매</a>&nbsp;&nbsp;
 		<a href="">나의 구매</a>&nbsp;&nbsp;
 	</c:if>
 	<br><br>

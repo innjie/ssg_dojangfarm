@@ -43,8 +43,8 @@ public class NormalServiceEndpoint {
 	}
 
 	@WebMethod
-	public int turnSaleState(int saleNo) {
-		return normalService.turnSaleState(saleNo);
+	public int turnSaleState(int saleNo, String saleState) {
+		return normalService.turnSaleState(saleNo, saleState);
 	}
 	@WebMethod
 	public List<Normal> searchNormal(String title) {

@@ -61,4 +61,9 @@ public class NormalServiceImpl implements NormalService {
 	public List<Product> getProductList() {
 		return normalDAO.getProductList();
 	}
+
+	@Override
+	public Product getProduct(int pNo) {
+		return normalDAO.getProduct(pNo);
+	}
 }

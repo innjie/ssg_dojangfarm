@@ -470,6 +470,10 @@ public class FarmImpl implements FarmFacade{
 	public List<Product> getProductList() {
 		return normalDAO.getProductList();
 	}
+	@Override
+	public Product getProduct(int pNo) {
+		return normalDAO.getProduct(pNo);
+	}
 
 	//-------------------------------------------------------------------------
 	//Payment

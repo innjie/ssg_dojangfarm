@@ -11,21 +11,27 @@
 <title>일반판매 수정 폼</title>
 </head>
 <body>
-	<form:form modelAttriute="normal"
-		action='<c:url value="/normal/updateNormal.do"/>'>
+<c:set var="targetUrI">
+		<c:url value="/normal/updateNormal.do" />
+	</c:set>
+		<form:form action="${targetUrI}" commandName="normal">
 		<form:label path="title" >제목</form:label>
-		<form:input path="title" value="${normal.title }" readonly/>
+		<form:input path="title"  value="${normal.title }" readonly = "true"/>
 		<form:errors path="title" />
 		<br>
 
 		<form:label path="price">가격</form:label>
-		<form:input path="price" value="${normal.price}" />
+		<form:input path="price"  value="${normal.price}" />
 		<form:errors path="price" />
+		<br>
+		
+		<form:label path="count">개수</form:label>
+		<form:input path="count"/>
+		<form:errors path="count"/>
 		<br>
 
 		<form:label path="product.pName">품목 </form:label>
-		<form:input path="product.pName" readonly/>
-		<%-- select or radiobuttons --%>
+		<form:input path="product.pName"  value = "${normal.product.pName }" disabled = "true"/>
 		<form:errors path="product.pName" />
 		<br>
 
@@ -33,8 +39,8 @@
 		<form:input path="info" value="${normal.info}" />
 		<form:errors path="info" />
 		<br>
-
-		<input type="submit" value="추가" />
+		<form:hidden path = "saleNo" value = "${normal.saleNo }"/>
+		<input type="submit" value="수정" />
 
 
 	</form:form>

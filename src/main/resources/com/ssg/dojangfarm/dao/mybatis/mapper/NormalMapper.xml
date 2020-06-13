@@ -20,17 +20,17 @@
 		#{product.pNo}, #{user.userNo}, #{regidDate})
 	</insert>
 
-	<update id="updateSale" parameterType="int">
+	<update id="updateSale" parameterType="Normal">
 		UPDATE Normal
-		SET info =
-		#{info}, price = #{price}, count = #{regidDate}
+		SET info =#{info}, price = #{price}, count = #{count}
+		WHERE saleNo = #{saleNo}
 
 	</update>
 	<select id="getNormalSale" parameterType="int"
 		resultType="Normal">
 		SELECT
 		saleNo, saleType, title, saleState, info, price,
-		count, state, pNo, userNo,
+		count, state, pNo as "product.pNo", userNo as "user.userNo",
 		regidDate
 		FROM Normal
 		WHERE saleNo = #{saleNo}
@@ -83,5 +83,11 @@
 	<select id = "getProductList" resultType = "Product">
 		SELECT pName, pNo
 		FROM Product
+	</select>
+	
+	<select id = "getProduct" resultType = "Product">
+	SELECT pName, cateNo
+	FROM Product
+	WHERE pNo = #{pNo}
 	</select>
 </mapper>

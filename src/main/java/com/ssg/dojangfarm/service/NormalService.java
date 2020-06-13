@@ -16,4 +16,5 @@ public interface NormalService {
 	public List<Normal> searchNormal(String title);
 	public String getSaleState(int saleNo);
 	public List<Product> getProductList();
+	public Product getProduct(int pNo);
 }

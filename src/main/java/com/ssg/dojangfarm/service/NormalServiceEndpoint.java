@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.Product;
 
 
 @Component
@@ -49,6 +50,14 @@ public class NormalServiceEndpoint {
 	@WebMethod
 	public List<Normal> searchNormal(String title) {
 		return normalService.searchNormal(title);
+	}
+	@WebMethod
+	public List<Product> getProductList() {
+		return normalService.getProductList();
+	}
+	@WebMethod
+	public Product getProduct(int pNo) {
+		return normalService.getProduct(pNo);
 	}
 
 

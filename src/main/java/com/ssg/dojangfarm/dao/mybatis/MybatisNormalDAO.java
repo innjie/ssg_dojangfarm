@@ -45,4 +45,7 @@ public class MybatisNormalDAO implements NormalDAO{
 	public List<Product> getProductList() {
 		return normalMapper.getProductList();
 	}
+	public Product getProduct(int pNo) {
+		return normalMapper.getProduct(pNo);
+	}
 }

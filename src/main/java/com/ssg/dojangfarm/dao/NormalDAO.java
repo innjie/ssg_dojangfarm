@@ -19,4 +19,5 @@ public interface NormalDAO {
 	int getUserByNormal(int saleNo);
 	String getSaleState(int saleNo);
 	List<Product> getProductList();
+	Product getProduct(int pNo);
 }

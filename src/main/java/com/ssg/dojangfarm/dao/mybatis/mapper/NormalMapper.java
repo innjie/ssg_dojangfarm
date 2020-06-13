@@ -16,4 +16,5 @@ public interface NormalMapper {
 	int getUserByNormal(int saleNo);
 	String getSaleState(int saleNo);
 	List<Product> getProductList();
+	Product getProduct(int pNo);
 }

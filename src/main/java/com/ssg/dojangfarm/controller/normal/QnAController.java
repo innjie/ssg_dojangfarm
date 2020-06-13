@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.QnA;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
@@ -21,7 +23,7 @@ import com.ssg.dojangfarm.service.FarmFacade;
 @Controller
 public class QnAController {
 	private static final String LISTQNA = "normal/QnAListView";
-	private static final String ANSWERQNA = "member/AnswerQnAFormView";
+	private static final String ANSWERQNA = "normal/AnswerQnAFormView";
 
 	@Autowired
 	private FarmFacade farm;
@@ -34,11 +36,16 @@ public class QnAController {
 	@RequestMapping("/normal/viewQnAList.do")
 	public String handleRequest(
 			@RequestParam("saleNo") int saleNo,
+			@RequestParam(required = false) String ques,
+			@RequestParam(required = false) int quesNo,
 			ModelMap model) throws Exception {
 		PagedListHolder<QnA> qnaList = new PagedListHolder<QnA>(this.farm.getQnAList(saleNo));
 
 		qnaList.setPageSize(4);
-		model.put("qnaList", qnaList );
+		model.put("qnaList", qnaList.getSource());
+		model.put("saleNo", saleNo);
+		model.put("ques", ques);
+		model.put("quesNo", quesNo);
 
 		return LISTQNA;   
 	}
@@ -66,18 +73,40 @@ public class QnAController {
 	//question ... insert QnA and view QnAList
 	@RequestMapping("/normal/questionQnA.do")
 	public String question(
-			@RequestParam("saleNo") int saleNo,
+			@RequestParam("saleNo") String saleNo,
 			@RequestParam("question") String question,
-			@RequestParam("secret") Boolean secret,
-			HttpServletRequest request) throws Exception {
+			@RequestParam(required = false) Boolean secret,
+			HttpServletRequest request,
+			Model model) throws Exception {
 
+		System.out.println("question!");
+		System.out.println("saleNo! " + saleNo);
+		System.out.println("question! " + question);
+		System.out.println("secret! " + secret);
+		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 
-		QnA qna = new QnA(user.getId(), saleNo, question, secret);
+		if(secret == null) {
+			secret = false;
+		}
+		if(question.equals("")) {
+			System.out.println("no question! ");
+			model.addAttribute("message", "No Question");
+			return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo;
+		}
+		
+		QnA qna = new QnA();
+		qna.setqUser(user);
+		Normal normal = new Normal();
+		normal.setSaleNo(Integer.parseInt(saleNo));
+		qna.setNormal(normal);
+		qna.setQuestion(question);
+		qna.setSecret(secret);
+		
 		this.farm.questionQnA(qna);
 
-		return "redirect:" + LISTQNA + "?saleNo=" + saleNo;
+		return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo;
 	}
 
 	//answer ... view answer form 
@@ -90,17 +119,11 @@ public class QnAController {
 
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
-//		int saleUserNo = this.farm.getUserNoBySale(saleNo);	//saleNo로 userNo알아내기
-//		
-//		//어차피 c:if로 주인만 수정 버튼 나오기는 함
-//		if(saleUserNo == user.getUserNo()) {  //판매번호로 판매 알아온다음 거기 저장된 번호 가져오기
-//			QnA qna = this.farm.getQnA(qNo);	
-//			model.put("qna", qna);
-//			
-//			return ANSWERQNA;
-//		}
-
-		return "redirect:" + LISTQNA + "?saleNo=" + saleNo;
+		
+		QnA qna = this.farm.getQnA(qNo);	
+		model.put("qna", qna);
+			
+		return ANSWERQNA;
 	}
 
 	//answer ... update QnA

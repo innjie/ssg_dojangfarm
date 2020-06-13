@@ -23,6 +23,7 @@ public interface FarmFacade {
 	public List<QnA> getQnAList(int saleNo);
 	public void questionQnA(QnA qna);
 	public void answerQnA(int qNo, String answer);
+	public QnA getQnA(int qNo);
 	
 	//Auction
 	public List<Auction> getAuctionList();

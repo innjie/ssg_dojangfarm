@@ -16,7 +16,7 @@
 		<table border='1'>
 			<tr>
 				<td>작성자</td>
-				<td>${qna.user.id}</td>
+				<td>${qna.qUser.id}</td>
 			</tr>
 			<tr>
 				<td>작성일</td>

@@ -17,29 +17,22 @@ public class QnA implements Serializable{
 	public QnA() {
 		super();
 	}
-	public QnA(String id, int saleNo, String question, Boolean secret) {
-		this.qUser.setId(id);
-		this.normal.setSaleNo(saleNo);
-		this.question = question;
-		this.secret = secret;
-		
-	}
 	public int getqNo() {
 		return qNo;
 	}
 	public void setqNo(int qNo) {
 		this.qNo = qNo;
 	}
-	public User getQUser() {
+	public User getqUser() {
 		return qUser;
 	}
-	public void setQUser(User qUser) {
+	public void setqUser(User qUser) {
 		this.qUser = qUser;
 	}
-	public User getAUser() {
+	public User getaUser() {
 		return aUser;
 	}
-	public void setAUser(User aUser) {
+	public void setaUser(User aUser) {
 		this.aUser = aUser;
 	}
 	public Normal getNormal() {

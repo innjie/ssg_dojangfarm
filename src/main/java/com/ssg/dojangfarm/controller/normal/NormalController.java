@@ -204,7 +204,7 @@ public class NormalController {
 		User normalUser = new User();
 		normalUser.setUserNo(confUserNo);
 		normal.setUser(normalUser);
-		
+
 		model.addAttribute("normal", normal);
 		model.addAttribute("loginUser", loginUser);
 		return normalView;

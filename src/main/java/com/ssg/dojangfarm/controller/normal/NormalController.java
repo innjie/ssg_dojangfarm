@@ -31,6 +31,7 @@ public class NormalController {
 	private static final String normalView = "normal/NormalView";
 	private static final String normalUserListView = "normal/NormalUserListView";
 	private static final String successPage = "/normal/Success";
+	private static final String updateNormalForm = "normal/NormalUpdateFormView";
 	
 	@Autowired
 	private FarmFacade farm;
@@ -68,8 +69,6 @@ public class NormalController {
 			@Valid@ModelAttribute("normalCommand") NormalCommand normalCommand,
 			BindingResult result, HttpServletRequest request, ModelMap model) {
 		//insert action
-		System.out.println("pNo : " + normalCommand.getProduct().getpNo());
-		System.out.println("pName : " + normalCommand.getProduct().getpName());
 		//get session -> user id
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
@@ -101,12 +100,8 @@ public class NormalController {
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		normal.setRegiDate(sqlDate);
 		
-		System.out.println("Normal: price: " + normal.getPrice() + " title : " + normal.getTitle()
-				+ " info: " + normal.getInfo());
-		
-		
 		int res = this.farm.insertSale(normal);
-		System.out.println(res);
+
 		if(res == 0) { //false
 			return new ModelAndView(errorPage, "message", "insert Error");
 		} else { //success
@@ -164,21 +159,43 @@ public class NormalController {
 		}
 
 	}
+	
 	@RequestMapping(value="/normal/updateForm.do")
-	public String updateForm(
-			@ModelAttribute("normal") Normal normal) throws Exception {
-		return "normal/NormalUpdateFormView";
+	public String updateForm(@RequestParam("saleNo") int saleNo, ModelMap model) throws Exception {
+		Normal normal = this.farm.getNormalSale(saleNo);
+		
+		Product product = this.farm.getProduct(normal.getProduct().getpNo());
+		normal.setProduct(product);
+		model.addAttribute(normal);
+		return updateNormalForm;
 	}
 	//update normal
 	@RequestMapping("/normal/updateNormal.do")
-	public ModelAndView updateNormal(@ModelAttribute("normal") Normal normal, BindingResult result) {
+	public ModelAndView updateNormal(@ModelAttribute("normal") Normal normal, 
+			BindingResult result, HttpServletRequest request, ModelMap model) {
+		
 		//update action
+		
+		//get user session
+		HttpSession httpSession = request.getSession();
+		User user = (User)httpSession.getAttribute("user");
+		
+		//validate
+		if(user == null) {
+			return new ModelAndView(errorPage, "message", "Please LOGIN first");
+		}
+		if(result.hasErrors()) {
+			return new ModelAndView(updateNormalForm);
+		}
+		
+		//set attributes
+		
 		int res = farm.updateSale(normal);
 		
 		if(res == 0)  {//failed
-			return new ModelAndView("Error", "message", "update Failed");
+			return new ModelAndView(errorPage, "message", "update Failed");
 		} else { //success
-			return new ModelAndView("Success", "message", "update success");
+			return new ModelAndView(successPage, "message", "update success");
 		}
 	}
 	
@@ -189,7 +206,7 @@ public class NormalController {
 		List<Normal> normalList = farm.getAllNormalList();
 		model.addAttribute("normalList", normalList);
 		
-		return "normal/NormalListView";
+		return normalListView;
 	}
 	
 	//get normal view

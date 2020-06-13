@@ -13,13 +13,17 @@
 </head>
 <body>
 	<%-- post일 때 질문 등록하게.. --%>
-	<form action="<c:url value="/normal/viewQnAList.do"/>" method="post">
-		<input type="checkbox" name="secret" value="secret">비밀글&nbsp;
-		<textarea name="question" rows="100" cols="100"></textarea>&nbsp;&nbsp;
-		<input type="hidden" name="saleNo" value="${qna.normal.saleNo}">
+	<form action="<c:url value="/normal/questionQnA.do"/>">
+		<input type="checkbox" name="secret" value="true">비밀글&nbsp;
+		<textarea name="question"></textarea>&nbsp;&nbsp;
+		<input type="hidden" name="saleNo" value="${saleNo}">
 		<input type="submit" value="질문하기">
 	</form>
-	<br><br>
+	<br>
+	<c:if test="${message} != null">
+		${message}<br><br>
+	</c:if>
+	<br>
 	<table border="1">
 		<tr>
 			<td>순번</td>		<%-- not cardNo, not cardPayNo, just No --%>
@@ -28,8 +32,8 @@
 			<td>질문</td>
 		</tr>
 		<c:forEach var="q" items="${qnaList}" varStatus="status">
-		<%-- 비밀글이 아니거나 자기 질문 나옴 --%>
-			<c:if test="${(q.secret == false) ||(q.qUser.id == session.id)}">
+		<%-- 비밀글이 아니거나 자기 질문 나옴 , 판매자는 다 --%>
+			<c:if test="${(q.secret == '0') ||(q.qUser.id == user.id) ||(q.aUser.id == user.id)}">
 				<tr>
 					<td>${status.count}</td>
 					<td>${q.qUser.id}</td>
@@ -40,14 +44,17 @@
 									<c:param name='saleNo' value='${q.normal.saleNo}' />
 									<c:param name='quesNo' value='${q.qNo}' />
 								</c:url>">
-						${q.quesstion}</a>
+						${q.question}</a>
 					</td>
 					<%-- 질문 클릭하면 해당 질문 답변 나옴 --%>
 					<c:if test="${(ques == 'click') && (quesNo == q.qNo) }">
-						${q.answer}
+						<tr>
+							<td>답변</td>
+							<td colspan="3">${q.answer}</td>
+						<tr>
 					</c:if>
 					<%-- 답변 없고 판매자면 답변 버튼 생김 --%>
-					<c:if test="${(q.answer == NULL) && (session.id == q.normal.user.id) }">
+					<c:if test="${(q.answer == NULL) && (user.id == q.aUser.id) }">
 						<td>
 							<a href="<c:url value='/normal/answerQnA.do'>
 										<c:param name='saleNo' value='${q.normal.saleNo}' />

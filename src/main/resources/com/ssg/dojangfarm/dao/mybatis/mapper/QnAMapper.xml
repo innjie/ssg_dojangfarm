@@ -5,11 +5,14 @@
   <cache />
   	<select id="getQnAList" parameterType="int" resultType="QnA">
     	SELECT 
-    		qNo, question, qDate, answer, secret, UserTable.id
-    	FROM QnA, Normal, UserTable
+    		qNo, question, qDate, answer, secret,
+    		qUser.id AS "qUser.id", QnA.saleNo AS "normal.saleNo",
+    		aUser.id AS "aUser.id", aUser.userNo AS "aUser.userNo"
+    	FROM QnA, UserTable aUser, UserTable qUser, Normal
     	WHERE 
-    		QnA.slaeNo = Normal.saleNo AND 
-    		QnA.userNo = User.userNo AND 
+    		Normal.userNo = aUser.userNo AND
+    		QnA.saleNo = Normal.saleNo AND
+    		QnA.userNo = qUser.userNo AND 
     		QnA.saleNo = #{saleNo}
     	ORDER BY qNo
   	</select>
@@ -19,9 +22,9 @@
         	SELECT QnASeq.nextval AS "qNo" FROM DUAL
      	</selectKey>
     	INSERT INTO QnA 
-    		(qNo, question, qDate, secret, saleNo, userNo)
+    		(qNo, question, secret, saleNo, userNo)
     	VALUES 
-    		(#{qNo}, #{question}, #{qDate}, #{secret}, #{normal.saleNo}, #{user.userNo})
+    		(#{qNo}, #{question}, #{secret}, #{normal.saleNo}, #{qUser.userNo})
   	</insert>
   	
   	<update id="answerQnA" parameterType="QnA">
@@ -32,10 +35,11 @@
   	
   	<select id="getQnA" parameterType="int" resultType="QnA">
     	SELECT 
-    		qNo, question, qDate, answer, secret, UserTable.id
+    		qNo, question, qDate, answer, secret, 
+    		id AS "qUser.id", QnA.saleNo AS "normal.saleNo"
     	FROM QnA, Normal, UserTable
     	WHERE 
-    		QnA.slaeNo = Normal.saleNo AND 
+    		QnA.saleNo = Normal.saleNo AND 
     		QnA.userNo = UserTable.userNo AND 
     		QnA.qNo = #{qNo}
   	</select>

@@ -31,4 +31,8 @@ public class QnAServiceEndpoint {
 		qnaService.answerQnA(qNo, answer);
 	}
 
+	@WebMethod
+	public QnA getQnA(int qNo) {
+		return qnaService.getQnA(qNo);
+	}
 }

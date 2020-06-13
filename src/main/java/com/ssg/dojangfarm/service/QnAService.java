@@ -9,4 +9,5 @@ public interface QnAService{
 	List<QnA> getQnAList(int saleNo);
 	void questionQnA(QnA qna);
 	void answerQnA(int qNo, String answer);
+	 QnA getQnA(int qNo);
 }

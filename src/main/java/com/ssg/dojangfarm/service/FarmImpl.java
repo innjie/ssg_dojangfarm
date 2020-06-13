@@ -105,7 +105,9 @@ public class FarmImpl implements FarmFacade{
 	public void answerQnA(int qNo, String answer){
 		qnaDAO.answerQnA(qNo, answer);
 	}
-	
+	public QnA getQnA(int qNo) {
+		return qnaDAO.getQnA(qNo);
+	}
 	
 	//-------------------------------------------------------------------------
 	//Auction

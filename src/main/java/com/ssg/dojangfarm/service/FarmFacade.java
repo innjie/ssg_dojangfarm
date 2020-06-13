@@ -111,6 +111,7 @@ public interface FarmFacade {
 	public List<Normal> getNormalListByUserNo(int userNo);
 	public List<Normal> searchNormal(String title);
 	int turnSaleState(int saleNo);
+	public int getUserByNormal(int saleNo);
 	
 	//Payment
 	public Payment getPayment(int payNo);
@@ -121,6 +122,7 @@ public interface FarmFacade {
 	public Refund getRefund(int refundNo);
 	public List<Refund> getRefundList(int userNo);
 	public Card checkCardPayNo(String cardPayNo);
+	
 	
 	
 

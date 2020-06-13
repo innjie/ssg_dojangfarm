@@ -12,4 +12,5 @@ public interface NormalMapper {
 	List<Normal> getNormalListByUserNo(int userNo);
 	List<Normal> searchNormal(String title);
 	int turnSaleState(int saleNo);
+	int getUserByNormal(int saleNo);
 }

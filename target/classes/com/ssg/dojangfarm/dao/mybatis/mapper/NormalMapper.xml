@@ -55,5 +55,9 @@
 		SET saleState = #{saleState}
 	</update>
 
-
+	<select id = "getUserByNormal" resultType = "int">
+		SELECT userNo
+		FROM Normal
+		WHERE saleNo = #{saleNo}
+	</select>
 </mapper>

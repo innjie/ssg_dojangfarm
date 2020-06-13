@@ -35,4 +35,7 @@ public class MybatisNormalDAO implements NormalDAO{
 	public int turnSaleState(int saleNo) {
 		return normalMapper.turnSaleState(saleNo);
 	}
+	public int getUserByNormal(int saleNo) {
+		return normalMapper.getUserByNormal(saleNo);
+	}
 }

@@ -20,12 +20,7 @@ public class Message implements Serializable{
 	public Message() {
 		super();
 	}
-	public Message(int sUserNo, int rUserNo, String title, String content) {
-		this.sUser.setUserNo(sUserNo);
-		this.rUser.setUserNo(rUserNo);
-		this.title = title;
-		this.content = content;
-	}
+	
 	public int getMsgNo() {
 		return msgNo;
 	}

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -116,7 +117,15 @@ public class MessageController {
 			@RequestParam("type") String type,
 			ModelMap model) throws Exception {
 		
-		Message message = this.farm.checkMsg(msgNo);
+		Message message;
+		if(type.equals("receive")) {
+			System.out.println("receive-");
+			message  = this.farm.checkMsg(msgNo);
+		}
+		else {
+			System.out.println("send-");
+			message = this.farm.checkSMsg(msgNo);
+		}
 		model.put("message", message );
 		model.put("type", type );
 		
@@ -197,56 +206,81 @@ public class MessageController {
 	}
 
 	//send message ... view message form
-//	@RequestMapping(value = "/message/sendMsg.do",  method = RequestMethod.GET)
-//	public ModelAndView messageForm(
-//			@RequestParam(value = "saleNo", defaultValue="-1") int saleNo,
-//			@RequestParam(value = "msgNo", defaultValue="-1") int msgNo) throws Exception {
-//		
-//		//첫 메세지
-//		if(msgNo == -1) {
-//			Normal normal = this.farm.getNormalBySaleNo(saleNo)		//saleNo로 normal가져옴
-//			
-//			return new ModelAndView(FORMMESSAGE, "normal", normal);
-//		}
-//		//연관 메세지 있음 (답장)
-//		else {
-//			Message cMsg = this.farm.checkMsg(msgNo);	
-//			
-//			return new ModelAndView(FORMMESSAGE, "cMsg", cMsg);
-//		}
-//	}
+	@RequestMapping(value = "/message/sendMsg.do",  method = RequestMethod.GET)
+	public ModelAndView messageForm(
+			@RequestParam(value = "saleNo", defaultValue="-1") int saleNo,
+			@RequestParam(value = "msgNo", defaultValue="-1") int msgNo) throws Exception {
+		
+		//첫 메세지
+		if(msgNo == -1) {
+			Normal normal = this.farm.getNormalSale(saleNo);	//saleNo로 normal가져옴
+			
+			return new ModelAndView(FORMMESSAGE, "normal", normal);
+		}
+		//연관 메세지 있음 (답장)
+		else {
+			Message cMsg = this.farm.checkMsgWithCMsg(msgNo);	
+			
+			return new ModelAndView(FORMMESSAGE, "cMsg", cMsg);
+		}
+	}
 	
-//	//send message ... insert message 
-//	@RequestMapping(value = "/message/sendMsg.do",  method = RequestMethod.POST)
-//	public String sendMsg(
-//			@RequestParam(value = "cMsg", required = false) Message cMsg,
-//			@RequestParam(value = "normal", required = false) Normal normal,
-//			@RequestParam("title") String title,
-//			@RequestParam("content") String content,
-//			HttpServletRequest request) throws Exception {
-//
-//		HttpSession httpSession = request.getSession();
-//		User user = (User) httpSession.getAttribute("user");
-//		Message msg;
-//		int rUserNo;
-//		
-//		if(cMsg != null) {
-//			rUserNo = this.farm.getRUserNo(cMsg.getMsgNo());	
-//			msg = new Message(user.getUserNo(), rUserNo, title, content);
-//			msg.setcMsg(cMsg);
-//			msg.setNormal(cMsg.getNormal());
-//		}
-//		else {
-//			rUserNo = this.farm.getUserBySaleNo(normal.getSaleNo()).getUserNo();	//add dao
-//			msg = new Message(user.getUserNo(), rUserNo, title, content);
-//			msg.setNormal(normal);
-//		}
-//		
-//		this.farm.sendMsg(msg);	
-//
-//		return "redirect:/message/viewMessage.do?msgNo=" + msg.getMsgNo();
-//	
-//	}
+	//send message ... insert message 
+	@RequestMapping(value = "/message/sendMsg.do",  method = RequestMethod.POST)
+	public String sendMsg(
+			@RequestParam(value = "cMsgNo", required = false) String cMsgNo,
+			@RequestParam(value = "saleNo", required = false) String saleNo,
+			@RequestParam("title") String title,
+			@RequestParam("content") String content,
+			HttpServletRequest request,
+			Model model) throws Exception {
+
+		HttpSession httpSession = request.getSession();
+		User user = (User) httpSession.getAttribute("user");
+		Message msg = new Message();
+		int rUserNo;
+		
+		System.out.println("cMsgNo : " + cMsgNo);
+		System.out.println("saleNo: " + saleNo);
+		
+		if(title.equals("")) {
+			System.out.println("no title! ");
+			model.addAttribute("message", "No title");
+			
+			if(!cMsgNo.equals(""))
+				return "redirect:/message/sendMsg.do?msgNo=" + Integer.parseInt(cMsgNo);
+			else
+				return "redirect:/message/sendMsg.do?saleNo=" + Integer.parseInt(saleNo);
+		}
+		
+		if(!cMsgNo.equals("")) {
+			Message cMsg = this.farm.checkMsg(Integer.parseInt(cMsgNo));
+			msg.setrUser(cMsg.getsUser());
+			msg.setsUser(user);
+			msg.setTitle(title);
+			msg.setContent(content);			
+			msg.setcMsg(cMsg);
+			msg.setNormal(cMsg.getNormal());
+			
+			this.farm.sendCMsg(msg);	
+		}
+		else {
+			Normal normal = this.farm.getNormalSale(Integer.parseInt(saleNo));
+			rUserNo = this.farm.getUserByNormal(Integer.parseInt(saleNo));	//add dao
+			User rUser = new User();
+			rUser.setUserNo(rUserNo);
+			msg.setsUser(user);
+			msg.setrUser(rUser);
+			msg.setTitle(title);
+			msg.setContent(content);
+			msg.setNormal(normal);
+			
+			this.farm.sendMsg(msg);	
+		}
+
+		return "redirect:/message/viewMessage.do?type=send&msgNo=" + msg.getMsgNo();
+	
+	}
 
 }
 

@@ -60,6 +60,10 @@ public class FarmImpl implements FarmFacade{
 		messageDAO.sendMsg(msg);
 	}
 	@Override
+	public void sendCMsg(Message msg) {
+		messageDAO.sendCMsg(msg);
+	}
+	@Override
 	public void deleteMsg(int msgNo) {
 		messageDAO.deleteMsg(msgNo);
 	}
@@ -78,6 +82,13 @@ public class FarmImpl implements FarmFacade{
 	@Override
 	public Message checkMsg(int msgNo) {
 		return messageDAO.checkMsg(msgNo);
+	}
+	public Message checkMsgWithCMsg(int msgNo) {
+		return messageDAO.checkMsgWithCMsg(msgNo);
+	}
+	@Override
+	public Message checkSMsg(int msgNo) {
+		return messageDAO.checkSMsg(msgNo);
 	}
 	@Override
 	public int getRUserNo(int msgNo) {

@@ -19,6 +19,9 @@ public class MybatisMessageDAO implements MessageDAO{
 	public void sendMsg(Message msg) {
 		messageMapper.sendMsg(msg);
 	}	
+	public void sendCMsg(Message msg) {
+		messageMapper.sendCMsg(msg);
+	}	
 	public void deleteMsg(int msgNo) {
 		messageMapper.deleteMsg(msgNo);
 	}	
@@ -37,7 +40,12 @@ public class MybatisMessageDAO implements MessageDAO{
 		messageMapper.changeReadState(msgNo);
 		return messageMapper.checkMsg(msgNo);
 	}
-	
+	public Message checkSMsg(int msgNo) {
+		return messageMapper.checkMsg(msgNo);
+	}
+	public Message checkMsgWithCMsg(int msgNo) {
+		return messageMapper.checkMsgWithCMsg(msgNo);
+	}
 	public int getRUserNo(int msgNo) {
 		return messageMapper.getRUserNo(msgNo);
 	}

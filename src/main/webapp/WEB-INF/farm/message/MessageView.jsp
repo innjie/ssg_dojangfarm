@@ -28,7 +28,7 @@
 		<tr>
 			<td>관련 상품</td>
 			<td>
-				<a href="<c:url value='/normal/view.do'>
+				<a href="<c:url value='/normal/viewNormal.do'>
 							<c:param name="saleNo" value="${message.normal.saleNo}"/>
 						</c:url>">
 					${message.normal.saleNo}</a>
@@ -60,10 +60,13 @@
 		</tr>
 	</table>
 	<br><br>
-	<a href="<c:url value='/message/sendMsg.do'>
-				<c:param name='msgNo' value='${message.msgNo}' />
-			</c:url>">
-	답장</a>&nbsp;&nbsp;
+	<c:if test="${message.sUser.id != user.id}">
+		<a href="<c:url value='/message/sendMsg.do'>
+					<c:param name='msgNo' value='${message.msgNo}' />
+				</c:url>">
+		답장</a>&nbsp;&nbsp;
+	</c:if>
+	
 	<a href="<c:url value='/message/deleteMsg.do'>
 				<c:param name='msgNo' value='${message.msgNo}' />
 				<c:param name='type' value='${param.type}' />

@@ -15,7 +15,7 @@
 	<form action='<c:url value="/message/sendMsg.do"/>' method="post">
 		받는사람&nbsp;
 		<c:if test="${cMsg != null}">	<!-- first message -->
-			${cMsg.rUser.id}<br>
+			${cMsg.sUser.id}<br>
 		</c:if>
 		<c:if test="${normal != null}">	<!-- reply message -->
 			${normal.user.id}<br>
@@ -30,16 +30,17 @@
 		제목&nbsp; 
 		<input type="text" name="title" /><br>
 		내용&nbsp; 
-		<textarea name="content">
-			<c:if test="${cMsg != null}">
-				<br>
-				re: ${cMsg.content}
-			</c:if>
-		</textarea>
+		<c:if test="${cMsg != null}">
+			<textarea name="content">re: ${cMsg.content}
+			</textarea>
+		</c:if>
+		<c:if test="${cMsg == null}">
+			<textarea name="content"></textarea>
+		</c:if>
 		<br>
-		
-		<input type="hidden" name="cMsg" value="${cMsg}" />
-		<input type="hidden" name="normal" value="${normal}" />
+
+		<input type="hidden" name="cMsgNo" value="${cMsg.msgNo}" />
+		<input type="hidden" name="saleNo" value="${normal.saleNo}" />
 		<input type="submit" value="보내기" />	
 	</form>
 </body>

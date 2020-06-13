@@ -11,8 +11,11 @@
 <title>공지 입력 폼</title>
 </head>
 <body>
-	<form:form modelAttribute="commonNotice"
-		action='<c:url value="/commonNotice/insertNotice.do"/>'>
+<c:set var="targetUrI">
+		<c:url value="/commonNotice/insertCN.do" />
+	</c:set>
+	<form:form commandName="CNCommand"
+		action="${targetUrI }">
 
 		<form:label path="title">제목</form:label>
 		<form:input path="title" />
@@ -20,7 +23,7 @@
 		<br>
 
 		<form:label path="info">내용</form:label>
-		<form:input path="info" />
+		<form:textarea path="info" />
 		<form:errors path="info" />
 		<br>
 

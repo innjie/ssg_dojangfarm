@@ -38,9 +38,11 @@
 	<td colspan="3">${normal.info }</td>
 	</tr>
 </table>
-<a href="NormalListView" >[이전 단계로]</a>
-	<c:if test="${ (session.id == normal.user.id)}">
+<a href= "<c:url value = '/normal/list.do'/> ">[이전 단계로]</a> <br>
+	<c:if test="${ (loginUser.userNo == normal.user.userNo)}">
 	<a href = "<c:url value ='/normal/updateForm.do' />">수정하기</a><br>
+	<a href = "<c:url value = '/normal/turnState.do'>
+					<c:param name = 'saleNo' value = '${normal.saleNo}'/></c:url>"> 판매 상태 변경  </a> <br>
 	</c:if>
 <input type="button" value="장바구니"/>
 </body>

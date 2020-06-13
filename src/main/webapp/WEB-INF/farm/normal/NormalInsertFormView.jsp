@@ -31,13 +31,14 @@
 		<form:errors path="count"/>
 		<br>
 
-		<form:label path="product.pName">품목 </form:label>
-		<form:select path="product.pName">
-			<option value="과일">사과</option>
-			<option value="채소">오렌지</option>
+		<form:label path="product.pNo">품목 </form:label>
+		<form:select path="product.pNo">
+			<c:forEach var = "product" items = "${product }">
+				<form:option value="${product.pNo}">${product.pName }</form:option>
+			</c:forEach>
 		</form:select>
 
-		<form:errors path="product.pName" />
+		<form:errors path="product.pNo" />
 		<br>
 
 		<form:label path="info">설명</form:label>

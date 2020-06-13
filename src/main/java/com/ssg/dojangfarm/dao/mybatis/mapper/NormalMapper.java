@@ -3,6 +3,7 @@ package com.ssg.dojangfarm.dao.mybatis.mapper;
 import java.util.List;
 
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.Product;
 
 public interface NormalMapper {
 	int insertSale(Normal normal);
@@ -11,6 +12,8 @@ public interface NormalMapper {
 	List<Normal> getAllNormalList();
 	List<Normal> getNormalListByUserNo(int userNo);
 	List<Normal> searchNormal(String title);
-	int turnSaleState(int saleNo);
+	int turnSaleState(int saleNo, String saleState);
 	int getUserByNormal(int saleNo);
+	String getSaleState(int saleNo);
+	List<Product> getProductList();
 }

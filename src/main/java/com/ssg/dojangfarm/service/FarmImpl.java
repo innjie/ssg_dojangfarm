@@ -451,8 +451,8 @@ public class FarmImpl implements FarmFacade{
 	}
 
 	@Override
-	public int turnSaleState(int saleNo) {
-		return normalDAO.turnSaleState(saleNo);
+	public int turnSaleState(int saleNo, String saleState) {
+		return normalDAO.turnSaleState(saleNo, saleState);
 	}
 	@Override
 	public List<Normal> searchNormal(String title) {
@@ -462,6 +462,15 @@ public class FarmImpl implements FarmFacade{
 	public int getUserByNormal(int saleNo) {
 		return normalDAO.getUserByNormal(saleNo);
 	}
+	@Override
+	public String getSaleState(int saleNo) {
+		return normalDAO.getSaleState(saleNo);
+	}
+	@Override
+	public List<Product> getProductList() {
+		return normalDAO.getProductList();
+	}
+
 	//-------------------------------------------------------------------------
 	//Payment
 	//-------------------------------------------------------------------------
@@ -494,6 +503,7 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
+	
 	
 	
 	

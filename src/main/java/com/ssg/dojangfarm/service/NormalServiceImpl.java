@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssg.dojangfarm.dao.NormalDAO;
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.Product;
 
 
 
@@ -42,8 +43,8 @@ public class NormalServiceImpl implements NormalService {
 	}
 
 	@Override
-	public int turnSaleState(int saleNo) {
-		return normalDAO.turnSaleState(saleNo);
+	public int turnSaleState(int saleNo, String saleState) {
+		return normalDAO.turnSaleState(saleNo, saleState);
 	}
 
 	@Override
@@ -51,5 +52,13 @@ public class NormalServiceImpl implements NormalService {
 		return normalDAO.searchNormal(title);
 	}
 
-	
+	@Override
+	public String getSaleState(int saleNo) {
+		return normalDAO.getSaleState(saleNo);
+	}
+
+	@Override
+	public List<Product> getProductList() {
+		return normalDAO.getProductList();
+	}
 }

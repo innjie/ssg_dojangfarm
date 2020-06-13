@@ -30,10 +30,11 @@
 		resultType="Normal">
 		SELECT
 		saleNo, saleType, title, saleState, info, price,
-		count, state, pNo as "product.pNo", userNo as "user.userNo",
-		regidDate
-		FROM Normal
+		count, state, pNo as "product.pNo", Normal.userNo as "user.userNo",
+		regidDate, id as "user.id"
+		FROM Normal, UserTable
 		WHERE saleNo = #{saleNo}
+		AND Normal.userNo = UserTable.userNo
 	</select>
 
 

@@ -19,6 +19,10 @@ public class MessageServiceImpl implements MessageService{
 		messageDAO.sendMsg(msg);
 	}
 
+	public void sendCMsg(Message msg) {
+		messageDAO.sendCMsg(msg);
+	}
+
 	public void deleteMsg(int msgNo) {
 		messageDAO.deleteMsg(msgNo);
 	}

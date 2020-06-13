@@ -112,6 +112,11 @@
 					<c:param name = 'saleNo' value = '${normal.saleNo}'/></c:url>"> 판매 상태 변경  </a> <br>
 	</c:if>
 	<br>
+	<a href="<c:url value='/message/sendMsg.do'>
+				<c:param name='saleNo' value='${normal.saleNo}' />
+			</c:url>">
+	쪽지보내기</a>
+	<br><br>
 <input type="button" value="장바구니"/>
 </body>
 </html>

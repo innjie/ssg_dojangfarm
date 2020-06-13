@@ -7,6 +7,7 @@ import com.ssg.dojangfarm.domain.User;
 
 public interface MessageDAO {
 	void sendMsg(Message msg);	//send Message
+	void sendCMsg(Message msg);	//send Message
 	void deleteMsg(int msgNo);	// just change deleteState
 	List<Message> sendMessageList(int userNo);	
 	List<Message> receiveMessageList(int userNo);	
@@ -15,4 +16,6 @@ public interface MessageDAO {
 	
 	int getRUserNo(int msgNo);
 	int getSUserNo(int msgNo);
+	Message checkMsgWithCMsg(int msgNo);
+	Message checkSMsg(int msgNo);
 }

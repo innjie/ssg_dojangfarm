@@ -11,11 +11,14 @@ public interface FarmFacade {
 	
 	//Message
 	public void sendMsg(Message msg);
+	public void sendCMsg(Message msg);
 	public void deleteMsg(int msgNo);
 	public List<Message> sendMessageList(int userNo);
 	public List<Message> receiveMessageList(int userNo);
 	public List<Message> findMsg(String title);
 	public Message checkMsg(int msgNo);
+	public Message checkMsgWithCMsg(int msgNo);
+	public Message checkSMsg(int msgNo);
 	public int getRUserNo(int msgNo);
 	public int getSUserNo(int msgNo);
 	

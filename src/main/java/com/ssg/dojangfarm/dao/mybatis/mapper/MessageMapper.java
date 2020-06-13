@@ -7,6 +7,7 @@ import com.ssg.dojangfarm.domain.User;
 
 public interface MessageMapper {
 	void sendMsg(Message msg);	//send Message
+	void sendCMsg(Message msg);	
 	void deleteMsg(int msgNo);	// just change deleteState
 	List<Message> sendMessageList(int userNo);	
 	List<Message> receiveMessageList(int userNo);	
@@ -16,4 +17,5 @@ public interface MessageMapper {
 	int getRUserNo(int msgNo);
 	int getSUserNo(int msgNo);
 	void changeReadState(int msgNo);
+	Message checkMsgWithCMsg(int msgNo);
 }

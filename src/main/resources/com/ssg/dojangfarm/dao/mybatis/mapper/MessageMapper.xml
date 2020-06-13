@@ -40,14 +40,15 @@
     		
   	</select>
  
- <!-- 여기에 판매관련된거 아래꺼보고 추가하기 -->
   	<select id="checkMsg" parameterType="int" resultType="Message">
     	SELECT 
     		m.title, m.sDate, m.read, m.deleteState, m.content,
     		rUser.id AS "rUser.id", sUser.id AS "sUser.id",
-    		m.msgNo
-    	FROM Message m, UserTable rUser, UserTable sUser
+    		m.msgNo, Normal.saleNo AS "normal.saleNo",
+    		sUser.userNo AS "sUser.userNo"
+    	FROM Message m, UserTable rUser, UserTable sUser, Normal
     	WHERE 
+    		m.saleNo = Normal.saleNo AND
     		m.sUserNo = sUser.userNo AND 
     		m.rUserNo = rUser.userNo AND 
     		m.msgNo = #{msgNo}
@@ -55,16 +56,12 @@
   	
   	<select id="checkMsgWithCMsg" parameterType="int" resultType="Message">
     	SELECT 
-    		m.title, m.sDate, m.read, m.deleteState, m.content,
-    		rUser.id AS "rUser.id", sUser.id AS "sUser.id",
-    		cm.content, Normal.saleNo, m.msgNo
-    	FROM Message m, Message cm, UserTable rUser, UserTable sUser, Normal
+    		title, m.content, sUser.id AS "sUser.id",
+    		saleNo AS "normal.saleNo", msgNo
+    	FROM Message m, UserTable sUser
     	WHERE 
     		m.sUserNo = sUser.userNo AND 
-    		m.rUserNo = rUser.userNo AND 
-    		m.cMsgNo = cm.msgNo AND
-    		m.saleNo = Normal.saleNo AND
-    		m.msgNo = #{msgNo}
+       		m.msgNo = #{msgNo}
   	</select>
   	
   	<insert id="sendMsg" parameterType="Message">
@@ -72,10 +69,21 @@
         	SELECT MessageSeq.nextval AS "msgNo" FROM DUAL
      	</selectKey>
     	INSERT INTO Message 
-    		(msgNo, title, content, sDate, cMsgNo, saleNo, sUserNo, rUserNo)
+    		(msgNo, title, content, saleNo, sUserNo, rUserNo)
     	VALUES 
-    		(#{msgNo}, #{title}, #{content}, #{sDate}, #{cMsg.msgNo}, 
-    		#{normal.saleNo}), #{sUser.userNo}), #{rUser.userNo})
+    		(#{msgNo}, #{title}, #{content},
+    		#{normal.saleNo}, #{sUser.userNo}, #{rUser.userNo})
+  	</insert>
+  	
+  	<insert id="sendCMsg" parameterType="Message">
+  		<selectKey keyProperty="msgNo" resultType="int" order="BEFORE">
+        	SELECT MessageSeq.nextval AS "msgNo" FROM DUAL
+     	</selectKey>
+    	INSERT INTO Message 
+    		(msgNo, title, content, cMsgNo, saleNo, sUserNo, rUserNo)
+    	VALUES 
+    		(#{msgNo}, #{title}, #{content}, #{cMsg.msgNo}, 
+    		#{normal.saleNo}, #{sUser.userNo}, #{rUser.userNo})
   	</insert>
   	
   	<update id="deleteMsg" parameterType="int">

@@ -23,6 +23,11 @@ public class MessageServiceEndpoint {
 	}
 
 	@WebMethod
+	public void sendCMsg(Message msg) {
+		messageService.sendCMsg(msg);
+	}
+	
+	@WebMethod
 	public void deleteMsg(int msgNo){
 		messageService.deleteMsg(msgNo);
 	}
@@ -46,6 +51,7 @@ public class MessageServiceEndpoint {
 	public Message checkMsg(int msgNo){
 		return messageService.checkMsg(msgNo);
 	}
+
 	
 	@WebMethod
 	public int getRUserNo(int msgNo) {

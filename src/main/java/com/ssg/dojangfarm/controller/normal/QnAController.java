@@ -37,15 +37,18 @@ public class QnAController {
 	public String handleRequest(
 			@RequestParam("saleNo") int saleNo,
 			@RequestParam(required = false) String ques,
-			@RequestParam(required = false) int quesNo,
+			@RequestParam(required = false) String quesNo,
 			ModelMap model) throws Exception {
 		PagedListHolder<QnA> qnaList = new PagedListHolder<QnA>(this.farm.getQnAList(saleNo));
 
 		qnaList.setPageSize(4);
 		model.put("qnaList", qnaList.getSource());
 		model.put("saleNo", saleNo);
-		model.put("ques", ques);
-		model.put("quesNo", quesNo);
+		
+		if(ques != null) {
+			model.put("ques", ques);
+			model.put("quesNo", Integer.parseInt(quesNo));
+		}
 
 		return LISTQNA;   
 	}
@@ -90,6 +93,7 @@ public class QnAController {
 		if(secret == null) {
 			secret = false;
 		}
+		
 		if(question.equals("")) {
 			System.out.println("no question! ");
 			model.addAttribute("message", "No Question");
@@ -131,15 +135,18 @@ public class QnAController {
 	public String answer(
 			@RequestParam("saleNo") int saleNo,
 			@RequestParam("qNo") int qNo,
-			@RequestParam("answer") String answer
-			) throws Exception {
+			@RequestParam("answer") String answer,
+			ModelMap model) throws Exception {
 
-		//validation으로 널 걸러주기는 함
-		if(answer != null) {
-			this.farm.answerQnA(qNo, answer);
+		if(answer.equals("")) {
+			System.out.println("no Anaswer! ");
+			model.addAttribute("message", "No Anaswer");
+			return "redirect:/normal/answerQnA.do?saleNo=" + saleNo + "&qNo=" + qNo;
 		}
+		
+		this.farm.answerQnA(qNo, answer);
 
-		return "redirect:" + LISTQNA + "?saleNo=" + saleNo;
+		return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo;
 	}
 
 

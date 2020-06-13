@@ -36,7 +36,10 @@
 		<br><br>
 		<input type="hidden" name="saleNo" value="${qna.normal.saleNo}">
 		<input type="hidden" name="qNo" value="${qna.qNo}">
-		<input type="submit" value="질문하기">
+		<c:if test="${message} != null">
+			${message}<br><br>
+		</c:if>
+		<input type="submit" value="답변하기">
 	</form>
 </body>
 </html>

@@ -458,7 +458,10 @@ public class FarmImpl implements FarmFacade{
 	public List<Normal> searchNormal(String title) {
 		return normalDAO.searchNormal(title);
 	}
-	
+	@Override
+	public int getUserByNormal(int saleNo) {
+		return normalDAO.getUserByNormal(saleNo);
+	}
 	//-------------------------------------------------------------------------
 	//Payment
 	//-------------------------------------------------------------------------
@@ -491,6 +494,7 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
+	
 	
 	
 }

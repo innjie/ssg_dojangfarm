@@ -13,9 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -174,14 +172,20 @@ public class NormalController {
 	
 	//get normal view
 	@RequestMapping("/normal/viewNormal.do")
-	public String getNormal(@RequestParam("saleNo") int saleNo, Model model) {
-	
+	public String getNormal(@RequestParam("saleNo") int saleNo, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		HttpSession httpSession = request.getSession();
+		User loginUser = (User) httpSession.getAttribute("user");
+		
+		int confUserNo = this.farm.getUserByNormal(saleNo);
+		System.out.println(confUserNo);
 		Normal normal = this.farm.getNormalSale(saleNo);
-		if(normal == null) {
-			return "normal/NormalNotFound";
-		}
+		User normalUser = new User();
+		normalUser.setUserNo(confUserNo);
+		normal.setUser(normalUser);
 		
 		model.addAttribute("normal", normal);
+		model.addAttribute("loginUser", loginUser);
 		return normalView;
 	}
 	//get userNormal List

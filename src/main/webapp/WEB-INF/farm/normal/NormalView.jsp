@@ -39,7 +39,8 @@
 	</tr>
 </table>
 <a href="NormalListView" >[이전 단계로]</a>
-	<c:if test="${(normal.state == '판매중지') && (session.id != normal.user.id)}">
+	<c:if test="${ (session.id == normal.user.id)}">
+	<a href = "<c:url value ='/normal/updateForm.do' />">수정하기</a><br>
 	</c:if>
 <input type="button" value="장바구니"/>
 </body>

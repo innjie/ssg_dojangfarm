@@ -38,12 +38,6 @@ public class NormalController {
 	public void setFarm(FarmFacade farm) {
 		this.farm = farm;
 	}
-	/**
-	@ModelAttribute("normal")
-	public Normal formBacking() {
-		return new Normal();
-	}
-	**/
 	//Normal Command
 	@ModelAttribute("normalCommand")
 	public NormalCommand formBacking(HttpServletRequest request) {
@@ -57,8 +51,6 @@ public class NormalController {
 			 ModelMap model) throws Exception {
 		List<Product> pList = this.farm.getProductList();
 		model.addAttribute("product", pList);
-		
-		System.out.println(pList.get(5).getpNo());
 		
 		return insertNormaForm;
 	}
@@ -104,8 +96,6 @@ public class NormalController {
 
 		if(res == 0) { //false
 			return new ModelAndView(errorPage, "message", "insert Error");
-		} else { //success
-			//return success page
 		}
 		//insert -> list (or main)
 		return new ModelAndView( "redirect:/normal/list.do");

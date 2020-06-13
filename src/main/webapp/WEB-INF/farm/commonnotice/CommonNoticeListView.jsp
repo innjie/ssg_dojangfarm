@@ -11,6 +11,10 @@
 <title>공동구매 공지 리스트 보기</title>
 </head>
 <body>
+<form action = "<c:url value = '/commonNotice/searchCN.do'/>">
+<input type = "text" name = "word"> &nbsp;
+<input type = "submit" value = "검색">
+</form>
 <table border="1">
 <tr>
 	<td>번호</td>
@@ -20,13 +24,17 @@
 <c:forEach var="cn" items="${cnList}" >
 	<tr>
 	<td>${cn.CNNO}</td>
-	<td><a href="<c:url value='/normal/viewNormal.do'> 
-						<c:param name='saleNo' value='${cn.CNNO}'/>
-						</c:url>">${cn.title}</a>
+	<td><a href="<c:url value='/commonNotice/view.do'> 
+						<c:param name='CNNO' value='${cn.CNNO}'/>
+						</c:url>">${cn.CNNO}</a>
 	</td>
+	<td>${cn.title }</td>
 	<td>${cn.user.name}</td>
 	</tr>
 </c:forEach>
 </table>
+
+<br><br>
+<a href="<c:url value='/commonNotice/insertForm.do'/>"> 등록</a> <br>
 </body>
 </html>

@@ -31,7 +31,7 @@ WHERE CNNo = #{CNNo}
 
 <select id = "getAllNoticeList" resultType = "Normal">
 SELECT
-(CNNo, title, info, userNo)
+CNNo, title, info, userNo
 FROM CommonNotice
 </select>
 

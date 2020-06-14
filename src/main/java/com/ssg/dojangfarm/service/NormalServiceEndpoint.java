@@ -8,6 +8,7 @@ import javax.jws.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ssg.dojangfarm.domain.Category;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Product;
 
@@ -59,6 +60,13 @@ public class NormalServiceEndpoint {
 	public Product getProduct(int pNo) {
 		return normalService.getProduct(pNo);
 	}
-
+	@WebMethod
+	public List<Category> getCategoryList() {
+		return normalService.getCategoryList();
+	}
+	@WebMethod
+	public List<Normal> getNormalListByCateNo(int cateNo) {
+		return normalService.getNormalListByCateNo(cateNo);
+		}
 
 }

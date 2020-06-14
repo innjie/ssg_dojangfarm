@@ -491,7 +491,14 @@ public class FarmImpl implements FarmFacade{
 	public Product getProduct(int pNo) {
 		return normalDAO.getProduct(pNo);
 	}
-
+	@Override
+	public List<Category> getCategoryList() {
+		return normalDAO.getCategoryList();
+	}
+	@Override
+	public List<Normal> getNormalListByCateNo(int cateNo) {
+		return normalDAO.getNormalListByCateNo(cateNo);
+	}
 	//-------------------------------------------------------------------------
 	//Payment
 	//-------------------------------------------------------------------------
@@ -524,6 +531,8 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
+	
+	
 	
 	
 	

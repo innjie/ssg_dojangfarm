@@ -2,9 +2,9 @@ package com.ssg.dojangfarm.dao;
 
 import java.util.List;
 
+import com.ssg.dojangfarm.domain.Category;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Product;
-import com.ssg.dojangfarm.domain.User;
 
 
 
@@ -20,4 +20,6 @@ public interface NormalDAO {
 	String getSaleState(int saleNo);
 	List<Product> getProductList();
 	Product getProduct(int pNo);
+	List<Category> getCategoryList();
+	List<Normal> getNormalListByCateNo(int cateNo);
 }

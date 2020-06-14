@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssg.dojangfarm.dao.NormalDAO;
+import com.ssg.dojangfarm.domain.Category;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Product;
 
@@ -65,5 +66,15 @@ public class NormalServiceImpl implements NormalService {
 	@Override
 	public Product getProduct(int pNo) {
 		return normalDAO.getProduct(pNo);
+	}
+
+	@Override
+	public List<Category> getCategoryList() {
+		return normalDAO.getCategoryList();
+	}
+
+	@Override
+	public List<Normal> getNormalListByCateNo(int cateNo) {
+		return normalDAO.getNormalListByCateNo(cateNo);
 	}
 }

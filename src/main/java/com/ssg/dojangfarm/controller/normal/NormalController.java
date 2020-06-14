@@ -13,10 +13,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.domain.Category;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Product;
 import com.ssg.dojangfarm.domain.User;
@@ -187,8 +189,22 @@ public class NormalController {
 	public String getNormalList(Model model) {
 		//get list.do
 		List<Normal> normalList = farm.getAllNormalList();
+		List <Category> categoryList = farm.getCategoryList();
 		model.addAttribute("normalList", normalList);
+		model.addAttribute("categoryList", categoryList);
 		
+		return normalListView;
+	}
+	
+	//get NormalList by categoryNo
+	@RequestMapping("/normal/list2.do")
+	public String getNormalListByCategoryNo(@RequestParam(value="cateNo", required = false) int cateNo, Model model) {
+		//get category list
+		List<Normal> normalList = farm.getNormalListByCateNo(cateNo);
+		List <Category> categoryList = farm.getCategoryList();
+		
+		model.addAttribute("normalList", normalList);
+		model.addAttribute("categoryList", categoryList);
 		return normalListView;
 	}
 	

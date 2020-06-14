@@ -16,17 +16,17 @@ import com.ssg.dojangfarm.domain.CommonJoin;
 @WebService(serviceName="CommonService")
 public class CommonServiceEndpoint {
 	@Autowired
-	CommonService commonService; // inject CommonServiceImpl
+	CommonService commonService;
 
 	
 	@WebMethod
-	public int insertSale( Common common) {
-		return commonService.insertSale(common);
+	public int insertCommon( Common common) {
+		return commonService.insertCommon(common);
 	}
 
 	@WebMethod
-	public int updateSale(Common common) {
-		return commonService.updateSale(common);
+	public int updateCommon(Common common) {
+		return commonService.updateCommon(common);
 	}
 
 	@WebMethod

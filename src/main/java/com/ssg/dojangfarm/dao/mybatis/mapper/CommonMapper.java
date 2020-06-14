@@ -6,8 +6,8 @@ import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonJoin;
 
 public interface CommonMapper {
-	public int insertSale(Common common);
-	public int updateSale(Common common);
+	public int insertCommon(Common common);
+	public int updateCommon(Common common);
 	public Common getCommonSale(int saleNo);
 	public List<Common> getAllCommonList();
 	public List<Common> getCommonListByUserNo(int userNo);

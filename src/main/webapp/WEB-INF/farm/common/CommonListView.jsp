@@ -11,11 +11,11 @@
 <title>공동구매 전체보기</title>
 </head>
 <body>
-<form:form action='<c:url value="/common/searchNormal.do"/>' method = "GET"">
-	<form:label path="word">검색</form:label>
-	<form:input path="word"/>
-	<form:errors path="word"/>
-</form:form>
+<form action = "<c:url value = '/common/searchCommon.do'/>">
+<input type = "text" name = "word"> &nbsp;
+<input type = "submit" value = "검색">
+</form>
+
 <table border="1">
 <tr>
 	<td>번호</td>
@@ -24,14 +24,16 @@
 </tr>
 <c:forEach var="common" items="${commonList}" >
 	<tr>
-	<td>${common.saleNo}</td>
-	<td><a href="<c:url value='/common/viewCommon.do'> 
+	<td><a href="<c:url value='/common/viewCommondo'> 
 						<c:param name='saleNo' value='${common.saleNo}'/>
-						</c:url>">${common.title}</a>
+						</c:url>">${common.saleNo}</a></td>
+	<td>${common.title}
 	</td>
 	<td>${common.user.name}</td>
 	</tr>
 </c:forEach>
 </table>
+<a href="<c:url value='/common/insertForm.do'/>"> 등록</a> <br>
+
 </body>
 </html>

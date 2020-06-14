@@ -86,8 +86,8 @@ public interface FarmFacade {
 	public void deleteCard(int cardNo);
 	
 	//Common
-	public int insertSale( Common common);
-	public int updateSale(Common common);
+	public int insertCommon(Common common);
+	public int updateCommon(Common common);
 	public Common getCommonSale(int saleNo);
 	public List<Common> getAllCommonList();
 	public List<Common> getCommonListByUserNo(int userNo);
@@ -134,6 +134,7 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	
 
 
 	

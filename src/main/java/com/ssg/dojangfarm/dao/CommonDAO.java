@@ -8,9 +8,8 @@ import com.ssg.dojangfarm.domain.CommonJoin;
 
 
 public interface CommonDAO {
-	//Common() throws dataAcception;
-	int insertSale( Common common);
-	int updateSale(Common common);
+	int insertCommon(Common common);
+	int updateCommon(Common common);
 	Common getCommonSale(int saleNo);
 	List<Common> getAllCommonList();
 	List<Common> getCommonListByUserNo(int userNo);
@@ -21,5 +20,6 @@ public interface CommonDAO {
 	CommonJoin getCommonJoin(int cjNo);
 	List<CommonJoin> getCJList(int saleNo);
 	List<CommonJoin> getCJListByUserNo(int userNo);
+	
 }
 

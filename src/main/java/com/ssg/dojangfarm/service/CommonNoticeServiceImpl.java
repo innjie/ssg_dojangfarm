@@ -44,6 +44,11 @@ public class CommonNoticeServiceImpl implements CommonNoticeService {
 		return commonNoticeDAO.getCNoticeListByUserNo(userNo);
 	}
 
+	@Override
+	public List<CommonNotice> searchCommonNotice(String word) {
+		return commonNoticeDAO.searchCommonNotice(word);
+	}
+
 	
 	
 

@@ -12,4 +12,5 @@ public interface CommonNoticeDAO {
 	CommonNotice viewCommonNotice(int CNNo);
 	List<CommonNotice> getAllNoticeList();
 	List<CommonNotice> getCNoticeListByUserNo(int userNo);
+	List<CommonNotice> searchCommonNotice(String word);
 }

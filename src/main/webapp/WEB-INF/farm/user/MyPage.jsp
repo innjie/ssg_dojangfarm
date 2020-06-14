@@ -38,6 +38,7 @@
 	<c:if test="${param.type == 'common'}">
 		<a href="">나의 공동구매</a>&nbsp;&nbsp;
 		<a href="">나의 공구 신청</a>&nbsp;&nbsp;
+		<a href="<c:url value = '/commonNotice/userList.do'/>">나의 공지</a>
 	</c:if>
 	<br><br>
 </body>

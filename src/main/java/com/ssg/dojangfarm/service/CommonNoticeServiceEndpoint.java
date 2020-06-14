@@ -46,5 +46,9 @@ public class CommonNoticeServiceEndpoint {
 	public List<CommonNotice> getCNoticeListByUserNo(int userNo) {
 		return commonNoticeService.getCNoticeListByUserNo(userNo);
 	}
+	@WebMethod
+	public List<CommonNotice> searchCommonNotice(String word) {
+		return commonNoticeService.searchCommonNotice(word);
+	}
 
 }

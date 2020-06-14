@@ -421,7 +421,11 @@ public class FarmImpl implements FarmFacade{
 	public List<CommonNotice> getCNoticeListByUserNo(int userNo) {
 		return commonNoticeDAO.getCNoticeListByUserNo(userNo);
 	}
-	
+	@Override
+	public List<CommonNotice> searchCommonNotice(String word) {
+		return commonNoticeDAO.searchCommonNotice(word);
+	}
+
 	//-------------------------------------------------------------------------
 	//Discount
 	//-------------------------------------------------------------------------

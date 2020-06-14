@@ -11,8 +11,9 @@
 <title>공지 수정 폼</title>
 </head>
 <body>
+<c:set var = "targetUrI"> <c:url value = "/commonNotice/update.do"/> </c:set>
 <form:form modelAttribute="commonNotice"
-		action='<c:url value="/commonNotice/updateNotice.do"/>'>
+		method = "POST">
 
 		<form:label path="title">제목</form:label>
 		<form:input path="title" value="${commonNotice.title }"/>
@@ -20,7 +21,7 @@
 		<br>
 
 		<form:label path="info">내용</form:label>
-		<form:input path="info" value="${commonNotice.info }"/>
+		<form:textarea path="info" value="${commonNotice.info }"/>
 		<form:errors path="info" />
 		<br>
 

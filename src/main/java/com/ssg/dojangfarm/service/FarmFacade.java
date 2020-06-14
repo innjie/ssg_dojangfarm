@@ -58,6 +58,7 @@ public interface FarmFacade {
 	public User existingPhone(String phone);
 	public User checkIdPw(String id, String password);
 	public boolean confirmPassword(String password, String cPassword);
+
 	
 	//Address
 	public Address getAddress(int addrNo);
@@ -103,6 +104,7 @@ public interface FarmFacade {
 	public CommonNotice viewCommonNotice(int CNNo);
 	public List<CommonNotice> getAllNoticeList();
 	public List<CommonNotice> getCNoticeListByUserNo(int userNo);
+	public List<CommonNotice> searchCommonNotice(String word);
 	
 	//Discount
 	public void newDiscount(Normal normal);
@@ -130,6 +132,7 @@ public interface FarmFacade {
 	public List<Refund> getRefundList(int userNo);
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
+
 	
 	
 	

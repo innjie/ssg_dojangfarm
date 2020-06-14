@@ -106,8 +106,6 @@ public class NormalController {
 	public ModelAndView searchNormal(HttpServletRequest request,
 			@RequestParam(value="word", required = false) String word
 			) throws Exception {
-		
-		System.out.println(word);
 		//search action
 		List<Normal> normalList = null;
 		if(word != null) {
@@ -117,11 +115,6 @@ public class NormalController {
 			normalList = this.farm.searchNormal(word.toLowerCase());
 		}
 		
-		if(normalList == null) {
-			System.out.println("0");
-		} else {
-			System.out.println(normalList.size());
-		}
 		//search -> list( or main)
 		
 		return new ModelAndView(normalListView, "normalList", normalList);

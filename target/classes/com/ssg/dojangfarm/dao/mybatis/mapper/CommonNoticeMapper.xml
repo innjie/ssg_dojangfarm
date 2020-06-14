@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssg.dojangfarm.dao.mybatis.mapper.CommonNoticeMapper">
-<insert id = "insertCommonNotice" parameterType = "CommonNotice">
-<selectKey keyProperty = "CNNo" resultType = "int" order="BEFORE">
-SELECT CommonNoticeSeq.nextval AS "CNNo" FROM DUAL
-</selectKey>
-INSERT INTO CommonNotice
-(CNNo, title, info, userNo)
-VALUES
-(#{CNNo}, #{title}, #{info}, #{userNo})
-</insert>
+<mapper
+	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.CommonNoticeMapper">
+	<insert id="insertCommonNotice" parameterType="CommonNotice">
+		<selectKey keyProperty="CNNO" resultType="int"
+			order="BEFORE">
+			SELECT CommonNoticeSeq.nextval AS "CNNO" FROM DUAL
+		</selectKey>
+		INSERT INTO CommonNotice
+		(CNNO, title, info, userNo)
+		VALUES
+		(#{CNNO}, #{title}, #{info}, #{user.userNo})
+	</insert>
 
-<update id = "updateCommonNotice" parameterType = "CommonNotice">
-UPDATE CommonNotice
-SET title = #{title}, info = #{info}
-</update>
+	<update id="updateCommonNotice" parameterType="CommonNotice">
+		UPDATE CommonNotice
+		SET title = #{title}, info = #{info}
+	</update>
 
-<delete id = "deleteCommonNotice" parameterType = "CommonNotice">
-DELETE FROM CommonNotice
-WHERE CNNo = CommonNotice.CNNo
-</delete>
+	<delete id="deleteCommonNotice" parameterType="CommonNotice">
+		DELETE FROM CommonNotice
+		WHERE CNNO = CommonNotice.CNNO
+	</delete>
 
-<select id = "viewCommonNotice" parameterType = "int" resultType = "CommonNotice">
-SELECT
-(CNNo, title, info, userNo)
-FROM CommonNotice
-WHERE CNNo = #{CNNo}
-</select>
+	<select id="viewCommonNotice" parameterType="int"
+		resultType="CommonNotice">
+		SELECT
+		CNNO, title, info, UserTable.name as "user.name", CommonNotice.userNo as
+		"user.userNo"
+		FROM CommonNotice, UserTable
+		WHERE CNNO = #{CNNO} and UserTable.userNo = CommonNotice.userNo
+	</select>
 
-<select id = "getAllNoticeList" resultType = "Normal">
-SELECT
-CNNo, title, info, userNo
-FROM CommonNotice
-</select>
+	<select id="getAllNoticeList" resultType="CommonNotice">
+		SELECT
+		CNNO, title, info, Usertable.name as "user.name"
+		FROM CommonNotice, UserTable
+		WHERE CommonNotice.userNo = UserTable.userNo
+	</select>
 
-<select id = "getCNoticeListByUserNo" parameterType = "int" resultType = "CommonNotice">
-SELECT (CNNo, title, info, userNo)
-FROM CommonNotice
-WHERE userNo = #{userNo}
-</select>
-<select id = "getCN" parameterType = "int"  resultType = "CommonNotice">
-SELECT (CNNo, title, info, userNo)
-FROM CommonNotice
-WHERE userNo = #{userNo}
-</select>
+	<select id="getCNoticeListByUserNo" parameterType="int"
+		resultType="CommonNotice">
+		SELECT CNNO, title, info, userNo
+		FROM CommonNotice
+		WHERE userNo = #{userNo}
+	</select>
+
+	<select id="searchCommonNotice" resultType="CommonNotice">
+		SELECT CNNO, title, info
+		userNo
+		From CommonNotice
+		WHERE title LIKE '%' ||
+		#{title} || '%'
+	</select>
 
 </mapper>

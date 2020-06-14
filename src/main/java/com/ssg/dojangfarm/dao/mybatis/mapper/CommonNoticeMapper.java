@@ -12,4 +12,5 @@ public interface CommonNoticeMapper {
 	List<CommonNotice> getAllNoticeList();
 	List<CommonNotice> getCNoticeListByUserNo(int userNo);
 	CommonNotice getCommonNotice(String userId);
+	List<CommonNotice> searchCommonNotice(String word);
 }

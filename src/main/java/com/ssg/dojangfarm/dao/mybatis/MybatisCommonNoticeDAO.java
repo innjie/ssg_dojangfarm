@@ -35,4 +35,7 @@ public class MybatisCommonNoticeDAO implements CommonNoticeDAO {
 	public CommonNotice getCommonNotice(String userId) {
 		return cnMapper.getCommonNotice(userId);
 	}
+	public List<CommonNotice> searchCommonNotice(String word) {
+		return cnMapper.searchCommonNotice(word);
+	}
 }

@@ -17,13 +17,13 @@ public class CommonServiceImpl implements CommonService {
 	private CommonDAO commonDAO;
 
 	@Override
-	public int insertSale(Common common) {
-		return commonDAO.insertSale(common);
+	public int insertCommon(Common common) {
+		return commonDAO.insertCommon(common);
 	}
 
 	@Override
-	public int updateSale(Common common) {
-		return commonDAO.updateSale(common);
+	public int updateCommon(Common common) {
+		return commonDAO.updateCommon(common);
 	}
 
 	@Override
@@ -74,4 +74,5 @@ public class CommonServiceImpl implements CommonService {
 	public List<CommonJoin> getCJListByUserNo(int userNo) {
 		return commonDAO.getCJListByUserNo(userNo);
 	}
+
 }

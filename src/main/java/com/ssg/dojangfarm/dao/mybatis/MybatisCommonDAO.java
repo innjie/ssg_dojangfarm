@@ -15,11 +15,11 @@ public class MybatisCommonDAO implements CommonDAO{
 	@Autowired
 	private CommonMapper commonMapper;
 	
-	public int insertSale(Common common) {
-		return commonMapper.insertSale(common);
+	public int insertCommon(Common common) {
+		return commonMapper.insertCommon(common);
 	}
-	public int updateSale(Common common) {
-		return commonMapper.updateSale(common);
+	public int updateCommon(Common common) {
+		return commonMapper.updateCommon(common);
 	}
 	public Common getCommonSale(int saleNo) {
 		return commonMapper.getCommonSale(saleNo);
@@ -45,11 +45,9 @@ public class MybatisCommonDAO implements CommonDAO{
 	public CommonJoin getCommonJoin(int cjNo) {
 		return commonMapper.getCommonJoin(cjNo);
 	}
-	@Override
 	public List<CommonJoin> getCJList(int saleNo) {
 		return commonMapper.getCJList(saleNo);
 	}
-	@Override
 	public List<CommonJoin> getCJListByUserNo(int userNo) {
 		return commonMapper.getCJListByUserNo(userNo);
 	}

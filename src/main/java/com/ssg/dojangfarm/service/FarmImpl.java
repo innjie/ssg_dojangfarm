@@ -341,13 +341,13 @@ public class FarmImpl implements FarmFacade{
 	//-------------------------------------------------------------------------
 		
 	@Override
-	public int insertSale(Common common) {
-		return commonDAO.insertSale( common);
+	public int insertCommon(Common common) {
+		return commonDAO.insertCommon( common);
 	}
 
 	@Override
-	public int updateSale(Common common) {
-		return commonDAO.updateSale(common);
+	public int updateCommon(Common common) {
+		return commonDAO.updateCommon(common);
 	}
 
 	@Override

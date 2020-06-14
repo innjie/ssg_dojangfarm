@@ -3,7 +3,7 @@
 <mapper
 	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.CommonMapper">
 	<cache />
-	<insert id="insertSale" parameterType="Common">
+	<insert id="insertCommon" parameterType="Common">
 		<selectKey keyProperty="saleNo" resultType="int"
 			order="BEFORE">
 			SELECT CommonSeq.nextval AS "saleNo" FROM DUAL
@@ -11,18 +11,18 @@
 		INSERT INTO Common
 		(saleNo, saleType, title, saleState, info, price,
 		count, state, pNo, userNo,
-		regiDate, deadline, min)
+		deadline, deadline, min)
 		VALUES
 		(#{saleNo},
 		#{saleType}, #{title}, #{saleState}, #{info}, #{price}, #{count},
-		#{state}, #{product.pNo}, #{user.userNo}, #{regiDate}, #{deadline},
+		#{state}, #{product.pNo}, #{user.userNo}, #{deadline}, #{deadline},
 		#{min})
 	</insert>
 
-	<update id="updateSale" parameterType="Common">
+	<update id="updateCommon" parameterType="Common">
 		UPDATE Common
 		SET info =
-		#{info}, price = #{price}, count = #{regiDate}, deadline =
+		#{info}, price = #{price}, count = #{deadline}, deadline =
 		#{deadline}, min = #{min}
 
 	</update>
@@ -31,7 +31,7 @@
 		SELECT
 		(saleNo, saleType, title, saleState, info, price,
 		count, state, pNo, userNo,
-		regiDate, deadline, min)
+		deadline, deadline, min)
 		FROM Common
 		WHERE
 		saleNo = #{saleNo}
@@ -39,26 +39,23 @@
 	<select id="getAllCommonList" resultType="Common">
 		SELECT
 		saleNo, title,
-		User.userNo, regiDate
-		FROM Common, User
+		UserTable.userNo, deadline
+		FROM Common, UserTable
 		WHERE
-		Common.userNo = User.userNo
+		Common.userNo = UserTable.userNo
 	</select>
 	<select id="getCommonListByUserNo" resultType="Common">
 		SELECT saleNo,
-		title, User.userNo, regiDate
-		From Common, User
+		title, UserTable.userNo, deadline
+		From Common, UserTable
 		WHERE Common.userNo =
-		User.userNo AND Common.userNo=#{userNo}
+		UserTable.userNo AND Common.userNo=#{userNo}
 	</select>
 	<select id="searchCommon" resultType="Common">
 		SELECT saleNo, title,
-		User.userNo, regiDate
-		FROM Common, User
-		WHERE Common.userNo =
-		User.userNo
-		AND Common.userNo=#{userNo}
-		AND title LIKE '%#{word}%'
+		userNo
+		FROM Common
+		WHERE title LIKE '%' || #{title} || '%'
 	</select>
 	<insert id="insertCommonjoin" parameterType="CommonJoin">
 		<selectKey keyProperty="CJNo" resultType="int"

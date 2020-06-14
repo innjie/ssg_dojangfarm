@@ -15,7 +15,14 @@
 <input type = "text" name = "word"> &nbsp;
 <input type = "submit" value = "검색">
 </form>
+<br> <br>
 
+<!--  category -->
+<c:forEach var = "category" items = "${categoryList }">
+<a href = "<c:url value='/normal/list2.do'> 
+				<c:param name = 'cateNo' value = '${category.cateNo}'/></c:url>">${category.kind }</a>&nbsp;&nbsp;
+</c:forEach>
+<!--  normal List  -->
 <table border="1">
 <tr>
 	<td>번호</td>

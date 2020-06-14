@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ssg.dojangfarm.dao.NormalDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.NormalMapper;
+import com.ssg.dojangfarm.domain.Category;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Product;
 
@@ -47,5 +48,11 @@ public class MybatisNormalDAO implements NormalDAO{
 	}
 	public Product getProduct(int pNo) {
 		return normalMapper.getProduct(pNo);
+	}
+	public List<Category> getCategoryList() {
+		return normalMapper.getCategoryList();
+	}
+	public List<Normal> getNormalListByCateNo(int cateNo) {
+		return normalMapper.getNormalListByCateNo(cateNo);
 	}
 }

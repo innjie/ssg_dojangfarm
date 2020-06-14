@@ -91,4 +91,20 @@
 	FROM Product
 	WHERE pNo = #{pNo}
 	</select>
+	
+	<select id = "getCategoryList" resultType = "Category">
+	SELECT cateNo, kind
+	FROM Category
+	</select>
+	
+	<select id = "getNormalListByCateNo" resultType = "Normal">
+	SELECT
+		saleNo, title,
+		Usertable.name as "user.name", regidDate
+		From Normal, UserTable, Product
+		WHERE
+		Normal.userNo = UserTable.userNo
+		AND saleState = 'OPEN'
+		AND normal.pNo = product.pNo and product.cateNo = #{cateNo}
+	</select>
 </mapper>

@@ -3,6 +3,8 @@ package com.ssg.dojangfarm.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @SuppressWarnings("serial")
 public class Common  implements Serializable{
 	private int saleNo;
@@ -17,6 +19,7 @@ public class Common  implements Serializable{
 	private String saleState;
 	private int count;
 	private int min;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deadline;
 	
 	public int getSaleNo() {

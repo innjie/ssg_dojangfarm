@@ -10,30 +10,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.ssg.dojangfarm.domain.Product;
 
 public class CommonCommand  {
-	private Product product;
 	@Min(1000)
 	private int price;
 	@NotBlank
 	private String title;
-	private String state;
 	private String info;
 	private Date regidDate;
 	private String saleType;
 	private String saleState;
-	@Min(1)
-	private int count;
+	
 	@Min(5)
 	private int min;
 	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deadline;
 	
-	public Product getProduct() {
-		return product;
-	}
-	public void setProduct(Product product) {
-		this.product = product;
-	}
 	public int getPrice() {
 		return price;
 	}
@@ -45,12 +36,6 @@ public class CommonCommand  {
 	}
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
 	}
 	public String getInfo() {
 		return info;
@@ -76,13 +61,6 @@ public class CommonCommand  {
 	public void setSaleState(String saleState) {
 		this.saleState = saleState;
 	}
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
-	}
-	
 	
 	public int getMin() {
 		return min;

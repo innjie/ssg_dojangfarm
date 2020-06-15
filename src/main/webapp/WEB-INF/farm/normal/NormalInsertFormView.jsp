@@ -15,7 +15,7 @@
 	<c:set var="targetUrI">
 		<c:url value="/normal/insertNormal.do" />
 	</c:set>
-	<form:form action="${targetUrI}" commandName="normalCommand">
+	<form:form action="${targetUrI}" commandName="normalCommand" method = "POST">
 		<form:label path="title">제목</form:label>
 		<form:input path="title" />
 		<form:errors path="title" />
@@ -44,6 +44,11 @@
 		<form:label path="info">설명</form:label>
 		<form:input path="info" />
 		<form:errors path="info" />
+		<br>
+		
+		<form:label  path = "regidDate">판매 마감 날짜 </form:label>
+		<form:input path = "regidDate"/>
+		<form:errors path = "regidDate"/>
 		<br>
 
 		<input type="submit" value="추가" />

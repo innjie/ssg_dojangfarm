@@ -14,7 +14,7 @@
 <c:set var="targetUrI">
 		<c:url value="/normal/updateNormal.do" />
 	</c:set>
-		<form:form action="${targetUrI}" commandName="normal">
+		<form:form action="${targetUrI}" commandName="normal" method = "POST">
 		<form:label path="title" >제목</form:label>
 		<form:input path="title"  value="${normal.title }" readonly = "true"/>
 		<form:errors path="title" />
@@ -39,6 +39,12 @@
 		<form:input path="info" value="${normal.info}" />
 		<form:errors path="info" />
 		<br>
+		
+		<form:label path = "regidDate">판매 마감 기한 </form:label>
+		<form:input path = "regidDate"/>
+		<form:errors path = "regidDate"/>
+		<br>
+		
 		<form:hidden path = "saleNo" value = "${normal.saleNo }"/>
 		<input type="submit" value="수정" />
 

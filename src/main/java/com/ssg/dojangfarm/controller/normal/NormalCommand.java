@@ -1,8 +1,12 @@
 package com.ssg.dojangfarm.controller.normal;
 
 import java.util.Date;
+
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ssg.dojangfarm.domain.Product;
 
@@ -14,6 +18,8 @@ public class NormalCommand {
 	private String title;
 	private String state;
 	private String info;
+	@Future
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regidDate;
 	private String saleType;
 	private String saleState;
@@ -50,10 +56,10 @@ public class NormalCommand {
 	public void setInfo(String info) {
 		this.info = info;
 	}
-	public Date getRegiDate() {
+	public Date getRegidDate() {
 		return regidDate;
 	}
-	public void setRegiDate(Date regiDate) {
+	public void setRegidDate(Date regiDate) {
 		regidDate = regiDate;
 	}
 	public String getSaleState() {

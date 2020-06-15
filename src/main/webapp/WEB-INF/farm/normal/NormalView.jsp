@@ -106,7 +106,7 @@
 	<br><br>
 <a href= "<c:url value = '/normal/list.do'/> ">[이전 단계로]</a> <br>
 	<c:if test="${ (loginUser.userNo == normal.user.userNo)}">
-	<a href = "<c:url value ='/normal/updateForm.do' > 
+	<a href = "<c:url value ='/normal/updateNormal.do' > 
 	<c:param name = 'saleNo'  value = '${normal.saleNo}'/></c:url> ">수정하기</a><br>
 	<a href = "<c:url value = '/normal/turnState.do'>
 					<c:param name = 'saleNo' value = '${normal.saleNo}'/></c:url>"> 판매 상태 변경  </a> <br>

@@ -2,6 +2,8 @@ package com.ssg.dojangfarm.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @SuppressWarnings("serial")
 public class Normal implements Serializable{
 	private int saleNo;
@@ -12,6 +14,7 @@ public class Normal implements Serializable{
 	private String state;
 	private String saleType;
 	private String info;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regidDate;
 	private String saleState;
 	private int count;
@@ -58,10 +61,10 @@ public class Normal implements Serializable{
 	public void setInfo(String info) {
 		this.info = info;
 	}
-	public Date getRegiDate() {
+	public Date getRegidDate() {
 		return regidDate;
 	}
-	public void setRegiDate(Date regiDate) {
+	public void setRegidDate(Date regiDate) {
 		regidDate = regiDate;
 	}
 	public String getSaleType() {

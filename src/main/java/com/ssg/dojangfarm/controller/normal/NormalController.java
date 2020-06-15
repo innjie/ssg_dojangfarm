@@ -76,7 +76,7 @@ public class NormalController {
 			model.addAttribute("product", pList);
 			return new ModelAndView(insertNormaForm);
 		}
-		
+		System.out.println("error count: " + result.getErrorCount());
 		
 		//insert normal
 		Normal normal = new Normal();
@@ -215,11 +215,7 @@ public class NormalController {
 		HttpSession httpSession = request.getSession();
 		User loginUser = (User) httpSession.getAttribute("user");
 		
-		int confUserNo = this.farm.getUserByNormal(saleNo);
 		Normal normal = this.farm.getNormalSale(saleNo);
-		User normalUser = new User();
-		normalUser.setUserNo(confUserNo);
-		normal.setUser(normalUser);
 
 		model.addAttribute("normal", normal);
 		model.addAttribute("loginUser", loginUser);

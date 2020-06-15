@@ -11,9 +11,9 @@
 <title>공동구매 보기</title>
 </head>
 <body>
- <table border="1" width="600" height="800">
+ <table border="1" >
 	<tr>
-	<td  colspan="4">${common.title }</td>
+	<td  colspan="3">${common.title }</td>
 	</tr>
 
 	<tr >
@@ -21,8 +21,6 @@
 	</tr>
 	
 	<tr>
-	<td>품목</td>
-	<td>${common.product.pName }</td>
 	<td>가격</td>
 	<td>${ common.price}</td>
 	</tr>
@@ -30,18 +28,24 @@
 	<tr>
 	<td>최소인원</td>
 	<td>${common.min }</td>
+	</tr>
+	
+	<tr>
 	<td>마감일시</td>
-	<td>${common.daedline }</td>
+	<td>${common.deadline }</td>
 	</tr>
 
 	<tr>
 	<td colspan="4">${common.info }</td>
 	</tr>
 </table>
-<a href="CommonListView" >[이전 단계로]</a>
+<a href= "<c:url value = '/common/list.do'/> ">[이전 단계로]</a> <br>
+	<c:if test="${ (loginUser.userNo == common.user.userNo)}">
+	<a href = "<c:url value ='/common/updateCommon.do' > 
+	<c:param name = 'saleNo'  value = '${common.saleNo}'/></c:url> ">수정하기</a><br>
+	</c:if>
 
-<!--  c:if test="${common.state == "판매중" : 문자열 에러남..,, -->
-<input type="button" value="신청"/>	
+	<br><br><input type="button" value="신청"/>	
 
 </body>
 </html>

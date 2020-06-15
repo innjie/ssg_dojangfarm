@@ -45,7 +45,7 @@
 		From Normal, UserTable
 		WHERE
 		Normal.userNo = UserTable.userNo
-		AND saleState = 'OPEN'
+		AND saleState = 'OPEN' ORDER BY saleNo
 	</select>
 
 	<select id="getNormalListByUserNo" resultType="Normal">
@@ -53,14 +53,14 @@
 		title, UserTable.name as "user.name", regidDate
 		From Normal, UserTable
 		WHERE
-		Normal.userNo = UserTable.userNo AND Normal.userNo=#{userNo}
+		Normal.userNo = UserTable.userNo AND Normal.userNo=#{userNo} ORDER BY saleNo
 	</select>
 
 	<select id="searchNormal" resultType="Normal">
 		SELECT saleNo, title,
 		userNo
 		From Normal
-		WHERE title LIKE '%' || #{title} || '%'
+		WHERE title LIKE '%' || #{title} || '%' ORDER BY saleNo
 	</select>
 
 	<update id="turnSaleState" parameterType="Normal">
@@ -75,11 +75,7 @@
 		FROM Normal
 		WHERE saleNo = #{saleNo}
 	</select>
-	<select id="getUserByNormal" resultType="int">
-		SELECT userNo
-		FROM Normal
-		WHERE saleNo = #{saleNo}
-	</select>
+
 	
 	<select id = "getProductList" resultType = "Product">
 		SELECT pName, pNo
@@ -105,6 +101,6 @@
 		WHERE
 		Normal.userNo = UserTable.userNo
 		AND saleState = 'OPEN'
-		AND normal.pNo = product.pNo and product.cateNo = #{cateNo}
+		AND normal.pNo = product.pNo and product.cateNo = #{cateNo} ORDER BY saleNo
 	</select>
 </mapper>

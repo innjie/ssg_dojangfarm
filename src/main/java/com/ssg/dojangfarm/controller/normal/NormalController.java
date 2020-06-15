@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,8 +48,8 @@ public class NormalController {
 	}
 	
 	//insert form
-	@RequestMapping("/normal/insertForm.do")
-	public String insertForm(HttpServletRequest request,
+	@RequestMapping(value = "/normal/insertNormal.do", method = RequestMethod.GET)
+	public String insertNormal(HttpServletRequest request,
 			 @ModelAttribute("normalCommand") NormalCommand normalCommand,
 			 ModelMap model) throws Exception {
 		List<Product> pList = this.farm.getProductList();
@@ -58,7 +59,7 @@ public class NormalController {
 	}
 	
 	//insert normal
-	@RequestMapping("/normal/insertNormal.do")
+	@RequestMapping(value = "/normal/insertNormal.do", method = RequestMethod.POST)
 	public ModelAndView insertNormal(
 			@Valid@ModelAttribute("normalCommand") NormalCommand normalCommand,
 			BindingResult result, HttpServletRequest request, ModelMap model) {
@@ -90,9 +91,9 @@ public class NormalController {
 		normal.setCount(normalCommand.getCount());
 		normal.setState("0");
 		
-		java.util.Date utilDate = new java.util.Date();
+		java.util.Date utilDate = normalCommand.getRegidDate();
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-		normal.setRegiDate(sqlDate);
+		normal.setRegidDate(sqlDate);
 		
 		int res = this.farm.insertSale(normal);
 
@@ -145,8 +146,8 @@ public class NormalController {
 
 	}
 	
-	@RequestMapping(value="/normal/updateForm.do")
-	public String updateForm(@RequestParam("saleNo") int saleNo, ModelMap model) throws Exception {
+	@RequestMapping(value="/normal/updateNormal.do", method = RequestMethod.GET)
+	public String updateNormal(@RequestParam("saleNo") int saleNo, ModelMap model) throws Exception {
 		Normal normal = this.farm.getNormalSale(saleNo);
 		
 		Product product = this.farm.getProduct(normal.getProduct().getpNo());
@@ -154,13 +155,11 @@ public class NormalController {
 		model.addAttribute(normal);
 		return updateNormalForm;
 	}
+	
 	//update normal
-	@RequestMapping("/normal/updateNormal.do")
+	@RequestMapping(value = "/normal/updateNormal.do", method = RequestMethod.POST)
 	public ModelAndView updateNormal(@ModelAttribute("normal") Normal normal, 
 			BindingResult result, HttpServletRequest request, ModelMap model) {
-		
-		//update action
-		
 		//get user session
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");

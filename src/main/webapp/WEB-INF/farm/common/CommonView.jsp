@@ -43,6 +43,8 @@
 	<c:if test="${ (loginUser.userNo == common.user.userNo)}">
 	<a href = "<c:url value ='/common/updateCommon.do' > 
 	<c:param name = 'saleNo'  value = '${common.saleNo}'/></c:url> ">수정하기</a><br>
+	<a href = "<c:url value = '/commonJoin/viewList.do'><c:param name = 'saleNo' value = '${common.saleNo }'/>
+	</c:url>"> 신청자 목록보기</a><br>
 	</c:if>
 
 	<br><br>
@@ -50,6 +52,6 @@
 	<a href = "<c:url value = '/commonjoin/join.do'><c:param name = 'saleNo' value = '${common.saleNo }'/>
 	</c:url> ">신청</a>
 	</c:if>	
-
+	
 </body>
 </html>

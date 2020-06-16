@@ -39,6 +39,7 @@ public class CommonController {
 	private static final String updateCJForm = "commonjoin/JoinUpdateView";
 	private static final String commonJoinUserListView = "commonjoin/JoinUserListView";
 	private static final String commonJoinView = "commonjoin/CommonJoinView";
+	private static final String commonJoinedListView = "commonjoin/ListBySaleView";
 	@Autowired
 	private FarmFacade farm;
 	public void setFarm(FarmFacade farm) {
@@ -203,7 +204,7 @@ public class CommonController {
 	
 	//commonJoin user List
 	@RequestMapping("/commonJoin/userList.do")
-	public String getCommon(HttpServletRequest request, Model model) {
+	public String getCommonJoinUserList(HttpServletRequest request, Model model) {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
@@ -214,6 +215,15 @@ public class CommonController {
 		return commonJoinUserListView;
 	}
 	
+	//commonJoin list by saleNo
+	@RequestMapping("/commonJoin/viewList.do")
+	public String getCommonJonListBySaleNo(@RequestParam("saleNo") int saleNo, HttpServletRequest request, Model model) {
+		
+		List<CommonJoin> cjList = this.farm.getCommonJoinListBySaleNo(saleNo);
+		System.out.println(cjList.get(0).getUser().getName());
+		model.addAttribute("cjList", cjList);
+		return commonJoinedListView;
+	}
 	//insert CommonJoin Form
 	@RequestMapping(value = "/commonjoin/join.do", method = RequestMethod.GET)
 	public String insertCommonJoin(@RequestParam int saleNo, HttpServletRequest request,
@@ -297,7 +307,7 @@ public class CommonController {
 
 	// cancel CommonJoin
 	@RequestMapping("/commonJoin/cancel.do")
-	public ModelAndView cancelCommonJoin(@PathVariable int CJNo, BindingResult result) {
+	public ModelAndView cancelCommonJoin(@RequestParam("cjNo") int CJNo) {
 		// cancel action
 		int res = farm.cancelCommonjoin(CJNo);
 

@@ -392,7 +392,10 @@ public class FarmImpl implements FarmFacade{
 	public List<CommonJoin> getCommonJoinListByUserNo(int userNo) {
 		return commonDAO.getCommonJoinListByUserNo(userNo);
 	}
-
+	@Override
+	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo) {
+		return commonDAO.getCommonJoinListBySaleNo(saleNo);
+	}
 	//-------------------------------------------------------------------------
 	//CommonNotice
 	//-------------------------------------------------------------------------
@@ -536,6 +539,7 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
+
 	
 	
 	

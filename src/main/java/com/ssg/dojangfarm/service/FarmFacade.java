@@ -92,11 +92,13 @@ public interface FarmFacade {
 	public List<Common> getAllCommonList();
 	public List<Common> getCommonListByUserNo(int userNo);
 	public List<Common> searchCommon(String title);
+	
 	public int insertCommonjoin(CommonJoin commonJoin);  
 	public int cancelCommonjoin( int CJNo);
 	public int updateCommonjoin(CommonJoin commonJoin);
 	public CommonJoin getCommonJoin(int CJNo);
 	public List<CommonJoin> getCommonJoinListByUserNo(int userNo);
+	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo);
 	
 	//CommonNotice
 	public int insertCommonNotice(CommonNotice cn);
@@ -135,6 +137,7 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	
 
 	
 

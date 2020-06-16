@@ -57,8 +57,8 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	@Override
-	public int updateCommonjoin( int CJNo) {
-		return commonDAO.updateCommonjoin( CJNo);
+	public int updateCommonjoin(CommonJoin commonJoin) {
+		return commonDAO.updateCommonjoin( commonJoin);
 	}
 	@Override
 	public CommonJoin getCommonJoin(int CJNo) {
@@ -71,8 +71,10 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	@Override
-	public List<CommonJoin> getCJListByUserNo(int userNo) {
-		return commonDAO.getCJListByUserNo(userNo);
+	public List<CommonJoin> getCommonJoinListByUserNo(int userNo) {
+		return commonDAO.getCommonJoinListByUserNo(userNo);
 	}
+
+	
 
 }

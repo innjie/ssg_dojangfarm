@@ -16,10 +16,11 @@ public interface CommonDAO {
 	List<Common> searchCommon(String title);
 	int insertCommonjoin(CommonJoin commonJoin);  
 	int cancelCommonjoin( int CJNo);
-	int updateCommonjoin(int CJNo);
+	int updateCommonjoin(CommonJoin commonJoin);
 	CommonJoin getCommonJoin(int cjNo);
 	List<CommonJoin> getCJList(int saleNo);
 	List<CommonJoin> getCJListByUserNo(int userNo);
+	List<CommonJoin> getCommonJoinListByUserNo(int userNo);
 	
 }
 

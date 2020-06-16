@@ -56,15 +56,14 @@
 		WHERE title LIKE '%' || #{title} || '%'
 	</select>
 	<insert id="insertCommonjoin" parameterType="CommonJoin">
-		<selectKey keyProperty="CJNo" resultType="int"
+		<selectKey keyProperty="cjNo" resultType="int"
 			order="BEFORE">
 			SELECT CommonJoinSeq.nextval as "cjNo" FROM DUAL
 		</selectKey>
 		INSERT INTO CommonJoin
-		(cjNo, userNo, saleNo, cjState, dNo, payNo,
-		count)
+		(cjNo, userNo, saleNo, cjState, count)
 		VALUES
-		(#{cjNo}, #{userNo}, #{saleNo}, wait, null, null)
+		(#{cjNo}, #{user.userNo}, #{common.saleNo},#{cjState}, #{count})
 
 	</insert>
 	<delete id="cancelCommonjoin" parameterType="int">
@@ -72,15 +71,15 @@
 		CommonJoin
 		WHERE cjNo = #{cjNo}
 	</delete>
-	<update id="updateCommonjoin" parameterType="int">
+	<update id="updateCommonjoin" parameterType="CommonJoin">
 		UPDATE CommonJoin
 		SET count=#{count}
 	</update>
 
 	<select id="getCommonJoin" resultType="CommonJoin">
-		SELECT (cjNo, userNo,
-		saleNo, cjState, dNo, payNo, count)
-		FROM CommonJoin
+		SELECT cjNo, commonjoin.userNo as "user.userNo",
+		Commonjoin.saleNo as "common.saleNo", cjState, count, common.title as "common.title"
+		FROM CommonJoin, Common
 		WHERE cjNo = #{cjNo}
 	</select>
 	<select id="getCJList" resultType="CommonJoin">
@@ -88,11 +87,12 @@
 		FROM CommonJoin
 		WHERE saleNo = #{saleNo}
 	</select>
-	<select id="getCJListByUserNo" resultType="CommonJoin">
-		SELECT (cjNo, saleNo,
-		userNo)
-		FROM CommonJoin
-		WHERE userNo = #[userNo}]
+	<select id="getCommonJoinListByUserNo" resultType="CommonJoin">
+		SELECT cjNo, common.title as "common.title", count, cjState
+		FROM CommonJoin, Common
+		WHERE CommonJoin.userNo = #{userNo} 
+		AND common.saleNo = CommonJoin.saleNo
+		ORDER BY cjNo
 	</select>
 
 </mapper>

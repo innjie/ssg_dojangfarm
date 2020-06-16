@@ -34,6 +34,11 @@ public class CommonController {
 	private static final String commonUserListView = "common/CommonUserListView";
 	private static final String commonView = "common/CommonView";
 	private static final String updateCommonForm = "common/CommonUpdateFormView";
+	//-----commonjoin-----
+	private static final String insertCJForm = "commonjoin/CommonJoinFormView";
+	private static final String updateCJForm = "commonjoin/JoinUpdateView";
+	private static final String commonJoinUserListView = "commonjoin/JoinUserListView";
+	private static final String commonJoinView = "commonjoin/CommonJoinView";
 	@Autowired
 	private FarmFacade farm;
 	public void setFarm(FarmFacade farm) {
@@ -41,10 +46,14 @@ public class CommonController {
 	}
 
 	@ModelAttribute("commonCommand")
-	public CommonCommand formBcaking(HttpServletRequest request) {
+	public CommonCommand formBacking(HttpServletRequest request) {
 		return new CommonCommand();
 	}
-
+	
+	@ModelAttribute("cjCommand")
+	public CommonJoinCommand formBacking2(HttpServletRequest request) {
+		return new CommonJoinCommand();
+	}
 	// insert form
 	@RequestMapping("/common/insertForm.do")
 	public String insertCommonForm(
@@ -188,27 +197,60 @@ public class CommonController {
 		System.out.println(common.getDeadline());
 		return commonView;
 	}
+	
+	//--------------------- common join ---------------------
+	
+	
+	//commonJoin user List
 	@RequestMapping("/commonJoin/userList.do")
-	public String getCommon(@PathVariable int saleNo, Model model) {
-		Common common = farm.getCommonSale(saleNo);
-		if (common == null) {
-			return "common/CommonNotFound";
-		}
-		model.addAttribute("common", common);
-		return "common/CommonView";
+	public String getCommon(HttpServletRequest request, Model model) {
+		HttpSession httpSession = request.getSession();
+		User user = (User) httpSession.getAttribute("user");
+		int userNo = user.getUserNo();
+		
+		List<CommonJoin> cjList = this.farm.getCommonJoinListByUserNo(userNo);
+		System.out.println(cjList.get(0).getCommon().getTitle());
+		model.addAttribute("cjList", cjList);
+		return commonJoinUserListView;
 	}
 	
+	//insert CommonJoin Form
+	@RequestMapping(value = "/commonjoin/join.do", method = RequestMethod.GET)
+	public String insertCommonJoin(@RequestParam int saleNo, HttpServletRequest request,
+			@ModelAttribute("cjCommand") CommonJoinCommand cjCommand, 
+			ModelMap model) throws Exception {
+		Common common = this.farm.getCommonSale(saleNo);
+		model.addAttribute(common);
+		
+		return insertCJForm;
+	}
 	// insert CommonJoin
-	@RequestMapping("/commonjoin/join.do")
-	public ModelAndView insertCommonJoin(@RequestParam HttpServletRequest request,
-			@ModelAttribute("CommonJoin") CommonJoin commonJoin, BindingResult result) {
+	@RequestMapping(value = "/commonjoin/join.do", method = RequestMethod.POST)
+	public ModelAndView insertCommonJoin(HttpServletRequest request,
+			@ModelAttribute("cjCommand") CommonJoinCommand cjCommand, BindingResult result,
+			ModelMap model) {
 		// insert join actioin
-		int userNo = (int) request.getAttribute("userNo");
-		User user = new User();
-		user.setUserNo(userNo);
+		HttpSession httpSession = request.getSession();
+		User user = (User)httpSession.getAttribute("user");
+		Common common = this.farm.getCommonSale(cjCommand.getCommon().getSaleNo());
+		//validate
+		if(user == null) {
+			return new ModelAndView(errorPage, "message", "Please LOGIN first");
+		}
+		if(result.hasErrors()) {
+			model.addAttribute(common);
+			return new ModelAndView(insertCJForm);
+		}
+		
+		//insert CommonJoin
+		CommonJoin commonJoin = new CommonJoin();
 		commonJoin.setUser(user);
-		int res = farm.insertCommonjoin(commonJoin);
-
+		commonJoin.setCount(cjCommand.getCount());
+		commonJoin.setCommon(common);
+		commonJoin.setCjState("신청");
+		
+		int res = this.farm.insertCommonjoin(commonJoin);
+		
 		if (res == 0) {// failed
 			return new ModelAndView("Error", "message", "join Failed");
 		} else { // success
@@ -216,10 +258,19 @@ public class CommonController {
 		}
 	}
 
+	//update CommonJoin Form
+	@RequestMapping(value = "/commonJoin/update.do", method = RequestMethod.GET)
+	public String updateCommonJoin(@RequestParam("cjNo") int cjNo, 
+			ModelMap model) throws Exception {
+		CommonJoin commonJoin = this.farm.getCommonJoin(cjNo);
+		
+		model.addAttribute(commonJoin);
+		return updateCJForm;
+	}
 	// updateCommonJoin
-	@RequestMapping("/commonJoin/update.do")
-	public ModelAndView updateCommonJoin(@ModelAttribute("CommonJoin") CommonJoin cj, BindingResult result) {
-		int res = farm.updateCommonjoin(cj.getCjNo());
+	@RequestMapping(value = "/commonJoin/update.do", method = RequestMethod.POST)
+	public ModelAndView updateCommonJoin(@ModelAttribute("commonJoin") CommonJoin commonJoin, BindingResult result) {
+		int res = farm.updateCommonjoin(commonJoin);
 
 		if (res == 0) {// failed
 			return new ModelAndView("Error", "message", "update join Failed");
@@ -230,14 +281,18 @@ public class CommonController {
 
 	// view CommonJoin
 	@RequestMapping("/commonJoin/view.do")
-	public String viewCommonJoin(@PathVariable int CJNo, Model model) {
-		CommonJoin cj = farm.getCommonJoin(CJNo);
-
-		if (cj == null) {
-			return "/commonJoin/CJNotFound";
-		}
-		model.addAttribute("commonJoin", cj);
-		return "commonJoin/CommonJoinView";
+	public String viewCommonJoin(@RequestParam("cjNo")  int cjNo, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		HttpSession httpSession = request.getSession();
+		User loginUser = (User) httpSession.getAttribute("user");
+		
+		CommonJoin commonJoin = this.farm.getCommonJoin(cjNo);
+		Common common = this.farm.getCommonSale(commonJoin.getCommon().getSaleNo());
+		commonJoin.setCommon(common);
+		
+		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("commonJoin", commonJoin);
+		return commonJoinView;
 	}
 
 	// cancel CommonJoin

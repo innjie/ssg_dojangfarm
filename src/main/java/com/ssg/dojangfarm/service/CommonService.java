@@ -16,8 +16,8 @@ public interface CommonService {
 	
 	public int insertCommonjoin(CommonJoin commonJoin);  
 	public int cancelCommonjoin(int userNo);
-	public int updateCommonjoin(int CJNo);
+	public int updateCommonjoin(CommonJoin commonJoin);
 	public CommonJoin getCommonJoin(int cjNo);
 	List<CommonJoin> getCJList(int saleNo);
-	List<CommonJoin> getCJListByUserNo(int userNo);
+	List<CommonJoin> getCommonJoinListByUserNo(int userNo);
 }

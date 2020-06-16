@@ -45,7 +45,11 @@
 	<c:param name = 'saleNo'  value = '${common.saleNo}'/></c:url> ">수정하기</a><br>
 	</c:if>
 
-	<br><br><input type="button" value="신청"/>	
+	<br><br>
+	<c:if test = "${(loginUser.userNo != common.user.userNo) }">
+	<a href = "<c:url value = '/commonjoin/join.do'><c:param name = 'saleNo' value = '${common.saleNo }'/>
+	</c:url> ">신청</a>
+	</c:if>	
 
 </body>
 </html>

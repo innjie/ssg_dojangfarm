@@ -60,8 +60,12 @@ public class CommonServiceEndpoint {
 	}
 
 	@WebMethod
-	public int updateCommonjoin( int CJNo) {
-		return commonService.updateCommonjoin(CJNo);
+	public int updateCommonjoin(CommonJoin commonJoin) {
+		return commonService.updateCommonjoin(commonJoin);
+	}
+	@WebMethod
+	public List<CommonJoin> getCommonJoinListByUserNo(int userNo) {
+		return commonService.getCommonJoinListByUserNo(userNo);
 	}
 
 }

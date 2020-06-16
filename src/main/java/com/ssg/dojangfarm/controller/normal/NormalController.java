@@ -77,7 +77,6 @@ public class NormalController {
 			model.addAttribute("product", pList);
 			return new ModelAndView(insertNormaForm);
 		}
-		System.out.println("error count: " + result.getErrorCount());
 		
 		//insert normal
 		Normal normal = new Normal();
@@ -146,6 +145,7 @@ public class NormalController {
 
 	}
 	
+	//update form
 	@RequestMapping(value="/normal/updateNormal.do", method = RequestMethod.GET)
 	public String updateNormal(@RequestParam("saleNo") int saleNo, ModelMap model) throws Exception {
 		Normal normal = this.farm.getNormalSale(saleNo);

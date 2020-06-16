@@ -11,6 +11,7 @@
 <title>공동구매 보기</title>
 </head>
 <body>
+<b><c:out value="${message}" /></b>
  <table border="1" >
 	<tr>
 	<td  colspan="3">${common.title }</td>

@@ -67,5 +67,12 @@ public class CommonServiceEndpoint {
 	public List<CommonJoin> getCommonJoinListByUserNo(int userNo) {
 		return commonService.getCommonJoinListByUserNo(userNo);
 	}
-
+	@WebMethod
+	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo) {
+		return commonService.getCommonJoinListBySaleNo(saleNo);
+	}
+	@WebMethod
+	public CommonJoin ExistCommonJoin(int userNo, int saleNo) {
+		return commonService.ExistCommonJoin(userNo, saleNo);
+	}
 }

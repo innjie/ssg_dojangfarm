@@ -12,6 +12,7 @@
 </head>
 <body>
 <h2>${common.title } 신청 폼</h2>
+
 	<c:set var="targetUrI">
 		<c:url value="/commonjoin/join.do" />
 	</c:set>

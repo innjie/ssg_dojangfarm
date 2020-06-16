@@ -8,29 +8,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>등록한 공동구매 리스트 보기</title>
+<title>참여한 공동구매 리스트</title>
 </head>
 <body>
-
-<form action = "<c:url value = '/common/searchCommon.do'/>">
-<input type = "text" name = "word"> &nbsp;
-<input type = "submit" value = "검색">
-</form>
-
 <table border="1">
 <tr>
 	<td>번호</td>
 	<td>제목</td>
-	<td>작성자</td>
+	<td>수량</td>
+	<td>상태</td>
 </tr>
-<c:forEach var="common" items="${commonList}" >
+<c:forEach var="cj" items="${cjList}" >
 	<tr>
-	<td><a href="<c:url value='/common/viewCommondo'> 
-						<c:param name='saleNo' value='${common.saleNo}'/>
-						</c:url>">${common.saleNo}</a></td>
-	<td>${common.title}
-	</td>
-	<td>${common.user.name}</td>
+	<td><a href="<c:url value='/commonJoin/view.do'> 
+						<c:param name='cjNo' value='${cj.cjNo}'/>
+						</c:url>">${cj.cjNo}</a></td>
+	<td>${cj.common.title}</td>
+	<td>${cj.count}</td>
+	<td>${cj.cjState }
 	</tr>
 </c:forEach>
 </table>

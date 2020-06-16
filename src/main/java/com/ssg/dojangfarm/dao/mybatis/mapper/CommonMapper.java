@@ -14,8 +14,9 @@ public interface CommonMapper {
 	public List<Common> searchCommon(String title);
 	public int insertCommonjoin(CommonJoin commonJoin);  //
 	public int cancelCommonjoin(int userNo);
-	public int updateCommonjoin(int CJNo);
+	public int updateCommonjoin(CommonJoin commonJoin);
 	public CommonJoin getCommonJoin(int cjNo);
 	public List<CommonJoin> getCJList(int saleNo);
 	public List<CommonJoin> getCJListByUserNo(int userNo);
+	public List<CommonJoin> getCommonJoinListByUserNo(int userNo);
 }

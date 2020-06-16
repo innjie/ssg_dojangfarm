@@ -39,8 +39,8 @@ public class MybatisCommonDAO implements CommonDAO{
 	public int cancelCommonjoin(int userNo) {
 		return commonMapper.cancelCommonjoin(userNo);
 	}
-	public int updateCommonjoin(int CJNo) {
-		return commonMapper.updateCommonjoin(CJNo);
+	public int updateCommonjoin(CommonJoin commonJoin) {
+		return commonMapper.updateCommonjoin(commonJoin);
 	}
 	public CommonJoin getCommonJoin(int cjNo) {
 		return commonMapper.getCommonJoin(cjNo);
@@ -50,5 +50,9 @@ public class MybatisCommonDAO implements CommonDAO{
 	}
 	public List<CommonJoin> getCJListByUserNo(int userNo) {
 		return commonMapper.getCJListByUserNo(userNo);
+	}
+	@Override
+	public List<CommonJoin> getCommonJoinListByUserNo(int userNo) {
+		return commonMapper.getCommonJoinListByUserNo(userNo);
 	}
 }

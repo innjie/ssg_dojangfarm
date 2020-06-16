@@ -381,13 +381,18 @@ public class FarmImpl implements FarmFacade{
 	}
 
 	@Override
-	public int updateCommonjoin( int CJNo) {
-		return commonDAO.updateCommonjoin( CJNo);
+	public int updateCommonjoin(CommonJoin commonJoin) {
+		return commonDAO.updateCommonjoin( commonJoin);
 	}
 	@Override
 	public CommonJoin getCommonJoin(int CJNo) {
 		return commonDAO.getCommonJoin(CJNo);
 	}
+	@Override
+	public List<CommonJoin> getCommonJoinListByUserNo(int userNo) {
+		return commonDAO.getCommonJoinListByUserNo(userNo);
+	}
+
 	//-------------------------------------------------------------------------
 	//CommonNotice
 	//-------------------------------------------------------------------------

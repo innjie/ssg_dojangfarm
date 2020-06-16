@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.ssg.dojangfarm.dao.CommonDAO;
 import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonJoin;
-import com.ssg.dojangfarm.domain.CommonNotice;
 
 @Service("CommonServiceImpl")
 public class CommonServiceImpl implements CommonService {
@@ -74,6 +73,16 @@ public class CommonServiceImpl implements CommonService {
 	public List<CommonJoin> getCommonJoinListByUserNo(int userNo) {
 		return commonDAO.getCommonJoinListByUserNo(userNo);
 	}
+	@Override
+	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo) {
+		return commonDAO.getCommonJoinListBySaleNo(saleNo);
+	}
+	@Override
+	public CommonJoin ExistCommonJoin(int userNo, int saleNo) {
+		return commonDAO.ExistCommonJoin(userNo, saleNo);
+	}
+
+	
 
 	
 

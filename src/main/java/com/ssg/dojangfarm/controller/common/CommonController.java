@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -235,6 +236,7 @@ public class CommonController {
 		return insertCJForm;
 	}
 	// insert CommonJoin
+	@Transactional
 	@RequestMapping(value = "/commonjoin/join.do", method = RequestMethod.POST)
 	public ModelAndView insertCommonJoin(HttpServletRequest request,
 			@ModelAttribute("cjCommand") CommonJoinCommand cjCommand, BindingResult result,
@@ -243,6 +245,7 @@ public class CommonController {
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
 		Common common = this.farm.getCommonSale(cjCommand.getCommon().getSaleNo());
+		
 		//validate
 		if(user == null) {
 			return new ModelAndView(errorPage, "message", "Please LOGIN first");
@@ -251,7 +254,13 @@ public class CommonController {
 			model.addAttribute(common);
 			return new ModelAndView(insertCJForm);
 		}
+		//if already exist
 		
+		CommonJoin existJoin = this.farm.ExistCommonJoin(user.getUserNo(), common.getSaleNo());
+		if(existJoin != null) {
+			model.addAttribute("common", common);
+			return new ModelAndView(commonView, "message", "already exist");
+		}
 		//insert CommonJoin
 		CommonJoin commonJoin = new CommonJoin();
 		commonJoin.setUser(user);
@@ -260,6 +269,12 @@ public class CommonController {
 		commonJoin.setCjState("신청");
 		
 		int res = this.farm.insertCommonjoin(commonJoin);
+		int memberSize = this.farm.getCommonJoinListBySaleNo(cjCommand.getCommon().getSaleNo()).size();
+		//common state change	
+		if(memberSize == cjCommand.getCommon().getMin()) {
+			common.setSaleState("OK");
+			res = this.farm.updateCommon(common);
+		}
 		
 		if (res == 0) {// failed
 			return new ModelAndView("Error", "message", "join Failed");

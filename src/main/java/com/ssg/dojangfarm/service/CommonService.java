@@ -20,4 +20,7 @@ public interface CommonService {
 	public CommonJoin getCommonJoin(int cjNo);
 	List<CommonJoin> getCJList(int saleNo);
 	List<CommonJoin> getCommonJoinListByUserNo(int userNo);
+	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo);
+	public CommonJoin ExistCommonJoin(int userNo, int saleNo);
+	
 }

@@ -22,5 +22,6 @@ public interface CommonDAO {
 	List<CommonJoin> getCJListByUserNo(int userNo);
 	List<CommonJoin> getCommonJoinListByUserNo(int userNo);
 	List<CommonJoin> getCommonJoinListBySaleNo(int saleNo);
+	CommonJoin ExistCommonJoin(int userNo, int saleNo);
 }
 

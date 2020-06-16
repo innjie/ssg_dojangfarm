@@ -104,4 +104,10 @@
 		AND CommonJoin.userNo = UserTable.userNo
 		ORDER BY cjNo
 	</select>
+	
+	<select id = "ExistCommonJoin" resultType = "CommonJoin">
+	 SELECT cjNo
+	 FROM CommonJoin
+	 WHERE userNo = #{param1} AND saleNo = #{param2}
+	</select>
 </mapper>

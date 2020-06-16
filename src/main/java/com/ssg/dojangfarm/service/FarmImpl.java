@@ -396,6 +396,11 @@ public class FarmImpl implements FarmFacade{
 	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo) {
 		return commonDAO.getCommonJoinListBySaleNo(saleNo);
 	}
+	@Override
+	public CommonJoin ExistCommonJoin(int userNo, int saleNo) {
+		return commonDAO.ExistCommonJoin(userNo, saleNo);
+	}
+
 	//-------------------------------------------------------------------------
 	//CommonNotice
 	//-------------------------------------------------------------------------

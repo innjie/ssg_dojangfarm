@@ -25,7 +25,7 @@
 </tr>
 <c:forEach var="common" items="${commonList}" >
 	<tr>
-	<td><a href="<c:url value='/common/viewCommondo'> 
+	<td><a href="<c:url value='/common/viewCommon.do'> 
 						<c:param name='saleNo' value='${common.saleNo}'/>
 						</c:url>">${common.saleNo}</a></td>
 	<td>${common.title}

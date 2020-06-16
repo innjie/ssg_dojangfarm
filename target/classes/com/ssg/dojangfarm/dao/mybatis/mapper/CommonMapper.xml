@@ -95,4 +95,13 @@
 		ORDER BY cjNo
 	</select>
 
+	<select id = "getCommonJoinListBySaleNo" resultType = "CommonJoin">
+		SELECT cjNo, common.title as "common.title", count, cjState, 
+		CommonJoin.userNo as "user.userNo", UserTable.name as "user.name"
+		FROM CommonJoin, Common, UserTable
+		WHERE CommonJoin.saleNo = #{saleNo}
+		AND common.saleNo = CommonJoin.saleNo
+		AND CommonJoin.userNo = UserTable.userNo
+		ORDER BY cjNo
+	</select>
 </mapper>

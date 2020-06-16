@@ -55,4 +55,8 @@ public class MybatisCommonDAO implements CommonDAO{
 	public List<CommonJoin> getCommonJoinListByUserNo(int userNo) {
 		return commonMapper.getCommonJoinListByUserNo(userNo);
 	}
+	@Override
+	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo) {
+		return commonMapper.getCommonJoinListBySaleNo(saleNo);
+	}
 }

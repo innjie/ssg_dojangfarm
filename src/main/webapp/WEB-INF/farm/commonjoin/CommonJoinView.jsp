@@ -36,6 +36,8 @@
 <c:if test = "${(loginUser.userNo == commonJoin.user.userNo) && (commonJoin.common.saleState == 'OPEN')}">
 <a href = "<c:url value = '/commonJoin/update.do'>
 <c:param name = 'cjNo' value = '${commonJoin.cjNo }'/></c:url>"> 수정하기 </a>
+<a href = "<c:url value = '/commonJoin/cancel.do'>
+<c:param name = 'cjNo' value = ' ${commonJoin.cjNo}'/> </c:url>">취소하기</a>
 </c:if>
 
 </body>

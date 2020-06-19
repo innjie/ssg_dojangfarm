@@ -29,8 +29,11 @@ public interface AuctionService{
 	
 	List<SBid> getMySBidList(int userNo);
 	SBid getMySBid(int sBidNo);
+	List<SBid> getMySBidList(String id);
+	
 	List<ImPur> getMyImPurList(int userNo);
 	ImPur getMyImPur(int imPurNo);
+	List<ImPur> getMyImPurList(String id);
 
 	User getUserByAuction(int aNo);
 	

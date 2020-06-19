@@ -85,5 +85,17 @@ public class MybatisAuctionDAO implements AuctionDAO{
 	public int getPNoByPName(String pName) {
 		return auctionMapper.getPNoByPName(pName);
 	}
+	
+	
+	
+	
+	@Override
+	public List<SBid> getMySBidList(String id) {
+		return auctionMapper.getMySBidList(id);
+	}
+	@Override
+	public List<ImPur> getMyImPurList(String id) {
+		return auctionMapper.getMyImPurList(id);
+	}
 
 }

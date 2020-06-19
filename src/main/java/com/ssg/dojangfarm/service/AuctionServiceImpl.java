@@ -93,4 +93,14 @@ public class AuctionServiceImpl implements AuctionService{
 	public int getPNoByPName(String pName) {
 		return auctionDAO.getPNoByPName(pName);
 	}
+
+	@Override
+	public List<SBid> getMySBidList(String id) {
+		return auctionDAO.getMySBidList(id);
+	}
+
+	@Override
+	public List<ImPur> getMyImPurList(String id) {
+		return auctionDAO.getMyImPurList(id);
+	}
 }

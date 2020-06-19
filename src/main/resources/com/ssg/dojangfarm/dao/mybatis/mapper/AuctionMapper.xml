@@ -6,9 +6,11 @@
   	<!-- Auction -->
   	<select id="getAuctionList" resultType="Auction">
     	SELECT 
-    		aNo, title, minPrice, deadline,
-    		imPurPrice, bidPrice 
-    	FROM Auction
+    		aNo, title, minPrice, deadline, imPurPrice, bidPrice, 
+    		Auction.pNo AS "product.pNo", pName AS "product.pName"
+    	FROM Auction, Product
+    	WHERE 
+    		Auction.pNo = Product.pNo
     	ORDER BY aNo
   	</select>
   	

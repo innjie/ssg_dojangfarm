@@ -114,4 +114,15 @@ public class AuctionServiceEndpoint {
 	public int getPNoByPName(String pName) {
 		return auctionService.getPNoByPName(pName);
 	}
+	
+	
+	@WebMethod
+	public List<SBid> getMySBidList(String id) {
+		return auctionService.getMySBidList(id);
+	}
+
+	@WebMethod
+	public List<ImPur> getMyImPurList(String id) {
+		return auctionService.getMyImPurList(id);
+	}
 }

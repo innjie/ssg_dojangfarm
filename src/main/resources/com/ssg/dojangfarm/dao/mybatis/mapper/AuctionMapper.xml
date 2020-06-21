@@ -119,12 +119,26 @@
   	</insert>
   	
   	
-  	
+  	<select id="getMySBidList" parameterType="String" resultType="SBid">
+    	SELECT 
+    		sBidNo, payState, Auction.aNo AS "auction.aNo", 
+    		Bid.bidNo AS "bid.bidNo", Bid.bidPrice AS "bid.bidPrice",
+    		UserTable.userNo AS "user.userNo", id AS "user.id"
+    	FROM SBid, Auction, Bid, UserTable
+    	WHERE 
+    		Bid.bidNo = SBid.bidNo AND
+    		Auction.aNo = Bid.aNo AND
+    		Bid.userNo = UserTable.userNo AND
+    		UserTable.id = #{id}
+    	ORDER BY SBid.sBidNo
+  	</select>
   	
   
-  	<select id="getMySBidList" parameterType="int" resultType="Auction">
+  	<select id="getMySBidList" parameterType="int" resultType="SBid">
     	SELECT 
-    		sBidNo, payState, Auction.aNo, Bid.bidNo, Bid.bidPrice
+    		sBidNo, payState, Auction.aNo AS "auction.aNo",
+    		Bid.bidNo AS "bid.bidNo", Bid.bidPrice AS "bid.bidPrice",
+			userNo AS "user.userNo"
     	FROM SBid, Auction, Bid
     	WHERE 
     		Bid.bidNo = SBid.bidNo AND
@@ -133,7 +147,7 @@
     	ORDER BY SBid.sBidNo
   	</select>
   	
-  	<select id="getMySBid" parameterType="int" resultType="Auction">
+  	<select id="getMySBid" parameterType="int" resultType="SBid">
     	SELECT 
     		sBidNo, payState, Auction.aNo, title, Bid.bidNo, bid.bidPrice,
     		Delivery.dNo AS "delivery.dNo",
@@ -173,7 +187,19 @@
   	
   	
   	
-  	<select id="getMyImPurList" parameterType="int" resultType="Auction">
+  	<select id="getMyImPurList" parameterType="String" resultType="ImPur">
+    	SELECT 
+    		imPurNo, Auction.aNo, title, imPurPrice
+    	FROM ImPur, Auction, UserTable
+    	WHERE 
+    		Auction.aNo = ImPur.aNo AND
+    		UserTable.userNo = ImPur.userNo AND
+    		id = #{id}
+    	ORDER BY ImPur.imPurNo
+  	</select>
+  	
+  	
+  	<select id="getMyImPurList" parameterType="int" resultType="ImPur">
     	SELECT 
     		imPurNo, Auction.aNo, title, imPurPrice
     	FROM ImPur, Auction

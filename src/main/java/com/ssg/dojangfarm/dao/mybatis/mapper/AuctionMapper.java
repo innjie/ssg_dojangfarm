@@ -2,7 +2,9 @@ package com.ssg.dojangfarm.dao.mybatis.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Bid;
@@ -10,6 +12,7 @@ import com.ssg.dojangfarm.domain.ImPur;
 import com.ssg.dojangfarm.domain.SBid;
 import com.ssg.dojangfarm.domain.User;
 
+@CacheNamespaceRef(value=AuctionMapper.class)
 public interface AuctionMapper {
 	List<Auction> getAuctionList();	
 	Auction getAuction(int aNo);
@@ -30,10 +33,12 @@ public interface AuctionMapper {
 	
 	List<SBid> getMySBidList(int userNo);
 	SBid getMySBid(int sBidNo);
+	
 	List<SBid> getMySBidList(String id);
 	
 	List<ImPur> getMyImPurList(int userNo);
 	ImPur getMyImPur(int imPurNo);
+	
 	List<ImPur> getMyImPurList(String id);
 	
 	User getUserNoByAuction(int aNo);

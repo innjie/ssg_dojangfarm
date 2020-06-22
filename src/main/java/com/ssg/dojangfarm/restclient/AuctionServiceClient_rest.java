@@ -13,7 +13,7 @@ public class AuctionServiceClient_rest {
 
 	private static RestTemplate restTemplate = new RestTemplate();
 	private static String host = "localhost";
-	private static String port = "8080";
+	private static String port = "8081";
 	private static String auctionSvcUrl = "http://" + host + ":" + port + "/dojangfarm/rest";				
 
 	public static void main(String[] args) {		

@@ -118,7 +118,7 @@
     		(#{bidNo}, #{bidPrice}, #{user.userNo}, #{auction.aNo})
   	</insert>
   	
-  	
+<!-- 
   	<select id="getMySBidList" parameterType="String" resultType="SBid">
     	SELECT 
     		sBidNo, payState, Auction.aNo AS "auction.aNo", 
@@ -132,7 +132,7 @@
     		UserTable.id = #{id}
     	ORDER BY SBid.sBidNo
   	</select>
-  	
+   -->  		
   
   	<select id="getMySBidList" parameterType="int" resultType="SBid">
     	SELECT 
@@ -186,7 +186,7 @@
   	
   	
   	
-  	
+ <!--  	
   	<select id="getMyImPurList" parameterType="String" resultType="ImPur">
     	SELECT 
     		imPurNo, Auction.aNo, title, imPurPrice
@@ -197,7 +197,7 @@
     		id = #{id}
     	ORDER BY ImPur.imPurNo
   	</select>
-  	
+   -->  		
   	
   	<select id="getMyImPurList" parameterType="int" resultType="ImPur">
     	SELECT 

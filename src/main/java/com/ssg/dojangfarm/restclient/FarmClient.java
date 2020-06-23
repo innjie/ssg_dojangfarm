@@ -9,7 +9,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 
-public class OrderClient2 {
+public class FarmClient {
 	private static RestTemplate restTemplate = new RestTemplate();
 	private static String host = "202.20.119.117";
 	private static String port = "80";

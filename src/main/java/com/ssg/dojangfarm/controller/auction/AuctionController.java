@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,7 +33,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-public class AuctionController implements ApplicationContextAware{
+public class AuctionController implements ServletContextAware{
 	private static final String LISTAUCTION = "auction/AuctionListView";
 	private static final String VIEWAUCTION = "auction/AuctionView";
 	private static final String LISTMYAUCTION = "auction/MyAuctionListView";
@@ -39,14 +41,11 @@ public class AuctionController implements ApplicationContextAware{
 	private static final String ADDIMAGE = "auction/AddImage";
 	private static final String CONFIRMAUCTION = "auction/RegisterAuctionConfirmView";
 	
-	private WebApplicationContext context;	
-	private String uploadDir;
+	private ServletContext context;	
 
 	@Override
-	public void setApplicationContext(ApplicationContext appContext)
-		throws BeansException {
-		this.context = (WebApplicationContext) appContext;
-		this.uploadDir = context.getServletContext().getRealPath("/images/auction/");
+	public void setServletContext(ServletContext context) {
+		this.context = context;
 	}
 	
 	private FarmFacade farm;
@@ -293,8 +292,8 @@ public class AuctionController implements ApplicationContextAware{
 		this.farm.registerAuction(auction);	
 		System.out.println(image.getOriginalFilename());
 		int aNo = this.farm.getLastANo();
-		//File file = new File(this.uploadDir + aNo + ".jpg");
-		File file = new File(uploadDir, aNo + ".jpg");
+		String path = context.getRealPath("/images/auction");
+		File file = new File(path, aNo + ".jpg");
 		try {
 			image.transferTo(file);
 		} catch (Exception e) {
@@ -302,6 +301,8 @@ public class AuctionController implements ApplicationContextAware{
 		}
 		
 		// file name을 데이터베이스에 저장!
+		System.out.println("path: " + path);
+		System.out.println("path: " + file.getPath());
 		this.farm.addImage(aNo, "images/auction/" + file.getName());
 		//this.farm.addImage(auction, (lastANo+1), file.getPath());
 	}

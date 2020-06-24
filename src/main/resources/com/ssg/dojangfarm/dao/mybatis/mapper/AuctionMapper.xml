@@ -6,7 +6,7 @@
   	<!-- Auction -->
   	<select id="getAuctionList" resultType="Auction">
     	SELECT 
-    		aNo, title, minPrice, deadline, imPurPrice, bidPrice, 
+    		aNo, title, minPrice, deadline, imPurPrice, bidPrice,
     		Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product
     	WHERE 
@@ -49,7 +49,7 @@
   	<select id="getAuction" parameterType="int" resultType="Auction">
     	SELECT 
     		aNo, title, detail, minPrice, deadline,
-    		imPurAva, imPurPrice, finish, 
+    		imPurAva, imPurPrice, finish, image,
     		Auction.userNo AS "user.userNo", id AS "user.id",
     		 Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product, UserTable

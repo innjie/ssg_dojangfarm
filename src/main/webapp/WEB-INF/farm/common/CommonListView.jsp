@@ -34,6 +34,6 @@
 </c:forEach>
 </table>
 <a href="<c:url value='/common/insertForm.do'/>"> 등록</a> <br>
-
+<a href="<c:url value = '/index.do'/>">[메인으로]</a>
 </body>
 </html>

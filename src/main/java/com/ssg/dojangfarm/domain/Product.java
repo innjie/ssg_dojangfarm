@@ -2,6 +2,7 @@ package com.ssg.dojangfarm.domain;
 
 import java.io.Serializable;
 
+
 @SuppressWarnings("serial")
 public class Product implements Serializable{
 	private int pNo;

@@ -12,7 +12,7 @@
 <title>경매 리스트</title>
 </head>
 <body>
-	<a href="<c:url value='/auction/registerAuction.do' />">경매 추가</a>
+	<a href="<c:url value='/auction/registerAuctionForm.do' />">경매 추가</a>
 	<br><br>
 	<table border="1">
 		<tr>

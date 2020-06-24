@@ -87,6 +87,20 @@
     		pName = #{pName}
   	</select>
   	
+  	<select id="getLastANo" resultType="int">
+    	SELECT 
+    		MAX(aNo)
+    	FROM Auction
+  	</select>
+  	
+  	<update id="addImage" parameterType="Auction">
+    	UPDATE 
+    		Auction
+    	SET image = #{image}
+    	WHERE 
+    		aNo = #{aNo}
+  	</update>
+  	
   	
   	<select id="getMyBidList" parameterType="int" resultType="Bid">
     	SELECT 

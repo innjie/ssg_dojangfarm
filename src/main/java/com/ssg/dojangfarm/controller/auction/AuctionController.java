@@ -39,7 +39,7 @@ public class AuctionController {
 		this.farm = farm;
 	}
 
-	//AuctionCommand °´Ã¼ »ı¼º
+	//AuctionCommand
 	@ModelAttribute("auctionCommand")
 	public AuctionCommand formBacking() {
 		return new AuctionCommand();
@@ -49,28 +49,28 @@ public class AuctionController {
 	@ModelAttribute("pName")
 	public List<String> referenceData() {
 		List<String> pName = new ArrayList<String>();
-		pName.add("±âÅ¸°úÀÏ");
-		pName.add("±âÅ¸Ã¤¼Ò");
-		pName.add("»ç°ú");
-		pName.add("¿À·»Áö");
-		pName.add("¼ö¹Ú");
-		pName.add("º¹¼ş¾Æ");
-		pName.add("Åä¸¶Åä");
-		pName.add("¹è");
-		pName.add("°¨");
-		pName.add("Æ÷µµ");
-		pName.add("µş±â");
-		pName.add("Âü¿Ü");
-		pName.add("¹èÃß");
-		pName.add("¹ö¼¸");
-		pName.add("´ç±Ù");
-		pName.add("¿ÀÀÌ");
-		pName.add("¾çÆÄ");
-		pName.add("¸¶´Ã");
-		pName.add("¹«");
-		pName.add("°í±¸¸¶");
-		pName.add("°¨ÀÚ");
-		
+		pName.add("ì‚¬ê³¼");
+		pName.add("ì˜¤ë Œì§€");
+		pName.add("ìˆ˜ë°•");
+		pName.add("ë³µìˆ­ì•„");
+		pName.add("í† ë§ˆí† ");
+		pName.add("ë°°");
+		pName.add("ê°");
+		pName.add("í¬ë„");
+		pName.add("ë”¸ê¸°");
+		pName.add("ì°¸ì™¸");
+		pName.add("ê¸°íƒ€ê³¼ì¼");
+		pName.add("ë°°ì¶”");
+		pName.add("ë²„ì„¯");
+		pName.add("ë‹¹ê·¼");
+		pName.add("ì˜¤ì´");
+		pName.add("ì–‘íŒŒ");
+		pName.add("ë§ˆëŠ˜");
+		pName.add("ë¬´");
+		pName.add("ê³ êµ¬ë§ˆ");
+		pName.add("ê°ì");
+		pName.add("ê¸°íƒ€ì±„ì†Œ");
+
 		return pName;		
 	}
 	

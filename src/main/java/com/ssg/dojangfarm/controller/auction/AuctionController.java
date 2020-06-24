@@ -1,5 +1,6 @@
 package com.ssg.dojangfarm.controller.auction;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -16,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Auction;
@@ -25,12 +31,23 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-public class AuctionController {
+public class AuctionController implements ApplicationContextAware{
 	private static final String LISTAUCTION = "auction/AuctionListView";
 	private static final String VIEWAUCTION = "auction/AuctionView";
 	private static final String LISTMYAUCTION = "auction/MyAuctionListView";
 	private static final String AUCTIONFORM = "auction/RegisterAuctionFormView";
+	private static final String ADDIMAGE = "auction/AddImage";
 	private static final String CONFIRMAUCTION = "auction/RegisterAuctionConfirmView";
+	
+	private WebApplicationContext context;	
+	private String uploadDir;
+
+	@Override
+	public void setApplicationContext(ApplicationContext appContext)
+		throws BeansException {
+		this.context = (WebApplicationContext) appContext;
+		this.uploadDir = context.getServletContext().getRealPath("/images/auction/");
+	}
 	
 	private FarmFacade farm;
 	
@@ -209,31 +226,44 @@ public class AuctionController {
 	}
 
 	//register auction ... auction form
-	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.GET)
+	@RequestMapping("/auction/registerAuctionForm.do")
 	public String auctionForm(
 			@ModelAttribute("auctionCommand") AuctionCommand auctionCommand) throws Exception {
 
 		return AUCTIONFORM;
 	}
+	
+	
+	//confirm auction
+	@RequestMapping("/auction/confirmAuction.do")
+	public String confirm(
+			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
+			BindingResult bindingResult) throws Exception {
+		
+		//validate
+		if (bindingResult.hasErrors()) {
+			return AUCTIONFORM; 
+		}
+		
+		if (auctionCommand.getProduct() == null) {
+			bindingResult.rejectValue("product.pName", "NotNull");
+			return AUCTIONFORM; 
+		}
+		
+		return CONFIRMAUCTION;
+	}
 
 	
 	//register auction ... insert auction
-	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.POST)
+	@RequestMapping("/auction/registerAuction.do")
 	public String register(
-			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			BindingResult result,
+			@ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
 			HttpServletRequest request) throws Exception {
 		
 		System.out.println("register auction!!");
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
-		//validate
-		if (result.hasErrors()) {
-			System.out.println("register auction errror");
-			return AUCTIONFORM;
-		}
 		
 		auctionCommand.getProduct().setpNo(this.farm.getPNoByPName(auctionCommand.getProduct().getpName()));;
 		
@@ -247,10 +277,33 @@ public class AuctionController {
 		auction.setDeadline(auctionCommand.getDeadline());
 		auction.setImPurAva(auctionCommand.getImPurAva());
 		auction.setImPurPrice(auctionCommand.getImPurPrice());
-				
-		this.farm.registerAuction(auction);	
-					
+		
+		MultipartFile image = auctionCommand.getImage();
+		if(image != null) {
+			uploadFile(image, auction);
+		}
+		else {
+			this.farm.registerAuction(auction);	
+		}
+		
 		return "redirect:/auction/viewAuction.do?aNo=" + auction.getaNo();
+	}
+	
+	private void uploadFile(MultipartFile image, Auction auction) {
+		this.farm.registerAuction(auction);	
+		System.out.println(image.getOriginalFilename());
+		int aNo = this.farm.getLastANo();
+		//File file = new File(this.uploadDir + aNo + ".jpg");
+		File file = new File(uploadDir, aNo + ".jpg");
+		try {
+			image.transferTo(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// file name을 데이터베이스에 저장!
+		this.farm.addImage(aNo, "images/auction/" + file.getName());
+		//this.farm.addImage(auction, (lastANo+1), file.getPath());
 	}
 	
 }

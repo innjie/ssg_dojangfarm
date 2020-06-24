@@ -38,4 +38,8 @@ public interface AuctionService{
 	User getUserByAuction(int aNo);
 	
 	int getPNoByPName(String pName);
+	
+	int getLastANo();
+	
+	void addImage(int aNo, String image);
 }

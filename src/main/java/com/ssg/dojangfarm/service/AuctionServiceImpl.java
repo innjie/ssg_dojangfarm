@@ -2,6 +2,8 @@ package com.ssg.dojangfarm.service;
 
 import java.util.List;
 
+import javax.jws.WebMethod;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,5 +104,15 @@ public class AuctionServiceImpl implements AuctionService{
 	@Override
 	public List<ImPur> getMyImPurList(String id) {
 		return auctionDAO.getMyImPurList(id);
+	}
+	
+	
+	public int getLastANo() {
+		return auctionDAO.getLastANo();
+	}
+	
+	public void addImage(int aNo, String image) {
+		auctionDAO.addImage(aNo, image);
+		
 	}
 }

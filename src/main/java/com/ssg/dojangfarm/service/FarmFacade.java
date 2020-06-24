@@ -48,6 +48,10 @@ public interface FarmFacade {
 	public ImPur getMyImPur(int imPurNo);
 	public User getUserByAuction(int aNo);
 	public int getPNoByPName(String pName);
+	public int getLastANo();
+	public void addImage(int aNo, String image);
+	public void addImage(Auction auction, int aNo, String image);
+	
 	
 	//User
 	public void createUser(User user);

@@ -125,4 +125,14 @@ public class AuctionServiceEndpoint {
 	public List<ImPur> getMyImPurList(String id) {
 		return auctionService.getMyImPurList(id);
 	}
+	
+	@WebMethod
+	public int getLastANo() {
+		return auctionService.getLastANo();
+	}
+	@WebMethod
+	public void addImage(int aNo, String image) {
+		auctionService.addImage(aNo, image);
+		
+	}
 }

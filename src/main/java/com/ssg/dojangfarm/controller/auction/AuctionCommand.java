@@ -5,8 +5,10 @@ import java.util.Date;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssg.dojangfarm.domain.Product;
 
@@ -21,7 +23,12 @@ public class AuctionCommand {
 	private Date deadline;
 	private Boolean imPurAva;		//imme Purchase Available
 	private int imPurPrice;		//imme Purchase
+	private MultipartFile image;
 	
+	
+	
+	public AuctionCommand() {
+	}
 	
 	public Product getProduct() {
 		return product;
@@ -65,5 +72,10 @@ public class AuctionCommand {
 	public void setImPurPrice(int imPurPrice) {
 		this.imPurPrice = imPurPrice;
 	}
-	
+	public MultipartFile getImage() {
+		return image;
+	}
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
 }

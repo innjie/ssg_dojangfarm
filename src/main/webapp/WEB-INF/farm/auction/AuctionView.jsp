@@ -22,6 +22,10 @@
 			<td>${auction.product.pName}</td>
 		</tr>
 		<tr>
+			<td>사진</td>
+			<td><img src="../${auction.image}" /></td>
+		</tr>
+		<tr>
 			<td>최소 가격</td>
 			<td>${auction.minPrice}</td>
 		</tr>

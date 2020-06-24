@@ -35,7 +35,10 @@
 		<a href="<c:url value='/auction/viewAuctionList.do' />">경매</a>&nbsp;&nbsp;
 		<a href= "<c:url value='commonNotice/list.do'/>">공동구매 공지</a> &nbsp;&nbsp;
 	</c:if>
-	
+	<br><br>
+	<form method="post" action="<c:url value='/kakao/kakaoPay.do' />">
+    	<input type="image" src="images/payment_icon_yellow_medium.png" />
+	</form>
 	
 </body>
 </html>

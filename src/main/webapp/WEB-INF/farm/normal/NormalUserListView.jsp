@@ -34,6 +34,6 @@
 	</tr>
 </c:forEach>
 </table>
-<a href="/index" >[메인으로]</a>
+<a href="<c:url value='/user/myPage.do' />" >[이전 페이지로]</a>
 </body>
 </html>

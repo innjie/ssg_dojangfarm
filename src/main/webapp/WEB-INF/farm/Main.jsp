@@ -33,7 +33,7 @@
 		<a href="<c:url value='/normal/list.do'/>">일반판매</a>&nbsp;&nbsp;	
 		<a href="<c:url value='/common/list.do'/> "> 공동구매</a>&nbsp;&nbsp;	
 		<a href="<c:url value='/auction/viewAuctionList.do' />">경매</a>&nbsp;&nbsp;
-		<a href= "<c:url value='commonNotice/list.do'/>">공동구매 공지</a> &nbsp;&nbsp;
+		<a href= "<c:url value='/commonNotice/list.do'/>">공동구매 공지</a> &nbsp;&nbsp;
 	</c:if>
 	<br><br>
 	<form method="post" action="<c:url value='/kakao/kakaoPay.do' />">

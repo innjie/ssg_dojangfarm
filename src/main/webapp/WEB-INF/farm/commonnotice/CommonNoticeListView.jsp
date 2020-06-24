@@ -35,5 +35,6 @@
 
 <br><br>
 <a href="<c:url value='/commonNotice/insertForm.do'/>"> 등록</a> <br>
+<a href="<c:url value = '/index.do'/>">[메인으로]</a>
 </body>
 </html>

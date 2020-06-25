@@ -3,6 +3,7 @@ package com.ssg.dojangfarm.controller.order;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Order;
 import com.ssg.dojangfarm.domain.Refund;
+import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.OrderService;
 import com.ssg.dojangfarm.service.RefundService;
 
@@ -23,6 +25,10 @@ import com.ssg.dojangfarm.service.RefundService;
 public class OrderController {
 	private OrderService orderService;
 	private RefundService refundService;
+	
+	private static final String orderView = "order/OrderView";
+	private static final String orderListView = "order/orderListView";
+	private static final String orderListUserView = "order/OrderUserView";
   
 	@Autowired
 	public void setOrderService(OrderService orderService) {
@@ -46,63 +52,54 @@ public class OrderController {
 			return new ModelAndView("Success", "message", "cancel success");
 		}
 	}
-	//insertOrder
-	@RequestMapping("/order/insert.do")
-	public ModelAndView insertOrder(
-			@RequestParam HttpServletRequest request,
-			@ModelAttribute("Order") Order order,
-			BindingResult result) {
-		//insert order action
-		int userNo = (int)request.getAttribute("userNo");
-		int res = orderService.insertOrder(userNo, order);
-		
-		if(res == 0) {//failed
-			return new ModelAndView("Error", "message", "join Failed");
-		} else { //success
-			return new ModelAndView("Success", "message", "join success");
-		}
-	}
+
 	//view Order
 	@RequestMapping("/order/view.do")
-	public String orderView(@PathVariable int orderNo, Model model) {
-		Order order = orderService.getOrder(orderNo);
+	public String orderView(@RequestParam("orderNo") int orderNo, Model model,
+			HttpServletRequest request) throws Exception {
+		HttpSession httpSession = request.getSession();
+		User loginUser = (User) httpSession.getAttribute("user");
 		
-		if(order == null) {
-			return "/order/orderNotFound";
-		}
+		Order order = orderService.getOrder(orderNo);
 		model.addAttribute("order", order);
-		return "order/OrderView";
+		model.addAttribute("loginUser", loginUser);
+		
+		return orderView;
+		
 	}
 	//ViewOrderList
 	@RequestMapping("/order/list.do")
-	public String orderList(@RequestParam HttpServletRequest request, Model model) {
+	public String orderListByUserNo(HttpServletRequest request, Model model) {
 		//get list
-		int userNo =(int) request.getAttribute("userNo");
-		List<Order> orderList = orderService.getOrderList(userNo);
+		HttpSession httpSession = request.getSession();
+		User user = (User) httpSession.getAttribute("user");
+		
+		List<Order> orderList = orderService.getOrderList(user.getUserNo());
 		model.addAttribute("orderList", orderList);
-		return "order/orderListView";
+		return orderListView;
 	}
 	//viewOrderUserList
-	//command ??
 	@RequestMapping("/order/userView.do")
-	public String orderList(@PathVariable("orderNo") int orderNo, Model model) {
+	public String orderListBysaleNo(@RequestParam("saleNo") int saleNo, Model model) {
 		//get list
-		List<Order> orderUserList = orderService.getOrderUserList(orderNo);
+		List<Order> orderUserList = orderService.getOrderUserList(saleNo);
 		model.addAttribute("orderUserList", orderUserList);
-		return "order/OrderUserView";
+		return orderListUserView;
 	}
 	//view refund list
 	@RequestMapping("/refund/list.do")
-	public String getRefundList(@RequestParam HttpServletRequest request, Model model) {
+	public String getRefundList(HttpServletRequest request, Model model) {
 		//get list
-		int userNo = (int)request.getSession().getAttribute("userNo");
-		List<Refund> refundList = refundService.getRefundList(userNo);
+		HttpSession httpSession = request.getSession();
+		User user = (User) httpSession.getAttribute("user");
+		
+		List<Refund> refundList = refundService.getRefundList(user.getUserNo());
 		model.addAttribute("refundList", refundList);
 		return "refund/RefundListView";
 	}
 	//view refund
 	@RequestMapping("/refund/view.do")
-	public String getRefund(@PathVariable int refundNo, Model model) {
+	public String getRefund(@RequestParam("refundNo") int refundNo, Model model) {
 		Refund refund = refundService.getRefund(refundNo);
 		if(refund == null) {
 			return "refund/RefundNotFound";

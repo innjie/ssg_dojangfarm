@@ -6,15 +6,18 @@
 	<cache />
 	<select id="getOrder" resultType="Order">
 		SELECT
-		(orderNo, dNo, payNo, quantity, saleNo, userNo)
+		orderNo, dNo, payNo,
+		quantity, saleNo, userNo
 		FROM OrderTable
 		WHERE orderNo = #{orderNo}
 	</select>
 	<select id="getOrderList" resultType="Order">
 		SELECT
-		(orderNo, quantity, saleNo, userNo)
+		orderNo, quantity,
+		saleNo, userNo
 		FROM OrderTable
-		WHERE OrderTable.userNo = User.userNo AND OrderTable.saleNo = #{saleNo}
+		WHERE OrderTable.userNo = User.userNo AND
+		OrderTable.saleNo = #{saleNo}
 	</select>
 
 	<delete id="cancelOrder" parameterType="int">
@@ -29,13 +32,20 @@
 		</selectKey>
 		INSERT INTO OrderTable
 		(orderNo, dNo, payNo, quantity, saleNo, userNo)
-		VALUES (#{orderNo}, #{dNo}, #{payNo}, #{quantity}, #{saleNo}, #{userNo})
+		VALUES (#{orderNo}, #{dNo}, #{payNo}, #{quantity}, #{saleNo},
+		#{userNo})
 	</insert>
 
 	<select id="getOrderUserList" resultType="Order">
-		SELECT (orderNo, quantity, saleNo, userNo)
-		FROM OrderTable
-		WHERE OrderTable.userNo = #{userNO}
+		SELECT orderNo,
+		quantity, saleNo, userNo
+		FROM OrderTable, UserTable
+		WHERE
+		OrderTable.userNo = #{userNo} AND OrderTable.userNo = UserTable.userNo
 	</select>
-
+	
+	<select id = "getRefundList" resultType = "refund">
+	SELECT refundNo, name, orderNo
+	FROM RefundTable
+	</select>
 </mapper>

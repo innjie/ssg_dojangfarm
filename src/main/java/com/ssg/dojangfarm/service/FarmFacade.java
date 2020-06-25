@@ -130,6 +130,8 @@ public interface FarmFacade {
 	public String getSaleState(int saleNo);
 	public List<Product> getProductList();
 	public List<Category> getCategoryList();
+	public int getLastSaleNo();
+	public void addNormalImage(int saleNo, String string);
 	
 	//Payment
 	public Payment getPayment(int payNo);
@@ -142,6 +144,8 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	
+	
 	
 	
 

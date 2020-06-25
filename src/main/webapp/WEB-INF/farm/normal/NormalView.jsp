@@ -18,7 +18,7 @@
 	</tr>
 
 	<tr >
-	<td rowspan="3" colspan = "1">사진</td>
+	<td rowspan="3" colspan = "1"><img src = "../${normal.image }"/></td>
 	<td>판매상태</td>
 	<td>${normal.saleState }</td>
 	</tr>

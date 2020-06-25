@@ -15,12 +15,16 @@
 	<c:set var="targetUrI">
 		<c:url value="/normal/insertNormal.do" />
 	</c:set>
-	<form:form action="${targetUrI}" commandName="normalCommand" method = "POST">
+	<form:form action="${targetUrI}" commandName="normalCommand" method = "POST"
+	enctype = "multipart/form-data">
 		<form:label path="title">제목</form:label>
 		<form:input path="title" />
 		<form:errors path="title" />
 		<br>
-
+		
+		사진 : <input type = "file" name = "image"/>
+		<br> <br>
+		
 		<form:label path="price">가격</form:label>
 		<form:input path="price" />
 		<form:errors path="price" />

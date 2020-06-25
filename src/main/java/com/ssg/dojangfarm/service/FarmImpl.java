@@ -381,7 +381,16 @@ public class FarmImpl implements FarmFacade{
 	public List<Common> searchCommon(String title) {
 		return commonDAO.searchCommon(title);
 	}
-
+	@Override
+	public void addCommonImage(int saleNo, String string) {
+		commonDAO.addCommonImage(saleNo, string);
+		
+	}
+	@Override
+	public int getLastCommonSaleNo() {
+		return commonDAO.getLastCommonSaleNo();
+	}
+	
 	@Override
 	public int insertCommonjoin(CommonJoin commonJoin) {
 		return commonDAO.insertCommonjoin(commonJoin);
@@ -565,6 +574,7 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
+	
 	
 	
 

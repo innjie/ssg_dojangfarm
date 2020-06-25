@@ -15,12 +15,16 @@
 	<c:set var="targetUrI">
 		<c:url value="/common/insertCommon.do" />
 	</c:set>
-	<form:form action="${targetUrI}"  commandName="commonCommand">
+	<form:form action="${targetUrI}"  commandName="commonCommand"
+	enctype = "multipart/form-data">
 <form:label path="title">제목</form:label>
 		<form:input path="title" />
 		<form:errors path="title" />
 		<br>
-
+		
+		사진 : <input type = "file" name = "image"/>
+		<br> <br>
+		
 		<form:label path="price">가격</form:label>
 		<form:input path="price" />
 		<form:errors path="price" />

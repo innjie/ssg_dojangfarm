@@ -7,6 +7,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ssg.dojangfarm.domain.Product;
 
 public class CommonCommand  {
@@ -18,7 +20,7 @@ public class CommonCommand  {
 	private Date regidDate;
 	private String saleType;
 	private String saleState;
-	
+	private MultipartFile image;
 	@Min(5)
 	private int min;
 	@Future
@@ -74,6 +76,12 @@ public class CommonCommand  {
 	}
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
+	}
+	public MultipartFile getImage() {
+		return image;
+	}
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 	
 }

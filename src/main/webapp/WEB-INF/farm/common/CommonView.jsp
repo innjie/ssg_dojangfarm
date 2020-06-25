@@ -18,7 +18,7 @@
 	</tr>
 
 	<tr >
-	<td rowspan="4">사진</td>
+	<td rowspan="4"><img src = "../${common.image }"/></td>
 	</tr>
 	
 	<tr>

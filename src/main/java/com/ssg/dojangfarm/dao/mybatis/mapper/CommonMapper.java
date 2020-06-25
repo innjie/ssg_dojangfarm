@@ -21,4 +21,6 @@ public interface CommonMapper {
 	public List<CommonJoin> getCommonJoinListByUserNo(int userNo);
 	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo);
 	public CommonJoin ExistCommonJoin(int userNo, int saleNo);
+	public void addCommonImage(int saleNo, String string);
+	public int getLastCommonSaleNo();
 }

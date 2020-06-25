@@ -83,7 +83,7 @@ public class NormalController implements ServletContextAware {
 		if(user == null) {
 			return new ModelAndView(errorPage, "message", "Please LOGIN first");
 		}
-		/**
+		
 		if(result.hasErrors()) {
 			System.out.println(result.getFieldError());
 			System.out.println(result.getErrorCount());
@@ -91,7 +91,7 @@ public class NormalController implements ServletContextAware {
 			model.addAttribute("product", pList);
 			return new ModelAndView(insertNormaForm);
 		}
-		*/
+		
 		//insert normal
 		Normal normal = new Normal();
 		normal.setUser(user);

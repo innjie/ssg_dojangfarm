@@ -55,4 +55,12 @@ public class MybatisNormalDAO implements NormalDAO{
 	public List<Normal> getNormalListByCateNo(int cateNo) {
 		return normalMapper.getNormalListByCateNo(cateNo);
 	}
+	@Override
+	public int getLastSaleNo() {
+		return normalMapper.getLastSaleNo();
+	}
+	@Override
+	public void addNormalImage(int saleNo, String string) {
+		normalMapper.addNormalImage(saleNo, string);
+	}
 }

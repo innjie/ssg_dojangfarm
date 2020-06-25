@@ -7,6 +7,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssg.dojangfarm.domain.Product;
 
@@ -25,6 +26,7 @@ public class NormalCommand {
 	private String saleState;
 	@Min(1)
 	private int count;
+	private MultipartFile image;
 	
 	public Product getProduct() {
 		return product;
@@ -79,6 +81,12 @@ public class NormalCommand {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public MultipartFile getImage() {
+		return image;
+	}
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 	
 }

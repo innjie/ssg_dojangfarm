@@ -63,4 +63,13 @@ public class MybatisCommonDAO implements CommonDAO{
 	public CommonJoin ExistCommonJoin(int userNo, int saleNo) {
 		return commonMapper.ExistCommonJoin(userNo, saleNo);
 	}
+	@Override
+	public void addCommonImage(int saleNo, String string) {
+		commonMapper.addCommonImage(saleNo, string);
+		
+	}
+	@Override
+	public int getLastCommonSaleNo() {
+		return commonMapper.getLastCommonSaleNo();
+	}
 }

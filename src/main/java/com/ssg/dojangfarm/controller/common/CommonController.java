@@ -1,7 +1,9 @@
 package com.ssg.dojangfarm.controller.common;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -18,16 +20,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonJoin;
+import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Product;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-public class CommonController {
+public class CommonController implements ServletContextAware{
 	private static final String insertCommonForm = "common/CommonInsertFormView";
 	private static final String errorPage = "common/Error";
 	private static final String successPage = "common/Success";
@@ -47,6 +52,14 @@ public class CommonController {
 		this.farm = farm;
 	}
 
+
+	private ServletContext context;	
+	
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.context = context;
+	}
+	
 	@ModelAttribute("commonCommand")
 	public CommonCommand formBacking(HttpServletRequest request) {
 		return new CommonCommand();
@@ -82,7 +95,6 @@ public class CommonController {
 		}
 		System.out.println(user.getUserNo());
 		if(result.hasErrors() ) {
-			System.out.println(result.getErrorCount());
 			List<Product> pList = this.farm.getProductList();
 			model.addAttribute("product", pList);
 			return new ModelAndView(insertCommonForm);
@@ -103,13 +115,15 @@ public class CommonController {
 		common.setDeadline(sqlDate);
 		common.setMin(commonCommand.getMin());
 		
-		int res = this.farm.insertCommon(common);
+		MultipartFile image = commonCommand.getImage();
 		
-		if(res == 0) {
-			return new ModelAndView(errorPage, "message", "insert error");
-		} 
-		return new ModelAndView("redirect:/common/list.do");
+		if(image != null) {
+			uploadFile(image, common);
+		} else {
+			this.farm.insertCommon(common);
+		}
 	
+		return new ModelAndView("redirect:/common/list.do");
 	}
 
 	// search common
@@ -196,7 +210,6 @@ public class CommonController {
 		model.addAttribute("loginUser", loginUser);
 		model.addAttribute("common", common);
 		
-		System.out.println(common.getDeadline());
 		return commonView;
 	}
 	
@@ -211,7 +224,7 @@ public class CommonController {
 		int userNo = user.getUserNo();
 		
 		List<CommonJoin> cjList = this.farm.getCommonJoinListByUserNo(userNo);
-		System.out.println(cjList.get(0).getCommon().getTitle());
+		
 		model.addAttribute("cjList", cjList);
 		return commonJoinUserListView;
 	}
@@ -221,7 +234,7 @@ public class CommonController {
 	public String getCommonJonListBySaleNo(@RequestParam("saleNo") int saleNo, HttpServletRequest request, Model model) {
 		
 		List<CommonJoin> cjList = this.farm.getCommonJoinListBySaleNo(saleNo);
-		System.out.println(cjList.get(0).getUser().getName());
+		
 		model.addAttribute("cjList", cjList);
 		return commonJoinedListView;
 	}
@@ -332,5 +345,19 @@ public class CommonController {
 			return new ModelAndView("Success", "message", "cancel success");
 		}
 	}
-
+	//upload file
+		private void uploadFile(MultipartFile image, Common common) {
+			this.farm.insertCommon(common);
+			
+			int saleNo = this.farm.getLastCommonSaleNo();
+			String path = context.getRealPath("/images/common");
+			File file = new File(path, saleNo + ".jpg");
+			
+			try {
+				image.transferTo(file);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			this.farm.addCommonImage(saleNo, "images/common/" + file.getName());
+		}
 }

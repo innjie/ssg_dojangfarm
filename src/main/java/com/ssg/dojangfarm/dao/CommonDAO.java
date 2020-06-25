@@ -23,5 +23,7 @@ public interface CommonDAO {
 	List<CommonJoin> getCommonJoinListByUserNo(int userNo);
 	List<CommonJoin> getCommonJoinListBySaleNo(int saleNo);
 	CommonJoin ExistCommonJoin(int userNo, int saleNo);
+	void addCommonImage(int saleNo, String string);
+	int getLastCommonSaleNo();
 }
 

@@ -96,6 +96,8 @@ public interface FarmFacade {
 	public List<Common> getAllCommonList();
 	public List<Common> getCommonListByUserNo(int userNo);
 	public List<Common> searchCommon(String title);
+	public void addCommonImage(int saleNo, String string);
+	public int getLastCommonSaleNo();
 	
 	public int insertCommonjoin(CommonJoin commonJoin);  
 	public int cancelCommonjoin( int CJNo);
@@ -144,6 +146,8 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	
+	
 	
 	
 	

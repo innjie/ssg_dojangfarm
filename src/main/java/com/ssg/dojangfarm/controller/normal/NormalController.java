@@ -1,7 +1,9 @@
 package com.ssg.dojangfarm.controller.normal;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Category;
@@ -27,7 +31,7 @@ import com.ssg.dojangfarm.service.FarmFacade;
 
 //Normal Controller
 @Controller
-public class NormalController {
+public class NormalController implements ServletContextAware {
 	private static final String insertNormaForm = "normal/NormalInsertFormView";
 	private static final String normalListView = "normal/NormalListView";
 	private static final String errorPage = "/normal/Error";
@@ -35,6 +39,13 @@ public class NormalController {
 	private static final String normalUserListView = "normal/NormalUserListView";
 	private static final String successPage = "/normal/Success";
 	private static final String updateNormalForm = "normal/NormalUpdateFormView";
+	
+	private ServletContext context;	
+	
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.context = context;
+	}
 	
 	@Autowired
 	private FarmFacade farm;
@@ -72,7 +83,10 @@ public class NormalController {
 		if(user == null) {
 			return new ModelAndView(errorPage, "message", "Please LOGIN first");
 		}
+		
 		if(result.hasErrors()) {
+			System.out.println(result.getFieldError());
+			System.out.println(result.getErrorCount());
 			List<Product> pList = this.farm.getProductList();
 			model.addAttribute("product", pList);
 			return new ModelAndView(insertNormaForm);
@@ -94,11 +108,19 @@ public class NormalController {
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		normal.setRegidDate(sqlDate);
 		
-		int res = this.farm.insertSale(normal);
-
-		if(res == 0) { //false
-			return new ModelAndView(errorPage, "message", "insert Error");
+		MultipartFile image = normalCommand.getImage();
+		
+		if(image != null) {
+			System.out.println("image found");
+			uploadFile(image, normal);
+		} else {
+			System.out.println("image not found");
+			this.farm.insertSale(normal);
 		}
+//
+//		if(res == 0) {
+//			return new ModelAndView(errorPage, "message", "insert Error");
+//		}
 		//insert -> list (or main)
 		return new ModelAndView( "redirect:/normal/list.do");
 	}
@@ -215,7 +237,7 @@ public class NormalController {
 		User loginUser = (User) httpSession.getAttribute("user");
 		
 		Normal normal = this.farm.getNormalSale(saleNo);
-
+		System.out.println(normal.getImage());
 		model.addAttribute("normal", normal);
 		model.addAttribute("loginUser", loginUser);
 		return normalView;
@@ -230,5 +252,27 @@ public class NormalController {
 		List<Normal> normalList = farm.getNormalListByUserNo(userNo);
 		model.addAttribute("normalList", normalList);
 		return normalUserListView;
+	}
+	
+	//related image file
+	
+	//upload file
+	private void uploadFile(MultipartFile image, Normal normal) {
+		this.farm.insertSale(normal);
+		System.out.println(image.getOriginalFilename());
+		
+		int saleNo = this.farm.getLastSaleNo();
+		String path = context.getRealPath("/images/normal");
+		File file = new File(path, saleNo + ".jpg");
+		
+		try {
+			image.transferTo(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("path: " + path);
+		System.out.println("path: " + file.getPath());
+		this.farm.addNormalImage(saleNo, "images/normal/" + file.getName());
 	}
 }

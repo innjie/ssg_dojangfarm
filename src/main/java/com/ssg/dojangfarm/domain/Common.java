@@ -21,6 +21,7 @@ public class Common  implements Serializable{
 	private int min;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deadline;
+	private String image;
 	
 	public int getSaleNo() {
 		return saleNo;
@@ -101,6 +102,12 @@ public class Common  implements Serializable{
 	}
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 }

@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>주문 리스트 보기</title>
 </head>
 <body>
@@ -21,12 +21,14 @@
 <c:forEach var="order" items="${orderList}" >
 	<tr>
 	<td><a href="<c:url value='/order/view.do'> 
-						<c:param name='order' value='${order.orderNo}'/>
+						<c:param name='orderNo' value='${order.orderNo}'/>
 						</c:url>">${order.orderNo}</a>
 	</td>
 	<td>${order.quantity }</td>
 	<td>${order.saleNo} </td>
 	<td>${order.user.name}</td>
+	<td> <a href = "<c:url value =''><c:param name = 'deliveryNo'
+	value = '${order.delivery.deliveryNo}'/></c:url>"> ${order.deliveryNo.deliveryNo }</a></td> 
 	</tr>
 </c:forEach>
 </table>

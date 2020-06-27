@@ -12,6 +12,7 @@
 <title>나의 정보</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
 	<table border='1'>
 		<tr>
 			<td>id</td>
@@ -32,7 +33,8 @@
 	</table>
 	<br><br>
 	<a href='<c:url value="/user/modifyUser.do" />'>수정</a>&nbsp;&nbsp;
-	<a href='<c:url value="/user/deleteUser.do" />'>탈퇴</a>
+	<a href='<c:url value="/user/checkPW.do" />'>탈퇴</a>&nbsp;&nbsp;
+	<a href='<c:url value="/user/myPage.do" />'>이전</a>&nbsp;&nbsp;
 	
 </body>
 </html>

@@ -18,4 +18,7 @@ public interface MessageDAO {
 	int getSUserNo(int msgNo);
 	Message checkMsgWithCMsg(int msgNo);
 	Message checkSMsg(int msgNo);
+	
+	List<Message> findReceiveMsg(String title);
+	List<Message> findSendMsg(String title);
 }

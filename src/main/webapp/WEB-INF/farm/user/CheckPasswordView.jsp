@@ -9,18 +9,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인</title>
+<title>비밀번호확인</title>
 </head>
 <body>
-	<h1><a href="<c:url value='/' />">도장팜</a> 로그인</h1>
-	<c:set var="targetUrl"><c:url value="/user/login.do" /></c:set>
+	<c:set var="targetUrl"><c:url value="/user/checkPW.do" /></c:set>
 
 	<form:form modelAttribute="login" action="${targetUrl}">
 		<br>
 			
 		<form:label path="id">아이디 </form:label>
-		<form:input path="id" />
-		<form:errors path="id" />
+		<c:out value="${login.id}" />
 		<br><br>
 		
 		<form:label path="password">암호 </form:label>
@@ -28,9 +26,8 @@
 		<form:errors path="password" />
 		<br><br>
 		
-		<input type="hidden" name="forwardAction" value="${login.forwardAction}"/>
-		
-		<input type="submit" value="로그인" />
+		<input type="submit" value="삭제" />&nbsp;&nbsp;
+		<a href="<c:url value='/user/getUser.do' />">이전</a>
 		
 	</form:form>
 </body>

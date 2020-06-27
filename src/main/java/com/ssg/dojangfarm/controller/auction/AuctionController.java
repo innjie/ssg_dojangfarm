@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +34,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
+@SessionAttributes("auctionList")
 public class AuctionController implements ServletContextAware{
 	private static final String LISTAUCTION = "auction/AuctionListView";
 	private static final String VIEWAUCTION = "auction/AuctionView";
@@ -97,12 +99,12 @@ public class AuctionController implements ServletContextAware{
 
 		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getAuctionList());
 
-		auctionList.setPageSize(4);
-		model.put("auctionList", auctionList.getSource() );
+		auctionList.setPageSize(10);
+		model.put("auctionList", auctionList);
 		return LISTAUCTION;
 	}
 
-/*	//view auctionList by page
+	//view auctionList by page
 	@RequestMapping("/auction/viewAuctionList2.do")
 	public String listAuction2(
 			@RequestParam("page") String page,
@@ -120,7 +122,7 @@ public class AuctionController implements ServletContextAware{
 		
 		return LISTAUCTION;
 	}
-*/	
+	
 	
 	//view  myAuctionList
 	@RequestMapping("/auction/viewMyAuctionList.do")
@@ -133,12 +135,13 @@ public class AuctionController implements ServletContextAware{
 
 		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(user.getUserNo()));
 
-		auctionList.setPageSize(4);
-		model.put("auctionList", auctionList.getSource() );
+		auctionList.setPageSize(10);
+		model.put("auctionList", auctionList);
+		
 		return LISTMYAUCTION;
 	}	
 
-/*	//view myAuctionList by page
+	//view myAuctionList by page
 	@RequestMapping("/auction/viewMyAuctionList2.do")
 	public String listMyAuction2(
 			@RequestParam("page") String page,
@@ -154,9 +157,10 @@ public class AuctionController implements ServletContextAware{
 			auctionList.previousPage(); 
 		}
 		
+		
 		return LISTMYAUCTION;
 	}	
-*/
+
 	//find auctionList
 	@RequestMapping("/auction/findAuctionList.do")
 	public String findAuction(
@@ -173,14 +177,16 @@ public class AuctionController implements ServletContextAware{
 			auctionList = new PagedListHolder<Auction>(this.farm.findAuctionByProduct(text));
 		}
 
-		auctionList.setPageSize(4);
-		model.put("auctionList", auctionList.getSource());
+		auctionList.setPageSize(10);
+		model.put("auctionList", auctionList);
+		model.put("find", "find");
+		
 		return LISTAUCTION;
 	}
 
-/*	//find auctionList by page
+	//find auctionList by page
 	@RequestMapping("/auction/findAuctionList2.do")
-	public String findAuction2(
+	public ModelAndView findAuction2(
 			@RequestParam("page") String page,
 			@ModelAttribute("auctionList") PagedListHolder<Auction> auctionList,
 			BindingResult result) throws Exception {
@@ -193,13 +199,14 @@ public class AuctionController implements ServletContextAware{
 		else if ("previous".equals(page)) { 
 			auctionList.previousPage(); 
 		}
-		return LISTAUCTION;
+		return new ModelAndView(LISTAUCTION, "find", "find");
 	}
-*/
+
 	//view auction
 	@RequestMapping("/auction/viewAuction.do")
 	public String viewAuction(
 			@RequestParam("aNo") int aNo,
+			@RequestParam(value="my", required = false) String my,
 			ModelMap model,
 			HttpServletRequest request) throws Exception {
 		
@@ -209,6 +216,7 @@ public class AuctionController implements ServletContextAware{
 		
 		Auction auction = this.farm.getAuction(aNo);
 		model.put("auction", auction);
+		model.put("my", my);
 		
 		//check this user is auction's user
 		if(user != null) {

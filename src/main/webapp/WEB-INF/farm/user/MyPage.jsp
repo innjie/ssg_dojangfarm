@@ -12,7 +12,7 @@
 <title>마이페이지</title>
 </head>
 <body>
-<h2><a href="<c:url value='/' />" >도장팜</a>에 오시면 혜택이 팜팜</h2><br>
+	<%@ include file="../IncludeTop.jsp" %>
 	<a href="<c:url value='/user/myPage.do'><c:param name="type" value="user" /></c:url>">회원 정보</a>&nbsp;&nbsp;&nbsp;&nbsp;		
 	<c:if test="${param.type == 'user'}">
 		<a href="<c:url value='/user/getUser.do' />">나의 정보</a>&nbsp;&nbsp;

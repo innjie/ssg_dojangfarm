@@ -21,6 +21,8 @@ public interface FarmFacade {
 	public Message checkSMsg(int msgNo);
 	public int getRUserNo(int msgNo);
 	public int getSUserNo(int msgNo);
+	public List<Message> findReceiveMsg(String title);
+	public List<Message> findSendMsg(String title);
 	
 	//QnA
 	public List<QnA> getQnAList(int saleNo);
@@ -147,6 +149,7 @@ public interface FarmFacade {
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
 	
+
 	
 	
 	

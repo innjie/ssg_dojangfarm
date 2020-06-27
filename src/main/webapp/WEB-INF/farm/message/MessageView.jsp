@@ -12,6 +12,8 @@
 <title>메세지 보기</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border='1'>
 		<c:if test="${message.sUser.id != user.id}">
 			<tr>
@@ -71,6 +73,12 @@
 				<c:param name='msgNo' value='${message.msgNo}' />
 				<c:param name='type' value='${param.type}' />
 			</c:url>">
-	삭제</a>
+	삭제</a>&nbsp;&nbsp;
+	<c:if test='${type == "send"}'>
+		<a href="<c:url value='/message/viewSendMessageList.do' />">이전</a>
+	</c:if>
+	<c:if test='${type == "receive"}'>
+		<a href="<c:url value='/message/viewReceiveMessageList.do' />">이전</a>
+	</c:if>
 </body>
 </html>

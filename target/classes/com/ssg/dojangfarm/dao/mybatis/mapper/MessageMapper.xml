@@ -25,8 +25,33 @@
     	ORDER BY msgNo
   	</select>
   	
+  	<select id="findSendMsg" parameterType="String" resultType="Message">
+    	SELECT 
+    		msgNo, title, sDate, read, deleteState, 
+    		sUser.id AS "sUser.id"
+    	FROM Message, UserTable sUser
+    	WHERE 
+    		sUserNo = sUser.userNo AND 
+    		title LIKE #{paramValue} AND
+    		deleteState != '1'
+    	ORDER BY msgNo
+    		
+  	</select>
+  	
+  	<select id="findReceiveMsg" parameterType="String" resultType="Message">
+    	SELECT 
+    		msgNo, title, sDate, read, deleteState, 
+    		rUser.id AS "rUser.id"
+    	FROM Message, UserTable rUser
+    	WHERE 
+    		rUserNo = rUser.userNo AND 
+    		title LIKE #{paramValue} AND
+    		deleteState != '1'
+    	ORDER BY msgNo
+    		
+  	</select>
   	 
-  		<select id="findMsg" parameterType="String" resultType="Message">
+  	<select id="findMsg" parameterType="String" resultType="Message">
     	SELECT 
     		msgNo, title, sDate, read, deleteState, 
     		rUser.id AS "rUser.id", sUser.id AS "sUser.id"

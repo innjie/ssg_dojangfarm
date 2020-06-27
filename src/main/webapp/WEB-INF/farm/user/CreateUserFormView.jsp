@@ -12,7 +12,7 @@
 <title>회원 가입</title>
 </head>
 <body>
-	<h1>도장팜 회원가입</h1>
+	<h1><a href="<c:url value='/' />">도장팜</a> 회원가입</h1>
 	<form:form modelAttribute="userCommand" >
 		<form:label path="id">ID</form:label>
 		<form:input path="id" />

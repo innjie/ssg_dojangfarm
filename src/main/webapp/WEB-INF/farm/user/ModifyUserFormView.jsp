@@ -36,7 +36,8 @@
 		<form:errors path="phone" />
 		<br><br>
 		
-		<input type="submit" value="수정" />
+		<input type="submit" value="수정" />&nbsp;&nbsp;
+		<a href="<c:url value='/user/getUser.do' />">이전</a>
 		
 	</form:form>
 </body>

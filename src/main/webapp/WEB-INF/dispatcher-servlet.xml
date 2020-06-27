@@ -49,6 +49,7 @@
 			<mvc:mapping path="/user/getUser.do" />
 			<mvc:mapping path="/user/modifyUser.do" />
 			<mvc:mapping path="/user/deleteUser.do" />
+			<mvc:mapping path="/user/checkPW.do" />
 			<bean class="com.ssg.dojangfarm.controller.user.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>     

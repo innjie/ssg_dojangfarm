@@ -32,9 +32,13 @@
 		<form:label path="detail">상세 </form:label>
 		<form:input path="detail" />
 		<form:errors path="detail" />
-		<br>
+		<br><br>
 		
-		<input type="submit" value="수정" />
+		<input type="submit" value="수정" />&nbsp;&nbsp;
+		<a href="<c:url value='/address/getAddressList.do'>
+					<c:param name="adrNo" value="${addrNo}" />
+				</c:url>">
+		이전</a>
 		
 	</form:form>
 </body>

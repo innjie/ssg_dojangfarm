@@ -12,6 +12,8 @@
 <title>나의 경매</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border="1">
 		<tr>
 			<td>순번</td>
@@ -22,12 +24,13 @@
 			<td>기간</td>
 			<td>종료</td>
 		</tr>
-		<c:forEach var="auc" items="${auctionList}" varStatus="status">
+		<c:forEach var="auc" items="${auctionList.pageList}" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
 				<td>
 					<a href="<c:url value='/auction/viewAuction.do'>
 								<c:param name='aNo' value='${auc.aNo}' />
+								<c:param name='my' value='my' />
 							</c:url>">
 					${auc.title}</a>
 				</td>
@@ -39,5 +42,18 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<br><br>
+	<c:if test="${!auctionList.firstPage}">
+    	<a href='<c:url value="/auction/viewMyAuctionList2.do">
+        			<c:param name="page" value="previous"/>
+        		</c:url>'>
+        Prev</a>
+    </c:if> 
+    <c:if test="${!auctionList.lastPage}">
+    	<a href='<c:url value="/auction/viewMyAuctionList2.do">
+        			<c:param name="page" value="next"/>
+        		</c:url>'>
+        Next</a>
+    </c:if>
 </body>
 </html>

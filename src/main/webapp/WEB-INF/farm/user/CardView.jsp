@@ -12,6 +12,8 @@
 <title>나의 카드</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border='1'>
 		<tr>
 			<td>은행</td>
@@ -38,6 +40,7 @@
 	<a href="<c:url value='/card/deleteCard.do'>
 				<c:param name='cardNo' value='${card.cardNo}' />
 			</c:url>">
-	삭제</a>
+	삭제</a>&nbsp;&nbsp;
+	<a href="<c:url value='/card/viewCardList.do' />">이전</a>
 </body>
 </html>

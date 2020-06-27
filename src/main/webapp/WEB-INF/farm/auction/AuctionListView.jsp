@@ -100,7 +100,7 @@ function getAuction(aNo) {
 			<td>즉시구매 가격</td>
 			<td>기간</td>
 		</tr>
-		<c:forEach var="auc" items="${auctionList}" varStatus="status">
+		<c:forEach var="auc" items="${auctionList.pageList}" varStatus="status">
 			<c:if test="${auc.finish != true}">
 				<tr>
 					<td onClick="getAuction(${auc.aNo});">${status.count}</td>
@@ -123,6 +123,37 @@ function getAuction(aNo) {
 		</c:forEach>
 	</table>
 	<br><br>
+</td></tr>
+<tr><td>
+	<c:if test="${find == null}">
+		<c:if test="${!auctionList.firstPage}">
+    		<a href='<c:url value="/auction/viewAuctionList2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!auctionList.lastPage}">
+    		<a href='<c:url value="/auction/viewAuctionList2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
+	</c:if>
+	<c:if test="${find != null}">
+		<c:if test="${!auctionList.firstPage}">
+    		<a href='<c:url value="/auction/findAuctionList2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!auctionList.lastPage}">
+    		<a href='<c:url value="/auction/findAuctionList2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
+	</c:if>
+<br><br>
 </td></tr>
 <tr><td>
 	<form id="form" action="<c:url value="/auction/findAuctionList.do"/>">	<%-- 컨트롤러에서 type에 따라 다른 dao 사용 --%>

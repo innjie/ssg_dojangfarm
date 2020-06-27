@@ -27,7 +27,7 @@
 			<td>날짜</td>
 			<td>읽음</td>
 		</tr>
-		<c:forEach var="m" items="${receiveMessageList}" varStatus="status">
+		<c:forEach var="m" items="${receiveMessageList.pageList}" varStatus="status">
 			<c:if test="${m.sUser.id != user.id}">
 				<tr>
 					<td>${status.count}</td>	<%-- delete한거도 count될듯... --%>
@@ -46,9 +46,21 @@
 		</c:forEach>
 	</table>
 	<br><br>
+	<c:if test="${!receiveMessageList.firstPage}">
+    	<a href='<c:url value="/message/viewReceiveMessageList2.do">
+       				<c:param name="page" value="previous"/>
+       			</c:url>'>
+       	Prev</a>
+    </c:if> 
+    <c:if test="${!receiveMessageList.lastPage}">
+    	<a href='<c:url value="/message/viewReceiveMessageList2.do">
+       				<c:param name="page" value="next"/>
+       			</c:url>'>
+       	Next</a>
+    </c:if>
+	<br><br>
 	<form action="<c:url value="/message/findMessageList.do"/>">
 		제목 <input type="text" name="title">&nbsp;
-		<input type="hidden" name="type" value="receive">
 		<input type="submit" value="찾기">
 	</form>
 </body>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Message;
@@ -21,6 +22,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
+@SessionAttributes({"sendMessageList", "receiveMessageList", "findMessageList"})
 public class MessageController { 
 	private static final String FORMMESSAGE = "message/MessageFormView";
 	private static final String VIEWMESSAGE = "message/MessageView";
@@ -47,12 +49,12 @@ public class MessageController {
 
 		PagedListHolder<Message> sendMessageList= new PagedListHolder<Message>(this.farm.sendMessageList(user.getUserNo()));
 
-		sendMessageList.setPageSize(4);
-		model.put("sendMessageList", sendMessageList.getSource());
+		sendMessageList.setPageSize(10);
+		model.put("sendMessageList", sendMessageList);
 		return LISTSENDMESSAGE;   
 	}
 
-/*	//view SendMessageList by page
+	//view SendMessageList by page
 	@RequestMapping("/message/viewSendMessageList2.do")
 	public String listSendMsg2(
 			@RequestParam("page") String page,
@@ -71,7 +73,7 @@ public class MessageController {
 		
 		return LISTSENDMESSAGE;
 	}
-*/
+
 	
 	//view ReceiveMessageList 
 	@RequestMapping("/message/viewReceiveMessageList.do")
@@ -84,31 +86,31 @@ public class MessageController {
 
 		PagedListHolder<Message> receiveMessageList = new PagedListHolder<Message>(this.farm.receiveMessageList(user.getUserNo()));
 
-		receiveMessageList.setPageSize(4);
-		model.put("receiveMessageList", receiveMessageList.getSource());
+		receiveMessageList.setPageSize(10);
+		model.put("receiveMessageList", receiveMessageList);
 		return LISTRECEIVEMESSAGE;
 	}
 
-/*	//view ReceiveMessageList by page
+	//view ReceiveMessageList by page
 	@RequestMapping("/message/viewReceiveMessageList2.do")
 	public String listReceiveMsg2(
 			@RequestParam("page") String page,
-			@ModelAttribute("receiveMessageList ") PagedListHolder<Message> receiveMessageList ,
+			@ModelAttribute("receiveMessageList") PagedListHolder<Message> receiveMessageList ,
 			BindingResult result) throws Exception {
 		
-		if (receiveMessageList == null) {
+		if(receiveMessageList == null) {
 			throw new IllegalStateException("Cannot find pre-loaded receive message list");
 		}
-		if ("next".equals(page)) { 
+		if("next".equals(page)) { 
 			receiveMessageList.nextPage();
 		}
-		else if ("previous".equals(page)) { 
+		else if("previous".equals(page)) { 
 			receiveMessageList.previousPage();
 		}
 		
 		return LISTRECEIVEMESSAGE;
 	}
-*/
+
 	
 	//view Message detail
 	@RequestMapping("/message/viewMessage.do")
@@ -136,31 +138,28 @@ public class MessageController {
 	@RequestMapping("/message/findMessageList.do")
 	public String findMsg(
 			@RequestParam("title") String title,
-			@RequestParam("type") String type,
 			ModelMap model) throws Exception {
 		
 		PagedListHolder<Message> findMessageList = new PagedListHolder<Message>(this.farm.findMsg(title));
-		findMessageList.setPageSize(4);
+		findMessageList.setPageSize(10);
+		
 		model.put("title", title);
+		model.put("find", "find");
+		model.put("findMessageList", findMessageList);
 
-		if(type.equals("receive")) {
-			model.put("receiveMessageList", findMessageList.getSource());
-			return LISTRECEIVEMESSAGE;
-		}
-		else {
-			model.put("sendMessageList", findMessageList.getSource());
-			return LISTSENDMESSAGE;
-		}
+		return LISTSENDMESSAGE;
 	}
 	
 
 
-/*	//find Message by page
+	//find Message by page
 	@RequestMapping("/message/viewFindMessageList2.do")
 	public String findMsg2(
 			@RequestParam("page") String page,
+			@RequestParam("title") String title,
 			@ModelAttribute("findMessageList") PagedListHolder<Message> findMessageList,
-			BindingResult result) throws Exception {
+			BindingResult result,
+			ModelMap model) throws Exception {
 		if (findMessageList == null) {
 			throw new IllegalStateException("Cannot find pre-loaded message list");
 		}
@@ -171,9 +170,14 @@ public class MessageController {
 			findMessageList.previousPage(); 
 		}
 		
-		return "FindMessageList";
+		model.put("find", "find");
+		model.put("title", title);
+		model.put("findMessageList", findMessageList);
+		
+		return LISTSENDMESSAGE;
+		
 	}
-*/
+
 	
 	//delete message from list (update message's deleteState)
 	@RequestMapping("/message/deleteMsg.do")
@@ -211,13 +215,13 @@ public class MessageController {
 			@RequestParam(value = "saleNo", defaultValue="-1") int saleNo,
 			@RequestParam(value = "msgNo", defaultValue="-1") int msgNo) throws Exception {
 		
-		//Ã¹ ¸Þ¼¼Áö
+		//Ã¹ ï¿½Þ¼ï¿½ï¿½ï¿½
 		if(msgNo == -1) {
-			Normal normal = this.farm.getNormalSale(saleNo);	//saleNo·Î normal°¡Á®¿È
+			Normal normal = this.farm.getNormalSale(saleNo);	//saleNoï¿½ï¿½ normalï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			
 			return new ModelAndView(FORMMESSAGE, "normal", normal);
 		}
-		//¿¬°ü ¸Þ¼¼Áö ÀÖÀ½ (´äÀå)
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½)
 		else {
 			Message cMsg = this.farm.checkMsgWithCMsg(msgNo);	
 			

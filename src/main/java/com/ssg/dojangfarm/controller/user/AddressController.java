@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
@@ -23,6 +24,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
+@SessionAttributes("addressList")
 public class AddressController {
 	private static final String LISTADDRESS= "user/AddressListView";
 	private static final String VIEWADDRESS = "user/AddressView";
@@ -64,12 +66,12 @@ public class AddressController {
 		User user = (User) httpSession.getAttribute("user");
 
 		PagedListHolder<Address> addressList = new PagedListHolder<Address>(this.farm.getAddressList(user.getUserNo()));
-		addressList.setPageSize(4);
+		addressList.setPageSize(10);
 		
-		return new ModelAndView(LISTADDRESS, "addressList", addressList.getSource());
+		return new ModelAndView(LISTADDRESS, "addressList", addressList);
 	}
 	
-/*	//view cardList by page
+	//view cardList by page
 	@RequestMapping("/address/getAddressList2.do")
 	public String listAddress2(
 			@RequestParam("page") String page,
@@ -87,7 +89,7 @@ public class AddressController {
 		
 		return LISTADDRESS;
 	}	
-*/
+
 
 	//view address
 	@RequestMapping("/address/getAddress.do")

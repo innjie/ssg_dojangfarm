@@ -53,5 +53,13 @@ public class MybatisMessageDAO implements MessageDAO{
 	public int getSUserNo(int msgNo) {
 		return messageMapper.getSUserNo(msgNo);
 	}
+	@Override
+	public List<Message> findReceiveMsg(String title) {
+		return messageMapper.findReceiveMsg("%" + title + "%");
+	}
+	@Override
+	public List<Message> findSendMsg(String title) {
+		return messageMapper.findSendMsg("%" + title + "%");
+	}
 
 }

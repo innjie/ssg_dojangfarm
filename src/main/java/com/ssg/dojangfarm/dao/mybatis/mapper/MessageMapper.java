@@ -18,4 +18,7 @@ public interface MessageMapper {
 	int getSUserNo(int msgNo);
 	void changeReadState(int msgNo);
 	Message checkMsgWithCMsg(int msgNo);
+	
+	List<Message> findReceiveMsg(String title);
+	List<Message> findSendMsg(String title);
 }

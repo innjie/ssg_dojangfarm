@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Normal;
@@ -21,6 +22,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
+@SessionAttributes("qnaList")
 public class QnAController {
 	private static final String LISTQNA = "normal/QnAListView";
 	private static final String ANSWERQNA = "normal/AnswerQnAFormView";
@@ -36,19 +38,12 @@ public class QnAController {
 	@RequestMapping("/normal/viewQnAList.do")
 	public String handleRequest(
 			@RequestParam("saleNo") int saleNo,
-			@RequestParam(required = false) String ques,
-			@RequestParam(required = false) String quesNo,
 			ModelMap model) throws Exception {
 		PagedListHolder<QnA> qnaList = new PagedListHolder<QnA>(this.farm.getQnAList(saleNo));
 
-		qnaList.setPageSize(4);
-		model.put("qnaList", qnaList.getSource());
+		qnaList.setPageSize(10);
+		model.put("qnaList", qnaList);
 		model.put("saleNo", saleNo);
-		
-		if(ques != null) {
-			model.put("ques", ques);
-			model.put("quesNo", Integer.parseInt(quesNo));
-		}
 
 		return LISTQNA;   
 	}
@@ -56,9 +51,12 @@ public class QnAController {
 	//view QnAList by page
 	@RequestMapping("/normal/viewQnAList2.do")
 	public String handleRequest2(
-			@RequestParam("page") String page,
+			@RequestParam(value = "page", required = false) String page,
 			@ModelAttribute("qnaList") PagedListHolder<QnA> qnaList,
-			BindingResult result) throws Exception {
+			BindingResult result,
+			@RequestParam(required = false) String ques,
+			@RequestParam(required = false) String quesNo,
+			ModelMap model) throws Exception {
 
 		if (qnaList== null) {
 			throw new IllegalStateException("Cannot find pre-loaded QnA list");
@@ -69,7 +67,12 @@ public class QnAController {
 		else if ("previous".equals(page)) {
 			qnaList.previousPage(); 
 		}
-
+		
+		if(ques != null) {
+			model.put("ques", ques);
+			model.put("quesNo", Integer.parseInt(quesNo));
+		}
+		
 		return LISTQNA;
 	}
 

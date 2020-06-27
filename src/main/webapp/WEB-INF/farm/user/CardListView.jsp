@@ -18,7 +18,7 @@
 			<td>은행</td>
 			<td>카드번호</td>
 		</tr>
-		<c:forEach var="c" items="${cardList}" varStatus="status">
+		<c:forEach var="c" items="${cardList.pageList}" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
 				<td>${c.bank}</td>
@@ -37,6 +37,19 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<br><br>
+	<c:if test="${!cardList.firstPage}">
+    	<a href='<c:url value="/card/viewCardList2.do">
+        			<c:param name="page" value="previous"/>
+        		</c:url>'>
+        Prev</a>
+    </c:if> 
+    <c:if test="${!cardList.lastPage}">
+    	<a href='<c:url value="/card/viewCardList2.do">
+        			<c:param name="page" value="next"/>
+        		</c:url>'>
+        Next</a>
+    </c:if>
 	<br><br>
 	<a href="<c:url value='/card/insertCard.do' />">카드 추가</a>
 </body>

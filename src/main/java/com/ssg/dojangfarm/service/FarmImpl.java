@@ -98,7 +98,14 @@ public class FarmImpl implements FarmFacade{
 	public int getSUserNo(int msgNo) {
 		return messageDAO.getSUserNo(msgNo);
 	}
-	
+	@Override
+	public List<Message> findReceiveMsg(String title) {
+		return messageDAO.findReceiveMsg(title);
+	}
+	@Override
+	public List<Message> findSendMsg(String title) {
+		return messageDAO.findSendMsg(title);
+	}
 	
 	//-------------------------------------------------------------------------
 	//QnA

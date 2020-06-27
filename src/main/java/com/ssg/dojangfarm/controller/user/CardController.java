@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Card;
@@ -24,6 +25,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
+@SessionAttributes("cardList")
 public class CardController {
 	private static final String LISTCARD = "user/CardListView";
 	private static final String VIEWCARD = "user/CardView";
@@ -62,12 +64,12 @@ public class CardController {
 		User user = (User) httpSession.getAttribute("user");
 
 		PagedListHolder<Card> cardList = new PagedListHolder<Card>(this.farm.getCardList(user.getUserNo()));
-		cardList.setPageSize(4);
+		cardList.setPageSize(10);
 
-		return new ModelAndView(LISTCARD, "cardList", cardList.getSource());
+		return new ModelAndView(LISTCARD, "cardList", cardList);
 	}	
 
-/*	//view cardList by page
+	//view cardList by page
 	@RequestMapping("/card/viewCardList2.do")
 	public String listCard2(
 			@RequestParam("page") String page,
@@ -85,7 +87,7 @@ public class CardController {
 		
 		return LISTCARD;
 	}	
-*/
+
 	//view card
 	@RequestMapping("/card/viewCard.do")
 	public ModelAndView viewCard(

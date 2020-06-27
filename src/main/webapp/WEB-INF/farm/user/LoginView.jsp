@@ -12,7 +12,8 @@
 <title>로그인</title>
 </head>
 <body>
-<c:set var="targetUrl"><c:url value="/user/login.do" /></c:set>
+	<h1><a href="<c:url value='/' />">도장팜</a> 로그인</h1>
+	<c:set var="targetUrl"><c:url value="/user/login.do" /></c:set>
 
 	<form:form modelAttribute="login" action="${targetUrl}">
 		<br>

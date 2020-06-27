@@ -33,7 +33,8 @@
 	</table>
 	<br><br>
 	<a href='<c:url value="/user/modifyUser.do" />'>수정</a>&nbsp;&nbsp;
-	<a href='<c:url value="/user/deleteUser.do" />'>탈퇴</a>
+	<a href='<c:url value="/user/deleteUser.do" />'>탈퇴</a>&nbsp;&nbsp;
+	<a href="<c:url value='/user/myPage.do' />">이전</a>
 	
 </body>
 </html>

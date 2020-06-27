@@ -12,6 +12,8 @@
 <title>나의 카드</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border="1">
 		<tr>
 			<td>순번</td>		<%-- not cardNo, not cardPayNo, just No --%>

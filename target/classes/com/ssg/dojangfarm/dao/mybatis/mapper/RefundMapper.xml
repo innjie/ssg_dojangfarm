@@ -5,15 +5,13 @@
 	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.RefundMapper">
 	<cache />
 
-	<insert id="refundSale" parameterType="int">
-		<selectKey keyProperty="refundNo" resultType="int"
-			order="BEFORE">
+	<insert id = "refundSale" parameterType = "Refund">
+		<selectKey keyProperty = "refundNo" resultType = "int" order = "BEFORE">
 			SELECT RefundSeq.nextval AS "refundNo" FROM DUAL
 		</selectKey>
 		INSERT INTO Refund
-		(refundNo, account, bank, name, refundType, orderNo)
-		VALUES
-		(#{refundNo}, #{account}, #{bank}, #{name}, #{refundType}, #{orderNo})
+		(refundNo, account, bank, name, refundType, orderNo, refundDate, userNo)
+		VALUES(#{refundNo}, #{account}, #{bank}, #{name}, #{refundType}, #{order.orderNo}, SYSDATE,#{user.userNo} )
 	</insert>
 
 	<select id="getRefund" resultType="Refund">

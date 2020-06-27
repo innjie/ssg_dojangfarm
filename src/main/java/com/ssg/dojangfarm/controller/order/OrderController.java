@@ -4,15 +4,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,29 +31,52 @@ public class OrderController {
 	private static final String orderView = "order/OrderView";
 	private static final String orderListView = "order/OrderListView";
 	private static final String orderListUserView = "order/OrderUserView";
+	private static final String refundForm = "refund/RefundFormView";
 	@Autowired
 	private FarmFacade farm;
 	public void setFarm(FarmFacade farm) {
 		this.farm = farm;
 	}
-	
+	//refund sale form
+	@RequestMapping(value = "/order/cancel.do", method = RequestMethod.GET)
+	public String cancelOrder(HttpServletRequest request, 
+			@ModelAttribute("refundCommand") RefundCommand refundCommand,
+			ModelMap model, @RequestParam("orderNo") int orderNo) throws Exception {
+		Order order = this.farm.getOrder(orderNo);
+		refundCommand.setOrder(order);
+		model.addAttribute("refundCommand", refundCommand);
+		
+		return refundForm;
+	}
 	//refund sale
 	@Transactional
-	@RequestMapping("/order/cancel.do")
-	public ModelAndView cancelOrder(@PathVariable int orderNo, BindingResult result) {
-		//cancel action
-		Order order = this.farm.getOrder(orderNo);
-		int orderRes = this.farm.cancelOrder(orderNo);
+	@RequestMapping(value = "/order/cancel.do", method = RequestMethod.POST)
+	public ModelAndView cancelOrder(@Valid@ModelAttribute("refundCommand") RefundCommand refundCommand,
+			HttpServletRequest request, BindingResult result, ModelMap model) {
 		
+		HttpSession httpSession = request.getSession();
+		User user = (User)httpSession.getAttribute("user");
+		
+		
+		//insert refund
 		Refund refund = new Refund();
+		
+		Order order = new Order();
+		order.setOrderNo(refundCommand.getOrder().getOrderNo());
+		refund.setAccount(refundCommand.getAccount().toString());
+		refund.setBank(refundCommand.getBank());
+		refund.setName(refundCommand.getName());
+		refund.setRefundType(refundCommand.getRefundType());
 		refund.setOrder(order);
+		refund.setUser(user);
 		
 		int refundRes = this.farm.refundSale(refund);
-		
-		if(orderRes == 0 || refundRes == 0)  {//failed
+		//cancel action
+		//int orderRes = this.farm.cancelOrder(refundCommand.getOrder().getOrderNo());
+				
+		if( refundRes == 0)  {//failed
 			return new ModelAndView("Error", "message", "cancel failed");
 		} else { //success 
-			
 			return new ModelAndView(orderListView);
 		}
 		

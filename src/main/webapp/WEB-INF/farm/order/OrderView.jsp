@@ -10,20 +10,15 @@
 <title>주문 상세 보기</title>
 </head>
 <body>
-	<table border="1" width="600" height="800">
-		<c:forEach var="order" items="${orderList}">
-			<tr>
-				<td colspan="2">${order.normal.title }</td>
-			</tr>
-
+	<table border="1" >
 			<tr>
 				<td>주문번호</td>
 				<td>${order.orderNo }</td>
 			</tr>
-
+			
 			<tr>
-				<td>품목</td>
-				<td>${order.normal.product.pName }</td>
+			<td>판매종류</td>
+			<td>${order.saleType}</td>
 			</tr>
 
 			<tr>
@@ -35,16 +30,15 @@
 				<td>결제번호</td>
 				<td>${order.payment.paymentNo }</td>
 			</tr>
-		</c:forEach>
+		
 	</table>
 	<!--  session확인해서 본인일 시 취소버튼 만들기 -->
-	<c:if test="${(order.user.id == session.id) }">
-		<a
-			href="<c:url value='/order/cancel.do'>
-<c:param name='orderNo' value='${order.orderNo}'/>
+	<c:if test="${ (loginUser.userNo == order.user.userNo)}">
+		<a href="<c:url value='/order/cancel.do'>
+		<c:param name='orderNo' value='${order.orderNo}'/>
 </c:url>"></a>
 	</c:if>
-	<a href="OrderListView">[이전 단계로]</a>
+	<a href="<c:url value = '/order/list.do'/> ">[이전 단계로]</a>
 
 </body>
 </html>

@@ -5,7 +5,8 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Order implements Serializable{
 	private int orderNo;
-	private Normal normal;
+	private int saleNo;
+	private String saleType;
 	private Delivery delivery;
 	private Payment payment;
 	private int quantity;
@@ -18,12 +19,7 @@ public class Order implements Serializable{
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
-	public Normal getNormal() {
-		return normal;
-	}
-	public void setNormal(Normal normal) {
-		this.normal = normal;
-	}
+	
 	public Delivery getDelivery() {
 		return delivery;
 	}
@@ -49,6 +45,17 @@ public class Order implements Serializable{
 		this.user = user;
 	}
 	
-	
+	public int getSaleNo() {
+		return saleNo;
+	}
+	public void setSaleNo(int saleNo) {
+		this.saleNo = saleNo;
+	}
+	public String getSaleType() {
+		return saleType;
+	}
+	public void setSaleType(String saleType) {
+		this.saleType = saleType;
+	}
 	
 }

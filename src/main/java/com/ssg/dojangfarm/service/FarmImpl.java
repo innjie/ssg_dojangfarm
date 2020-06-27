@@ -561,8 +561,8 @@ public class FarmImpl implements FarmFacade{
 	//-------------------------------------------------------------------------
 		
 	@Override
-	public int refundSale(int saleNo) {
-		return refundDAO.refundSale(saleNo);
+	public int refundSale(Refund refund) {
+		return refundDAO.refundSale(refund);
 	}
 
 	@Override

@@ -15,8 +15,8 @@ public class MybatisRefundDAO implements RefundDAO  {
 	private RefundMapper refundMapper;
 
 	@Override
-	public int refundSale(int saleNo) {
-		return refundMapper.refundSale(saleNo);
+	public int refundSale(Refund refund) {
+		return refundMapper.refundSale(refund);
 	}
 
 	@Override

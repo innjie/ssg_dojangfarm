@@ -140,7 +140,7 @@ public interface FarmFacade {
 	public void insertPayment(Payment payment);
 	
 	//Refund
-	public int refundSale(int saleNo);
+	public int refundSale(Refund refund);
 	public Refund getRefund(int refundNo);
 	public List<Refund> getRefundList(int userNo);
 	public Card checkCardPayNo(String cardPayNo);

@@ -11,34 +11,83 @@
 <meta charset="UTF-8">
 <title>경매 리스트</title>
 
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-var xhttp = new XMLHttpRequest();
-
 function search() {
+	 
 	var form = document.getElementById("form");
 	var condition = {
 		type: form.type.value, 
 		text: form.text.value
 	} 	
+	//var	jsonStr = JSON.stringify(messages);
+	var reqUrl = (condition.type == "title") ? ("../rest/auctionListBy/title/" + condition.text) : ("../rest/auctionListBy/product/" + condition.text);
+	alert(reqUrl);
 	
-	/* 위 condition 객체를 JSON 문자열로 변환함 */
 	$.ajax({			
 		type: "GET",
-		url: (type == "title") ? "rest/auctionListBy/title/" + type : "rest/auctionListBy/product/" + type, 
+		//url: (condition.type == "title") ? "/rest/auctionListBy/title/" + condition.text : "/rest/auctionListBy/product/" + condition.text, 
+		//url: "rest/auctionListBy/title/수박",
+		url: reqUrl,
 		contentType: "application/json",
-		data: jsonStr,
-		success: function(responseJson){	
-			$("#result").text(JSON.stringify(responseJson))	
+		processData: false,
+		success: function(responseJson){
+			for(i = 0; i < responseJson.length; i++){
+				$("#result").html("<ul></ul>");
+
+	
+				$("#result > ul").append("<li>Auction Title: " + responseJson[i].title + "</li>");
+				$("#result > ul").append("<li>Auction pName: " + responseJson[i].product.pName + "</li>");
+				$("#result > ul").append("<li>Auction minPrice: " + responseJson[i].minPrice + "</li>");
+				$("#result > ul").append("<br>");
+
+				
+			}
 	  	},
 		error: function(){
-			alert("ERROR", arguments);
+			alert("내용을 입력하세요");
 		}
 	});
 	
 }
+
+function getAuction(aNo) {
+	var reqUrl = "../rest/auctionBy/" + aNo;
+
+	alert("select auction No" + aNo);
+	
+	$.ajax({
+		type: "GET",
+		url: reqUrl,
+		processData: false,
+		success: function(responseJson){	// object parsed from JSON text	
+			$("#detail").html("<ul></ul>");
+			$("#detail > ul").append("<li>Auction Title: " + responseJson.title + "</li>");
+			$("#detail > ul").append("<li>Auction pName: " + responseJson.product.pName + "</li>");
+			$("#detail > ul").append("<li>Auction minPrice: " + responseJson.minPrice + "</li>");
+			$("#detail > ul").append("<li>Auction bidPrice: " + responseJson.bidPrice + "</li>");
+			if(responseJson.imPurAva){
+				$("#detail > ul").append("<li>Auction imPurPrice: " + responseJson.imPurPrice + "</li>");
+			}
+			$("#detail > ul").append("<li>Auction rDate: " + responseJson.rDate + "</li>");
+			$("#detail > ul").append("<li>Auction detail: " + responseJson.detail + "</li>");
+		},
+		error: function(){
+			alert("ERROR", arguments);
+		}
+	});
+};
 </script>
 </head>
 <body>
+	<table>
+		<tr>
+			<td>
+				<div id="detail"></div>
+			</td>
+		</tr>
+	</table>
+
 	<a href="<c:url value='/auction/registerAuctionForm.do' />">경매 추가</a>
 	<br><br>
 	<table border="1">
@@ -53,7 +102,7 @@ function search() {
 		<c:forEach var="auc" items="${auctionList}" varStatus="status">
 			<c:if test="${auc.finish != true}">
 				<tr>
-					<td>${status.count}</td>
+					<td onClick="getAuction(${auc.aNo});">${status.count}</td>
 					<td>
 						<a href="<c:url value='/auction/viewAuction.do'>
 									<c:param name='aNo' value='${auc.aNo}' />
@@ -82,5 +131,13 @@ function search() {
 		<input type="submit" value="찾기">
 		<input type="button" value="Search!" onClick="search()" /><br>
 	</form>
+	<br><br>
+	<table>
+		<tr>
+			<td>
+				<div id="result"></div>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>

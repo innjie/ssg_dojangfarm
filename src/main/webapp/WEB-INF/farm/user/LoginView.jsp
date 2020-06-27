@@ -28,6 +28,8 @@
 		<form:errors path="password" />
 		<br><br>
 		
+		<input type="hidden" name="forwardAction" value="${login.forwardAction}"/>
+		
 		<input type="submit" value="로그인" />
 		
 	</form:form>

@@ -32,10 +32,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			if (query != null) {
 				System.out.println("aaa " + url+"?"+query);
 				login.setForwardAction(url+"?"+query);
+				modelAndView.addObject("loginForwardAction", url+"?"+query);
 			}
 			else {
 				System.out.println("aaa " + url);
 				login.setForwardAction(url);
+				modelAndView.addObject("loginForwardAction", url);
 			}
 			
 			

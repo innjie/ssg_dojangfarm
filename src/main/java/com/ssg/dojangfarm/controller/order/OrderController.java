@@ -82,6 +82,7 @@ public class OrderController {
 		model.addAttribute("orderList", orderList);
 		return orderListView;
 	}
+	
 	//viewOrderUserList
 	@RequestMapping("/order/userView.do")
 	public String orderListBysaleNo(@RequestParam("saleNo") int saleNo, Model model) {

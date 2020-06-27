@@ -6,18 +6,19 @@
 	<cache />
 	<select id="getOrder" resultType="Order">
 		SELECT
-		orderNo, dNo, payNo,
-		quantity, saleNo, userNo
+		orderNo, dNo,
+		quantity, saleNo, userNo, saleType, payNo as "payment.paymentNo"
 		FROM OrderTable
 		WHERE orderNo = #{orderNo}
 	</select>
 	<select id="getOrderList" resultType="Order">
 		SELECT
 		orderNo, quantity,
-		saleNo, userNo
-		FROM OrderTable
-		WHERE OrderTable.userNo = User.userNo AND
-		OrderTable.saleNo = #{saleNo}
+		saleNo, usertable.Name as "user.Name", saleType, dNo as "delivery.dNo",
+		ordertable.userNo as "user.userNo"
+		FROM OrderTable, usertable
+		WHERE OrderTable.userNo = Usertable.userNo
+    and usertable.userno = #{userNo}
 	</select>
 
 	<delete id="cancelOrder" parameterType="int">

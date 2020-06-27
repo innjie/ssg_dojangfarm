@@ -8,7 +8,7 @@ import com.ssg.dojangfarm.domain.Refund;
 
 
 public interface RefundDAO {
-	int refundSale(int saleNo);
+	int refundSale(Refund refund);
 	Refund getRefund(int refundNo);
 	List<Refund> getRefundList(int userNo);
 

@@ -18,8 +18,8 @@ public class RefundServiceEndpoint {
 	RefundService refundService; // inject RefundServiceImpl
 
 	@WebMethod
-	public int refundSale(int saleNo) {
-		return refundService.refundSale(saleNo);
+	public int refundSale(Refund refund) {
+		return refundService.refundSale(refund);
 	}
 
 	@WebMethod

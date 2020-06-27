@@ -39,10 +39,10 @@
 
 	<select id="getOrderUserList" resultType="Order">
 		SELECT orderNo,
-		quantity, saleNo, userNo
+		quantity, saleNo, ordertable.userNo, ordertable.saletype, usertable.name as "user.name",
+		ordertable.userNo as "user.userNo", dNo as "delivery.dNo"
 		FROM OrderTable, UserTable
-		WHERE
-		OrderTable.userNo = #{userNo} AND OrderTable.userNo = UserTable.userNo
+		WHERE saleNo = #{saleNo} AND OrderTable.userNo = UserTable.userNo
 	</select>
 	
 	<select id = "getRefundList" resultType = "refund">

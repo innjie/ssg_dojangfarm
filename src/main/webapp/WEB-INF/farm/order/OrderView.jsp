@@ -22,6 +22,11 @@
 			</tr>
 
 			<tr>
+			<td>판매번호</td>
+			<td>${order.saleNo }</td>
+			</tr>
+			
+			<tr>
 				<td>수량</td>
 				<td>${ order.quantity}</td>
 			</tr>

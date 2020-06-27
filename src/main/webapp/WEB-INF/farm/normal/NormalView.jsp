@@ -110,6 +110,8 @@
 	<c:param name = 'saleNo'  value = '${normal.saleNo}'/></c:url> ">수정하기</a><br>
 	<a href = "<c:url value = '/normal/turnState.do'>
 					<c:param name = 'saleNo' value = '${normal.saleNo}'/></c:url>"> 판매 상태 변경  </a> <br>
+	<a href = "<c:url value = '/order/userView.do'>
+	<c:param name = 'saleNo' value = '${normal.saleNo}'/> </c:url> "> 주문자 내역 보기 </a> <br>
 	</c:if>
 	<br>
 	<a href="<c:url value='/message/sendMsg.do'>

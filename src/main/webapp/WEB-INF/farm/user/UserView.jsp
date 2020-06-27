@@ -12,6 +12,7 @@
 <title>나의 정보</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
 	<table border='1'>
 		<tr>
 			<td>id</td>

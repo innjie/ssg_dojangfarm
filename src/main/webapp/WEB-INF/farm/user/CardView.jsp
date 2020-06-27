@@ -12,6 +12,8 @@
 <title>나의 카드</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border='1'>
 		<tr>
 			<td>은행</td>

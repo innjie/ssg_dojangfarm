@@ -30,9 +30,6 @@
 		
 		<input type="submit" value="로그인" />
 		
-		<c:if test="${message} != null">
-			${message}<br><br>
-		</c:if>
 	</form:form>
 </body>
 </html>

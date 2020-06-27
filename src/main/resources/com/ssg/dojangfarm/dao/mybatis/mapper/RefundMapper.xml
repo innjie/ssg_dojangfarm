@@ -15,13 +15,14 @@
 	</insert>
 
 	<select id="getRefund" resultType="Refund">
-		SELECT (refundNo, account, bank, name, refundType, orderNo)
-		FROM Refund
-		WHERE refundNo = #{refundNo}
+		SELECT refundNo, account, bank, name, refundType, refund.orderNo as "order.orderNo", refundDate, 
+		Normal.title "order.title"
+		FROM Refund, ordertable, normal
+		WHERE refundNo = #{refundNo} and normal.saleNo = ordertable.saleNo and refund.orderNo = ordertable.orderNo
 	</select>
 
 	<select id="getRefundList" resultType="Refund">
-		SELECT (refundNo, orderNo)
+		SELECT refundNo, orderNo as "order.orderNo"
 		FROM Refund
 		WHERE userNo = #{userNo}
 	</select>

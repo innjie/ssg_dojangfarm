@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.domain.Common;
+import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Order;
 import com.ssg.dojangfarm.domain.Refund;
 import com.ssg.dojangfarm.domain.User;
@@ -133,9 +135,20 @@ public class OrderController {
 	@RequestMapping("/refund/view.do")
 	public String getRefund(@RequestParam("refundNo") int refundNo, Model model) {
 		Refund refund = this.farm.getRefund(refundNo);
-		if(refund == null) {
-			return "refund/RefundNotFound";
+		Order order = this.farm.getOrder(refund.getOrder().getOrderNo());
+		
+		if(order.getSaleType().equals("Normal")) {
+			Normal normal = this.farm.getNormalSale(order.getSaleNo());
+			order.setTitle(normal.getTitle());
+			order.setPrice(normal.getPrice() * order.getQuantity());
+		} else if(order.getSaleType().equals("Common")) {
+			Common common = this.farm.getCommonSale(order.getSaleNo());
+			order.setTitle(common.getTitle());
+			order.setPrice(common.getPrice() * order.getQuantity());
 		}
+		
+		refund.setOrder(order);
+		
 		model.addAttribute("refund", refund);
 		return "refund/RefundView";
 	}

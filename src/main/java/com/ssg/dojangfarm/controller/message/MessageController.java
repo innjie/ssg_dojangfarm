@@ -215,13 +215,13 @@ public class MessageController {
 			@RequestParam(value = "saleNo", defaultValue="-1") int saleNo,
 			@RequestParam(value = "msgNo", defaultValue="-1") int msgNo) throws Exception {
 		
-		//ù �޼���
+		//첫 문의
 		if(msgNo == -1) {
-			Normal normal = this.farm.getNormalSale(saleNo);	//saleNo�� normal������
+			Normal normal = this.farm.getNormalSale(saleNo);	
 			
 			return new ModelAndView(FORMMESSAGE, "normal", normal);
 		}
-		//���� �޼��� ���� (����)
+		//답장
 		else {
 			Message cMsg = this.farm.checkMsgWithCMsg(msgNo);	
 			

@@ -29,7 +29,7 @@
 			<tr>
 				<td>답변</td>
 				<td>
-					<textarea name="answer" rows="100" cols="100"></textarea>
+					<textarea name="answer" ></textarea>
 				</td>
 			</tr>
 		</table>
@@ -39,7 +39,11 @@
 		<c:if test="${message} != null">
 			${message}<br><br>
 		</c:if>
-		<input type="submit" value="답변하기">
+		<input type="submit" value="답변하기">&nbsp;&nbsp;
+		<a href="<c:url value='/normal/viewQnAList.do'>
+					<c:param name="saleNo" value="${qna.normal.saleNo}" />
+				</c:url>">
+		이전</a>
 	</form>
 </body>
 </html>

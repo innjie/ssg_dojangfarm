@@ -52,6 +52,7 @@ public class QnAController {
 	@RequestMapping("/normal/viewQnAList2.do")
 	public String handleRequest2(
 			@RequestParam(value = "page", required = false) String page,
+			@RequestParam("saleNo") int saleNo,
 			@ModelAttribute("qnaList") PagedListHolder<QnA> qnaList,
 			BindingResult result,
 			@RequestParam(required = false) String ques,
@@ -68,6 +69,7 @@ public class QnAController {
 			qnaList.previousPage(); 
 		}
 		
+		model.put("saleNo", saleNo);
 		if(ques != null) {
 			model.put("ques", ques);
 			model.put("quesNo", Integer.parseInt(quesNo));

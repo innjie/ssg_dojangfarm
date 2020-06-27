@@ -73,6 +73,12 @@
 				<c:param name='msgNo' value='${message.msgNo}' />
 				<c:param name='type' value='${param.type}' />
 			</c:url>">
-	삭제</a>
+	삭제</a>&nbsp;&nbsp;
+	<c:if test='${type == "send"}'>
+		<a href="<c:url value='/message/viewSendMessageList.do' />">이전</a>
+	</c:if>
+	<c:if test='${type == "receive"}'>
+		<a href="<c:url value='/message/viewReceiveMessageList.do' />">이전</a>
+	</c:if>
 </body>
 </html>

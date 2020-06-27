@@ -78,14 +78,20 @@
 	<c:if test="${!qnaList.firstPage}">
     	<a href='<c:url value="/normal/viewQnAList2.do">
         			<c:param name="page" value="previous"/>
+        			<c:param name="saleNo" value="${saleNo}"/>
         		</c:url>'>
         Prev</a>
     </c:if> 
     <c:if test="${!qnaList.lastPage}">
     	<a href='<c:url value="/normal/viewQnAList2.do">
         			<c:param name="page" value="next"/>
+        			<c:param name="saleNo" value="${saleNo}"/>
         		</c:url>'>
         Next</a>
-    </c:if>
+    </c:if>&nbsp;&nbsp;
+    <a href="<c:url value='/normal/viewNormal.do'>
+				<c:param name="saleNo" value="${saleNo}" />
+			</c:url>">
+	이전</a>
 </body>
 </html>

@@ -137,6 +137,7 @@ public class AuctionController implements ServletContextAware{
 
 		auctionList.setPageSize(10);
 		model.put("auctionList", auctionList);
+		
 		return LISTMYAUCTION;
 	}	
 
@@ -155,6 +156,7 @@ public class AuctionController implements ServletContextAware{
 		else if ("previous".equals(page)) { 
 			auctionList.previousPage(); 
 		}
+		
 		
 		return LISTMYAUCTION;
 	}	
@@ -204,6 +206,7 @@ public class AuctionController implements ServletContextAware{
 	@RequestMapping("/auction/viewAuction.do")
 	public String viewAuction(
 			@RequestParam("aNo") int aNo,
+			@RequestParam(value="my", required = false) String my,
 			ModelMap model,
 			HttpServletRequest request) throws Exception {
 		
@@ -213,6 +216,7 @@ public class AuctionController implements ServletContextAware{
 		
 		Auction auction = this.farm.getAuction(aNo);
 		model.put("auction", auction);
+		model.put("my", my);
 		
 		//check this user is auction's user
 		if(user != null) {

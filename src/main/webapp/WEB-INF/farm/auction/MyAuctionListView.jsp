@@ -30,6 +30,7 @@
 				<td>
 					<a href="<c:url value='/auction/viewAuction.do'>
 								<c:param name='aNo' value='${auc.aNo}' />
+								<c:param name='my' value='my' />
 							</c:url>">
 					${auc.title}</a>
 				</td>

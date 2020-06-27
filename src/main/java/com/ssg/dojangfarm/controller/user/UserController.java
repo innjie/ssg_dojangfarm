@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class UserController {
 	private static final String VIEWUSER = "user/UserView";
 	private static final String USERFORM = "user/CreateUserFormView";
 	private static final String UPDATEUSERFORM = "user/ModifyUserFormView";
+	private static final String CHECKFORM = "user/CheckPasswordView";
 	
 	@Autowired
 	private FarmFacade farm;
@@ -44,6 +46,17 @@ public class UserController {
 		else {	// create new user
 			return new UserCommand();
 		}
+	}
+	
+	//LoginCommand 
+	@ModelAttribute("login")
+	public LoginCommand formBacking2(HttpServletRequest request) {
+		User user = (User)WebUtils.getSessionAttribute(request, "user");
+
+		LoginCommand loginCommand = new LoginCommand();
+		loginCommand.setId(user.getId());
+		
+		return loginCommand;
 	}
 
 	
@@ -169,5 +182,39 @@ public class UserController {
 		session.invalidate();
 		
 		return "redirect:/index.do";
+	}
+	
+	//check form
+	@RequestMapping(value = "/user/checkPW.do", method = RequestMethod.GET)
+	public String checkForm(
+			 @ModelAttribute("login") LoginCommand loginCommand,
+			 HttpServletRequest request) {
+		
+		return CHECKFORM;
+	}
+	
+	
+	//check
+	@RequestMapping(value = "/user/checkPW.do", method = RequestMethod.POST)
+	public String check(
+			HttpServletRequest request,
+			@Valid @ModelAttribute("login") LoginCommand loginCommand,
+			BindingResult result) throws Exception {
+								
+		//validate
+		if (result.hasErrors()) {
+			return CHECKFORM;
+		}
+		
+		User user = farm.checkIdPw(loginCommand.getId(), loginCommand.getPassword());
+
+		if (user == null) {
+			result.rejectValue("password", "idpwErr", new Object[] {loginCommand.getPassword()}, null);
+
+			return CHECKFORM;
+		}
+		else {
+			return "redirect:/user/deleteUser.do";
+		}
 	}
 }

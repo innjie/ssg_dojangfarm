@@ -11,7 +11,8 @@ public class Order implements Serializable{
 	private Payment payment;
 	private int quantity;
 	private User user;
-	
+	private String title;
+	private int price;
 	
 	public int getOrderNo() {
 		return orderNo;
@@ -56,6 +57,18 @@ public class Order implements Serializable{
 	}
 	public void setSaleType(String saleType) {
 		this.saleType = saleType;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	
 }

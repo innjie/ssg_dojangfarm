@@ -84,6 +84,8 @@ function getAuction(aNo) {
 </script>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
+
 <table>
 <tr><td>
 	<div id="detail"></div>

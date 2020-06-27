@@ -12,6 +12,8 @@
 <title>Q&A</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<%-- post일 때 질문 등록하게.. --%>
 	<form action="<c:url value="/normal/questionQnA.do"/>">
 		<input type="checkbox" name="secret" value="true">비밀글&nbsp;

@@ -12,6 +12,8 @@
 <title>메세지 보기</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border='1'>
 		<c:if test="${message.sUser.id != user.id}">
 			<tr>

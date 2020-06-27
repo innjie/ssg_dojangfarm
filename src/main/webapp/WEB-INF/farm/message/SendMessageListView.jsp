@@ -12,6 +12,8 @@
 <title>보낸 메세지</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<a href="<c:url value='/message/viewSendMessageList.do' />">전송함</a>&nbsp;
 	<a href="<c:url value='/message/viewReceiveMessageList.do' />">수신함</a>
 	<br>

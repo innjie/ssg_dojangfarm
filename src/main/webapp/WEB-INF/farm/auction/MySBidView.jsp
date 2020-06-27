@@ -12,6 +12,8 @@
 <title>나의 낙찰</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border='1'>
 		<tr>
 			<td>경매</td>

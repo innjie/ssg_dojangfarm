@@ -12,6 +12,8 @@
 <title>경매 상세보기</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border='1'>
 		<tr>
 			<td>제목</td>

@@ -10,6 +10,33 @@
 <head>
 <meta charset="UTF-8">
 <title>경매 리스트</title>
+
+<script type="text/javascript">
+var xhttp = new XMLHttpRequest();
+
+function search() {
+	var form = document.getElementById("form");
+	var condition = {
+		type: form.type.value, 
+		text: form.text.value
+	} 	
+	
+	/* 위 condition 객체를 JSON 문자열로 변환함 */
+	$.ajax({			
+		type: "GET",
+		url: (type == "title") ? "rest/auctionListBy/title/" + type : "rest/auctionListBy/product/" + type, 
+		contentType: "application/json",
+		data: jsonStr,
+		success: function(responseJson){	
+			$("#result").text(JSON.stringify(responseJson))	
+	  	},
+		error: function(){
+			alert("ERROR", arguments);
+		}
+	});
+	
+}
+</script>
 </head>
 <body>
 	<a href="<c:url value='/auction/registerAuctionForm.do' />">경매 추가</a>
@@ -46,13 +73,14 @@
 		</c:forEach>
 	</table>
 	<br><br>
-	<form action="<c:url value="/auction/findAuctionList.do"/>">	<%-- 컨트롤러에서 type에 따라 다른 dao 사용 --%>
+	<form id="form" action="<c:url value="/auction/findAuctionList.do"/>">	<%-- 컨트롤러에서 type에 따라 다른 dao 사용 --%>
 		<select name="type">
 			<option value="title">제목</option>
 			<option value="pName">품목</option>
 		</select>
 		<input type="text" name="text">&nbsp;	<%-- text - title or pName --%>
 		<input type="submit" value="찾기">
+		<input type="button" value="Search!" onClick="search()" /><br>
 	</form>
 </body>
 </html>

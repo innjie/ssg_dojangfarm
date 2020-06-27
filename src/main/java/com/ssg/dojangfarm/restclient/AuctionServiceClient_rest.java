@@ -19,6 +19,8 @@ public class AuctionServiceClient_rest {
 	public static void main(String[] args) {		
 		getAuctionListByUser(99999);
 		getAuction(9999);
+		findAuctionByProduct("수박");
+		findAuctionByTitle("수박");
 	}
 
 	private static void getAuction(int aNo) {
@@ -63,6 +65,50 @@ public class AuctionServiceClient_rest {
 		
 		System.out.println();
 	}
+	
+	private static void findAuctionByProduct(String pName) {
+		System.out.println("Calling findAuctionByProduct() with pName " + pName);
+		
+		Auction[] auctions = null;
+		
+		try {
+			auctions = restTemplate.getForObject(
+					auctionSvcUrl + "/auctionListBy/product/{pName}", Auction[].class, pName);
+		} catch (HttpStatusCodeException e) {
+			if (e.getStatusCode() == HttpStatus.NOT_FOUND) {	// 404 Not Found	
+				System.out.println("auctions by " + pName + " not found");
+			}
+		} catch (RestClientException e) {
+			e.printStackTrace();
+			return;
+		} 	
+		if (auctions != null) 
+			printAuctionsByProduct(auctions, pName);
+		
+		System.out.println();
+	}
+	
+	private static void findAuctionByTitle(String title) {
+		System.out.println("Calling findAuctionByTitle() with title " + title);
+		
+		Auction[] auctions = null;
+		
+		try {
+			auctions = restTemplate.getForObject(
+					auctionSvcUrl + "/auctionListBy/title/{title}", Auction[].class, title);
+		} catch (HttpStatusCodeException e) {
+			if (e.getStatusCode() == HttpStatus.NOT_FOUND) {	// 404 Not Found	
+				System.out.println("auctions by " + title + " not found");
+			}
+		} catch (RestClientException e) {
+			e.printStackTrace();
+			return;
+		} 	
+		if (auctions != null) 
+			printAuctionsByTitle(auctions, title);
+		
+		System.out.println();
+	}
 
 	
 	private static void printAuction(Auction auction) {
@@ -74,6 +120,28 @@ public class AuctionServiceClient_rest {
 	
 	private static void printAuctions(Auction[] auctions, int userNo) {		
 		System.out.println("Number of auctions by " + userNo + ": "+ auctions.length);
+		for (int i = 0; i < auctions.length; i++) {
+			Auction auction = auctions[i];
+			System.out.println("-------------------------------");
+			System.out.println("auction No: " + auction.getaNo());
+			System.out.println("auction title: " + auction.getTitle());
+			System.out.println("min prices: " + auction.getMinPrice());
+		}
+	}
+	
+	private static void printAuctionsByProduct(Auction[] auctions, String pName) {		
+		System.out.println("Number of auctions by " + pName + ": "+ auctions.length);
+		for (int i = 0; i < auctions.length; i++) {
+			Auction auction = auctions[i];
+			System.out.println("-------------------------------");
+			System.out.println("auction No: " + auction.getaNo());
+			System.out.println("auction title: " + auction.getTitle());
+			System.out.println("min prices: " + auction.getMinPrice());
+		}
+	}
+	
+	private static void printAuctionsByTitle(Auction[] auctions, String title) {		
+		System.out.println("Number of auctions by " + title + ": "+ auctions.length);
 		for (int i = 0; i < auctions.length; i++) {
 			Auction auction = auctions[i];
 			System.out.println("-------------------------------");

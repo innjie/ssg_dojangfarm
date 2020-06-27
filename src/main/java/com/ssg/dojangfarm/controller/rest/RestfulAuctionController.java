@@ -48,4 +48,28 @@ public class RestfulAuctionController {
 		}
 		return auctionList;  // convert list of orders to JSON text in response body
 	}
+	
+	@RequestMapping(value = "/auctionListBy/product/{pName}", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody         
+	public List<Auction> findAuctionByProduct(@PathVariable("pName") String pName, HttpServletResponse response) throws IOException {
+		System.out.println("/rest/auctionListBy/product/{pName} request accepted: {pName} = " + pName);
+		List<Auction> auctionList = auctionService.findAuctionByProduct(pName);
+		if (auctionList == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		return auctionList;  // convert list of orders to JSON text in response body
+	}
+	
+	@RequestMapping(value = "/auctionListBy/title/{title}", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody         
+	public List<Auction> findAuctionByTitle(@PathVariable("title") String title, HttpServletResponse response) throws IOException {
+		System.out.println("/rest/auctionListBy/title/{title} request accepted: {title} = " + title);
+		List<Auction> auctionList = auctionService.findAuctionByTitle(title);
+		if (auctionList == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		return auctionList;  // convert list of orders to JSON text in response body
+	}
 }

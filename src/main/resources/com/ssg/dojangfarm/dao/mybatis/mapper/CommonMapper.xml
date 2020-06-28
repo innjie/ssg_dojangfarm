@@ -95,7 +95,7 @@
 		SELECT cjNo, commonjoin.userNo as "user.userNo",
 		Commonjoin.saleNo as "common.saleNo", cjState, count, common.title as "common.title"
 		FROM CommonJoin, Common
-		WHERE cjNo = #{cjNo}
+		WHERE cjNo = #{cjNo} and commonjoin.saleNo = common.saleNo
 	</select>
 	<select id="getCJList" resultType="CommonJoin">
 		SELECT(cjNo, saleNo, userNo)

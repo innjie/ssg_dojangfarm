@@ -50,6 +50,22 @@
 			<mvc:mapping path="/user/modifyUser.do" />
 			<mvc:mapping path="/user/deleteUser.do" />
 			<mvc:mapping path="/user/checkPW.do" />
+			<mvc:mapping path= "/common/CommonInsertFormView"/>
+			<mvc:mapping path= "/common/CommonUpdateFormView"/>
+			<mvc:mapping path="/common/CommonUserListView"/>
+			<mvc:mapping path="/commonnotice/CNUserListView"/>
+			<mvc:mapping path= "/commonnotice/InsertFormView"/>
+			<mvc:mapping path="/commonnotice/UpdateFormView"/>
+			<mvc:mapping path= "/normal/NormalInsertFormView"/>
+			<mvc:mapping path="/normal/NormalUpdateFormView"/>
+			<mvc:mapping path= "/normal/NormalUserListView"/>
+			<mvc:mapping path="/order/OrderCancleView"/>
+			<mvc:mapping path="/order/OrderUserView"/>
+			<mvc:mapping path="/order/OrderListView"/>
+			<mvc:mapping path="/order/OrderView"/>
+			<mvc:mapping path="/refund/RefundFormView"/>
+			<mvc:mapping path="/refund/RefundListView"/>
+			<mvc:mapping path="/refund/RefundView"/>
 			<bean class="com.ssg.dojangfarm.controller.user.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>     

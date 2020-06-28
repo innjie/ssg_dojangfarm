@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -127,23 +128,40 @@ public class NormalController implements ServletContextAware {
 	
 	//search normal
 	@RequestMapping("/normal/searchNormal.do")
-	public ModelAndView searchNormal(HttpServletRequest request,
-			@RequestParam(value="word", required = false) String word
-			) throws Exception {
+	public String searchNormal(HttpServletRequest request,
+			@RequestParam(value="word", required = false) String word,
+			ModelMap model) throws Exception {
 		//search action
-		List<Normal> normalList = null;
+		PagedListHolder<Normal> normalList = null;
 		if(word != null) {
 			if(!StringUtils.hasLength(word)) {
-				return new ModelAndView(errorPage, "message", "enter keword");
+				model.put("message", "enter keword");
+				return errorPage;
 			}
-			normalList = this.farm.searchNormal(word.toLowerCase());
+			normalList = new PagedListHolder<Normal>(this.farm.searchNormal(word.toLowerCase()));
 		}
 		
 		//search -> list( or main)
-		
-		return new ModelAndView(normalListView, "normalList", normalList);
+		model.put("normalList", normalList);
+		return normalListView;
 	}
 	
+	@RequestMapping("/normal/searchNormal2.do")
+	public String searchNormal2(@RequestParam("page") String page,
+			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
+			BindingResult result) throws Exception {
+		if (normalList== null) {
+			throw new IllegalStateException("Cannot find pre-loaded auction list");
+		}
+		if ("next".equals(page)) { 
+			normalList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			normalList.previousPage(); 
+		}
+		
+		return normalListView;
+	}
 	//turn state off / on
 	@RequestMapping("/normal/turnState.do")
 	public ModelAndView sarchNormal(@RequestParam("saleNo") int saleNo) {
@@ -207,21 +225,40 @@ public class NormalController implements ServletContextAware {
 	
 	//get all normal list
 	@RequestMapping("/normal/list.do")
-	public String getNormalList(Model model) {
+	public String getNormalList(ModelMap model) throws Exception{
 		//get list.do
-		List<Normal> normalList = farm.getAllNormalList();
+		PagedListHolder<Normal> normalList = new PagedListHolder<Normal>(farm.getAllNormalList());
+		
+		
 		List <Category> categoryList = farm.getCategoryList();
-		model.addAttribute("normalList", normalList);
-		model.addAttribute("categoryList", categoryList);
+		model.put("normalList", normalList);
+		model.put("categoryList", categoryList);
+		normalList.setPageSize(10);
+		return normalListView;
+	}
+	@RequestMapping("/normal/list2.do")
+	public String getNormalList2(
+			@RequestParam("page") String page,
+			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
+			BindingResult result, 
+			 ModelMap model) throws Exception {
+		
+		if ("next".equals(page)) {
+			normalList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			normalList.previousPage();
+		}
 		
 		return normalListView;
 	}
-	
 	//get NormalList by categoryNo
-	@RequestMapping("/normal/list2.do")
+	@RequestMapping("/normal/cateList.do")
 	public String getNormalListByCategoryNo(@RequestParam(value="cateNo", required = false) int cateNo, Model model) {
 		//get category list
-		List<Normal> normalList = farm.getNormalListByCateNo(cateNo);
+		PagedListHolder<Normal> normalList =new PagedListHolder<Normal> (farm.getNormalListByCateNo(cateNo));
+		normalList.setPageSize(10);
+		
 		List <Category> categoryList = farm.getCategoryList();
 		
 		model.addAttribute("normalList", normalList);

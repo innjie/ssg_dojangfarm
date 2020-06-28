@@ -95,7 +95,7 @@
 	
 	<select id = "getNormalListByCateNo" resultType = "Normal">
 	SELECT
-		saleNo, title, image
+		saleNo, title, image,
 		Usertable.name as "user.name", regidDate
 		From Normal, UserTable, Product
 		WHERE

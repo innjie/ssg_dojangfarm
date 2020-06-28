@@ -71,10 +71,14 @@ public class LoginController {
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("user", user);
 			
-			if (loginCommand.getForwardAction() != null) 
+			if (loginCommand.getForwardAction() != null && !loginCommand.getForwardAction().equals("")) {
+				System.out.println("login" + loginCommand.getForwardAction() + "!!");
 				return new ModelAndView("redirect:" + loginCommand.getForwardAction());
-			else 
-				return new ModelAndView("Main");
+			
+			}
+			else {
+				return new ModelAndView("redirect:/");
+			}
 		}
 	}
 }

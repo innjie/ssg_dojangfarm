@@ -11,6 +11,7 @@
 <title>등록한 상품 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
  <table border="1" >
  	<tr> <td colspan="3">제목</td></tr>
 	<tr>
@@ -18,7 +19,7 @@
 	</tr>
 
 	<tr >
-	<td rowspan="3" colspan = "1">사진</td>
+	<td rowspan="3" colspan = "1"><img src = "../${normal.image }"/></td>
 	<td>판매상태</td>
 	<td>${normal.saleState }</td>
 	</tr>
@@ -104,12 +105,14 @@
 	</c:if> 
 	
 	<br><br>
-<a href= "<c:url value = '/normal/list.do'/> ">[이전 단계로]</a> <br>
+
 	<c:if test="${ (loginUser.userNo == normal.user.userNo)}">
 	<a href = "<c:url value ='/normal/updateNormal.do' > 
 	<c:param name = 'saleNo'  value = '${normal.saleNo}'/></c:url> ">수정하기</a><br>
 	<a href = "<c:url value = '/normal/turnState.do'>
 					<c:param name = 'saleNo' value = '${normal.saleNo}'/></c:url>"> 판매 상태 변경  </a> <br>
+	<a href = "<c:url value = '/order/userView.do'>
+	<c:param name = 'saleNo' value = '${normal.saleNo}'/> </c:url> "> 주문자 내역 보기 </a> <br>
 	</c:if>
 	<br>
 	<a href="<c:url value='/message/sendMsg.do'>

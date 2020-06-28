@@ -11,6 +11,7 @@
 <title>공동구매 공지 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 	<table border="1px">
 		<tr>
 			<td>공지번호</td>
@@ -34,7 +35,7 @@
 	<c:param name = 'CNNO'  value = '${cn.CNNO }'/></c:url>">수정하기</a>
 		<br>
 	</c:if>
-	<a href="CommonNoticeListView">[이전 단계로]</a>
+	<a href="<c:url value = '/commonNotice/list.do'/>">[이전 단계로]</a>
 	<c:if test="${(session.id == commonNotice.user.id)} ">
 		<a
 			href='<c:url value="/commonNotice/delete.do">

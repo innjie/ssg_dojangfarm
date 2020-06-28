@@ -21,6 +21,8 @@ public interface FarmFacade {
 	public Message checkSMsg(int msgNo);
 	public int getRUserNo(int msgNo);
 	public int getSUserNo(int msgNo);
+	public List<Message> findReceiveMsg(String title);
+	public List<Message> findSendMsg(String title);
 	
 	//QnA
 	public List<QnA> getQnAList(int saleNo);
@@ -48,6 +50,10 @@ public interface FarmFacade {
 	public ImPur getMyImPur(int imPurNo);
 	public User getUserByAuction(int aNo);
 	public int getPNoByPName(String pName);
+	public int getLastANo();
+	public void addImage(int aNo, String image);
+	public void addImage(Auction auction, int aNo, String image);
+	
 	
 	//User
 	public void createUser(User user);
@@ -92,6 +98,8 @@ public interface FarmFacade {
 	public List<Common> getAllCommonList();
 	public List<Common> getCommonListByUserNo(int userNo);
 	public List<Common> searchCommon(String title);
+	public void addCommonImage(int saleNo, String string);
+	public int getLastCommonSaleNo();
 	
 	public int insertCommonjoin(CommonJoin commonJoin);  
 	public int cancelCommonjoin( int CJNo);
@@ -126,18 +134,25 @@ public interface FarmFacade {
 	public String getSaleState(int saleNo);
 	public List<Product> getProductList();
 	public List<Category> getCategoryList();
+	public int getLastSaleNo();
+	public void addNormalImage(int saleNo, String string);
 	
 	//Payment
 	public Payment getPayment(int payNo);
 	public void insertPayment(Payment payment);
 	
 	//Refund
-	public int refundSale(int saleNo);
+	public int refundSale(Refund refund);
 	public Refund getRefund(int refundNo);
 	public List<Refund> getRefundList(int userNo);
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	
+
+	
+	
+	
 	
 	
 

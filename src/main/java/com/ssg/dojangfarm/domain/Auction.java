@@ -17,6 +17,7 @@ public class Auction implements Serializable{
 	private int imPurPrice;		//imme Purchase
 	private Boolean finish;
 	private int bidPrice;
+	private String image;
 	
 	public int getaNo() {
 		return aNo;
@@ -89,6 +90,12 @@ public class Auction implements Serializable{
 	}
 	public void setBidPrice(int bidPrice) {
 		this.bidPrice = bidPrice;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

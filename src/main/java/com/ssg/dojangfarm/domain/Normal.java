@@ -18,6 +18,7 @@ public class Normal implements Serializable{
 	private Date regidDate;
 	private String saleState;
 	private int count;
+	private String image;
 	
 	public int getSaleNo() {
 		return saleNo;
@@ -84,6 +85,12 @@ public class Normal implements Serializable{
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }

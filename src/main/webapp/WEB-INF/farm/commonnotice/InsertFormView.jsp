@@ -11,6 +11,7 @@
 <title>공지 입력 폼</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <c:set var="targetUrI">
 		<c:url value="/commonNotice/insertCN.do" />
 	</c:set>

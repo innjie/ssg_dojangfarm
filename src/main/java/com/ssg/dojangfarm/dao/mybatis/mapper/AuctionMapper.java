@@ -45,4 +45,7 @@ public interface AuctionMapper {
 	void updateBidPrice(@Param("aNo") int aNo, @Param("bidPrice") int bidPrice);
 
 	int getPNoByPName(String pName);
+	
+	int getLastANo();
+	void addImage(@Param("aNo")int aNo, @Param("image")String image);
 }

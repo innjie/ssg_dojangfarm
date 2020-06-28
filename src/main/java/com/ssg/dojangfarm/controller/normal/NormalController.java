@@ -1,12 +1,15 @@
 package com.ssg.dojangfarm.controller.normal;
 
+import java.io.File;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,6 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Category;
@@ -26,8 +32,9 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 //Normal Controller
+@SessionAttributes({"normalList", "categoryList"})
 @Controller
-public class NormalController {
+public class NormalController implements ServletContextAware {
 	private static final String insertNormaForm = "normal/NormalInsertFormView";
 	private static final String normalListView = "normal/NormalListView";
 	private static final String errorPage = "/normal/Error";
@@ -35,6 +42,13 @@ public class NormalController {
 	private static final String normalUserListView = "normal/NormalUserListView";
 	private static final String successPage = "/normal/Success";
 	private static final String updateNormalForm = "normal/NormalUpdateFormView";
+	
+	private ServletContext context;	
+	
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.context = context;
+	}
 	
 	@Autowired
 	private FarmFacade farm;
@@ -72,7 +86,10 @@ public class NormalController {
 		if(user == null) {
 			return new ModelAndView(errorPage, "message", "Please LOGIN first");
 		}
+		
 		if(result.hasErrors()) {
+			System.out.println(result.getFieldError());
+			System.out.println(result.getErrorCount());
 			List<Product> pList = this.farm.getProductList();
 			model.addAttribute("product", pList);
 			return new ModelAndView(insertNormaForm);
@@ -94,34 +111,59 @@ public class NormalController {
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		normal.setRegidDate(sqlDate);
 		
-		int res = this.farm.insertSale(normal);
-
-		if(res == 0) { //false
-			return new ModelAndView(errorPage, "message", "insert Error");
+		MultipartFile image = normalCommand.getImage();
+		
+		if(image != null) {
+			System.out.println("image found");
+			uploadFile(image, normal);
+		} else {
+			System.out.println("image not found");
+			this.farm.insertSale(normal);
 		}
+//
+//		if(res == 0) {
+//			return new ModelAndView(errorPage, "message", "insert Error");
+//		}
 		//insert -> list (or main)
 		return new ModelAndView( "redirect:/normal/list.do");
 	}
 	
 	//search normal
 	@RequestMapping("/normal/searchNormal.do")
-	public ModelAndView searchNormal(HttpServletRequest request,
-			@RequestParam(value="word", required = false) String word
-			) throws Exception {
+	public String searchNormal(HttpServletRequest request,
+			@RequestParam(value="word", required = false) String word,
+			ModelMap model) throws Exception {
 		//search action
-		List<Normal> normalList = null;
+		PagedListHolder<Normal> normalList = null;
 		if(word != null) {
 			if(!StringUtils.hasLength(word)) {
-				return new ModelAndView(errorPage, "message", "enter keword");
+				model.put("message", "enter keword");
+				return errorPage;
 			}
-			normalList = this.farm.searchNormal(word.toLowerCase());
+			normalList = new PagedListHolder<Normal>(this.farm.searchNormal(word.toLowerCase()));
 		}
 		
 		//search -> list( or main)
-		
-		return new ModelAndView(normalListView, "normalList", normalList);
+		model.put("normalList", normalList);
+		return normalListView;
 	}
 	
+	@RequestMapping("/normal/searchNormal2.do")
+	public String searchNormal2(@RequestParam("page") String page,
+			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
+			BindingResult result, ModelMap model) throws Exception {
+		if (normalList== null) {
+			throw new IllegalStateException("Cannot find pre-loaded auction list");
+		}
+		if ("next".equals(page)) { 
+			normalList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			normalList.previousPage(); 
+		}
+		model.put("search", "search");
+		return normalListView;
+	}
 	//turn state off / on
 	@RequestMapping("/normal/turnState.do")
 	public ModelAndView sarchNormal(@RequestParam("saleNo") int saleNo) {
@@ -185,21 +227,44 @@ public class NormalController {
 	
 	//get all normal list
 	@RequestMapping("/normal/list.do")
-	public String getNormalList(Model model) {
+	public String getNormalList(ModelMap model) throws Exception{
 		//get list.do
-		List<Normal> normalList = farm.getAllNormalList();
+		PagedListHolder<Normal> normalList = new PagedListHolder<Normal>(farm.getAllNormalList());
+		
+		
 		List <Category> categoryList = farm.getCategoryList();
-		model.addAttribute("normalList", normalList);
-		model.addAttribute("categoryList", categoryList);
+		normalList.setPageSize(10);
+		model.put("normalList", normalList);
+		model.put("categoryList", categoryList);
 		
 		return normalListView;
 	}
-	
-	//get NormalList by categoryNo
 	@RequestMapping("/normal/list2.do")
+	public String getNormalList2(
+			@RequestParam("page") String page,
+			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
+			BindingResult result, 
+			 ModelMap model) throws Exception {
+		
+		if ("next".equals(page)) {
+			normalList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			normalList.previousPage();
+		}
+		List <Category> categoryList = farm.getCategoryList();
+		model.put("normalList", normalList);
+		
+		model.put("categoryList", categoryList);
+		return normalListView;
+	}
+	//get NormalList by categoryNo
+	@RequestMapping("/normal/cateList.do")
 	public String getNormalListByCategoryNo(@RequestParam(value="cateNo", required = false) int cateNo, Model model) {
 		//get category list
-		List<Normal> normalList = farm.getNormalListByCateNo(cateNo);
+		PagedListHolder<Normal> normalList =new PagedListHolder<Normal> (farm.getNormalListByCateNo(cateNo));
+		normalList.setPageSize(10);
+		
 		List <Category> categoryList = farm.getCategoryList();
 		
 		model.addAttribute("normalList", normalList);
@@ -215,7 +280,7 @@ public class NormalController {
 		User loginUser = (User) httpSession.getAttribute("user");
 		
 		Normal normal = this.farm.getNormalSale(saleNo);
-
+		System.out.println(normal.getImage());
 		model.addAttribute("normal", normal);
 		model.addAttribute("loginUser", loginUser);
 		return normalView;
@@ -227,8 +292,42 @@ public class NormalController {
 		User user = (User)httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
 		//get list.do
-		List<Normal> normalList = farm.getNormalListByUserNo(userNo);
+		PagedListHolder<Normal> normalList = new PagedListHolder<Normal>(farm.getNormalListByUserNo(userNo));
 		model.addAttribute("normalList", normalList);
 		return normalUserListView;
+	}
+	@RequestMapping("/normal/userList2.do")
+	public String getNormalListByUserNo2(
+			@RequestParam("page") String page, 
+			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
+			HttpServletRequest request, Model model) {
+		if ("next".equals(page)) { 
+			normalList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			normalList.previousPage(); 
+		}
+		
+		return normalUserListView;
+	}
+	//related image file
+	//upload file
+	private void uploadFile(MultipartFile image, Normal normal) {
+		this.farm.insertSale(normal);
+		System.out.println(image.getOriginalFilename());
+		
+		int saleNo = this.farm.getLastSaleNo();
+		String path = context.getRealPath("/images/normal");
+		File file = new File(path, saleNo + ".jpg");
+		
+		try {
+			image.transferTo(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("path: " + path);
+		System.out.println("path: " + file.getPath());
+		this.farm.addNormalImage(saleNo, "images/normal/" + file.getName());
 	}
 }

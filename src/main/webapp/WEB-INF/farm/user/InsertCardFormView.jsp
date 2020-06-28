@@ -44,7 +44,8 @@
 		<br><br>
 		
 	
-		<input type="submit" value="추가" />
+		<input type="submit" value="추가" />&nbsp;&nbsp;
+		<a href="<c:url value='/card/viewCardList.do' />">이전</a>
 		
 	</form:form>
 </body>

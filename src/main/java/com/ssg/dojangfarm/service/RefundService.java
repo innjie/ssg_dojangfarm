@@ -6,7 +6,7 @@ import com.ssg.dojangfarm.domain.Refund;
 
 
 public interface RefundService {
-	public int refundSale(int saleNo);
+	public int refundSale(Refund refund);
 	public Refund getRefund(int refundNo);
 	public List<Refund> getRefundList(int userNo);
 }

@@ -11,6 +11,7 @@
 <title>공동구매 신청자 리스트</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <table border = "1">
 <tr>
 <td>번호</td>
@@ -18,7 +19,7 @@
 <td>개수</td>
 </tr>
 
-<c:forEach var = "commonJoin" items = "${cjList }">
+<c:forEach var = "commonJoin" items = "${cjList.pageList }">
 <tr>
 <td> <a href = "<c:url value = '/commonJoin/view.do'>
 <c:param name = 'cjNo' value = '${commonJoin.cjNo }'/>
@@ -29,6 +30,20 @@
 <td>${commonJoin.count }</td>
 </tr>
 </c:forEach>
+<c:if test="${!cjList.firstPage}">
+		<a
+			href='<c:url value="/commonJoin/viewList2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+			Prev</a>
+	</c:if>
+	<c:if test="${!cjList.lastPage}">
+		<a
+			href='<c:url value="/commonJoin/viewList2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+			Next</a>
+	</c:if>
 </table>
 </body>
 </html>

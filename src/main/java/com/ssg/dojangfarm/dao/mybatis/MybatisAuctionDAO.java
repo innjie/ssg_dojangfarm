@@ -97,5 +97,23 @@ public class MybatisAuctionDAO implements AuctionDAO{
 	public List<ImPur> getMyImPurList(String id) {
 		return auctionMapper.getMyImPurList(id);
 	}
+	
+	
+	@Override
+	public int getLastANo() {
+		return auctionMapper.getLastANo();
+	}
+	@Override
+	public void addImage(int aNo, String image) {
+		auctionMapper.addImage(aNo, image);
+		
+	}
+	
+	@Transactional
+	public void addImage(Auction auction, int aNo, String image) {
+		auctionMapper.registerAuction(auction);
+		auctionMapper.addImage(aNo, image);
+		
+	}
 
 }

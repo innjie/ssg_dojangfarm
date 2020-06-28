@@ -11,28 +11,40 @@
 <title>주문자 리스트 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 	<table border="1">
 		<tr>
 			<td>주문번호</td>
 			<td>수량</td>
-			<td>주문자 번호</td>
 			<td>주문자</td>
+			<td>배송</td>
 		</tr>
-		<c:forEach var="order" items="${orderUserList}">
+		<c:forEach var="order" items="${orderUserList.pageList}">
 			<tr>
-				<td>${order.orderNo }</td>
 				<td><a
 					href="<c:url value='/order/view.do'>
 	<c:param name='orderNo' value='${order.orderNo }'/>
 	</c:url>">${order.orderNo }</a>
 				</td>
 				<td>${order.quantity }</td>
-				<td>${order.user.userNo }</td>
 				<td>${order.user.name }</td>
+				<td>${order.delivery.dNo }</td>
 			</tr>
 		</c:forEach>
 	</table>
+	<c:if test="${!orderList.firstPage}">
+    		<a href='<c:url value="/order/userView2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!orderList.lastPage}">
+    		<a href='<c:url value="/order/userView2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
 	<!--  매핑 확인하고 수정 -->
-	<a href="OrderListView">[이전 단계로]</a>
+	<a href="/user/myPage.do">[이전 단계로]</a>
 </body>
 </html>

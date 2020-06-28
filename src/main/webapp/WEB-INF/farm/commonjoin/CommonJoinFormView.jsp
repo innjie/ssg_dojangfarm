@@ -11,6 +11,7 @@
 <title>공동구매 참여</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <h2>${common.title } 신청 폼</h2>
 
 	<c:set var="targetUrI">

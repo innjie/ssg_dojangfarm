@@ -11,6 +11,7 @@
 <title>공동구매 전체보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <form action = "<c:url value = '/common/searchCommon.do'/>">
 <input type = "text" name = "word"> &nbsp;
 <input type = "submit" value = "검색">
@@ -22,7 +23,7 @@
 	<td>제목</td>
 	<td>작성자</td>
 </tr>
-<c:forEach var="common" items="${commonList}" >
+<c:forEach var="common" items="${commonList.pageList}" >
 	<tr>
 	<td><a href="<c:url value='/common/viewCommon.do'> 
 						<c:param name='saleNo' value='${common.saleNo}'/>
@@ -32,8 +33,21 @@
 	<td>${common.user.name}</td>
 	</tr>
 </c:forEach>
-</table>
-<a href="<c:url value='/common/insertForm.do'/>"> 등록</a> <br>
 
+</table>
+	<c:if test="${!commonList.firstPage}">
+    		<a href='<c:url value="/common/list2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!commonList.lastPage}">
+    		<a href='<c:url value="/common/list2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
+<a href="<c:url value='/common/insertForm.do'/>"> 등록</a> <br>
+<a href="<c:url value = '/index.do'/>">[메인으로]</a>
 </body>
 </html>

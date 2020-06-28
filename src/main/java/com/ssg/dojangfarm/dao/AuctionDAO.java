@@ -37,4 +37,8 @@ public interface AuctionDAO {
 	User getUserNoByAuction(int aNo);
 
 	int getPNoByPName(String pName);
+	
+	int getLastANo();
+	void addImage(int aNo, String image);
+	void addImage(Auction auction, int aNo, String image);
 }

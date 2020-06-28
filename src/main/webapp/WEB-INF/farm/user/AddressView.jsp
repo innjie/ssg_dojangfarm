@@ -12,6 +12,8 @@
 <title>나의 주소록</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border='1'>
 		<tr>
 			<td>이름</td>
@@ -38,6 +40,7 @@
 	<a href="<c:url value='/address/deleteAddress.do'>
 				<c:param name='addrNo' value='${address.addrNo}' />
 			</c:url>">
-	삭제</a>
+	삭제</a>&nbsp;&nbsp;
+	<a href="<c:url value='/address/getAddressList.do' />">이전</a>
 </body>
 </html>

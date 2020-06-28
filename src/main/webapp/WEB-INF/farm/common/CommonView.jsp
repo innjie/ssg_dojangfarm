@@ -11,6 +11,7 @@
 <title>공동구매 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <b><c:out value="${message}" /></b>
  <table border="1" >
 	<tr>
@@ -18,7 +19,7 @@
 	</tr>
 
 	<tr >
-	<td rowspan="4">사진</td>
+	<td rowspan="4"><img src = "../${common.image }"/></td>
 	</tr>
 	
 	<tr>

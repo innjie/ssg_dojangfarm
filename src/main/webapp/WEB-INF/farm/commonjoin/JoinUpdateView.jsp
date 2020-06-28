@@ -12,6 +12,7 @@
 <title>공동구매 참여 수정</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <h2>${common.title } 신청 수정 폼</h2>
 <c:set var="targetUrI">
 		<c:url value="/commonJoin/update.do" />

@@ -9,7 +9,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
    	<!-- scan package and make bean  -->   	
-    <context:component-scan base-package="com.ssg.dojangfarm.controller.*"/>   
+    <context:component-scan base-package="com.ssg.dojangfarm.controller.*"/> 
+     
 
 	<!-- make HandlerMapping bean -->
 	 <mvc:annotation-driven /> 
@@ -19,6 +20,9 @@
 	<!-- really use -->
 	<mvc:view-controller path="index.do" view-name="Main" />
 	<mvc:view-controller path="user/myPage.do" view-name="user/MyPage" />
+	
+	<mvc:view-controller path="kakao.do" view-name="kakao/kakao" />
+	
 	
 	
 	<bean id="viewResolver" 
@@ -45,6 +49,23 @@
 			<mvc:mapping path="/user/getUser.do" />
 			<mvc:mapping path="/user/modifyUser.do" />
 			<mvc:mapping path="/user/deleteUser.do" />
+			<mvc:mapping path="/user/checkPW.do" />
+			<mvc:mapping path= "/common/CommonInsertFormView"/>
+			<mvc:mapping path= "/common/CommonUpdateFormView"/>
+			<mvc:mapping path="/common/CommonUserListView"/>
+			<mvc:mapping path="/commonnotice/CNUserListView"/>
+			<mvc:mapping path= "/commonnotice/InsertFormView"/>
+			<mvc:mapping path="/commonnotice/UpdateFormView"/>
+			<mvc:mapping path= "/normal/NormalInsertFormView"/>
+			<mvc:mapping path="/normal/NormalUpdateFormView"/>
+			<mvc:mapping path= "/normal/NormalUserListView"/>
+			<mvc:mapping path="/order/OrderCancleView"/>
+			<mvc:mapping path="/order/OrderUserView"/>
+			<mvc:mapping path="/order/OrderListView"/>
+			<mvc:mapping path="/order/OrderView"/>
+			<mvc:mapping path="/refund/RefundFormView"/>
+			<mvc:mapping path="/refund/RefundListView"/>
+			<mvc:mapping path="/refund/RefundView"/>
 			<bean class="com.ssg.dojangfarm.controller.user.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>     
@@ -60,11 +81,7 @@
 		<property name="defaultEncoding" value="UTF-8" />
 	</bean> 
 	
-
-
-<!-- 
-	
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	</bean>-->
+	</bean>
 </beans>

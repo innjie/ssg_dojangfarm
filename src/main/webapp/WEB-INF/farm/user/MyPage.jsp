@@ -12,7 +12,7 @@
 <title>마이페이지</title>
 </head>
 <body>
-<h2><a href="<c:url value='/' />" >도장팜</a>에 오시면 혜택이 팜팜</h2><br>
+	<%@ include file="../IncludeTop.jsp" %>
 	<a href="<c:url value='/user/myPage.do'><c:param name="type" value="user" /></c:url>">회원 정보</a>&nbsp;&nbsp;&nbsp;&nbsp;		
 	<c:if test="${param.type == 'user'}">
 		<a href="<c:url value='/user/getUser.do' />">나의 정보</a>&nbsp;&nbsp;
@@ -23,7 +23,8 @@
 	<a href="<c:url value='/user/myPage.do'><c:param name="type" value="normal" /></c:url>">나의 일반 판매</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	<c:if test="${param.type == 'normal'}">
 		<a href="<c:url value='/normal/userList.do'/>">나의 판매</a>&nbsp;&nbsp;
-		<a href="">나의 구매</a>&nbsp;&nbsp;
+		<a href="<c:url value = '/order/list.do'/>">나의 구매</a>&nbsp;&nbsp;
+		<a href = "<c:url value = '/refund/list.do'/> "> 환불 목록 </a> &nbsp;&nbsp;
 	</c:if>
 	<br><br>
 	<a href="<c:url value='/user/myPage.do'><c:param name="type" value="auction" /></c:url>">나의 경매</a>&nbsp;&nbsp;&nbsp;&nbsp;

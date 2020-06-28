@@ -1,14 +1,19 @@
 package com.ssg.dojangfarm.controller.auction;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -16,6 +21,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Auction;
@@ -25,12 +34,21 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-public class AuctionController {
+@SessionAttributes("auctionList")
+public class AuctionController implements ServletContextAware{
 	private static final String LISTAUCTION = "auction/AuctionListView";
 	private static final String VIEWAUCTION = "auction/AuctionView";
 	private static final String LISTMYAUCTION = "auction/MyAuctionListView";
 	private static final String AUCTIONFORM = "auction/RegisterAuctionFormView";
+	private static final String ADDIMAGE = "auction/AddImage";
 	private static final String CONFIRMAUCTION = "auction/RegisterAuctionConfirmView";
+	
+	private ServletContext context;	
+
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.context = context;
+	}
 	
 	private FarmFacade farm;
 	
@@ -39,7 +57,7 @@ public class AuctionController {
 		this.farm = farm;
 	}
 
-	//AuctionCommand ∞¥√º ª˝º∫
+	//AuctionCommand
 	@ModelAttribute("auctionCommand")
 	public AuctionCommand formBacking() {
 		return new AuctionCommand();
@@ -49,28 +67,28 @@ public class AuctionController {
 	@ModelAttribute("pName")
 	public List<String> referenceData() {
 		List<String> pName = new ArrayList<String>();
-		pName.add("±‚≈∏∞˙¿œ");
-		pName.add("±‚≈∏√§º“");
-		pName.add("ªÁ∞˙");
-		pName.add("ø¿∑ª¡ˆ");
-		pName.add("ºˆπ⁄");
-		pName.add("∫πº˛æ∆");
-		pName.add("≈‰∏∂≈‰");
-		pName.add("πË");
-		pName.add("∞®");
-		pName.add("∆˜µµ");
-		pName.add("µ˛±‚");
-		pName.add("¬¸ø‹");
-		pName.add("πË√ﬂ");
-		pName.add("πˆº∏");
-		pName.add("¥Á±Ÿ");
-		pName.add("ø¿¿Ã");
-		pName.add("æÁ∆ƒ");
-		pName.add("∏∂¥√");
-		pName.add("π´");
-		pName.add("∞Ì±∏∏∂");
-		pName.add("∞®¿⁄");
-		
+		pName.add("ÏÇ¨Í≥º");
+		pName.add("Ïò§Î†åÏßÄ");
+		pName.add("ÏàòÎ∞ï");
+		pName.add("Î≥µÏà≠ÏïÑ");
+		pName.add("ÌÜ†ÎßàÌÜ†");
+		pName.add("Î∞∞");
+		pName.add("Í∞ê");
+		pName.add("Ìè¨ÎèÑ");
+		pName.add("Îî∏Í∏∞");
+		pName.add("Ï∞∏Ïô∏");
+		pName.add("Í∏∞ÌÉÄÍ≥ºÏùº");
+		pName.add("Î∞∞Ï∂î");
+		pName.add("Î≤ÑÏÑØ");
+		pName.add("ÎãπÍ∑º");
+		pName.add("Ïò§Ïù¥");
+		pName.add("ÏñëÌåå");
+		pName.add("ÎßàÎäò");
+		pName.add("Î¨¥");
+		pName.add("Í≥†Íµ¨Îßà");
+		pName.add("Í∞êÏûê");
+		pName.add("Í∏∞ÌÉÄÏ±ÑÏÜå");
+
 		return pName;		
 	}
 	
@@ -81,12 +99,12 @@ public class AuctionController {
 
 		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getAuctionList());
 
-		auctionList.setPageSize(4);
-		model.put("auctionList", auctionList.getSource() );
+		auctionList.setPageSize(10);
+		model.put("auctionList", auctionList);
 		return LISTAUCTION;
 	}
 
-/*	//view auctionList by page
+	//view auctionList by page
 	@RequestMapping("/auction/viewAuctionList2.do")
 	public String listAuction2(
 			@RequestParam("page") String page,
@@ -104,7 +122,7 @@ public class AuctionController {
 		
 		return LISTAUCTION;
 	}
-*/	
+	
 	
 	//view  myAuctionList
 	@RequestMapping("/auction/viewMyAuctionList.do")
@@ -117,12 +135,13 @@ public class AuctionController {
 
 		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(user.getUserNo()));
 
-		auctionList.setPageSize(4);
-		model.put("auctionList", auctionList.getSource() );
+		auctionList.setPageSize(10);
+		model.put("auctionList", auctionList);
+		
 		return LISTMYAUCTION;
 	}	
 
-/*	//view myAuctionList by page
+	//view myAuctionList by page
 	@RequestMapping("/auction/viewMyAuctionList2.do")
 	public String listMyAuction2(
 			@RequestParam("page") String page,
@@ -138,9 +157,10 @@ public class AuctionController {
 			auctionList.previousPage(); 
 		}
 		
+		
 		return LISTMYAUCTION;
 	}	
-*/
+
 	//find auctionList
 	@RequestMapping("/auction/findAuctionList.do")
 	public String findAuction(
@@ -157,14 +177,16 @@ public class AuctionController {
 			auctionList = new PagedListHolder<Auction>(this.farm.findAuctionByProduct(text));
 		}
 
-		auctionList.setPageSize(4);
-		model.put("auctionList", auctionList.getSource());
+		auctionList.setPageSize(10);
+		model.put("auctionList", auctionList);
+		model.put("find", "find");
+		
 		return LISTAUCTION;
 	}
 
-/*	//find auctionList by page
+	//find auctionList by page
 	@RequestMapping("/auction/findAuctionList2.do")
-	public String findAuction2(
+	public ModelAndView findAuction2(
 			@RequestParam("page") String page,
 			@ModelAttribute("auctionList") PagedListHolder<Auction> auctionList,
 			BindingResult result) throws Exception {
@@ -177,13 +199,14 @@ public class AuctionController {
 		else if ("previous".equals(page)) { 
 			auctionList.previousPage(); 
 		}
-		return LISTAUCTION;
+		return new ModelAndView(LISTAUCTION, "find", "find");
 	}
-*/
+
 	//view auction
 	@RequestMapping("/auction/viewAuction.do")
 	public String viewAuction(
 			@RequestParam("aNo") int aNo,
+			@RequestParam(value="my", required = false) String my,
 			ModelMap model,
 			HttpServletRequest request) throws Exception {
 		
@@ -193,6 +216,7 @@ public class AuctionController {
 		
 		Auction auction = this.farm.getAuction(aNo);
 		model.put("auction", auction);
+		model.put("my", my);
 		
 		//check this user is auction's user
 		if(user != null) {
@@ -209,31 +233,44 @@ public class AuctionController {
 	}
 
 	//register auction ... auction form
-	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.GET)
+	@RequestMapping("/auction/registerAuctionForm.do")
 	public String auctionForm(
 			@ModelAttribute("auctionCommand") AuctionCommand auctionCommand) throws Exception {
 
 		return AUCTIONFORM;
 	}
+	
+	
+	//confirm auction
+	@RequestMapping("/auction/confirmAuction.do")
+	public String confirm(
+			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
+			BindingResult bindingResult) throws Exception {
+		
+		//validate
+		if (bindingResult.hasErrors()) {
+			return AUCTIONFORM; 
+		}
+		
+		if (auctionCommand.getProduct() == null) {
+			bindingResult.rejectValue("product.pName", "NotNull");
+			return AUCTIONFORM; 
+		}
+		
+		return CONFIRMAUCTION;
+	}
 
 	
 	//register auction ... insert auction
-	@RequestMapping(value = "/auction/registerAuction.do",  method = RequestMethod.POST)
+	@RequestMapping("/auction/registerAuction.do")
 	public String register(
-			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			BindingResult result,
+			@ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
 			HttpServletRequest request) throws Exception {
 		
 		System.out.println("register auction!!");
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
-		
-		//validate
-		if (result.hasErrors()) {
-			System.out.println("register auction errror");
-			return AUCTIONFORM;
-		}
 		
 		auctionCommand.getProduct().setpNo(this.farm.getPNoByPName(auctionCommand.getProduct().getpName()));;
 		
@@ -247,10 +284,35 @@ public class AuctionController {
 		auction.setDeadline(auctionCommand.getDeadline());
 		auction.setImPurAva(auctionCommand.getImPurAva());
 		auction.setImPurPrice(auctionCommand.getImPurPrice());
-				
-		this.farm.registerAuction(auction);	
-					
+		
+		MultipartFile image = auctionCommand.getImage();
+		if(image != null) {
+			uploadFile(image, auction);
+		}
+		else {
+			this.farm.registerAuction(auction);	
+		}
+		
 		return "redirect:/auction/viewAuction.do?aNo=" + auction.getaNo();
+	}
+	
+	private void uploadFile(MultipartFile image, Auction auction) {
+		this.farm.registerAuction(auction);	
+		System.out.println(image.getOriginalFilename());
+		int aNo = this.farm.getLastANo();
+		String path = context.getRealPath("/images/auction");
+		File file = new File(path, aNo + ".jpg");
+		try {
+			image.transferTo(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// file nameÏùÑ Îç∞Ïù¥ÌÑ∞Î≤†Ïù¥Ïä§Ïóê Ï†ÄÏû•!
+		System.out.println("path: " + path);
+		System.out.println("path: " + file.getPath());
+		this.farm.addImage(aNo, "images/auction/" + file.getName());
+		//this.farm.addImage(auction, (lastANo+1), file.getPath());
 	}
 	
 }

@@ -98,7 +98,14 @@ public class FarmImpl implements FarmFacade{
 	public int getSUserNo(int msgNo) {
 		return messageDAO.getSUserNo(msgNo);
 	}
-	
+	@Override
+	public List<Message> findReceiveMsg(String title) {
+		return messageDAO.findReceiveMsg(title);
+	}
+	@Override
+	public List<Message> findSendMsg(String title) {
+		return messageDAO.findSendMsg(title);
+	}
 	
 	//-------------------------------------------------------------------------
 	//QnA
@@ -198,7 +205,19 @@ public class FarmImpl implements FarmFacade{
 	public int getPNoByPName(String pName) {
 		return auctionDAO.getPNoByPName(pName);
 	}
+	public int getLastANo() {
+		return auctionDAO.getLastANo();
+	}
 	
+	public void addImage(int aNo, String image) {
+		auctionDAO.addImage(aNo, image);
+		
+	}
+	
+	public void addImage(Auction auction, int aNo, String image) {
+		auctionDAO.addImage(auction, aNo, image);
+		
+	}
 	//-------------------------------------------------------------------------
 	//User
 	//-------------------------------------------------------------------------
@@ -369,7 +388,16 @@ public class FarmImpl implements FarmFacade{
 	public List<Common> searchCommon(String title) {
 		return commonDAO.searchCommon(title);
 	}
-
+	@Override
+	public void addCommonImage(int saleNo, String string) {
+		commonDAO.addCommonImage(saleNo, string);
+		
+	}
+	@Override
+	public int getLastCommonSaleNo() {
+		return commonDAO.getLastCommonSaleNo();
+	}
+	
 	@Override
 	public int insertCommonjoin(CommonJoin commonJoin) {
 		return commonDAO.insertCommonjoin(commonJoin);
@@ -512,6 +540,15 @@ public class FarmImpl implements FarmFacade{
 	public List<Normal> getNormalListByCateNo(int cateNo) {
 		return normalDAO.getNormalListByCateNo(cateNo);
 	}
+	@Override
+	public int getLastSaleNo() {
+		return normalDAO.getLastSaleNo();
+	}
+	@Override
+	public void addNormalImage(int saleNo, String string) {
+		normalDAO.addNormalImage(saleNo, string);
+		
+	}
 	//-------------------------------------------------------------------------
 	//Payment
 	//-------------------------------------------------------------------------
@@ -531,8 +568,8 @@ public class FarmImpl implements FarmFacade{
 	//-------------------------------------------------------------------------
 		
 	@Override
-	public int refundSale(int saleNo) {
-		return refundDAO.refundSale(saleNo);
+	public int refundSale(Refund refund) {
+		return refundDAO.refundSale(refund);
 	}
 
 	@Override
@@ -544,6 +581,9 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
+	
+	
+	
 
 	
 	

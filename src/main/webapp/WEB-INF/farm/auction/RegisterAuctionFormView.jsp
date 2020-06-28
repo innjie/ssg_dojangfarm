@@ -12,7 +12,9 @@
 <title>경매 등록</title>
 </head>
 <body>
-	<form:form modelAttribute="auctionCommand">
+	<c:set var="targetUrl"><c:url value="/auction/registerAuction.do" /></c:set>
+	
+	<form:form modelAttribute="auctionCommand" action="${targetUrl}" enctype="multipart/form-data">
 		<form:label path="title">제목 </form:label>
 		<form:input path="title" />
 		<form:errors path="title" />
@@ -21,6 +23,7 @@
 		<form:label path="product.pName">품목 </form:label>
 		<br>
 		<form:radiobuttons path="product.pName" items="${pName}"/>
+		<br>
 		<form:errors path="product.pName" />
 		<br>
 		
@@ -48,8 +51,12 @@
 		<form:input path="imPurPrice" />
 		<form:errors path="imPurPrice" />
 		<br>
+				
+		사진 <input type="file" name="image" />
+		<br><br>	
 		
-		<input type="submit" value="추가" />
+		<input type="submit" value="추가" />&nbsp;&nbsp;
+		<a href="<c:url value='/auction/viewAuctionList.do' />">이전</a>
 		
 	</form:form>
 </body>

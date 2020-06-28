@@ -12,6 +12,8 @@
 <title>경매 상세보기</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+
 	<table border='1'>
 		<tr>
 			<td>제목</td>
@@ -20,6 +22,10 @@
 		<tr>
 			<td>품목</td>
 			<td>${auction.product.pName}</td>
+		</tr>
+		<tr>
+			<td>사진</td>
+			<td><img src="../${auction.image}" /></td>
 		</tr>
 		<tr>
 			<td>최소 가격</td>
@@ -109,6 +115,13 @@
 				</table>
 			</c:if>
 		</table>
+	</c:if>
+	<br><br>
+	<c:if test="${my == null}">
+		<a href="<c:url value='/auction/viewAuctionList.do' />">이전</a>
+	</c:if>
+	<c:if test="${my != null}">
+		<a href="<c:url value='/auction/viewMyAuctionList.do' />">이전</a>
 	</c:if>
 </body>
 </html>

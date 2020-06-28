@@ -29,7 +29,7 @@
 	<select id="getNormalSale" parameterType="int"
 		resultType="Normal">
 		SELECT
-		saleNo, saleType, title, saleState, info, price,
+		saleNo, saleType, title, saleState, info, price, image,
 		count, state, pNo as "product.pNo", Normal.userNo as "user.userNo",
 		regidDate, id as "user.id"
 		FROM Normal, UserTable
@@ -95,7 +95,7 @@
 	
 	<select id = "getNormalListByCateNo" resultType = "Normal">
 	SELECT
-		saleNo, title,
+		saleNo, title, image,
 		Usertable.name as "user.name", regidDate
 		From Normal, UserTable, Product
 		WHERE
@@ -103,4 +103,18 @@
 		AND saleState = 'OPEN'
 		AND normal.pNo = product.pNo and product.cateNo = #{cateNo} ORDER BY saleNo
 	</select>
+	
+	<select id="getLastSaleNo" resultType="int">
+    	SELECT 
+    		MAX(saleNo)
+    	FROM Normal
+  	</select>
+  	
+  	<update id="addNormalImage" parameterType="Normal">
+    	UPDATE 
+    		Normal
+    	SET image = #{param2}
+    	WHERE 
+    		saleNo = #{param1}
+  	</update>
 </mapper>

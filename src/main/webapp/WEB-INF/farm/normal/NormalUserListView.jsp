@@ -11,6 +11,7 @@
 <title> 등록한 판매 리스트 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 
 <form action = "<c:url value = '/normal/searchNormal.do'/>">
 <input type = "text" name = "word"> &nbsp;
@@ -23,7 +24,7 @@
 	<td>제목</td>
 	<td>작성자</td>
 </tr>
-<c:forEach var="normal" items="${normalList}" >
+<c:forEach var="normal" items="${normalList.pageList}" >
 	<tr>
 	<td>${normal.saleNo}</td>
 	<td><a href="<c:url value='/normal/viewNormal.do'> 
@@ -34,6 +35,20 @@
 	</tr>
 </c:forEach>
 </table>
-<a href="/index" >[메인으로]</a>
+<c:if test="${!normalList.firstPage}">
+			<a
+				href='<c:url value="/normal/userList2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+				Prev</a>
+		</c:if>
+		<c:if test="${!normalList.lastPage}">
+			<a
+				href='<c:url value="/normal/userList2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+				Next</a>
+		</c:if>
+<a href="<c:url value='/user/myPage.do' />" >[이전 페이지로]</a>
 </body>
 </html>

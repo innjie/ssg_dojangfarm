@@ -37,11 +37,25 @@
 		<c:if test="${cMsg == null}">
 			<textarea name="content"></textarea>
 		</c:if>
-		<br>
+		<br><br>
 
 		<input type="hidden" name="cMsgNo" value="${cMsg.msgNo}" />
 		<input type="hidden" name="saleNo" value="${normal.saleNo}" />
-		<input type="submit" value="보내기" />	
+		<input type="submit" value="보내기" />&nbsp;&nbsp;
+	
+		<c:if test='${normal != null}'>
+			<a href="<c:url value='/normal/viewNormal.do'>
+						<c:param name="saleNo" value="${normal.saleNo}" />
+					</c:url>">
+			이전</a>
+		</c:if>
+		<c:if test='${cMsg != null}'>
+			<a href="<c:url value='/message/viewMessage.do'>
+						<c:param name="msgNo" value="${cMsg.msgNo}" />
+						<c:param name="type" value="receive" />
+					</c:url>">
+			이전</a>		
+		</c:if>	
 	</form>
 </body>
 </html>

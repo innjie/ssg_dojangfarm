@@ -17,8 +17,8 @@ public class RefundServiceImpl implements RefundService {
 	private RefundDAO refundDAO;
 
 	@Override
-	public int refundSale(int saleNo) {
-		return refundDAO.refundSale(saleNo);
+	public int refundSale(Refund refund) {
+		return refundDAO.refundSale(refund);
 	}
 
 	@Override

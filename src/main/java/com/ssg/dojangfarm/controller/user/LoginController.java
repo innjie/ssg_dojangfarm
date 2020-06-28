@@ -61,8 +61,9 @@ public class LoginController {
 		User user = farm.checkIdPw(loginCommand.getId(), loginCommand.getPassword());
 
 		if (user == null) {
-			return new ModelAndView(LOGINFORM, "message", 
-					"Invalid username or password.  Signon failed.");
+			result.rejectValue("id", "idpwErr", new Object[] {loginCommand.getId()}, null);
+
+			return new ModelAndView(LOGINFORM);
 		}
 		else {
 			System.out.println("Success login");
@@ -70,10 +71,14 @@ public class LoginController {
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("user", user);
 			
-			if (loginCommand.getForwardAction() != null) 
+			if (loginCommand.getForwardAction() != null && !loginCommand.getForwardAction().equals("")) {
+				System.out.println("login" + loginCommand.getForwardAction() + "!!");
 				return new ModelAndView("redirect:" + loginCommand.getForwardAction());
-			else 
-				return new ModelAndView("Main");
+			
+			}
+			else {
+				return new ModelAndView("redirect:/");
+			}
 		}
 	}
 }

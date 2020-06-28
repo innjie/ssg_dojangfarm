@@ -6,7 +6,7 @@
   	<!-- Auction -->
   	<select id="getAuctionList" resultType="Auction">
     	SELECT 
-    		aNo, title, minPrice, deadline, imPurPrice, bidPrice, 
+    		aNo, title, minPrice, deadline, imPurPrice, bidPrice,
     		Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product
     	WHERE 
@@ -16,18 +16,19 @@
   	
   	<select id="findAuctionByTitle" parameterType="String" resultType="Auction">
     	SELECT 
-    		Auction.aNo, title, minPrice, deadline,
-    		imPurPrice, bidPrice 
-    	FROM Auction
+    		aNo, title, minPrice, deadline, imPurPrice, bidPrice,
+    		Auction.pNo AS "product.pNo", pName AS "product.pName"
+    	FROM Auction, Product
     	WHERE 
+    		Auction.pNo = Product.pNo AND
     		title LIKE #{paramValue}
     	ORDER BY Auction.aNo
   	</select>
   	
   	<select id="findAuctionByProduct" parameterType="String" resultType="Auction">
     	SELECT 
-    		Auction.aNo, title, minPrice, deadline,
-    		imPurPrice, Auction.bidPrice 
+    		aNo, title, minPrice, deadline, imPurPrice, bidPrice,
+    		Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product
     	WHERE 
     		Auction.pNo = Product.pNo AND
@@ -38,10 +39,11 @@
   	
   	<select id="getMyAuctionList" parameterType="int" resultType="Auction">
     	SELECT 
-    		Auction.aNo, title, minPrice, deadline,
-    		imPurPrice, bidPrice, finish 
-    	FROM Auction
+    		aNo, title, minPrice, deadline, imPurPrice, bidPrice,
+    		Auction.pNo AS "product.pNo", pName AS "product.pName"
+    	FROM Auction, Product
     	WHERE 
+    		Auction.pNo = Product.pNo AND
     		userNo = #{userNo}
     	ORDER BY Auction.aNo
   	</select>
@@ -49,7 +51,7 @@
   	<select id="getAuction" parameterType="int" resultType="Auction">
     	SELECT 
     		aNo, title, detail, minPrice, deadline,
-    		imPurAva, imPurPrice, finish, 
+    		imPurAva, imPurPrice, finish, image,
     		Auction.userNo AS "user.userNo", id AS "user.id",
     		 Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product, UserTable
@@ -86,6 +88,20 @@
     	WHERE 
     		pName = #{pName}
   	</select>
+  	
+  	<select id="getLastANo" resultType="int">
+    	SELECT 
+    		MAX(aNo)
+    	FROM Auction
+  	</select>
+  	
+  	<update id="addImage" parameterType="Auction">
+    	UPDATE 
+    		Auction
+    	SET image = #{image}
+    	WHERE 
+    		aNo = #{aNo}
+  	</update>
   	
   	
   	<select id="getMyBidList" parameterType="int" resultType="Bid">

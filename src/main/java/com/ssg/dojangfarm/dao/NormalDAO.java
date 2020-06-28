@@ -22,4 +22,6 @@ public interface NormalDAO {
 	Product getProduct(int pNo);
 	List<Category> getCategoryList();
 	List<Normal> getNormalListByCateNo(int cateNo);
+	int getLastSaleNo();
+	void addNormalImage(int saleNo, String string);
 }

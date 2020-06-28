@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
+<%@ include file="../IncludeTop.jsp" %>
 <b><c:out value="${message}" default="No further information was provided."/></b>
 
 <br> <br>

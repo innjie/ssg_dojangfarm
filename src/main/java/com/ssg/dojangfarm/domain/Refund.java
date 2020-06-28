@@ -11,7 +11,7 @@ public class Refund implements Serializable{
 	private String name;
 	private String refundType;
 	private String refundDate;
-	
+	private User user;
 	
 	public int getRefundNo() {
 		return refundNo;
@@ -54,6 +54,12 @@ public class Refund implements Serializable{
 	}
 	public void setRefundDate(String refundDate) {
 		this.refundDate = refundDate;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

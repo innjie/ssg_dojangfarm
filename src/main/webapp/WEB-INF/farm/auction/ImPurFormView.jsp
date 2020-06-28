@@ -88,6 +88,11 @@ function searchAddress(userNo) {
 		품목  ${auction.product.pName}<br>	
 		가격   ${auction.imPurPrice}<br>
 	
+		<form:label path="phone">전화번호 </form:label>
+		<form:input path="phone" />
+		<form:errors path="phone" />
+		<br>
+	
 		<form:label path="cardNo">cardNo </form:label>
 		<form:input path="cardNo" />
 		<input type="button" value="Search!" onClick="searchCard(${user.userNo})" />

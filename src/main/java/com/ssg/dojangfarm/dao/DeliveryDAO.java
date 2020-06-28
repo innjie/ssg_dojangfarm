@@ -10,5 +10,6 @@ public interface DeliveryDAO {
 	public void addDelivery(Delivery delivery);
 	public List<Delivery> getDeliveryListByUserNo(int userNo);
 	public int getLastDNo();
-
+	
+	public void changeDeliveryFinish(int dNo);
 }

@@ -4,10 +4,18 @@
 <mapper
 	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.DeliveryMapper">
 	<cache />
-	<update id = "changeDeliveryStatus" parameterType = "Delivery">
+	<update id = "changeDeliveryStatus" parameterType = "int">
 	UPDATE Delivery
 	SET status = '배송중'
 	WHERE dNo= #{dNo}
+	</update>
+	
+	<update id = "changeDeliveryFinish" parameterType = "int">
+		UPDATE Delivery
+		SET 
+			status = '배송완료'
+		WHERE 
+			dNo= #{dNo}
 	</update>
 	
 	<select id = "getDelivery" parameterType = "int" resultType = "Delivery">
@@ -30,9 +38,9 @@
         	SELECT DELIVERYSEQ.nextval AS "dNo" FROM DUAL
      	</selectKey>
     	INSERT INTO Delivery 
-    		(dNo, addrNo)
+    		(dNo, addrNo, phone)
     	VALUES 
-    		(#{dNo}, #{address.addrNo})
+    		(#{dNo}, #{address.addrNo}, #{phone})
   	</insert>
   	
   	<select id="getLastDNo" resultType="int">

@@ -34,6 +34,7 @@
 		<tr>
 			<td>배송</td>
 			<td>주소</td>
+			<td>전화번호</td>
 			<td>상태</td>
 		</tr>
 		<tr>
@@ -44,6 +45,7 @@
 						</c:url>">
 				${imPur.delivery.address.addr}</a>
 			</td>
+			<td>${imPur.delivery.phone}</td>
 			<td>${imPur.delivery.status}</td>
 		</tr>
 	</table>

@@ -302,6 +302,10 @@ public class FarmImpl implements FarmFacade{
 	public List<Delivery> getDeliveryListByUserNo(int userNo) {
 		return deliveryDAO.getDeliveryListByUserNo(userNo);
 	}
+	@Override
+	public void changeDeliveryFinish(int dNo) {
+		deliveryDAO.changeDeliveryFinish(dNo);
+	}
 	
 	//-------------------------------------------------------------------------
 	//Order

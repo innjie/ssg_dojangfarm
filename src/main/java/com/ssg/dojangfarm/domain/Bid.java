@@ -13,7 +13,7 @@ public class Bid implements Serializable{
 	private String state;
 	private Address address;
 	private Card card;
-	
+	private String phone;
 	
 	public int getBidNo() {
 		return bidNo;
@@ -62,6 +62,12 @@ public class Bid implements Serializable{
 	}
 	public void setCard(Card card) {
 		this.card = card;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	

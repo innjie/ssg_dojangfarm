@@ -200,6 +200,7 @@ public class BidController {
 		bid.setBidPrice(bidCommand.getBidPrice());
 		bid.setAddress(address);
 		bid.setCard(card);
+		bid.setPhone(bidCommand.getPhone());
 			
 		this.farm.bidAuction(bid);	
 

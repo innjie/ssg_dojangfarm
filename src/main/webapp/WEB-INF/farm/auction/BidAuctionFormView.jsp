@@ -95,6 +95,11 @@ function searchAddress(userNo) {
 		<form:errors path="bidPrice" />
 		<br>
 		
+		<form:label path="phone">전화번호 </form:label>
+		<form:input path="phone" />
+		<form:errors path="phone" />
+		<br>
+		
 		<form:label path="cardNo">cardNo </form:label>
 		<form:input path="cardNo" />
 		<input type="button" value="Search!" onClick="searchCard(${user.userNo})" />

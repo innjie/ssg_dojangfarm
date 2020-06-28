@@ -15,22 +15,26 @@
 <tr>
 	<td>주문번호</td>
 	<td>수량</td>
+	<td>상품 타입</td>
 	<td>상품번호</td>
 	<td>주문자</td>
 	<td>배송번호</td>
 </tr>
 <c:forEach var="order" items="${orderList}" >
+<c:if test = "${(order.state != 'Refund') }">
 	<tr>
 	<td><a href="<c:url value='/order/view.do'> 
 						<c:param name='orderNo' value='${order.orderNo}'/>
 						</c:url>">${order.orderNo}</a>
 	</td>
 	<td>${order.quantity }</td>
+	<td>${order.saleType}</td>
 	<td>${order.saleNo} </td>
 	<td>${order.user.name}</td>
 	<td> <a href = "<c:url value =''><c:param name = 'dNo'
 	value = '${order.delivery.dNo}'/></c:url>"> ${order.delivery.dNo }</a></td> 
 	</tr>
+	</c:if>
 </c:forEach>
 </table>
 <a href="/index" >[메인으로]</a>

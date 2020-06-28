@@ -15,14 +15,15 @@
 		SELECT
 		orderNo, quantity,
 		saleNo, usertable.Name as "user.Name", saleType, dNo as "delivery.dNo",
-		ordertable.userNo as "user.userNo"
+		ordertable.userNo as "user.userNo", ordertable.state
 		FROM OrderTable, usertable
 		WHERE OrderTable.userNo = Usertable.userNo
     and usertable.userno = #{userNo}
 	</select>
 
 	<delete id="cancelOrder" parameterType="int">
-		DELETE FROM OrderTable
+		Update OrderTable
+		SET state = 'Refund'
 		WHERE orderNo = #{orderNo}
 	</delete>
 

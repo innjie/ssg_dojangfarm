@@ -13,6 +13,6 @@ public class LogoutController {
 	public String handleRequest(HttpSession session) throws Exception {
 		session.removeAttribute("user");
 		session.invalidate();
-		return "Main";
+		return "redirect:/";
 	}
 }

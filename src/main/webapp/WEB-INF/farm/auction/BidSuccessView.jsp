@@ -20,9 +20,10 @@
 		기간  ${bid.auction.deadline}<br>
 		가격  ${bid.bidPrice}<br>
 		입찰시간  ${bid.bidTime}<br>
+		주소  ${bid.address.addrNo}<br>
+		카드  ${bid.card.cardNo}<br>
 		
-		<input type="submit" value="확인" />
-		
+		<input type="submit" value="확인" />&nbsp;&nbsp;
 	</form>
 </body>
 </html>

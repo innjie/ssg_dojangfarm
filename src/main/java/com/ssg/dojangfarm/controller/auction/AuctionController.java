@@ -241,33 +241,31 @@ public class AuctionController implements ServletContextAware{
 	}
 	
 	
-	//confirm auction
-	@RequestMapping("/auction/confirmAuction.do")
-	public String confirm(
+	//register auction ... insert auction
+	@RequestMapping("/auction/registerAuction.do")
+	public String register(
 			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			BindingResult bindingResult) throws Exception {
+			BindingResult bindingResult,
+			HttpServletRequest request) throws Exception {
+		
+		System.out.println("register auction!!");
 		
 		//validate
 		if (bindingResult.hasErrors()) {
 			return AUCTIONFORM; 
 		}
-		
+				
 		if (auctionCommand.getProduct() == null) {
 			bindingResult.rejectValue("product.pName", "NotNull");
 			return AUCTIONFORM; 
 		}
 		
-		return CONFIRMAUCTION;
-	}
-
-	
-	//register auction ... insert auction
-	@RequestMapping("/auction/registerAuction.do")
-	public String register(
-			@ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			HttpServletRequest request) throws Exception {
-		
-		System.out.println("register auction!!");
+		if (auctionCommand.getImPurAva() == true && auctionCommand.getImPurPrice() != 0) {
+			if(auctionCommand.getMinPrice() >= auctionCommand.getImPurPrice()) {
+				bindingResult.rejectValue("imPurPrice", "hastoHighThanMinPrice");
+				return AUCTIONFORM; 
+			}
+		}
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");

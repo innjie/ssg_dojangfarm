@@ -58,6 +58,7 @@ public class MybatisAuctionDAO implements AuctionDAO{
 	@Transactional	
 	public void bidAuction(Bid bid) {
 		auctionMapper.updateBidPrice(bid.getAuction().getaNo(), bid.getBidPrice());
+		auctionMapper.changeBidState(bid.getAuction().getaNo());
 		auctionMapper.bidAuction(bid);
 	}  
 	public Bid getBid(int bidNo) {

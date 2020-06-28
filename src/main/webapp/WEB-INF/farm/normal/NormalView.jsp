@@ -11,6 +11,7 @@
 <title>등록한 상품 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
  <table border="1" >
  	<tr> <td colspan="3">제목</td></tr>
 	<tr>

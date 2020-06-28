@@ -11,6 +11,7 @@
 <title>일반판매 전체보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 	<form action="<c:url value = '/normal/searchNormal.do'/>">
 		<input type="text" name="word"> &nbsp; <input type="submit"
 			value="검색">

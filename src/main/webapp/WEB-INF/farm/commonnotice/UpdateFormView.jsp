@@ -11,6 +11,7 @@
 <title>공지 수정 폼</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <c:set var = "targetUrI"> <c:url value = "/commonNotice/update.do"/> </c:set>
 <form:form modelAttribute="commonNotice"
 		method = "POST">

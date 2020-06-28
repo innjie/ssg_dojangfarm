@@ -25,4 +25,19 @@
   and usertable.userNo = #{userNo} 
 	</select>
 	
+	<insert id="addDelivery" parameterType="Delivery">
+  		<selectKey keyProperty="dNo" resultType="int" order="BEFORE">
+        	SELECT DELIVERYSEQ.nextval AS "dNo" FROM DUAL
+     	</selectKey>
+    	INSERT INTO Delivery 
+    		(dNo, addrNo)
+    	VALUES 
+    		(#{dNo}, #{address.addrNo})
+  	</insert>
+  	
+  	<select id="getLastDNo" resultType="int">
+    	SELECT 
+    		MAX(dNo)
+    	FROM Delivery
+  	</select>
 </mapper>

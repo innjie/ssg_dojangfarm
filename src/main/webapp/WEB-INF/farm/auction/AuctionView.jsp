@@ -118,7 +118,7 @@
 	</c:if>
 	<br><br>
 	<c:if test="${my == null}">
-		<a href="<c:url value='/auction/viewAuctionList.do' />">이전</a>
+		<a href="<c:url value='/auction/viewAuctionList.do' />">경매리스트보기</a>
 	</c:if>
 	<c:if test="${my != null}">
 		<a href="<c:url value='/auction/viewMyAuctionList.do' />">이전</a>

@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssg.dojangfarm.dao.AuctionDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.AuctionMapper;
+import com.ssg.dojangfarm.dao.mybatis.mapper.DeliveryMapper;
+import com.ssg.dojangfarm.dao.mybatis.mapper.PaymentMapper;
 import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Bid;
 import com.ssg.dojangfarm.domain.ImPur;
@@ -18,6 +20,10 @@ import com.ssg.dojangfarm.domain.User;
 public class MybatisAuctionDAO implements AuctionDAO{
 	@Autowired
 	private AuctionMapper auctionMapper;
+	@Autowired
+	private DeliveryMapper deliveryMapper;
+	@Autowired
+	private PaymentMapper paymentMapper;
 	
 	public List<Auction> getAuctionList() {
 		return auctionMapper.getAuctionList();
@@ -41,9 +47,22 @@ public class MybatisAuctionDAO implements AuctionDAO{
 		return auctionMapper.getUserNoByAuction(aNo);
 	}
 	
-	
+	@Transactional	
 	public void immePurchase(ImPur imPur) {
+		int dNo = deliveryMapper.getLastDNo();
+		int payNo = paymentMapper.getLastPayNo();
+		
+		deliveryMapper.addDelivery(imPur.getDelivery());
+		paymentMapper.insertPayment(imPur.getPayment());
+		
+		auctionMapper.changeBidState(imPur.getAuction().getaNo());
+		
+		imPur.getDelivery().setdNo(dNo+1);
+		imPur.getPayment().setPayNo(payNo);
+		
 		auctionMapper.immePurchase(imPur);
+		
+		auctionMapper.finishAuction(imPur.getAuction().getaNo());
 	} 
 	public ImPur getImPurByAuction(int aNo) {
 		return auctionMapper.getImPurByAuction(aNo);
@@ -115,6 +134,10 @@ public class MybatisAuctionDAO implements AuctionDAO{
 		auctionMapper.registerAuction(auction);
 		auctionMapper.addImage(aNo, image);
 		
+	}
+	
+	public void finishAuction(int aNo) {
+		auctionMapper.finishAuction(aNo);
 	}
 
 }

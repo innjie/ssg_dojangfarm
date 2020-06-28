@@ -32,7 +32,7 @@ import com.ssg.dojangfarm.domain.ImPur;
 import com.ssg.dojangfarm.domain.SBid;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
-
+ 
 @Controller
 @SessionAttributes("auctionList")
 public class AuctionController implements ServletContextAware{

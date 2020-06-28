@@ -12,6 +12,7 @@
 </head>
 <body>
 
+<%@ include file="../IncludeTop.jsp" %>
 <form action = "<c:url value = '/commonNotice/searchNotice.do'/>">
 <input type = "text" name = "word"> &nbsp;
 <input type = "submit" value = "검색">

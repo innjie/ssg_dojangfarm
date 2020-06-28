@@ -11,6 +11,7 @@
 <title>공동구매 공지 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 	<table border="1px">
 		<tr>
 			<td>공지번호</td>

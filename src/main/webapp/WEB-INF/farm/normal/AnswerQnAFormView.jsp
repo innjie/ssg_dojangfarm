@@ -12,6 +12,7 @@
 <title>답변하기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 	<form action="<c:url value="/normal/answerQnA.do"/>" method="post">
 		<table border='1'>
 			<tr>

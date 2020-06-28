@@ -11,6 +11,7 @@
 <title>일반판매 수정 폼</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <c:set var="targetUrI">
 		<c:url value="/normal/updateNormal.do" />
 	</c:set>

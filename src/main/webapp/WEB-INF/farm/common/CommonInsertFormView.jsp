@@ -12,6 +12,7 @@
 <title>공동구매 추가</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 	<c:set var="targetUrI">
 		<c:url value="/common/insertCommon.do" />
 	</c:set>

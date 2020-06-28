@@ -11,6 +11,7 @@
 <title>공동구매 전체보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <form action = "<c:url value = '/common/searchCommon.do'/>">
 <input type = "text" name = "word"> &nbsp;
 <input type = "submit" value = "검색">

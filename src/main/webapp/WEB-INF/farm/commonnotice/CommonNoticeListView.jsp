@@ -11,6 +11,7 @@
 <title>공동구매 공지 리스트 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <form action = "<c:url value = '/commonNotice/searchCN.do'/>">
 <input type = "text" name = "word"> &nbsp;
 <input type = "submit" value = "검색">

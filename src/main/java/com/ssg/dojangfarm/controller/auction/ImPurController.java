@@ -110,11 +110,11 @@ public class ImPurController {
 		return IMPURFORM;
 	}
 	
-	//Bid ... insertBid
+	//imPur ... imPur
 	@RequestMapping(value = "/auction/immePurchase.do",  method = RequestMethod.POST)
 	public ModelAndView imPur(
 		@RequestParam("aNo") int aNo,
-		@ModelAttribute("imPurCommand") ImPurCommand imPurCommand,
+		@Valid @ModelAttribute("imPurCommand") ImPurCommand imPurCommand,
 		BindingResult bindingResult,
 		HttpServletRequest request) throws Exception {
 			
@@ -130,13 +130,23 @@ public class ImPurController {
 			return new ModelAndView(IMPURFORM, "auction", auction);
 		}
 		
+		if(card.getUser().getUserNo() != user.getUserNo()) {
+			bindingResult.rejectValue("cardNo", "notMyCard");
+			return new ModelAndView(IMPURFORM, "auction", auction);
+		}
+		
 		Address address = this.farm.getAddress(imPurCommand.getAddrNo());
 		
 		if(address == null) {
 			bindingResult.rejectValue("addrNo", "noaddressNo");
 			return new ModelAndView(IMPURFORM, "auction", auction);
+		}
 		
-		}	
+		if(address.getUser().getUserNo() != user.getUserNo()) {
+			bindingResult.rejectValue("addrNo", "notMyAddress");
+			return new ModelAndView(IMPURFORM, "auction", auction);
+		}
+		
 		
 		Payment payment = new Payment();
 		payment.setCard(card);
@@ -144,6 +154,7 @@ public class ImPurController {
 		
 		Delivery delivery = new Delivery();
 		delivery.setAddress(address);
+		delivery.setPhone(imPurCommand.getPhone());
 		
 		ImPur imPur = new ImPur();
 		imPur.setAuction(auction);

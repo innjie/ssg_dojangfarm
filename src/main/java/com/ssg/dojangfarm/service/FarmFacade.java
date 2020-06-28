@@ -78,6 +78,7 @@ public interface FarmFacade {
 	public void changeDeliveryStatus(int dNo);
 	public void addDelivery(Delivery delivery);
 	public List<Delivery> getDeliveryListByUserNo(int userNo);
+	public void changeDeliveryFinish(int dNo);
 	
 	//Order
 	public Order getOrder(int orderNo);

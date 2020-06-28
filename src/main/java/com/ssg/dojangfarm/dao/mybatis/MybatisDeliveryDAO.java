@@ -33,5 +33,10 @@ public class MybatisDeliveryDAO implements DeliveryDAO{
 	public int getLastDNo() {
 		return deliveryMapper.getLastDNo();
 	}
+	@Override
+	public void changeDeliveryFinish(int dNo) {
+		deliveryMapper.changeDeliveryFinish(dNo);
+		
+	}
 	
 }

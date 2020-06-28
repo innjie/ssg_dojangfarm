@@ -70,17 +70,14 @@
 			즉시구매</a>&nbsp;&nbsp;
 		</c:if>
 	</c:if>
-	
-	<!-- 이 부분 처리하는 기능 컨트롤러에 추가 - 판매자일 때 낙찰/즉시구매자 정보 가져오기 -->
-	<c:if test="${(auction.finish == false) && (user.id != auction.user.id)}">
+	<c:if test="${(auction.finish == true) && (user.id == auction.user.id)}">
 		<table border='1'>
-			<c:if test="${sBid != null}">
+	<!-- 		<c:if test="${sBid != null}">
 				<table border='1'>
 					<tr>
 						<td>낙찰자</td>
 						<td>입찰 가격</td>
 						<td>지불상태</td>
-						<!-- 배송, 결제 관련 -->
 					</tr>
 					<tr>
 						<td>
@@ -91,31 +88,69 @@
 						</td> 
 						<td>${sBid.bid.bidPrice}</td>
 						<td>${sBid.payState}</td>
-						<!-- 배송, 결제 관련 -->
 					</tr>
-				</table>	
-			</c:if>
+				</table><br>	
+			</c:if> -->
 			<c:if test="${imPur != null}">
 				<table border='1'>
 					<tr>
 						<td>즉시구매자</td>
 						<td>즉시구매 가격</td>
-						<!-- 배송, 결제 관련 -->
 					</tr>
 					<tr>
-						<td>
-							<a href="<c:url value='/auction/viewMyImpur.do'>
-										<c:param name='imPurNo' value='${imPur.imPurNo}' />
-									</c:url>">
-							${imPur.user.id}</a>
-						</td> 
+						<td>${imPur.user.id}</td> 
 						<td>${imPur.auction.imPurPrice}</td>
-						<!-- 배송, 결제 관련 -->
+					</tr>
+				</table><br>
+				<table border='1'>
+					<tr>
+						<td>결제번호</td>
+						<td>결제방법</td>
+						<td>결제일</td>
+						<td>카드번호</td>
+						<td>결제상태</td>
+					</tr>
+					<tr>
+						<td>${imPur.payment.payNo}</td>
+						<td>${imPur.payment.method}</td>
+						<td>${imPur.payment.pDate}</td>
+						<td>${imPur.payment.card.cardPayNo}</td>
+						<td>${imPur.payment.payCheck}</td>
+					</tr>
+				</table><br>
+				<table border='1'>
+					<tr>
+						<td>배송번호</td>
+						<td>주소</td>
+						<td>상세주소</td>
+						<td>우편번호</td>
+						<td>전화번호</td>
+						<td>배송상태</td>
+					</tr>
+					<tr>
+						<td>${imPur.delivery.dNo}</td>
+						<td>${imPur.delivery.address.addr}</td>
+						<td>${imPur.delivery.address.detail}</td>
+						<td>${imPur.delivery.address.zip}</td>
+						<td>${imPur.delivery.phone}</td>
+						<td>${imPur.delivery.status}</td>
+						<c:if test="${imPur.delivery.status != '배송완료'}">
+							<td>
+								<a href="<c:url value='/auction/auctionDeliveryStateChange.do'>
+											<c:param name='dNo' value='${imPur.delivery.dNo}' />
+											<c:param name='aNo' value='${auction.aNo}' />
+											<c:param name='status' value='${imPur.delivery.status}' />
+										</c:url>">
+								배송상태변경</a>
+							</td>
+						</c:if>
 					</tr>
 				</table>
+				
 			</c:if>
 		</table>
 	</c:if>
+	
 	<br><br>
 	<c:if test="${my == null}">
 		<a href="<c:url value='/auction/viewAuctionList.do' />">경매리스트보기</a>

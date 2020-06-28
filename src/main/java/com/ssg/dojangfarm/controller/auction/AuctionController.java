@@ -40,8 +40,7 @@ public class AuctionController implements ServletContextAware{
 	private static final String VIEWAUCTION = "auction/AuctionView";
 	private static final String LISTMYAUCTION = "auction/MyAuctionListView";
 	private static final String AUCTIONFORM = "auction/RegisterAuctionFormView";
-	private static final String ADDIMAGE = "auction/AddImage";
-	private static final String CONFIRMAUCTION = "auction/RegisterAuctionConfirmView";
+	private static final String DELIVERYPAYMENT = "auction/AuctionDeliveryPaymentView";
 	
 	private ServletContext context;	
 
@@ -221,16 +220,37 @@ public class AuctionController implements ServletContextAware{
 		//check this user is auction's user
 		if(user != null) {
 			if(user.getUserNo() == auctionUserNo) {
-				SBid sBid = this.farm.getSBidByAuction(aNo);	
+			//	SBid sBid = this.farm.getSBidByAuction(aNo);	
 				ImPur imPur = this.farm.getImPurByAuction(aNo);	
 				
-				model.put("sBid", sBid);
+			//	model.put("sBid", sBid);
 				model.put("imPur", imPur);
 			}
 		}
 		
 		return VIEWAUCTION;
 	}
+	
+	
+	//delivery 
+	@RequestMapping("/auction/auctionDeliveryStateChange.do")
+	public String auctionDeliveryPayment(
+		@RequestParam("dNo") int dNo,	
+		@RequestParam("aNo") int aNo,
+		@RequestParam("status") String status,
+		ModelMap model) throws Exception {
+		
+		if(status.equals("배송전")) {
+			this.farm.changeDeliveryStatus(dNo);
+		}
+		else if(status.equals("배송중")) {
+			this.farm.changeDeliveryFinish(dNo);
+		}
+		model.put("aNo", aNo);
+		
+		return "redirect:/auction/viewAuction.do";
+	}
+	
 
 	//register auction ... auction form
 	@RequestMapping("/auction/registerAuctionForm.do")

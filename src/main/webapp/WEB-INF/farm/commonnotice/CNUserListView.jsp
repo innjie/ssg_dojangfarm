@@ -24,7 +24,7 @@
 	<td>제목</td>
 	<td>작성자</td>
 </tr>
-<c:forEach var="cn"  items="${cnList}" >
+<c:forEach var="cn"  items="${cnList.pageList}" >
 	<tr>
 	<td>${cn.CNNO}</td>
 	<td><a href="<c:url value='/commonNotice/view.do'> 
@@ -35,6 +35,18 @@
 	</tr>
 </c:forEach>
 </table>
+<c:if test="${!cnList.firstPage}">
+    		<a href='<c:url value="/order/list2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!cnList.lastPage}">
+    		<a href='<c:url value="/order/list2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
 <a href="/index" >[메인으로]</a>
 </body>
 </html>

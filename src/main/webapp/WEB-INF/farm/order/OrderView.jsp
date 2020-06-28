@@ -10,6 +10,7 @@
 <title>주문 상세 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 	<table border="1" >
 			<tr>
 				<td>주문번호</td>

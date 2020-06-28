@@ -12,6 +12,7 @@
 <title>환불정보 상세보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <h2>환불목록 상세보기</h2>
 <table border="1" >
 	<tr>

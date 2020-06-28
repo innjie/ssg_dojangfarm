@@ -11,6 +11,7 @@
 <title>환불목록 보기</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <h2>환불목록 보기</h2>
 <table border="1">
 <tr>

@@ -19,7 +19,7 @@
 
 <!--  category -->
 <c:forEach var = "category" items = "${categoryList }">
-<a href = "<c:url value='/normal/list2.do'> 
+<a href = "<c:url value='/normal/cateList.do'> 
 				<c:param name = 'cateNo' value = '${category.cateNo}'/></c:url>">${category.kind }</a>&nbsp;&nbsp;
 </c:forEach>
 <!--  normal List  -->
@@ -29,7 +29,7 @@
 	<td>제목</td>
 	<td>작성자</td>
 </tr>
-<c:forEach var="normal" items="${normalList}" >
+<c:forEach var="normal" items="${normalList.pageList}" varStatus = "status">
 	<tr>
 	<td><a href="<c:url value='/normal/viewNormal.do'> 
 						<c:param name='saleNo' value='${normal.saleNo}'/>
@@ -39,7 +39,22 @@
 	<td>${normal.user.name}</td>
 	</tr>
 </c:forEach>
+
 </table>
+<c:if test="${!normalList.firstPage}">
+    		<a href='<c:url value="/normal/list2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!normalList.lastPage}">
+    		<a href='<c:url value="/normal/list2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
+
+	<br>
 <a href="<c:url value='/normal/insertNormal.do'/>"> 등록</a> <br>
 <a href="<c:url value = '/index.do'/>">[메인으로]</a>
 </body>

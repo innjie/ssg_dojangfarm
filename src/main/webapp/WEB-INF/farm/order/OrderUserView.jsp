@@ -18,7 +18,7 @@
 			<td>주문자</td>
 			<td>배송</td>
 		</tr>
-		<c:forEach var="order" items="${orderUserList}">
+		<c:forEach var="order" items="${orderUserList.pageList}">
 			<tr>
 				<td><a
 					href="<c:url value='/order/view.do'>
@@ -31,7 +31,19 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<c:if test="${!orderList.firstPage}">
+    		<a href='<c:url value="/order/userView2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!orderList.lastPage}">
+    		<a href='<c:url value="/order/userView2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
 	<!--  매핑 확인하고 수정 -->
-	<a href="OrderListView">[이전 단계로]</a>
+	<a href="/user/myPage.do">[이전 단계로]</a>
 </body>
 </html>

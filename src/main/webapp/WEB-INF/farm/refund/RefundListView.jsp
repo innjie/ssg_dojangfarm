@@ -17,7 +17,7 @@
 	<td>환불번호</td>
 	<td>주문번호 </td>
 </tr>
-<c:forEach var="refund" items="${refundList}" >
+<c:forEach var="refund" items="${refundList.pageList}" >
 	<tr>
 	<td><a href="<c:url value='/refund/view.do'> 
 						<c:param name='refundNo' value='${refund.refundNo}'/>
@@ -28,6 +28,18 @@
 
 </c:forEach>
 </table>
+<c:if test="${!refundList.firstPage}">
+    		<a href='<c:url value="/refund/list2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!refundList.lastPage}">
+    		<a href='<c:url value="/refund/list2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
 <a href="<c:url value = '/index.do'/>">[메인으로]</a>
 </body>
 </html>

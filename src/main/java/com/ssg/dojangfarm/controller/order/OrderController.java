@@ -73,10 +73,9 @@ public class OrderController {
 		refund.setUser(user);
 		
 		int refundRes = this.farm.refundSale(refund);
-		//cancel action
-		//int orderRes = this.farm.cancelOrder(refundCommand.getOrder().getOrderNo());
+		int orderRes = this.farm.cancelOrder(refundCommand.getOrder().getOrderNo());
 				
-		if( refundRes == 0)  {//failed
+		if( orderRes == 0 || refundRes == 0)  {//failed
 			return new ModelAndView("Error", "message", "cancel failed");
 		} else { //success 
 			return new ModelAndView(orderListView);

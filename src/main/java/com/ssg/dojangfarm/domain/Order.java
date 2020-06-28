@@ -13,6 +13,7 @@ public class Order implements Serializable{
 	private User user;
 	private String title;
 	private int price;
+	private String state;
 	
 	public int getOrderNo() {
 		return orderNo;
@@ -69,6 +70,12 @@ public class Order implements Serializable{
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 }

@@ -58,14 +58,14 @@
 		</c:forEach>
 	</table>
 	<br><br>
-	<c:if test="${!auctionList.firstPage}">
-    	<a href='<c:url value="/auction/viewMyAuctionList2.do">
+	<c:if test="${!bidList.firstPage}">
+    	<a href='<c:url value="/auction/viewMyBidList2.do">
         			<c:param name="page" value="previous"/>
         		</c:url>'>
         Prev</a>
     </c:if> 
-    <c:if test="${!auctionList.lastPage}">
-    	<a href='<c:url value="/auction/viewMyAuctionList2.do">
+    <c:if test="${!bidList.lastPage}">
+    	<a href='<c:url value="/auction/viewMyBidList2.do">
         			<c:param name="page" value="next"/>
         		</c:url>'>
         Next</a>

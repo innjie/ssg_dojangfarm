@@ -5,7 +5,7 @@
   <cache />
   	<select id="getAddressList" parameterType="int" resultType="Address">
     	SELECT 
-    		addrNo, addr, aName
+    		addrNo, addr, aName, detail
     	FROM Address
     	WHERE 
     		userNo = #{userNo}

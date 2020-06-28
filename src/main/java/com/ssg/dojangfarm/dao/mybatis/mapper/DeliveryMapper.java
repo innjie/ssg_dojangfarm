@@ -9,4 +9,5 @@ public interface DeliveryMapper {
 	public void changeDeliveryStatus(int dNo);
 	public void addDelivery(Delivery delivery);
 	public List<Delivery> getDeliveryListByUserNo(int userNo);
+	public int getLastDNo();
 }

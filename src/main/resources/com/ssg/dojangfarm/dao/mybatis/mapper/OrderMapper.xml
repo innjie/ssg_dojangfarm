@@ -42,9 +42,11 @@
 	<select id="getOrderUserList" resultType="Order">
 		SELECT orderNo,
 		quantity, saleNo, ordertable.userNo, ordertable.saletype, usertable.name as "user.name",
-		ordertable.userNo as "user.userNo", dNo as "delivery.dNo"
-		FROM OrderTable, UserTable
+		ordertable.userNo as "user.userNo", delivery.dNo as "delivery.dNo",
+    delivery.status as "delivery.status"
+		FROM OrderTable, UserTable, Delivery
 		WHERE saleNo = #{saleNo} AND OrderTable.userNo = UserTable.userNo
+    and ordertable.dNo = delivery.dNo
 	</select>
 	
 	

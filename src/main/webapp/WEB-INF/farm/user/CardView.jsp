@@ -41,6 +41,6 @@
 				<c:param name='cardNo' value='${card.cardNo}' />
 			</c:url>">
 	삭제</a>&nbsp;&nbsp;
-	<a href="<c:url value='/card/viewCardList.do' />">이전</a>
+	<a href="<c:url value='/card/viewCardList.do' />">카드리스트보기</a>
 </body>
 </html>

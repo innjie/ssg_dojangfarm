@@ -20,7 +20,7 @@
 			<td>경매</td>
 			<td>즉시구매 가격</td>
 		</tr>
-		<c:forEach var="imPur" items="${imPurList}" varStatus="status">
+		<c:forEach var="imPur" items="${imPurList.pageList}" varStatus="status">
 			<tr>
 				<td>
 					<a href="<c:url value='/auction/viewMyImpur.do'>
@@ -38,5 +38,18 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<br><br>
+	<c:if test="${!auctionList.firstPage}">
+    	<a href='<c:url value="/auction/viewMyAuctionList2.do">
+        			<c:param name="page" value="previous"/>
+        		</c:url>'>
+        Prev</a>
+    </c:if> 
+    <c:if test="${!auctionList.lastPage}">
+    	<a href='<c:url value="/auction/viewMyAuctionList2.do">
+        			<c:param name="page" value="next"/>
+        		</c:url>'>
+        Next</a>
+    </c:if>
 </body>
 </html>

@@ -10,7 +10,9 @@
     		Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product
     	WHERE 
-    		Auction.pNo = Product.pNo
+    		Auction.pNo = Product.pNo AND
+            deadline > SYSDATE AND
+            finish = '0'
     	ORDER BY aNo
   	</select>
   	
@@ -21,7 +23,9 @@
     	FROM Auction, Product
     	WHERE 
     		Auction.pNo = Product.pNo AND
-    		title LIKE #{paramValue}
+    		title LIKE #{paramValue} AND
+            deadline > SYSDATE AND
+            finish = '0'
     	ORDER BY Auction.aNo
   	</select>
   	
@@ -32,7 +36,9 @@
     	FROM Auction, Product
     	WHERE 
     		Auction.pNo = Product.pNo AND
-    		Product.pName LIKE #{paramValue}
+    		Product.pName LIKE #{paramValue} AND
+            deadline > SYSDATE AND
+            finish = '0'
     	ORDER BY Auction.aNo
     		
   	</select>
@@ -50,7 +56,7 @@
   	
   	<select id="getAuction" parameterType="int" resultType="Auction">
     	SELECT 
-    		aNo, title, detail, minPrice, deadline,
+    		aNo, title, detail, minPrice, deadline, bidPrice,
     		imPurAva, imPurPrice, finish, image,
     		Auction.userNo AS "user.userNo", id AS "user.id",
     		 Auction.pNo AS "product.pNo", pName AS "product.pName"
@@ -106,11 +112,14 @@
   	
   	<select id="getMyBidList" parameterType="int" resultType="Bid">
     	SELECT 
-    		bidNo, Bid.bidPrice, state, deadline, title, Auction.aNo
+    		Bid.bidNo, Bid.bidPrice, Bid.state, 
+    		Auction.deadline AS "auction.deadline", Auction.title AS "auction.title",
+    		Auction.aNo AS "austion.aNo",
+ 	  		cardNo AS "card.cardNo", addrNo AS "address.addrNo"
     	FROM Bid, Auction
     	WHERE 
     		Auction.aNo = Bid.aNo AND
-    		userNo = #{userNo}
+    		Bid.userNo = #{userNo}
     	ORDER BY Bid.bidNo
   	</select>
   	
@@ -129,10 +138,12 @@
         	SELECT BidSeq.nextval AS "bidNo" FROM DUAL
      	</selectKey>
     	INSERT INTO Bid 
-    		(bidNo, bidPrice, userNo, aNo)
+    		(bidNo, bidPrice, userNo, aNo, addrNo, cardNo)
     	VALUES 
-    		(#{bidNo}, #{bidPrice}, #{user.userNo}, #{auction.aNo})
+    		(#{bidNo}, #{bidPrice}, #{user.userNo}, #{auction.aNo}, #{address.addrNo}, #{card.cardNo})
   	</insert>
+  	
+  	
   	
 <!-- 
   	<select id="getMySBidList" parameterType="String" resultType="SBid">
@@ -264,6 +275,14 @@
     	UPDATE Auction SET 
     		bidPrice = #{bidPrice}
     	WHERE aNo = #{aNo}
+  	</update>
+  	
+  	<update id="changeBidState" parameterType="int">
+    	UPDATE Bid SET
+    		state = '입찰실패'
+    	WHERE 
+    		aNo = #{aNo} AND
+    		state = '입찰성공'
   	</update>
   	
   	

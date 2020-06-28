@@ -10,7 +10,9 @@ public class Bid implements Serializable{
 	private User user;
 	private int bidPrice;
 	private Date bidTime;
-	private String state;		//실패, 현재최고가, 성공
+	private String state;
+	private Address address;
+	private Card card;
 	
 	
 	public int getBidNo() {
@@ -48,6 +50,18 @@ public class Bid implements Serializable{
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	public Card getCard() {
+		return card;
+	}
+	public void setCard(Card card) {
+		this.card = card;
 	}
 	
 	

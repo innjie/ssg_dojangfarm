@@ -21,7 +21,7 @@
 			<td>입찰 가격</td>
 			<td>지불상태</td>
 		</tr>
-		<c:forEach var="sBid" items="${sBidList}" varStatus="status">
+		<c:forEach var="sBid" items="${sBidList.pageList}" varStatus="status">
 			<tr>
 				<td>
 					<a href="<c:url value='/auction/viewMySBid.do'>
@@ -46,5 +46,18 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<br><br>
+	<c:if test="${!auctionList.firstPage}">
+    	<a href='<c:url value="/auction/viewMyAuctionList2.do">
+        			<c:param name="page" value="previous"/>
+        		</c:url>'>
+        Prev</a>
+    </c:if> 
+    <c:if test="${!auctionList.lastPage}">
+    	<a href='<c:url value="/auction/viewMyAuctionList2.do">
+        			<c:param name="page" value="next"/>
+        		</c:url>'>
+        Next</a>
+    </c:if>
 </body>
 </html>

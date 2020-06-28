@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,7 +17,7 @@ public class CardCommand {
 	private String bank;
 	@NotEmpty @Pattern(regexp="\\d{4}")
 	private String cardPW;
-	@Future @DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull @Future @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date period;
 	@NotEmpty @Pattern(regexp="\\d{3,4}")
 	private String cvc;

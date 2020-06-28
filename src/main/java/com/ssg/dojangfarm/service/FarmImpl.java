@@ -26,7 +26,7 @@ public class FarmImpl implements FarmFacade{
 	private AddressDAO addressDAO;
 	@Autowired
 	private OrderDAO orderDAO;
-//	@Autowired
+	@Autowired
 	private DeliveryDAO deliveryDAO;
 	@Autowired
 	private CardDAO cardDAO;
@@ -291,14 +291,17 @@ public class FarmImpl implements FarmFacade{
 		return deliveryDAO.getDelivery(dNo);
 	}
 	@Override
-	public void changeDeliveryStatus(int dNo, String status) {
-		deliveryDAO.changeDeliveryStatus(dNo, status);
+	public void changeDeliveryStatus(int dNo) {
+		deliveryDAO.changeDeliveryStatus(dNo);
 	}
 	@Override
 	public void addDelivery(Delivery delivery) {
 		deliveryDAO.addDelivery(delivery);
 	}
-	
+	@Override
+	public List<Delivery> getDeliveryListByUserNo(int userNo) {
+		return deliveryDAO.getDeliveryListByUserNo(userNo);
+	}
 	
 	//-------------------------------------------------------------------------
 	//Order
@@ -581,6 +584,7 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
+	
 	
 	
 	

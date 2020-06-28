@@ -22,7 +22,7 @@
 	<td>제목</td>
 	<td>작성자</td>
 </tr>
-<c:forEach var="common" items="${commonList}" >
+<c:forEach var="common" items="${commonList.pageList}" >
 	<tr>
 	<td><a href="<c:url value='/common/viewCommon.do'> 
 						<c:param name='saleNo' value='${common.saleNo}'/>
@@ -32,7 +32,20 @@
 	<td>${common.user.name}</td>
 	</tr>
 </c:forEach>
+
 </table>
+	<c:if test="${!auctionList.firstPage}">
+    		<a href='<c:url value="/common/list2.do">
+        				<c:param name="page" value="previous"/>
+        			</c:url>'>
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!auctionList.lastPage}">
+    		<a href='<c:url value="/common/list2.do">
+        				<c:param name="page" value="next"/>
+        			</c:url>'>
+        	Next</a>
+    	</c:if>
 <a href="<c:url value='/common/insertForm.do'/>"> 등록</a> <br>
 <a href="<c:url value = '/index.do'/>">[메인으로]</a>
 </body>

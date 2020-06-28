@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +32,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 //Normal Controller
+@SessionAttributes({"normalList", "categoryList"})
 @Controller
 public class NormalController implements ServletContextAware {
 	private static final String insertNormaForm = "normal/NormalInsertFormView";
@@ -149,7 +151,7 @@ public class NormalController implements ServletContextAware {
 	@RequestMapping("/normal/searchNormal2.do")
 	public String searchNormal2(@RequestParam("page") String page,
 			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
-			BindingResult result) throws Exception {
+			BindingResult result, ModelMap model) throws Exception {
 		if (normalList== null) {
 			throw new IllegalStateException("Cannot find pre-loaded auction list");
 		}
@@ -159,7 +161,7 @@ public class NormalController implements ServletContextAware {
 		else if ("previous".equals(page)) { 
 			normalList.previousPage(); 
 		}
-		
+		model.put("search", "search");
 		return normalListView;
 	}
 	//turn state off / on
@@ -231,9 +233,10 @@ public class NormalController implements ServletContextAware {
 		
 		
 		List <Category> categoryList = farm.getCategoryList();
+		normalList.setPageSize(10);
 		model.put("normalList", normalList);
 		model.put("categoryList", categoryList);
-		normalList.setPageSize(10);
+		
 		return normalListView;
 	}
 	@RequestMapping("/normal/list2.do")
@@ -249,7 +252,10 @@ public class NormalController implements ServletContextAware {
 		else if ("previous".equals(page)) {
 			normalList.previousPage();
 		}
+		List <Category> categoryList = farm.getCategoryList();
+		model.put("normalList", normalList);
 		
+		model.put("categoryList", categoryList);
 		return normalListView;
 	}
 	//get NormalList by categoryNo
@@ -286,13 +292,25 @@ public class NormalController implements ServletContextAware {
 		User user = (User)httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
 		//get list.do
-		List<Normal> normalList = farm.getNormalListByUserNo(userNo);
+		PagedListHolder<Normal> normalList = new PagedListHolder<Normal>(farm.getNormalListByUserNo(userNo));
 		model.addAttribute("normalList", normalList);
 		return normalUserListView;
 	}
-	
+	@RequestMapping("/normal/userList2.do")
+	public String getNormalListByUserNo2(
+			@RequestParam("page") String page, 
+			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
+			HttpServletRequest request, Model model) {
+		if ("next".equals(page)) { 
+			normalList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			normalList.previousPage(); 
+		}
+		
+		return normalUserListView;
+	}
 	//related image file
-	
 	//upload file
 	private void uploadFile(MultipartFile image, Normal normal) {
 		this.farm.insertSale(normal);

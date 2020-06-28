@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,13 +17,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.CommonNotice;
+import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 //commonnotice controlelr
+@SessionAttributes("cnList")
 @Controller
 public class CommonNoticeController {
 	private static final String commonNoticeListView = "commonnotice/CommonNoticeListView";
@@ -47,12 +51,24 @@ public class CommonNoticeController {
 
 	// get CN List
 	@RequestMapping("/commonNotice/list.do")
-	public String getCNList(Model model) {
-		List<CommonNotice> cnList = this.farm.getAllNoticeList();
-		model.addAttribute("cnList", cnList);
+	public String getCNList(ModelMap model) {
+		PagedListHolder<CommonNotice> cnList = new PagedListHolder<CommonNotice>(this.farm.getAllNoticeList());
+		model.put("cnList", cnList);
 		return commonNoticeListView;
 	}
-
+	@RequestMapping("/commonNotice/list2.do")
+	public String getCNList2(@RequestParam("page") String page, 
+			@ModelAttribute("cnList") PagedListHolder<CommonNotice> cnList,
+			ModelMap model) {
+		if ("next".equals(page)) { 
+			cnList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			cnList.previousPage(); 
+		}
+		
+		return commonNoticeListView;
+	}
 	// get CN view
 	@RequestMapping("/commonNotice/view.do")
 	public String getCN(@RequestParam("CNNO") int CNNO, Model model, HttpServletRequest request) {

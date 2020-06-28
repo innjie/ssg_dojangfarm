@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +34,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
+@SessionAttributes("commonList")
 public class CommonController implements ServletContextAware{
 	private static final String insertCommonForm = "common/CommonInsertFormView";
 	private static final String errorPage = "common/Error";
@@ -179,11 +182,27 @@ public class CommonController implements ServletContextAware{
 
 	// common list
 	@RequestMapping("/common/list.do")
-	public String getCommonList(Model model) {
+	public String getCommonList(ModelMap model) {
 		// get list.do
-		List<Common> commonList = farm.getAllCommonList();
-		model.addAttribute("commonList", commonList);
-		return "common/CommonListView";
+		PagedListHolder<Common> commonList = new PagedListHolder<Common>(farm.getAllCommonList());
+		model.put("commonList", commonList);
+		return commonListView;
+	}
+	
+	@RequestMapping("/common/list2.do")
+	public String getCommonList2(
+			@RequestParam("page") String page,
+			@ModelAttribute("commonList") PagedListHolder<Common> commonList,
+			BindingResult result, ModelMap model) {
+		
+		if ("next".equals(page)) { 
+			commonList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			commonList.previousPage(); 
+		}
+		
+		return commonListView;
 	}
 	
 	//get user CommonList
@@ -194,11 +213,25 @@ public class CommonController implements ServletContextAware{
 		int userNo = user.getUserNo();
 		
 		//get list
-		List<Common> commonList = farm.getCommonListByUserNo(userNo);
+		PagedListHolder<Common> commonList = new PagedListHolder<Common>(farm.getCommonListByUserNo(userNo));
 		model.addAttribute("commonList", commonList);
 		return commonUserListView;
 	}
-	
+	//get user CommonList
+		@RequestMapping("/common/userList2.do")
+		public String getCommonListByUserNo2(
+				@RequestParam("page") String page,
+				@ModelAttribute("commonList") PagedListHolder<Common> commonList,
+				HttpServletRequest request, Model model) {
+			if ("next".equals(page)) { 
+				commonList.nextPage(); 
+			}
+			else if ("previous".equals(page)) { 
+				commonList.previousPage(); 
+			}
+			
+			return commonUserListView;
+		}
 	//get commonView
 	@RequestMapping("/common/viewCommon.do")
 	public String getCommon(@RequestParam("saleNo") int saleNo, ModelMap model,

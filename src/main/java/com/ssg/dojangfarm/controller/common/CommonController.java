@@ -26,6 +26,7 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.domain.Category;
 import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonJoin;
 import com.ssg.dojangfarm.domain.Normal;
@@ -251,22 +252,55 @@ public class CommonController implements ServletContextAware{
 	
 	//commonJoin user List
 	@RequestMapping("/commonJoin/userList.do")
-	public String getCommonJoinUserList(HttpServletRequest request, Model model) {
+	public String getCommonJoinUserList(HttpServletRequest request, ModelMap model) {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
 		
-		List<CommonJoin> cjList = this.farm.getCommonJoinListByUserNo(userNo);
+		PagedListHolder<CommonJoin> cjList = new PagedListHolder<CommonJoin>(this.farm.getCommonJoinListByUserNo(userNo));
+		
+		model.put("cjList", cjList);
+		return commonJoinUserListView;
+	}
+	@RequestMapping("/commonJoin/userList2.do")
+	public String getCommonJoinUserList2(
+			@RequestParam("page") String page,
+			@ModelAttribute("cjList") PagedListHolder<CommonJoin> cjList,
+			HttpServletRequest request, ModelMap model) {
+		if ("next".equals(page)) {
+			cjList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			cjList.previousPage();
+		}
+		List <Category> categoryList = farm.getCategoryList();
+		
 		
 		model.addAttribute("cjList", cjList);
 		return commonJoinUserListView;
 	}
-	
 	//commonJoin list by saleNo
 	@RequestMapping("/commonJoin/viewList.do")
-	public String getCommonJonListBySaleNo(@RequestParam("saleNo") int saleNo, HttpServletRequest request, Model model) {
+	public String getCommonJonListBySaleNo(@RequestParam("saleNo") int saleNo, ModelMap model) {
 		
-		List<CommonJoin> cjList = this.farm.getCommonJoinListBySaleNo(saleNo);
+		PagedListHolder<CommonJoin> cjList = new PagedListHolder<CommonJoin>(this.farm.getCommonJoinListBySaleNo(saleNo));
+		
+		model.put("cjList", cjList);
+		return commonJoinedListView;
+	}
+	@RequestMapping("/commonJoin/viewList2.do")
+	public String getCommonJonListBySaleNo(@RequestParam("saleNo") int saleNo, 
+			@RequestParam("page") String page,
+			@ModelAttribute("cjList") PagedListHolder<CommonJoin> cjList,
+			BindingResult result, 
+			 ModelMap model) {
+	
+		if ("next".equals(page)) {
+			cjList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			cjList.previousPage();
+		}
 		
 		model.addAttribute("cjList", cjList);
 		return commonJoinedListView;

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -34,6 +35,8 @@ public class OrderController {
 	private static final String orderListView = "order/OrderListView";
 	private static final String orderListUserView = "order/OrderUserView";
 	private static final String refundForm = "refund/RefundFormView";
+	private static final String refundListView = "refund/RefundListView";
+	private static final String refundView = "refund/RefundView";
 	@Autowired
 	private FarmFacade farm;
 	public void setFarm(FarmFacade farm) {
@@ -53,7 +56,8 @@ public class OrderController {
 	//refund sale
 	@Transactional
 	@RequestMapping(value = "/order/cancel.do", method = RequestMethod.POST)
-	public ModelAndView cancelOrder(@Valid@ModelAttribute("refundCommand") RefundCommand refundCommand,
+	public ModelAndView cancelOrder(
+			@Valid@ModelAttribute("refundCommand") RefundCommand refundCommand,
 			HttpServletRequest request, BindingResult result, ModelMap model) {
 		
 		HttpSession httpSession = request.getSession();
@@ -100,16 +104,27 @@ public class OrderController {
 	}
 	//ViewOrderList
 	@RequestMapping("/order/list.do")
-	public String orderListByUserNo(HttpServletRequest request, Model model) {
+	public String orderListByUserNo(HttpServletRequest request, ModelMap model) {
 		//get list
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		
-		List<Order> orderList = this.farm.getOrderList(user.getUserNo());
-		model.addAttribute("orderList", orderList);
+		PagedListHolder<Order> orderList = new PagedListHolder<Order>(this.farm.getOrderList(user.getUserNo()));
+		model.put("orderList", orderList);
 		return orderListView;
 	}
-	
+	@RequestMapping("/order/list2.do")
+	public String orderListByUserNo(@RequestParam("page") String page,
+			@ModelAttribute("orderList") PagedListHolder<Order> orderList, ModelMap model) {
+		if ("next".equals(page)) {
+			orderList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			orderList.previousPage();
+		}
+		model.put("orderList", orderList);
+		return orderListView;
+	}
 	//viewOrderUserList
 	@RequestMapping("/order/userView.do")
 	public String orderListBysaleNo(@RequestParam("saleNo") int saleNo, Model model) {
@@ -126,10 +141,26 @@ public class OrderController {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		
-		List<Refund> refundList = this.farm.getRefundList(user.getUserNo());
+		PagedListHolder<Refund> refundList = new PagedListHolder<Refund>(this.farm.getRefundList(user.getUserNo()));
 		model.addAttribute("refundList", refundList);
-		return "refund/RefundListView";
+		return refundListView;
 	}
+	@RequestMapping("/refund/list2.do")
+	public String getRefundList(@RequestParam("page") String page,
+			@ModelAttribute("refundList") PagedListHolder<Refund> refundList,
+			BindingResult result, 
+			 ModelMap model) {
+		//get list
+		if ("next".equals(page)) {
+			refundList.nextPage();
+		}
+		else if ("previous".equals(page)) {
+			refundList.previousPage();
+		}
+		model.addAttribute("refundList", refundList);
+		return refundListView;
+	}
+	
 	//view refund
 	@RequestMapping("/refund/view.do")
 	public String getRefund(@RequestParam("refundNo") int refundNo, Model model) {
@@ -149,6 +180,6 @@ public class OrderController {
 		refund.setOrder(order);
 		
 		model.addAttribute("refund", refund);
-		return "refund/RefundView";
+		return refundView;
 	}
 }

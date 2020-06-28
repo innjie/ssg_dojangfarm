@@ -34,13 +34,13 @@
 </c:forEach>
 
 </table>
-	<c:if test="${!auctionList.firstPage}">
+	<c:if test="${!commonList.firstPage}">
     		<a href='<c:url value="/common/list2.do">
         				<c:param name="page" value="previous"/>
         			</c:url>'>
         	Prev</a>
     	</c:if> 
-    	<c:if test="${!auctionList.lastPage}">
+    	<c:if test="${!commonList.lastPage}">
     		<a href='<c:url value="/common/list2.do">
         				<c:param name="page" value="next"/>
         			</c:url>'>

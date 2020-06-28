@@ -11,6 +11,7 @@
 <title>공동구매 신청자 리스트</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <table border = "1">
 <tr>
 <td>번호</td>

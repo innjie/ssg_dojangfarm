@@ -10,6 +10,7 @@
 <title>주문 취소 완료</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <h3>주문이 취소되었습니다.</h3>
 주문번호 : ${order.orderNo }
 

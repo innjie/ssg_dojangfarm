@@ -8,6 +8,7 @@
 <title>공동구매 참여완료</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 	<h3>참여에 완료했습니다.</h3>
 	<!--  상품번호, 공구번호 추가? -->
 

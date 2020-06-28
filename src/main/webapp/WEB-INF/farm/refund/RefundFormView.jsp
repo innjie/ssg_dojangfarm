@@ -11,6 +11,7 @@
 <title>환불 정보 입력</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
 <c:set var="targetUrI">
 		<c:url value="/order/cancel.do" />
 	</c:set>

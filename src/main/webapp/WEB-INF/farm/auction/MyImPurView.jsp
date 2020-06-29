@@ -32,23 +32,37 @@
 	<br><br>
 	결제
 	<table border='1'>
-		<tr>
-			<td>결제방법</td>
-			<td>카드</td>
-			<td>결제일</td>
-			<td>결제금액</td>
-		</tr>
-		<tr>
-			<td>${imPur.payment.method}</td>
-			<td>
-				<a href="<c:url value='/card/viewCard.do'> 
-							<c:param name='cardNo' value='${imPur.payment.card.cardNo}' />
-						</c:url>">
-				${imPur.payment.card.cardPayNo}</a>
-			</td>
-			<td>${pDate}</td>
-			<td>${imPur.payment.totalPrice}</td>
-		</tr>
+		<c:if test="${imPur.payment.method == '카드'}">
+			<tr>
+				<td>결제방법</td>
+				<td>카드</td>
+				<td>결제일</td>
+				<td>결제금액</td>
+			</tr>
+			<tr>
+				<td>${imPur.payment.method}</td>
+				<td>
+					<a href="<c:url value='/card/viewCard.do'> 
+								<c:param name='cardNo' value='${imPur.payment.card.cardNo}' />
+							</c:url>">
+					${imPur.payment.card.cardPayNo}</a>
+				</td>
+				<td>${pDate}</td>
+				<td>${imPur.payment.totalPrice}</td>
+			</tr>
+		</c:if>
+		<c:if test="${imPur.payment.method == '카카오페이'}">
+			<tr>
+				<td>결제방법</td>
+				<td>결제일</td>
+				<td>결제금액</td>
+			</tr>
+			<tr>
+				<td>${imPur.payment.method}</td>
+				<td>${pDate}</td>
+				<td>${imPur.payment.totalPrice}</td>
+			</tr>
+		</c:if>
 	</table>
 	<br><br>
 	배송

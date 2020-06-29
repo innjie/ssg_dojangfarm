@@ -335,7 +335,9 @@ public class AuctionController implements ServletContextAware{
 		auction.setMinPrice(auctionCommand.getMinPrice());	
 		auction.setDeadline(auctionCommand.getDeadline());
 		auction.setImPurAva(auctionCommand.getImPurAva());
-		auction.setImPurPrice(auctionCommand.getImPurPrice());
+		if(auctionCommand.getImPurAva()) {
+			auction.setImPurPrice(auctionCommand.getImPurPrice());
+		}
 		
 		MultipartFile image = auctionCommand.getImage();
 		if(image != null) {

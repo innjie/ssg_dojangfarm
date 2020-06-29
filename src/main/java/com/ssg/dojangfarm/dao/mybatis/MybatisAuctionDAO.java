@@ -173,5 +173,30 @@ public class MybatisAuctionDAO implements AuctionDAO{
 		}
 
 	}
+	
+	
+	@Transactional
+	public void immePurchaseKakao(ImPur imPur) {
+		deliveryMapper.addDelivery(imPur.getDelivery());
+		paymentMapper.insertPaymentKakao(imPur.getPayment());
+		
+		int dNo = deliveryMapper.getLastDNo();
+		int payNo = paymentMapper.getLastPayNo();
+		
+		auctionMapper.changeBidState(imPur.getAuction().getaNo());
+		
+		imPur.getDelivery().setdNo(dNo);
+		imPur.getPayment().setPayNo(payNo);
+		
+		auctionMapper.immePurchase(imPur);
+		
+		auctionMapper.finishAuction(imPur.getAuction().getaNo());
+		
+	}
+	
+	@Override
+	public ImPur getMyImPurKakao(int imPurNo) {
+		return auctionMapper.getMyImPurKakao(imPurNo);
+	}
 
 }

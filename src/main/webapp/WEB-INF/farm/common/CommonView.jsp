@@ -43,10 +43,16 @@
 </table>
 
 	<c:if test="${ (loginUser.userNo == common.user.userNo)}">
-	<a href = "<c:url value ='/common/updateCommon.do' > 
-	<c:param name = 'saleNo'  value = '${common.saleNo}'/></c:url> ">수정하기</a><br>
-	<a href = "<c:url value = '/commonJoin/viewList.do'><c:param name = 'saleNo' value = '${common.saleNo }'/>
-	</c:url>"> 신청자 목록보기</a><br>
+	<c:if test = "${(common.saleState == 'OPEN') }">
+		<a href = "<c:url value ='/common/updateCommon.do' > 
+		<c:param name = 'saleNo'  value = '${common.saleNo}'/>
+		</c:url> ">수정하기</a><br>
+		<a href = "<c:url value ='/common/payCommon.do' > 
+		<c:param name = 'saleNo'  value = '${common.saleNo}'/>
+		</c:url> ">공동구매 진행하기</a><br>
+	</c:if>
+		<a href = "<c:url value = '/commonJoin/viewList.do'><c:param name = 'saleNo' value = '${common.saleNo }'/>
+		</c:url>"> 신청자 목록보기</a><br>
 	</c:if>
 
 	<br><br>

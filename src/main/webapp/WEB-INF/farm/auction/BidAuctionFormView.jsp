@@ -98,7 +98,7 @@ function searchAddress(userNo) {
 		품목  ${auction.product.pName}<br>	
 		최소 가격   ${auction.minPrice}<br>
 		현재 입찰 가격  ${auction.bidPrice}<br>
-		기간  ${auction.sDeadline}<br>
+		기간  ${auction.sDeadline}<br><br><br>
 		
 		<form:label path="bidPrice">가격 </form:label>
 		<form:input path="bidPrice" />
@@ -125,8 +125,9 @@ function searchAddress(userNo) {
 		<input type="hidden" name="aNo" value="${auction.aNo}" />
 		<input type="hidden" name="minPrice" value="${auction.minPrice}" />
 		<input type="hidden" name="nowPrice" value="${auction.bidPrice}" />
-		<input type="submit" value="추가" />&nbsp;&nbsp;
-		<a href="<c:url value='/auction/viewAuction.do'>
+		<input type="submit" value="추가" />
+		<br><br>
+		<a href="<c:url value='/auction/viewAuction.do'> 
 					<c:param name="aNo" value="${auction.aNo}" />
 				</c:url>">
 		이전</a>	

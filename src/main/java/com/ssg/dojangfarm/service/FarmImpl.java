@@ -228,14 +228,22 @@ public class FarmImpl implements FarmFacade{
 	}
 	
 	public void addImage(int aNo, String image) {
-		auctionDAO.addImage(aNo, image);
-		
+		auctionDAO.addImage(aNo, image);		
 	}
 	
 	public void addImage(Auction auction, int aNo, String image) {
-		auctionDAO.addImage(auction, aNo, image);
-		
+		auctionDAO.addImage(auction, aNo, image);	
 	}
+	
+	public void immePurchaseKakao(ImPur imPur) {
+		auctionDAO.immePurchaseKakao(imPur);
+	}
+	
+	public ImPur getMyImPurKakao(int imPurNo) {
+		return auctionDAO.getMyImPurKakao(imPurNo);
+	}
+
+	
 	//-------------------------------------------------------------------------
 	//User
 	//-------------------------------------------------------------------------

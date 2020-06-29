@@ -28,6 +28,7 @@ import com.ssg.dojangfarm.domain.ImPur;
 import com.ssg.dojangfarm.domain.Payment;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
+import com.ssg.dojangfarm.service.KakaoPay;
 
 @Controller
 @SessionAttributes("imPurList")
@@ -37,9 +38,14 @@ public class ImPurController {
 	private static final String IMPURFORM = "auction/ImPurFormView";
 	private static final String IMPURSUCCESS = "auction/ImPurSuccessView";
 	private static final String IMPURFAIL = "auction/BidFailView";
+	private static final String IMPURKAKAOFORM = "auction/ImPurKakaoFormView";
+
 
 	@Autowired
 	private FarmFacade farm;
+	
+	@Autowired
+    private KakaoPay kakaopay;
 	
 	public void setFarm(FarmFacade  farm) {
 		this.farm = farm;
@@ -93,8 +99,12 @@ public class ImPurController {
 	public String viewMyImPur(
 			@RequestParam("imPurNo") int imPurNo,
 			ModelMap model) throws Exception {
-			
-		ImPur imPur = this.farm.getMyImPur(imPurNo);	
+		
+		ImPur imPur = this.farm.getMyImPurKakao(imPurNo);
+		
+		if(imPur.getPayment().getMethod().equals("카드")) {
+			imPur = this.farm.getMyImPur(imPurNo);
+		}			
 		
 		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String pDate = sdFormat.format(imPur.getPayment().getpDate());
@@ -103,6 +113,86 @@ public class ImPurController {
 		model.put("pDate", pDate);
 			
 		return VIEWIMPUR;
+	}	
+	
+	//kakao pay form
+	@RequestMapping(value = "/auction/immePurchaseKaKao.do",  method = RequestMethod.GET)
+	public String imPurkakaoForm(
+			@ModelAttribute("imPurCommand") ImPurCommand imPurCommand,
+			@RequestParam("aNo") int aNo,
+			ModelMap model) throws Exception {
+		
+		Auction auction = this.farm.getAuction(aNo);
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		auction.setsDeadline(sdFormat.format(auction.getDeadline()));
+		
+		model.put("auction", auction);
+
+		return IMPURKAKAOFORM;
+	}
+	
+	//kakao pay
+	@RequestMapping(value = "/auction/immePurchaseKaKao.do",  method = RequestMethod.POST)
+	public String imPurkakao(
+			@RequestParam("aNo") int aNo,
+			@Valid @ModelAttribute("imPurCommand") ImPurCommand imPurCommand,
+			BindingResult bindingResult,
+			HttpServletRequest request,
+			ModelMap model) throws Exception {
+				
+			
+		HttpSession httpSession = request.getSession();
+		User user = (User) httpSession.getAttribute("user");
+			
+		Auction auction = this.farm.getAuction(aNo);
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		auction.setsDeadline(sdFormat.format(auction.getDeadline()));
+					
+		if(bindingResult.hasErrors()) {
+			model.put("auction", auction);
+			return IMPURKAKAOFORM;
+		}
+		
+		Address address = this.farm.getAddress(imPurCommand.getAddrNo());
+		
+		if(address == null) {
+			bindingResult.rejectValue("addrNo", "noaddressNo");
+			model.put("auction", auction);
+			return IMPURKAKAOFORM;		}
+		
+		if(address.getUser().getUserNo() != user.getUserNo()) {
+			bindingResult.rejectValue("addrNo", "notMyAddress");
+			model.put("auction", auction);
+			return IMPURKAKAOFORM;		}
+			
+		if(auction.getFinish()) {
+			model.put("message", "경매가 종료되었습니다.");
+			return IMPURFAIL;
+		}
+		
+		String url = request.getRequestURL().toString();
+					
+		Payment payment = new Payment();
+		payment.setMethod("카카오페이");
+		payment.setTotalPrice(auction.getImPurPrice());
+		
+		Delivery delivery = new Delivery();
+		delivery.setAddress(address);
+		delivery.setPhone(imPurCommand.getPhone());
+		
+		ImPur imPur = new ImPur();
+		imPur.setAuction(auction);
+		imPur.setPayment(payment);
+		imPur.setUser(user);
+		imPur.setDelivery(delivery);
+			
+		this.farm.immePurchaseKakao(imPur);	
+
+		model.put("imPur", imPur);
+
+		return IMPURSUCCESS;
 	}	
 	
 	//ImPur ... ImPur form
@@ -135,8 +225,15 @@ public class ImPurController {
 		
 		Auction auction = this.farm.getAuction(aNo);
 		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		auction.setsDeadline(sdFormat.format(auction.getDeadline()));
+		
 		Card card = this.farm.getCard(imPurCommand.getCardNo());
 
+		if(bindingResult.hasErrors()) {
+			return new ModelAndView(IMPURFORM, "auction", auction);
+		}
+		
 		if(card == null) {
 			bindingResult.rejectValue("cardNo", "nocardNo");
 			return new ModelAndView(IMPURFORM, "auction", auction);

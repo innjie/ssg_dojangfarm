@@ -185,7 +185,8 @@ public class CommonController implements ServletContextAware{
 		if(result.hasErrors()) {
 			return new ModelAndView(updateCommonForm, "common", common);
 		}
-		
+		common.setSaleNo(common.getSaleNo());
+		common.setSaleState("OPEN");
 		int res = farm.updateCommon(common);
 		if(res == 0) {
 			return new ModelAndView(errorPage, "message", "update Failed");

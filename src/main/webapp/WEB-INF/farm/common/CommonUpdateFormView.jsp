@@ -42,6 +42,7 @@
 		<form:errors path = "deadline"/>
 		<br>
 		
+		<form:hidden path = "saleNo" value = "${common.saleNo }"/>
 		<a href="CommonListView">[이전으로]</a>
 		<input type="submit" value="추가" />
 

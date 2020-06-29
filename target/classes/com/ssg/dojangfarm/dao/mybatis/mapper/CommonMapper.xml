@@ -76,9 +76,10 @@
 			SELECT CommonJoinSeq.nextval as "cjNo" FROM DUAL
 		</selectKey>
 		INSERT INTO CommonJoin
-		(cjNo, userNo, saleNo, cjState, count)
+		(cjNo, userNo, saleNo, cjState, count, dNo, cardNo)
 		VALUES
-		(#{cjNo}, #{user.userNo}, #{common.saleNo},#{cjState}, #{count})
+		(#{cjNo}, #{user.userNo}, #{common.saleNo},#{cjState}, #{count},
+		#{delivery.dNo}, #{cardNo})
 
 	</insert>
 	<delete id="cancelCommonjoin" parameterType="int">

@@ -352,12 +352,44 @@ public class CommonController implements ServletContextAware{
 			model.addAttribute("common", common);
 			return new ModelAndView(commonView, "message", "already exist");
 		}
+		// card validation
+		Card card = this.farm.getCard(cjCommand.getCardNo());
+		if (card == null) {
+			result.rejectValue("cardNo", "nocardNo");
+			return new ModelAndView(insertCJForm, "cjCommand", cjCommand);
+		}
+		if (card.getUser().getUserNo() != user.getUserNo()) {
+			result.rejectValue("cardNo", "notMyCard");
+			return new ModelAndView(insertCJForm, "cjCommand", cjCommand);
+		}
+		// Address validation
+		Address address = this.farm.getAddress(cjCommand.getAddrNo());
+		if (address == null) {
+			result.rejectValue("addrNo", "noaddressNo");
+			return new ModelAndView(insertCJForm, "cjCommand", cjCommand);
+		}
+		if (address.getUser().getUserNo() != user.getUserNo()) {
+			result.rejectValue("addrNo", "notMyAddress");
+			return new ModelAndView(insertCJForm, "cjCommand", cjCommand);
+		}
+		
+		Delivery delivery = new Delivery();
+		delivery.setAddress(address);
+		delivery.setPhone(cjCommand.getDelivery().getPhone());
+		this.farm.addDelivery(delivery);
+		
+		int dNo = this.farm.getLastDNo();
+		delivery = this.farm.getDelivery(dNo);
+				
 		//insert CommonJoin
 		CommonJoin commonJoin = new CommonJoin();
 		commonJoin.setUser(user);
 		commonJoin.setCount(cjCommand.getCount());
+		commonJoin.setDelivery(delivery);
+		commonJoin.setCardNo(cjCommand.getCardNo());
 		commonJoin.setCommon(common);
 		commonJoin.setCjState("신청");
+		
 		
 		int res = this.farm.insertCommonjoin(commonJoin);
 		int memberSize = this.farm.getCommonJoinListBySaleNo(cjCommand.getCommon().getSaleNo()).size();
@@ -366,12 +398,8 @@ public class CommonController implements ServletContextAware{
 			common.setSaleState("OK");
 			res = this.farm.updateCommon(common);
 		}
-		
-		if (res == 0) {// failed
-			return new ModelAndView("Error", "message", "join Failed");
-		} else { // success
-			return new ModelAndView("Success", "message", "join success");
-		}
+	
+		return new ModelAndView("redirect:/commonJoin/viewList.do");
 	}
 
 	//update CommonJoin Form
@@ -388,11 +416,7 @@ public class CommonController implements ServletContextAware{
 	public ModelAndView updateCommonJoin(@ModelAttribute("commonJoin") CommonJoin commonJoin, BindingResult result) {
 		int res = farm.updateCommonjoin(commonJoin);
 
-		if (res == 0) {// failed
-			return new ModelAndView("Error", "message", "update join Failed");
-		} else { // success
-			return new ModelAndView("Success", "message", "update join success");
-		}
+		return new ModelAndView("redirect:/" + commonJoinedListView);
 	}
 
 	// view CommonJoin
@@ -415,13 +439,9 @@ public class CommonController implements ServletContextAware{
 	@RequestMapping("/commonJoin/cancel.do")
 	public ModelAndView cancelCommonJoin(@RequestParam("cjNo") int CJNo) {
 		// cancel action
-		int res = farm.cancelCommonjoin(CJNo);
+		this.farm.cancelCommonjoin(CJNo);
 
-		if (res == 0) {// failed
-			return new ModelAndView("Error", "message", "cancel failed");
-		} else { // success
-			return new ModelAndView("Success", "message", "cancel success");
-		}
+		return new ModelAndView("redirect:/" + commonJoinedListView);
 	}
 	@RequestMapping(value = "/common/buyCommon.do", method = RequestMethod.GET)
 	public String buyCommon(@RequestParam("saleNo") int saleNo, @RequestParam("cjNo") int cjNo,

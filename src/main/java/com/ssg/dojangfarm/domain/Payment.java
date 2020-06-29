@@ -5,19 +5,20 @@ import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Payment implements Serializable{
-	private int paymentNo;
+	private int payNo;
 	private User user;
 	private String method;
 	private boolean payCheck;
 	private Date pDate;
 	private Card card;
+	private int totalPrice;
 	
 	
-	public int getPaymentNo() {
-		return paymentNo;
+	public int getPayNo() {
+		return payNo;
 	}
-	public void setPaymentNo(int paymentNo) {
-		this.paymentNo = paymentNo;
+	public void setPayNo(int payNo) {
+		this.payNo = payNo;
 	}
 	public User getUser() {
 		return user;
@@ -48,6 +49,12 @@ public class Payment implements Serializable{
 	}
 	public void setCard(Card card) {
 		this.card = card;
+	}
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 	
 	

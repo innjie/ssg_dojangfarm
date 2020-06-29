@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Common;
+import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Order;
 import com.ssg.dojangfarm.domain.Refund;
@@ -29,6 +31,7 @@ import com.ssg.dojangfarm.service.FarmFacade;
 import com.ssg.dojangfarm.service.OrderService;
 import com.ssg.dojangfarm.service.RefundService;
 
+@SessionAttributes("orderList")
 @Controller
 public class OrderController {
 	private static final String orderView = "order/OrderView";
@@ -127,11 +130,24 @@ public class OrderController {
 	}
 	//viewOrderUserList
 	@RequestMapping("/order/userView.do")
-	public String orderListBysaleNo(@RequestParam("saleNo") int saleNo, Model model) {
+	public String orderListBysaleNo(@RequestParam("saleNo") int saleNo, ModelMap model) {
 		//get list
-		List<Order> orderUserList = this.farm.getOrderUserList(saleNo);
+		PagedListHolder<Order> orderList = new PagedListHolder<Order>( this.farm.getOrderUserList(saleNo));
 		
-		model.addAttribute("orderUserList", orderUserList);
+		model.put("orderList", orderList);
+		return orderListUserView;
+	}
+	@RequestMapping("/order/userView2.do")
+	public String orderListBysaleNo(@RequestParam("page") String page, 
+			@ModelAttribute("dList") PagedListHolder<Order> orderList,
+			ModelMap model) {
+		//get list
+		if ("next".equals(page)) { 
+			orderList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			orderList.previousPage(); 
+		}
 		return orderListUserView;
 	}
 	//view refund list

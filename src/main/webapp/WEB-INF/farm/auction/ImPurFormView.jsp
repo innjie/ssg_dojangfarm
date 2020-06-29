@@ -81,25 +81,18 @@ function searchAddress(userNo) {
 </script>
 </head>
 <body>
-	<c:set var="targetUrl"><c:url value="/auction/bidAuction.do" /></c:set>
+	<c:set var="targetUrl"><c:url value="/auction/immePurchase.do" /></c:set>
 	
-	<form:form id="form" modelAttribute="bidCommand" action="${targetUrl}">	
+	<form:form id="form" modelAttribute="imPurCommand" action="${targetUrl}">	
 		제목  ${auction.title}<br>	
 		품목  ${auction.product.pName}<br>	
-		최소 가격   ${auction.minPrice}<br>
-		현재 입찰 가격  ${auction.bidPrice}<br>
-		기간  ${auction.deadline}<br>
-		
-		<form:label path="bidPrice">가격 </form:label>
-		<form:input path="bidPrice" />
-		<form:errors path="bidPrice" />
-		<br>
-		
+		가격   ${auction.imPurPrice}<br>
+	
 		<form:label path="phone">전화번호 </form:label>
 		<form:input path="phone" />
 		<form:errors path="phone" />
 		<br>
-		
+	
 		<form:label path="cardNo">cardNo </form:label>
 		<form:input path="cardNo" />
 		<input type="button" value="Search!" onClick="searchCard(${user.userNo})" />
@@ -110,11 +103,9 @@ function searchAddress(userNo) {
 		<form:input path="addrNo" />
 		<input type="button" value="Search!" onClick="searchAddress(${user.userNo})" />
 		<form:errors path="addrNo" />
-		<br>
+		<br><br>
 		
 		<input type="hidden" name="aNo" value="${auction.aNo}" />
-		<input type="hidden" name="minPrice" value="${auction.minPrice}" />
-		<input type="hidden" name="nowPrice" value="${auction.bidPrice}" />
 		<input type="submit" value="추가" />&nbsp;&nbsp;
 		<a href="<c:url value='/auction/viewAuction.do'>
 					<c:param name="aNo" value="${auction.aNo}" />

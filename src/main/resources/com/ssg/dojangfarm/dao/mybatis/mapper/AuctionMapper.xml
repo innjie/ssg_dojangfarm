@@ -10,7 +10,9 @@
     		Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product
     	WHERE 
-    		Auction.pNo = Product.pNo
+    		Auction.pNo = Product.pNo AND
+            deadline > SYSDATE AND
+            finish = '0'
     	ORDER BY aNo
   	</select>
   	
@@ -21,7 +23,9 @@
     	FROM Auction, Product
     	WHERE 
     		Auction.pNo = Product.pNo AND
-    		title LIKE #{paramValue}
+    		title LIKE #{paramValue} AND
+            deadline > SYSDATE AND
+            finish = '0'
     	ORDER BY Auction.aNo
   	</select>
   	
@@ -32,14 +36,16 @@
     	FROM Auction, Product
     	WHERE 
     		Auction.pNo = Product.pNo AND
-    		Product.pName LIKE #{paramValue}
+    		Product.pName LIKE #{paramValue} AND
+            deadline > SYSDATE AND
+            finish = '0'
     	ORDER BY Auction.aNo
     		
   	</select>
   	
   	<select id="getMyAuctionList" parameterType="int" resultType="Auction">
     	SELECT 
-    		aNo, title, minPrice, deadline, imPurPrice, bidPrice,
+    		aNo, title, minPrice, deadline, imPurPrice, bidPrice, finish,
     		Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product
     	WHERE 
@@ -50,10 +56,10 @@
   	
   	<select id="getAuction" parameterType="int" resultType="Auction">
     	SELECT 
-    		aNo, title, detail, minPrice, deadline,
+    		aNo, title, detail, minPrice, deadline, bidPrice,
     		imPurAva, imPurPrice, finish, image,
     		Auction.userNo AS "user.userNo", id AS "user.id",
-    		 Auction.pNo AS "product.pNo", pName AS "product.pName"
+    		Auction.pNo AS "product.pNo", pName AS "product.pName"
     	FROM Auction, Product, UserTable
     	WHERE 
     		Auction.pNo = Product.pNo AND
@@ -106,11 +112,14 @@
   	
   	<select id="getMyBidList" parameterType="int" resultType="Bid">
     	SELECT 
-    		bidNo, Bid.bidPrice, state, deadline, title, Auction.aNo
+    		Bid.bidNo, Bid.bidPrice, Bid.state, 
+    		Auction.deadline AS "auction.deadline", Auction.title AS "auction.title",
+    		Auction.aNo AS "auction.aNo",
+ 	  		cardNo AS "card.cardNo", addrNo AS "address.addrNo"
     	FROM Bid, Auction
     	WHERE 
     		Auction.aNo = Bid.aNo AND
-    		userNo = #{userNo}
+    		Bid.userNo = #{userNo}
     	ORDER BY Bid.bidNo
   	</select>
   	
@@ -129,10 +138,12 @@
         	SELECT BidSeq.nextval AS "bidNo" FROM DUAL
      	</selectKey>
     	INSERT INTO Bid 
-    		(bidNo, bidPrice, userNo, aNo)
+    		(bidNo, bidPrice, userNo, aNo, addrNo, cardNo, phone)
     	VALUES 
-    		(#{bidNo}, #{bidPrice}, #{user.userNo}, #{auction.aNo})
+    		(#{bidNo}, #{bidPrice}, #{user.userNo}, #{auction.aNo}, #{address.addrNo}, #{card.cardNo}, #{phone})
   	</insert>
+  	
+  	
   	
 <!-- 
   	<select id="getMySBidList" parameterType="String" resultType="SBid">
@@ -186,7 +197,7 @@
     		Bid.bidNo = SBid.bidNo AND
     		Auction.aNo = Bid.aNo AND
     		Bid.userNo = UserTable.userNo AND
-    		Bid.userNo = #{userNo}
+    		Bid.aNo = #{aNo}
   	</select>
   	
   	<insert id="successBid" parameterType="SBid">
@@ -217,7 +228,8 @@
   	
   	<select id="getMyImPurList" parameterType="int" resultType="ImPur">
     	SELECT 
-    		imPurNo, Auction.aNo, title, imPurPrice
+    		imPurNo, Auction.aNo AS "auction.aNo",
+    		title AS "auction.title", imPurPrice AS "auction.imPurPrice"
     	FROM ImPur, Auction
     	WHERE 
     		Auction.aNo = ImPur.aNo AND
@@ -225,28 +237,57 @@
     	ORDER BY ImPur.imPurNo
   	</select>
   	
-  	<select id="getMyImPur" parameterType="int" resultType="Auction">
+  	<select id="getMyImPur" parameterType="int" resultType="ImPur">
     	SELECT 
-    		imPurNo, Auction.aNo, title, imPurPrice,
+    		imPurNo, Auction.aNo AS "auction.aNo",
+    		title AS "auction.title", 
+    		imPurPrice AS "auction.imPurPrice",
     		Delivery.dNo AS "delivery.dNo",
-    		Payment.payNo AS "payment.payNo"
-    	FROM ImPur, Auction, Delivery, Payment
+    		Delivery.status AS "delivery.status",
+    		Delivery.phone AS "delivery.phone",
+    		Payment.payNo AS "payment.payNo",
+    		Payment.method AS "payment.method",
+    		Payment.pDate AS "payment.pDate",
+    		Payment.totalPrice AS "payment.totalPrice",
+    		Address.addrNo AS "delivery.address.addrNo", 
+    		Address.addr AS "delivery.address.addr",
+    		Card.cardNo AS "payment.card.cardNo",
+    		Card.cardPayNo AS "payment.card.cardPayNo"
+    	FROM ImPur, Auction, Delivery, Payment, Address, Card
     	WHERE 
     		Auction.aNo = ImPur.aNo AND
     		Delivery.dNo = ImPur.dNo AND
     		Payment.payNo = ImPur.payNo AND
+    		Delivery.addrNo = Address.addrNo AND
+    		Payment.cardNo = Card.cardNo AND
     		imPurNo = #{imPurNo}
   	</select>
   	
-  	<select id="getImPurByAuction" parameterType="int" resultType="Auction">
+  	<select id="getImPurByAuction" parameterType="int" resultType="ImPur">
     	SELECT 
-    		imPurNo, Auction.aNo, title, imPurPrice, 
-    		UserTable.userNo AS "user.userNo", id AS "user.id"
-    	FROM ImPur, Auction, UserTable
+    		imPurNo, Auction.aNo AS "auction.aNo",
+    		title AS "auction.title", imPurPrice AS "auction.imPurPrice",
+    		UserTable.userNo AS "user.userNo", id AS "user.id",
+    		Payment.payNo AS "payment.payNo",
+    		Payment.method AS "payment.method",
+    		Payment.pDate AS "payment.pDate",
+		    Payment.payCheck AS "payment.payCheck",
+    		Card.cardPayNo AS "payment.card.cardPayNo",    		
+    		Delivery.dNo AS "delivery.dNo",
+    		Delivery.status AS "delivery.status",
+    		Delivery.phone AS "delivery.phone",
+    		Address.addr AS "delivery.address.addr",
+    		Address.detail AS "delivery.address.detail",
+    		Address.zip AS "delivery.address.zip"
+    	FROM ImPur, Auction, UserTable, Delivery, Payment, Address, Card
     	WHERE 
     		Auction.aNo = ImPur.aNo AND
     		UserTable.userNo = ImPur.userNo AND
-    		ImPur.userNo = #{userNo}
+    		Delivery.dNo = ImPur.dNo AND
+    		Payment.payNo = ImPur.payNo AND
+    		Delivery.addrNo = Address.addrNo AND
+    		Payment.cardNo = Card.cardNo AND
+    		ImPur.aNo = #{aNo}
   	</select>
   	
   	<insert id="immePurchase" parameterType="ImPur">
@@ -266,5 +307,18 @@
     	WHERE aNo = #{aNo}
   	</update>
   	
+  	<update id="changeBidState" parameterType="int">
+    	UPDATE Bid SET
+    		state = '입찰실패'
+    	WHERE 
+    		aNo = #{aNo} AND
+    		state = '입찰성공'
+  	</update>
+  	
+  	<update id="finishAuction" parameterType="int">
+    	UPDATE Auction SET 
+    		finish = '1'
+    	WHERE aNo = #{aNo}
+  	</update>
   	
  </mapper>

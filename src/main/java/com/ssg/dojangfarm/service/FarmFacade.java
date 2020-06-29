@@ -75,8 +75,10 @@ public interface FarmFacade {
 	
 	//Delivery
 	public Delivery getDelivery(int dNo);
-	public void changeDeliveryStatus(int dNo, String status);
+	public void changeDeliveryStatus(int dNo);
 	public void addDelivery(Delivery delivery);
+	public List<Delivery> getDeliveryListByUserNo(int userNo);
+	public void changeDeliveryFinish(int dNo);
 	
 	//Order
 	public Order getOrder(int orderNo);
@@ -148,6 +150,7 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	
 	
 
 	

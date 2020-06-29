@@ -1,6 +1,7 @@
 package com.ssg.dojangfarm.controller.common;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.Delivery;

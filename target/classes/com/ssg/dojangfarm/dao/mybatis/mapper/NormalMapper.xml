@@ -41,7 +41,7 @@
 	<select id="getAllNormalList" resultType="Normal">
 		SELECT
 		saleNo, title,
-		Usertable.name as "user.name", regidDate
+		Usertable.name as "user.name", regidDate, saleState 
 		From Normal, UserTable
 		WHERE
 		Normal.userNo = UserTable.userNo

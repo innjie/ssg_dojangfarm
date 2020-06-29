@@ -132,11 +132,7 @@ public class NormalController implements ServletContextAware {
 			System.out.println("image not found");
 			this.farm.insertSale(normal);
 		}
-//
-//		if(res == 0) {
-//			return new ModelAndView(errorPage, "message", "insert Error");
-//		}
-		//insert -> list (or main)
+
 		return new ModelAndView( "redirect:/normal/list.do");
 	}
 	
@@ -227,7 +223,7 @@ public class NormalController implements ServletContextAware {
 		}
 		
 		//set attributes
-		
+		normal.setSaleState("OPEN");
 		int res = farm.updateSale(normal);
 		
 		if(res == 0)  {//failed
@@ -356,6 +352,9 @@ public class NormalController implements ServletContextAware {
 			result.rejectValue("quantity", "quantity");
 			model.addAttribute("normal", normal);
 			return new ModelAndView(buyNormalForm);
+		} 
+		if(paymentCommand.getQuantity() == normal.getCount()) {
+			this.farm.turnSaleState(normal.getSaleNo(), "CLOSE");
 		}
 				
 		if (result.hasErrors()) {
@@ -416,11 +415,12 @@ public class NormalController implements ServletContextAware {
 		order.setSaleType("Normal");
 		
 		this.farm.insertOrder(order);
-		
+		System.out.println(normal.getInfo());
 		normal.setCount(normal.getCount() - paymentCommand.getQuantity());
 		this.farm.updateSale(normal);
 		
-		return new ModelAndView(normalListView);
+		int orderNo = this.farm.getLastOrderNo();
+		return new ModelAndView("redirect:/normal/viewDelivery.do?orderNo=" + orderNo);
 
 	}
 	

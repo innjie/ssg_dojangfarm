@@ -13,4 +13,5 @@ public interface OrderMapper {
 	List<Order> getOrderUserList(int orderNo);
 	List<Refund> getRefundList(int userNo);
 	Refund getRefund(int refundNo);
+	int getLastOrderNo();
 }

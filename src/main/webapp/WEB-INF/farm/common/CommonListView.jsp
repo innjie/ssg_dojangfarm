@@ -47,7 +47,7 @@
         			</c:url>'>
         	Next</a>
     	</c:if>
-<a href="<c:url value='/common/insertForm.do'/>"> 등록</a> <br>
+<a href="<c:url value='/common/insertCommon.do'/>"> 등록</a> <br>
 
 </body>
 </html>

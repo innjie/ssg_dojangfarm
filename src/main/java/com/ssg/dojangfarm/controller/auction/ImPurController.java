@@ -1,5 +1,8 @@
 package com.ssg.dojangfarm.controller.auction;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -33,7 +36,8 @@ public class ImPurController {
 	private static final String VIEWIMPUR = "auction/MyImPurView";
 	private static final String IMPURFORM = "auction/ImPurFormView";
 	private static final String IMPURSUCCESS = "auction/ImPurSuccessView";
-	
+	private static final String IMPURFAIL = "auction/BidFailView";
+
 	@Autowired
 	private FarmFacade farm;
 	
@@ -91,7 +95,12 @@ public class ImPurController {
 			ModelMap model) throws Exception {
 			
 		ImPur imPur = this.farm.getMyImPur(imPurNo);	
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String pDate = sdFormat.format(imPur.getPayment().getpDate());
+		
 		model.put("imPur", imPur);
+		model.put("pDate", pDate);
 			
 		return VIEWIMPUR;
 	}	
@@ -104,6 +113,9 @@ public class ImPurController {
 			ModelMap model) throws Exception {
 		
 		Auction auction = this.farm.getAuction(aNo);
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		auction.setsDeadline(sdFormat.format(auction.getDeadline()));
 		
 		model.put("auction", auction);
 
@@ -147,6 +159,9 @@ public class ImPurController {
 			return new ModelAndView(IMPURFORM, "auction", auction);
 		}
 		
+		if(auction.getFinish()) {
+			return new ModelAndView(IMPURFAIL, "message", "경매가 종료되었습니다.");
+		}
 		
 		Payment payment = new Payment();
 		payment.setCard(card);

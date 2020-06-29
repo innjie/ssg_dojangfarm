@@ -29,7 +29,7 @@
 	<select id="getNormalSale" parameterType="int"
 		resultType="Normal">
 		SELECT
-		saleNo, saleType, title, saleState, info, price, image,
+		saleNo, saleType, title, saleState, info, price, image, price,
 		count, state, pNo as "product.pNo", Normal.userNo as "user.userNo",
 		regidDate, id as "user.id"
 		FROM Normal, UserTable

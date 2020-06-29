@@ -88,7 +88,8 @@
 	</delete>
 	<update id="updateCommonjoin" parameterType="CommonJoin">
 		UPDATE CommonJoin
-		SET count=#{count}
+		SET count=#{count}, cjState = #{cjState}
+		where cjNo = #{cjNo}
 	</update>
 
 	<select id="getCommonJoin" resultType="CommonJoin">

@@ -26,10 +26,16 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.controller.normal.PaymentCommand;
+import com.ssg.dojangfarm.domain.Address;
+import com.ssg.dojangfarm.domain.Card;
 import com.ssg.dojangfarm.domain.Category;
 import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonJoin;
+import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.Order;
+import com.ssg.dojangfarm.domain.Payment;
 import com.ssg.dojangfarm.domain.Product;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
@@ -50,6 +56,9 @@ public class CommonController implements ServletContextAware{
 	private static final String commonJoinUserListView = "commonjoin/JoinUserListView";
 	private static final String commonJoinView = "commonjoin/CommonJoinView";
 	private static final String commonJoinedListView = "commonjoin/ListBySaleView";
+	private static final String buyCommonForm = "common/buyCommonFormView";
+	private static final String deliveryView = "normal/DeliveryView";
+	
 	@Autowired
 	private FarmFacade farm;
 	public void setFarm(FarmFacade farm) {
@@ -72,6 +81,10 @@ public class CommonController implements ServletContextAware{
 	@ModelAttribute("cjCommand")
 	public CommonJoinCommand formBacking2(HttpServletRequest request) {
 		return new CommonJoinCommand();
+	}
+	@ModelAttribute("payment")
+	public PaymentCommand formBacking3(HttpServletRequest request) {
+		return new PaymentCommand();
 	}
 	// insert form
 	@RequestMapping("/common/insertForm.do")
@@ -273,8 +286,6 @@ public class CommonController implements ServletContextAware{
 		else if ("previous".equals(page)) {
 			cjList.previousPage();
 		}
-		List <Category> categoryList = farm.getCategoryList();
-		
 		
 		model.addAttribute("cjList", cjList);
 		return commonJoinUserListView;
@@ -411,6 +422,112 @@ public class CommonController implements ServletContextAware{
 		} else { // success
 			return new ModelAndView("Success", "message", "cancel success");
 		}
+	}
+	@RequestMapping(value = "/common/buyCommon.do", method = RequestMethod.GET)
+	public String buyCommon(@RequestParam("saleNo") int saleNo, @RequestParam("cjNo") int cjNo,
+			@ModelAttribute("payment")PaymentCommand paymentCommand, ModelMap model) {
+		CommonJoin commonJoin = this.farm.getCommonJoin(cjNo);
+		Common common = this.farm.getCommonSale(saleNo);
+		model.addAttribute("common", common);
+		model.addAttribute("commonJoin", commonJoin);
+		return buyCommonForm;
+	}
+	@RequestMapping(value = "/common/buyCommon.do", method = RequestMethod.POST)
+	public ModelAndView buyCommon(@RequestParam("cjNo") int cjNo,
+			@Valid@ModelAttribute("payment") PaymentCommand paymentCommand,
+			BindingResult result, HttpServletRequest request, ModelMap model) throws Exception {
+		//userSession
+		HttpSession httpSession = request.getSession();
+		User user = (User)httpSession.getAttribute("user");
+		if (user == null) {
+			return new ModelAndView(errorPage, "message", "Please LOGIN first");
+		}
+		
+		//get CommonSale
+		Common common = this.farm.getCommonSale(paymentCommand.getSaleNo());
+		CommonJoin commonJoin = this.farm.getCommonJoin(cjNo);
+		if (result.hasErrors()) {
+			model.addAttribute("common", common);
+			model.addAttribute("commonJoin", commonJoin);
+			return new ModelAndView(buyCommonForm);
+		}
+		
+		//card validation
+		Card card = this.farm.getCard(paymentCommand.getCardNo());
+		if (card == null) {
+			result.rejectValue("cardNo", "nocardNo");
+			return new ModelAndView(buyCommonForm, "payment", paymentCommand);
+		}
+		if (card.getUser().getUserNo() != user.getUserNo()) {
+			result.rejectValue("cardNo", "notMyCard");
+			return new ModelAndView(buyCommonForm, "payment", paymentCommand);
+		}
+		// Address validation
+		Address address = this.farm.getAddress(paymentCommand.getAddrNo());
+		if (address == null) {
+			result.rejectValue("addrNo", "noaddressNo");
+			return new ModelAndView(buyCommonForm, "auction", paymentCommand);
+		}
+		if (address.getUser().getUserNo() != user.getUserNo()) {
+			result.rejectValue("addrNo", "notMyAddress");
+			return new ModelAndView(buyCommonForm, "auction", paymentCommand);
+		}
+		Payment payment = new Payment();
+		payment.setCard(card);
+		payment.setTotalPrice(paymentCommand.getQuantity() * common.getPrice());
+		payment.setMethod("카드");
+		// insert normal Payment
+		this.farm.insertPayment(payment);
+		
+
+		Delivery delivery = new Delivery();
+		delivery.setAddress(address);
+		delivery.setPhone(paymentCommand.getPhone());
+		this.farm.addDelivery(delivery);
+		
+		int dNo = this.farm.getLastDNo();
+		delivery = this.farm.getDelivery(dNo);
+		
+		int pNo = this.farm.getLastPayNo();
+		payment = this.farm.getPayment(pNo);
+		
+		Order order = new Order();
+		
+		order.setDelivery(delivery);
+		order.setPayment(payment);
+		order.setQuantity(paymentCommand.getQuantity());
+		order.setSaleNo(paymentCommand.getSaleNo());
+		order.setUser(user);
+		order.setSaleType("Common");
+		
+		this.farm.insertOrder(order);
+		
+		commonJoin.setCjState("결제완료");
+		this.farm.updateCommonjoin(commonJoin);
+		
+		
+		return new ModelAndView("redirect:/commonjoin/JoinUserListView");
+	}
+	@RequestMapping("/common/viewDelivery.do")
+	public String deliveryView(@RequestParam("orderNo") int orderNo, ModelMap model) {
+		//get order
+		Order order = this.farm.getOrder(orderNo);
+		//get Delivery
+		Delivery delivery = this.farm.getDelivery(order.getDelivery().getdNo());
+		//get payment
+		Payment payment = this.farm.getPayment(order.getPayment().getPayNo());
+		//get Normal
+		Common  common = this.farm.getCommonSale(order.getSaleNo());
+		//get Address
+		Address address = this.farm.getAddress(delivery.getAddress().getAddrNo());
+		delivery.setAddress(address);
+		
+		model.addAttribute("order", order);
+		model.addAttribute("delivery", delivery);
+		model.addAttribute("payment", payment);
+		model.addAttribute("common", common);
+		
+		return deliveryView;
 	}
 	//upload file
 		private void uploadFile(MultipartFile image, Common common) {

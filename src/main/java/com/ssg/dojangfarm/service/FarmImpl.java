@@ -1,8 +1,10 @@
 package com.ssg.dojangfarm.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +40,13 @@ public class FarmImpl implements FarmFacade{
 	private DiscountDAO discountDAO;
 	@Autowired
 	private NormalDAO normalDAO;
-//	@Autowired
+	@Autowired
 	private PaymentDAO paymentDAO;
 	@Autowired
 	private RefundDAO refundDAO;
 	
+	@Autowired		
+	private ThreadPoolTaskScheduler scheduler;
 	
 	 
 	
@@ -149,7 +153,21 @@ public class FarmImpl implements FarmFacade{
 	}
 	@Override
 	public void registerAuction(Auction auction) {
+		
+		Runnable updateTableRunner = new Runnable() {	
+			@Override
+			public void run() {   
+				Date curTime = new Date();
+				auctionDAO.successBidAuction(auction);	
+				System.out.println("updateTableRunner is executed at " + curTime);
+			}
+		};
+		
 		auctionDAO.registerAuction(auction);
+
+		scheduler.schedule(updateTableRunner, auction.getDeadline());  
+		
+		System.out.println("updateTableRunner has been scheduled to execute at " + auction.getDeadline());		
 	}
 	@Override
 	public void bidAuction(Bid bid) {
@@ -254,6 +272,10 @@ public class FarmImpl implements FarmFacade{
 	public boolean confirmPassword(String password, String cPassword) {
 		return userDAO.confirmPassword(password, cPassword);
 	}
+	@Override
+	public void addPoint(User user) {
+		userDAO.addPoint(user);
+	}
 	
 	
 	//-------------------------------------------------------------------------
@@ -306,7 +328,11 @@ public class FarmImpl implements FarmFacade{
 	public void changeDeliveryFinish(int dNo) {
 		deliveryDAO.changeDeliveryFinish(dNo);
 	}
-	
+	@Override
+	public int getLastDNo() {
+		return deliveryDAO.getLastDNo();
+	}
+
 	//-------------------------------------------------------------------------
 	//Order
 	//-------------------------------------------------------------------------
@@ -325,8 +351,8 @@ public class FarmImpl implements FarmFacade{
 		return orderDAO.cancelOrder(orderNo);
 	}
 	@Override
-	public int insertOrder(int userNo, Order order) {
-		return orderDAO.insertOrder(userNo, order);
+	public int insertOrder( Order order) {
+		return orderDAO.insertOrder(order);
 	}
 	@Override
 	public List<Order> getOrderUserList(int orderNo) {
@@ -569,7 +595,15 @@ public class FarmImpl implements FarmFacade{
 	public void insertPayment(Payment payment) {
 		paymentDAO.insertPayment(payment);
 	}
-	
+	@Override
+	public void normalPayment(Payment payment) {
+		paymentDAO.normalPayment(payment);
+	}
+	@Override
+	public int getLastPayNo() {
+		return paymentDAO.getLastPayNo();
+	}
+
 	//-------------------------------------------------------------------------
 	//Refund
 	//-------------------------------------------------------------------------
@@ -588,7 +622,7 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
-	
+
 	
 	
 	

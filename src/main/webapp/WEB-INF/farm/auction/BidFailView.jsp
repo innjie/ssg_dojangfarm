@@ -4,10 +4,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
-
-<%@ include file="../IncludeTop.jsp" %>
-<b><c:out value="${message}" default="No further information was provided."/></b>
-
-<br> <br>
-
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>경매종료</title>
+</head>
+<body>
+	<form action='<c:url value="/auction/viewAuctionList.do"/>'>
+		${message}&nbsp;
+		<input type="submit" value="확인" />&nbsp;&nbsp;
+	</form>
+</body>
+</html>

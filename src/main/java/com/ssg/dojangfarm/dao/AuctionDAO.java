@@ -42,4 +42,6 @@ public interface AuctionDAO {
 	void addImage(int aNo, String image);
 	void addImage(Auction auction, int aNo, String image);
 	void finishAuction(int aNo);
+	
+	void successBidAuction(Auction auction);
 }

@@ -35,12 +35,23 @@
 </table>
 
 <br>
-<a href = <c:url value = '/commonJoin/userList.do'/>">리스트로 돌아가기</a><br>
+<c:set var="today" value="<%=new java.util.Date()%>"/>  
+
 <c:if test = "${(loginUser.userNo == commonJoin.user.userNo) && (commonJoin.common.saleState == 'OPEN')}">
-<a href = "<c:url value = '/commonJoin/update.do'>
-<c:param name = 'cjNo' value = '${commonJoin.cjNo }'/></c:url>"> 수정하기 </a><br>
-<a href = "<c:url value = '/commonJoin/cancel.do'>
-<c:param name = 'cjNo' value = ' ${commonJoin.cjNo}'/> </c:url>">취소하기</a><br>
+<c:if test = "${(commonJoin.common.deadline > today) && (commonJoin.cjState) == '신청' }">
+	<a href = "<c:url value = '/commonJoin/update.do'>
+	<c:param name = 'cjNo' value = '${commonJoin.cjNo }'/>
+	</c:url>"> 수정하기 </a><br>
+	<a href = "<c:url value = '/commonJoin/cancel.do'>
+	<c:param name = 'cjNo' value = ' ${commonJoin.cjNo}'/> </c:url>">취소하기</a><br>
+	<a href = "<c:url value = '/common/buyCommon.do'>
+	<c:param name = 'cjNo' value = '${commonJoin.cjNo }'/>
+	<c:param name = 'saleNo' value = '${commonJoin.common.saleNo }'/>
+	 </c:url> "> 결제하기 </a> <br>
+</c:if>
+<c:if test = "${(commonJoin.common.deadline < today) }">
+
+</c:if>
 </c:if>
 
 </body>

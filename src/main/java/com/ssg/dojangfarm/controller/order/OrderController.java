@@ -66,7 +66,6 @@ public class OrderController {
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
 		
-		
 		//insert refund
 		Refund refund = new Refund();
 		
@@ -81,6 +80,14 @@ public class OrderController {
 		
 		int refundRes = this.farm.refundSale(refund);
 		int orderRes = this.farm.cancelOrder(refundCommand.getOrder().getOrderNo());
+		
+		order = this.farm.getOrder(refundCommand.getOrder().getOrderNo());
+		//insert point
+		Normal normal = this.farm.getNormalSale(order.getSaleNo());
+		int point = normal.getPrice();
+		user.setPoint(point);
+		
+		this.farm.addPoint(user);
 				
 		if( orderRes == 0 || refundRes == 0)  {//failed
 			return new ModelAndView("Error", "message", "cancel failed");

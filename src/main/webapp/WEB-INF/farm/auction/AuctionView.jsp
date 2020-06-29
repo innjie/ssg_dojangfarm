@@ -43,7 +43,7 @@
 		</c:if>
 		<tr>
 			<td>기간</td>
-			<td>${auction.deadline}</td>
+			<td>${deadline}</td>
 		</tr>
 		<tr>
 			<td>판매자</td>
@@ -96,7 +96,7 @@
 					<tr>
 						<td>${sBid.payment.payNo}</td>
 						<td>${sBid.payment.method}</td>
-						<td>${sBid.payment.pDate}</td>
+						<td>${pDate}</td>
 						<td>${sBid.payment.card.cardPayNo}</td>
 						<td>${sBid.payment.payCheck}</td>
 					</tr>
@@ -152,7 +152,7 @@
 					<tr>
 						<td>${imPur.payment.payNo}</td>
 						<td>${imPur.payment.method}</td>
-						<td>${imPur.payment.pDate}</td>
+						<td>${pDate}</td>
 						<td>${imPur.payment.card.cardPayNo}</td>
 						<td>${imPur.payment.payCheck}</td>
 					</tr>
@@ -190,12 +190,5 @@
 		</table>
 	</c:if>
 	
-	<br><br>
-	<c:if test="${my == null}">
-		<a href="<c:url value='/auction/viewAuctionList.do' />">경매리스트보기</a>
-	</c:if>
-	<c:if test="${my != null}">
-		<a href="<c:url value='/auction/viewMyAuctionList.do' />">이전</a>
-	</c:if>
 </body>
 </html>

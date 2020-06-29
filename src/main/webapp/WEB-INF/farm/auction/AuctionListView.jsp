@@ -119,7 +119,7 @@ function getAuction(aNo) {
 						</c:if>
 					</td>
 					<td>${auc.imPurPrice}</td>
-					<td>${auc.deadline}</td>						
+					<td>${auc.sDeadline}</td>						
 				</tr>
 			</c:if>
 		</c:forEach>

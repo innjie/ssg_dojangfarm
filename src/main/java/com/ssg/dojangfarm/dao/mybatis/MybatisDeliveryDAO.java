@@ -38,5 +38,6 @@ public class MybatisDeliveryDAO implements DeliveryDAO{
 		deliveryMapper.changeDeliveryFinish(dNo);
 		
 	}
+
 	
 }

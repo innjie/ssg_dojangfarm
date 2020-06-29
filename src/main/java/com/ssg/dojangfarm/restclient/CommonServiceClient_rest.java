@@ -1,5 +1,7 @@
 package com.ssg.dojangfarm.restclient;
 
+import java.util.Scanner;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestClientException;
@@ -15,8 +17,15 @@ public class CommonServiceClient_rest {
 	private static String commonSycUrl = "http://" + host + ":" + port + "/dojangfarm/rest";
 
 	public static void main(String[] args) {
-		getCommonJoinListByUserNo(99999);
-		getCommonJoin(5);
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.print("유저번호를 입력하세요: "); 
+		int userNo = scan.nextInt();
+		System.out.print("공구참여번호를 입력하세요: ");
+		int cjNo = scan.nextInt();
+		
+		getCommonJoinListByUserNo(userNo);
+		getCommonJoin(cjNo);
 	}
 
 	private static void getCommonJoinListByUserNo(int userNo) {

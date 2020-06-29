@@ -32,8 +32,20 @@
 	<td>${order.saleType}</td>
 	<td>${order.saleNo} </td>
 	<td>${order.user.name}</td>
-	<td> <a href = "<c:url value =''><c:param name = 'dNo'
-	value = '${order.delivery.dNo}'/></c:url>"> ${order.delivery.dNo }</a></td> 
+	<td>
+	<c:if test = "${(order.saleType == 'Normal') }">
+	 <a href = "<c:url value ='/normal/viewDelivery.do'>
+	 <c:param name = 'orderNo' value = '${order.orderNo }'/>
+	 </c:url>"> ${order.delivery.dNo }</a>
+	</c:if>
+	
+	<c:if test = "${(order.saleType == 'Common') }">
+	<a href = "<c:url value ='/common/viewDelivery.do'>
+	 <c:param name = 'orderNo' value = '${order.orderNo }'/>
+	 </c:url>"> ${order.delivery.dNo }</a>
+	</c:if>
+	</td>
+	 
 	</tr>
 	</c:if>
 </c:forEach>
@@ -51,6 +63,6 @@
         	Next</a>
     	</c:if>
 
-<a href="/index" >[메인으로]</a>
+
 </body>
 </html>

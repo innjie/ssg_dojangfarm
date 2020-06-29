@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonNotice;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.User;
@@ -177,8 +178,21 @@ public class CommonNoticeController {
 		int userNo = user.getUserNo();
 
 		// get list by userNo
-		List<CommonNotice> cnList = farm.getCNoticeListByUserNo(userNo);
+		PagedListHolder<CommonNotice> cnList = new PagedListHolder<CommonNotice>( farm.getCNoticeListByUserNo(userNo));
 		model.addAttribute("cnList", cnList);
+		return cnUserListView;
+	}
+	@RequestMapping("commonNotice/userList2.do")
+	public String getCNListByUserNo2(@RequestParam("page") String page,
+			@ModelAttribute("cnList") PagedListHolder<CommonNotice> commonList,
+			BindingResult result, ModelMap model) {
+		if ("next".equals(page)) { 
+			commonList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			commonList.previousPage(); 
+		}
+		
 		return cnUserListView;
 	}
 

@@ -1,5 +1,10 @@
 package com.ssg.dojangfarm.controller.auction;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,13 +31,14 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-@SessionAttributes("[bidList, sBidList]")
+@SessionAttributes({"bidList", "sBidList"})
 public class BidController {
 	private static final String LISTBID = "auction/MyBidListView";
 	private static final String LISTSBID = "auction/MySBidListView";
 	private static final String VIEWSBID = "auction/MySBidView";
 	private static final String BIDFORM = "auction/BidAuctionFormView";
 	private static final String BIDSUCCESS = "auction/BidSuccessView";
+	private static final String BIDFAIL = "auction/BidFailView";
 
 	@Autowired
 	private FarmFacade farm;
@@ -55,8 +61,17 @@ public class BidController {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
+		
+		List<Bid> list = this.farm.getMyBidList(user.getUserNo());
+		
+		DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String sDeadline;
+		for(int i = 0; i <list.size(); i++) {
+			sDeadline = dFormat.format(list.get(i).getAuction().getDeadline());
+			list.get(i).getAuction().setsDeadline(sDeadline);
+		}
 
-		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(this.farm.getMyBidList(user.getUserNo()));	//add dao
+		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(list);	
 
 		bidList.setPageSize(10);
 		model.put("bidList", bidList);
@@ -128,8 +143,13 @@ public class BidController {
 			@RequestParam("sBidNo") int sBidNo,
 			ModelMap model) throws Exception {
 			
-		SBid sBid = this.farm.getMySBid(sBidNo);	
+		SBid sBid = this.farm.getMySBid(sBidNo);
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String pDate = sdFormat.format(sBid.getPayment().getpDate());
+		
 		model.put("sBid", sBid);
+		model.put("pDate", pDate);
 			
 		return VIEWSBID;
 	}	
@@ -143,6 +163,9 @@ public class BidController {
 		
 		Auction auction = this.farm.getAuction(aNo);
 		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		auction.setsDeadline(sdFormat.format(auction.getDeadline()));
+		
 		model.put("auction", auction);
 
 		return BIDFORM;
@@ -152,7 +175,6 @@ public class BidController {
 	@RequestMapping(value = "/auction/bidAuction.do",  method = RequestMethod.POST)
 	public ModelAndView bid(
 		@RequestParam("aNo") int aNo,
-		@RequestParam("nowPrice") int nowPrice,
 		@RequestParam("minPrice") int minPrice,
 		@Valid @ModelAttribute("bidCommand") BidCommand bidCommand,
 		BindingResult bindingResult,
@@ -173,7 +195,7 @@ public class BidController {
 			return new ModelAndView(BIDFORM, "auction", auction);
 		}
 		
-		if(bidCommand.getBidPrice() <= nowPrice) {
+		if(bidCommand.getBidPrice() <= auction.getBidPrice()) {
 			bindingResult.rejectValue("bidPrice", "minThanBidPrice");
 			return new ModelAndView(BIDFORM, "auction", auction);
 		}
@@ -191,6 +213,15 @@ public class BidController {
 			bindingResult.rejectValue("addrNo", "noaddressNo");
 			return new ModelAndView(BIDFORM, "auction", auction);
 		
+		}
+		
+		Date now = new Date();
+		if(auction.getDeadline().before(now)) {
+			return new ModelAndView(BIDFAIL, "message", "경매가 종료되었습니다.");
+		}
+		
+		if(auction.getFinish()) {
+			return new ModelAndView(BIDFAIL, "message", "경매가 종료되었습니다.");
 		}
 		
 		

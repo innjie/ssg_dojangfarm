@@ -31,6 +31,7 @@
 		<form:label path="period">유효기간</form:label>
 		<form:input path="period" />
 		<form:errors path="period" />
+		<br>*유효기간은 YYYY-MM-DD 포맷으로 입력해주세요
 		<br><br>
 		
 		<form:label path="cvc">cvc</form:label>

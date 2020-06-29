@@ -28,8 +28,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int insertOrder(int userNo, Order order) {
-		return orderDAO.insertOrder(userNo, order);
+	public int insertOrder( Order order) {
+		return orderDAO.insertOrder(order);
 	}
 
 	@Override

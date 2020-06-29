@@ -16,12 +16,14 @@
 
 	<table border="1">
 		<tr>
+			<td>순번</td>
 			<td>즉시구매 번호</td>
 			<td>경매</td>
 			<td>즉시구매 가격</td>
 		</tr>
-		<c:forEach var="imPur" items="${imPurList.pageList}">
+		<c:forEach var="imPur" items="${imPurList.pageList}" varStatus="status">
 			<tr>
+				<td>${status.count}</td>
 				<td>
 					<a href="<c:url value='/auction/viewMyImPur.do'>
 								<c:param name='imPurNo' value='${imPur.imPurNo}' />

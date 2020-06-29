@@ -9,7 +9,7 @@ public interface OrderMapper {
 	Order getOrder(int orderNo);
 	List<Order> getOrderList(int userNo);
 	int cancelOrder(int orderNo);
-	int insertOrder(int userNo, Order order);
+	int insertOrder( Order order);
 	List<Order> getOrderUserList(int orderNo);
 	List<Refund> getRefundList(int userNo);
 	Refund getRefund(int refundNo);

@@ -25,6 +25,11 @@ public class MybatisPaymentDAO implements PaymentDAO{
 	public int getLastPayNo() {
 		return paymentMapper.getLastPayNo();
 	}
+
+	@Override
+	public void normalPayment(Payment payment) {
+		paymentMapper.normalPayment(payment);
+	}
 	
 
 }

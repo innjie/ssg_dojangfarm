@@ -220,10 +220,10 @@ public class AuctionController implements ServletContextAware{
 		//check this user is auction's user
 		if(user != null) {
 			if(user.getUserNo() == auctionUserNo) {
-			//	SBid sBid = this.farm.getSBidByAuction(aNo);	
+				SBid sBid = this.farm.getSBidByAuction(aNo);	
 				ImPur imPur = this.farm.getImPurByAuction(aNo);	
 				
-			//	model.put("sBid", sBid);
+				model.put("sBid", sBid);
 				model.put("imPur", imPur);
 			}
 		}

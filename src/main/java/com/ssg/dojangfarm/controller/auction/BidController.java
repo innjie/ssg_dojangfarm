@@ -26,7 +26,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-@SessionAttributes("bidList")
+@SessionAttributes("[bidList, sBidList]")
 public class BidController {
 	private static final String LISTBID = "auction/MyBidListView";
 	private static final String LISTSBID = "auction/MySBidListView";
@@ -94,10 +94,10 @@ public class BidController {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 
-		PagedListHolder<SBid> SBidList = new PagedListHolder<SBid>(this.farm.getMySBidList(user.getUserNo()));	//add dao
+		PagedListHolder<SBid> sBidList = new PagedListHolder<SBid>(this.farm.getMySBidList(user.getUserNo()));	//add dao
 
-		SBidList.setPageSize(4);
-		model.put("SBidList", SBidList);
+		sBidList.setPageSize(4);
+		model.put("sBidList", sBidList);
 		return LISTSBID;
 	}
 	
@@ -106,16 +106,16 @@ public class BidController {
 	@RequestMapping("/auction/viewMySBidList2.do")
 	public String listMySBid2(
 			@RequestParam("page") String page,
-			@ModelAttribute("SBidList") PagedListHolder<SBid> SBidList,
+			@ModelAttribute("sBidList") PagedListHolder<SBid> sBidList,
 			BindingResult result) throws Exception {
-		if (SBidList== null) {
+		if (sBidList== null) {
 			throw new IllegalStateException("Cannot find pre-loaded SBidList");
 		}
 		if ("next".equals(page)) { 
-			SBidList.nextPage(); 
+			sBidList.nextPage(); 
 		}
 		else if ("previous".equals(page)) { 
-			SBidList.previousPage(); 
+			sBidList.previousPage(); 
 		}
 			
 		return LISTSBID;

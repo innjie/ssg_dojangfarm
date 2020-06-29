@@ -30,36 +30,52 @@
 		</tr>
 		<tr>
 			<td>지불상태</td>
-			<td>${sBid.payState}</td>
-			<c:if test="${sBid.payState == '결제예정'}"	>
-				<td>
-					<a href="<c:url value='/delivery/addDelivery.do'>
-								<%-- <c:param name="sBidNo" value="${sBid.sBidNo}"/> --%>
-							</c:url>">
-					결제</</a>
-				</td>
-			</c:if>		
-		</tr>
-	</table>
-	<br><br>
-	<table border='1'>
-		<tr>
-			<td>배송</td>
-			
-		</tr>
-		<tr>
-			
+			<td>${sBid.payState}</td>	
 		</tr>
 	</table>
 	<br><br>
 	<table border='1'>
 		<tr>
 			<td>결제</td>
-			
+			<td>결제방법</td>
+			<td>카드</td>
+			<td>결제일</td>
+			<td>결제금액</td>
 		</tr>
 		<tr>
-			
+			<td>${sBid.payment.payNo}</td>
+			<td>${sBid.payment.method}</td>
+			<td>
+				<a href="<c:url value='/card/viewCard.do'> 
+							<c:param name='cardNo' value='${sBid.payment.card.cardNo}' />
+						</c:url>">
+				${sBid.payment.card.cardPayNo}</a>
+			</td>
+			<td>${sBid.payment.pDate}</td>
+			<td>${sBid.payment.totalPrice}</td>
 		</tr>
 	</table>
+	<br><br>
+	<table border='1'>
+		<tr>
+			<td>배송</td>
+			<td>주소</td>
+			<td>전화번호</td>
+			<td>상태</td>
+		</tr>
+		<tr>
+			<td>${sBid.delivery.dNo}</td>
+			<td>
+				<a href="<c:url value='/address/getAddress.do'>
+							<c:param name='addrNo' value='${sBid.delivery.address.addrNo}' />
+						</c:url>">
+				${sBid.delivery.address.addr}</a>
+			</td>
+			<td>${sBid.delivery.phone}</td>
+			<td>${sBid.delivery.status}</td>
+		</tr>
+	</table>
+	<br><br>
+	<a href="<c:url value='/auction/viewMySBid.do' />">이전</a>
 </body>
 </html>

@@ -48,6 +48,8 @@ public interface AuctionMapper {
 	
 	int getLastANo();
 	void addImage(@Param("aNo")int aNo, @Param("image")String image);
-	void changeBidState(int getaNo);
+	void changeBidState(int aNo);
 	void finishAuction(int aNo);
+	void changeBidStateSuccess(int aNo);
+	
 }

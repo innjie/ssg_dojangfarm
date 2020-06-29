@@ -19,7 +19,7 @@ public class AuctionCommand {
 	private String detail;
 	@Min(1000)
 	private int minPrice;
-	@NotNull @Future @DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull @Future @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date deadline;
 	private Boolean imPurAva;		//imme Purchase Available
 	private int imPurPrice;		//imme Purchase

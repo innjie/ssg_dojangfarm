@@ -126,12 +126,16 @@
   	
   	<select id="getBid" parameterType="int" resultType="Bid">
     	SELECT 
-    		bidNo, Bid.bidPrice, state, deadline, title, Auction.aNo
+    		bidNo, Bid.bidPrice, state, deadline, phone,
+    		title AS "auction.title", Auction.aNo AS "auction.aNo",
+    		cardNo AS "card.cardNo", addrNo AS "address.addrNo"
     	FROM Bid, Auction
     	WHERE 
     		Auction.aNo = Bid.aNo AND
     		bidNo = #{bidNo}
   	</select>
+  	
+  	
   	
   	<insert id="bidAuction" parameterType="Bid">
   		<selectKey keyProperty="bidNo" resultType="int" order="BEFORE">
@@ -237,10 +241,10 @@
   		<selectKey keyProperty="sBidNo" resultType="int" order="BEFORE">
         	SELECT SBidSeq.nextval AS "sBidNo" FROM DUAL
      	</selectKey>
-    	INSERT INTO ImPur 
+    	INSERT INTO SBid 
     		(sBidNo, bidNo, dNo, payNo)
     	VALUES 
-    		(#{imPurNo}, #{bid.bidNo}, #{delivery.dNo}, #{payment.payNo})
+    		(#{sBidNo}, #{bid.bidNo}, #{delivery.dNo}, #{payment.payNo})
   	</insert>
   	
   	
@@ -361,5 +365,15 @@
     		finish = '1'
     	WHERE aNo = #{aNo}
   	</update>
+  	
+  	<select id="findSBid" parameterType="int" resultType="Bid">
+  		select 
+  			bidNo
+  		from
+  			Bid
+  		Where
+  			aNo = #{aNo} AND
+    		state = '낙찰'
+  	</select>
   	
  </mapper>

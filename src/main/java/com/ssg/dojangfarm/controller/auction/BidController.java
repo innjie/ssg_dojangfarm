@@ -26,7 +26,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-@SessionAttributes("[bidList, sBidList]")
+@SessionAttributes({"bidList", "sBidList"})
 public class BidController {
 	private static final String LISTBID = "auction/MyBidListView";
 	private static final String LISTSBID = "auction/MySBidListView";

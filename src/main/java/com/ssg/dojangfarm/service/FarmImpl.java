@@ -1,8 +1,10 @@
 package com.ssg.dojangfarm.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,8 @@ public class FarmImpl implements FarmFacade{
 	@Autowired
 	private RefundDAO refundDAO;
 	
+	@Autowired		
+	private ThreadPoolTaskScheduler scheduler;
 	
 	 
 	
@@ -149,7 +153,21 @@ public class FarmImpl implements FarmFacade{
 	}
 	@Override
 	public void registerAuction(Auction auction) {
+		
+		Runnable updateTableRunner = new Runnable() {	
+			@Override
+			public void run() {   
+				Date curTime = new Date();
+				auctionDAO.successBidAuction(auction);	
+				System.out.println("updateTableRunner is executed at " + curTime);
+			}
+		};
+		
 		auctionDAO.registerAuction(auction);
+
+		scheduler.schedule(updateTableRunner, auction.getDeadline());  
+		
+		System.out.println("updateTableRunner has been scheduled to execute at " + auction.getDeadline());		
 	}
 	@Override
 	public void bidAuction(Bid bid) {

@@ -76,6 +76,6 @@
 		</tr>
 	</table>
 	<br><br>
-	<a href="<c:url value='/auction/viewMySBid.do' />">이전</a>
+	<a href="<c:url value='/auction/viewMySBidList.do' />">이전</a>
 </body>
 </html>

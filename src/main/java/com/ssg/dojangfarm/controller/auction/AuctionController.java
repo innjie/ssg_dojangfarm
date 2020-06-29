@@ -40,7 +40,6 @@ public class AuctionController implements ServletContextAware{
 	private static final String VIEWAUCTION = "auction/AuctionView";
 	private static final String LISTMYAUCTION = "auction/MyAuctionListView";
 	private static final String AUCTIONFORM = "auction/RegisterAuctionFormView";
-	private static final String DELIVERYPAYMENT = "auction/AuctionDeliveryPaymentView";
 	
 	private ServletContext context;	
 

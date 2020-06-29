@@ -41,6 +41,6 @@
 				<c:param name='addrNo' value='${address.addrNo}' />
 			</c:url>">
 	삭제</a>&nbsp;&nbsp;
-	<a href="<c:url value='/address/getAddressList.do' />">이전</a>
+	<a href="<c:url value='/address/getAddressList.do' />">주소리스트보기</a>
 </body>
 </html>

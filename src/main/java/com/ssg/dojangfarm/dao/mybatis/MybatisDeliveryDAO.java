@@ -29,5 +29,14 @@ public class MybatisDeliveryDAO implements DeliveryDAO{
 	public List<Delivery> getDeliveryListByUserNo(int userNo) {
 		return deliveryMapper.getDeliveryListByUserNo(userNo);
 	}
-
+	@Override
+	public int getLastDNo() {
+		return deliveryMapper.getLastDNo();
+	}
+	@Override
+	public void changeDeliveryFinish(int dNo) {
+		deliveryMapper.changeDeliveryFinish(dNo);
+		
+	}
+	
 }

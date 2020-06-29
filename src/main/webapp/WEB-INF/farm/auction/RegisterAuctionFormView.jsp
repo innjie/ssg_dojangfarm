@@ -52,7 +52,7 @@
 		<form:errors path="imPurPrice" />
 		<br>
 				
-		사진 <input type="file" name="image" />
+		사진 <input type="file" name="image" value="${auctionCommand.image}" />
 		<br><br>	
 		
 		<input type="submit" value="추가" />&nbsp;&nbsp;

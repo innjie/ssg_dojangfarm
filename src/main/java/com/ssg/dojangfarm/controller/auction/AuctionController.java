@@ -32,7 +32,7 @@ import com.ssg.dojangfarm.domain.ImPur;
 import com.ssg.dojangfarm.domain.SBid;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
-
+ 
 @Controller
 @SessionAttributes("auctionList")
 public class AuctionController implements ServletContextAware{
@@ -40,8 +40,7 @@ public class AuctionController implements ServletContextAware{
 	private static final String VIEWAUCTION = "auction/AuctionView";
 	private static final String LISTMYAUCTION = "auction/MyAuctionListView";
 	private static final String AUCTIONFORM = "auction/RegisterAuctionFormView";
-	private static final String ADDIMAGE = "auction/AddImage";
-	private static final String CONFIRMAUCTION = "auction/RegisterAuctionConfirmView";
+	private static final String DELIVERYPAYMENT = "auction/AuctionDeliveryPaymentView";
 	
 	private ServletContext context;	
 
@@ -231,6 +230,27 @@ public class AuctionController implements ServletContextAware{
 		
 		return VIEWAUCTION;
 	}
+	
+	
+	//delivery 
+	@RequestMapping("/auction/auctionDeliveryStateChange.do")
+	public String auctionDeliveryPayment(
+		@RequestParam("dNo") int dNo,	
+		@RequestParam("aNo") int aNo,
+		@RequestParam("status") String status,
+		ModelMap model) throws Exception {
+		
+		if(status.equals("배송전")) {
+			this.farm.changeDeliveryStatus(dNo);
+		}
+		else if(status.equals("배송중")) {
+			this.farm.changeDeliveryFinish(dNo);
+		}
+		model.put("aNo", aNo);
+		
+		return "redirect:/auction/viewAuction.do";
+	}
+	
 
 	//register auction ... auction form
 	@RequestMapping("/auction/registerAuctionForm.do")
@@ -241,33 +261,31 @@ public class AuctionController implements ServletContextAware{
 	}
 	
 	
-	//confirm auction
-	@RequestMapping("/auction/confirmAuction.do")
-	public String confirm(
+	//register auction ... insert auction
+	@RequestMapping("/auction/registerAuction.do")
+	public String register(
 			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			BindingResult bindingResult) throws Exception {
+			BindingResult bindingResult,
+			HttpServletRequest request) throws Exception {
+		
+		System.out.println("register auction!!");
 		
 		//validate
 		if (bindingResult.hasErrors()) {
 			return AUCTIONFORM; 
 		}
-		
+				
 		if (auctionCommand.getProduct() == null) {
 			bindingResult.rejectValue("product.pName", "NotNull");
 			return AUCTIONFORM; 
 		}
 		
-		return CONFIRMAUCTION;
-	}
-
-	
-	//register auction ... insert auction
-	@RequestMapping("/auction/registerAuction.do")
-	public String register(
-			@ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			HttpServletRequest request) throws Exception {
-		
-		System.out.println("register auction!!");
+		if (auctionCommand.getImPurAva() == true && auctionCommand.getImPurPrice() != 0) {
+			if(auctionCommand.getMinPrice() >= auctionCommand.getImPurPrice()) {
+				bindingResult.rejectValue("imPurPrice", "hastoHighThanMinPrice");
+				return AUCTIONFORM; 
+			}
+		}
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");

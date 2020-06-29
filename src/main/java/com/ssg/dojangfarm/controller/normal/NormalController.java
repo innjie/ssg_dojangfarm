@@ -349,19 +349,16 @@ public class NormalController implements ServletContextAware {
 		}
 		//get NormalSale
 		Normal normal = this.farm.getNormalSale(paymentCommand.getSaleNo());
+		Product product = this.farm.getProduct(normal.getProduct().getpNo());
+		normal.setProduct(product);
+		
 		if(paymentCommand.getQuantity() > normal.getCount()) {
-			Product product = this.farm.getProduct(normal.getProduct().getpNo());
-			normal.setProduct(product);
 			result.rejectValue("quantity", "quantity");
 			model.addAttribute("normal", normal);
 			return new ModelAndView(buyNormalForm);
 		}
 				
 		if (result.hasErrors()) {
-			
-			Product product = this.farm.getProduct(normal.getProduct().getpNo());
-			normal.setProduct(product);
-			
 			model.addAttribute("normal", normal);
 			return new ModelAndView(buyNormalForm);
 		}
@@ -369,26 +366,27 @@ public class NormalController implements ServletContextAware {
 		//card validation
 		Card card = this.farm.getCard(paymentCommand.getCardNo());
 		if(card == null) {
+			model.addAttribute("normal", normal);
 			result.rejectValue("cardNo", "nocardNo");
 			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
 		}
 		if(card.getUser().getUserNo() != user.getUserNo()) {
+			model.addAttribute("normal", normal);
 			result.rejectValue("cardNo", "notMyCard");
 			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
 		}
 		//Address validation
 		Address address = this.farm.getAddress(paymentCommand.getAddrNo());
 		if(address == null) {
+			model.addAttribute("normal", normal);
 			result.rejectValue("addrNo", "noaddressNo");
-			return new ModelAndView(buyNormalForm, "auction", paymentCommand);
+			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
 		}
 		if(address.getUser().getUserNo() != user.getUserNo()) {
+			model.addAttribute("normal", normal);
 			result.rejectValue("addrNo", "notMyAddress");
-			return new ModelAndView(buyNormalForm, "auction", paymentCommand);
+			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
 		}
-		
-		
-		
 		//payNo, method, paycheck,cardNo, totalPrice
 		Payment payment = new Payment();
 		payment.setCard(card);

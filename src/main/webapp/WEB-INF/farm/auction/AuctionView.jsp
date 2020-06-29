@@ -72,7 +72,7 @@
 	</c:if>
 	<c:if test="${(auction.finish == true) && (user.id == auction.user.id)}">
 		<table border='1'>
-	<!-- 		<c:if test="${sBid != null}">
+	 		<c:if test="${sBid != null}">
 				<table border='1'>
 					<tr>
 						<td>낙찰자</td>
@@ -80,17 +80,56 @@
 						<td>지불상태</td>
 					</tr>
 					<tr>
-						<td>
-							<a href="<c:url value='/auction/viewMySBid.do'>
-										<c:param name='sBidNo' value='${sBid.sBidNo}' />
-									</c:url>">
-							${sBid.bid.user.id}</a>
-						</td> 
+						<td>${sBid.bid.user.id}</td> 
 						<td>${sBid.bid.bidPrice}</td>
 						<td>${sBid.payState}</td>
 					</tr>
-				</table><br>	
-			</c:if> -->
+				</table><br>
+				<table border='1'>
+					<tr>
+						<td>결제번호</td>
+						<td>결제방법</td>
+						<td>결제일</td>
+						<td>카드번호</td>
+						<td>결제상태</td>
+					</tr>
+					<tr>
+						<td>${sBid.payment.payNo}</td>
+						<td>${sBid.payment.method}</td>
+						<td>${sBid.payment.pDate}</td>
+						<td>${sBid.payment.card.cardPayNo}</td>
+						<td>${sBid.payment.payCheck}</td>
+					</tr>
+				</table><br>
+				<table border='1'>
+					<tr>
+						<td>배송번호</td>
+						<td>주소</td>
+						<td>상세주소</td>
+						<td>우편번호</td>
+						<td>전화번호</td>
+						<td>배송상태</td>
+					</tr>
+					<tr>
+						<td>${sBid.delivery.dNo}</td>
+						<td>${sBid.delivery.address.addr}</td>
+						<td>${sBid.delivery.address.detail}</td>
+						<td>${sBid.delivery.address.zip}</td>
+						<td>${sBid.delivery.phone}</td>
+						<td>${sBid.delivery.status}</td>
+						<c:if test="${sBid.delivery.status != '배송완료'}">
+							<td>
+								<a href="<c:url value='/auction/auctionDeliveryStateChange.do'>
+											<c:param name='dNo' value='${sBid.delivery.dNo}' />
+											<c:param name='aNo' value='${auction.aNo}' />
+											<c:param name='status' value='${sBid.delivery.status}' />
+										</c:url>">
+								배송상태변경</a>
+							</td>
+						</c:if>
+					</tr>
+				</table>	
+			</c:if> 
 			<c:if test="${imPur != null}">
 				<table border='1'>
 					<tr>

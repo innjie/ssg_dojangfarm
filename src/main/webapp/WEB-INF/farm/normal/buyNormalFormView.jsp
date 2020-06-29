@@ -124,7 +124,7 @@ function searchAddress(userNo) {
 		<br><br>
 		<form:hidden path = "saleNo" value = "${normal.saleNo }"/>
 		<form:hidden path = "saleType" value = "Normal"/>
-		<input type="submit" value="수정" />
+		<input type="submit" value="결제" />
 	</form:form>
 	<br>
 	<div id="result"></div>

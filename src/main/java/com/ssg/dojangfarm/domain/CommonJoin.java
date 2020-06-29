@@ -11,7 +11,7 @@ public class CommonJoin implements Serializable{
 	private Delivery delivery;
 	private Payment payment;
 	private String count;
-	
+	private int cardNo;
 	
 	public int getCjNo() {
 		return cjNo;
@@ -54,6 +54,12 @@ public class CommonJoin implements Serializable{
 	}
 	public void setCount(String count) {
 		this.count = count;
+	}
+	public int getCardNo() {
+		return cardNo;
+	}
+	public void setCardNo(int cardNo) {
+		this.cardNo = cardNo;
 	}
 	
 	

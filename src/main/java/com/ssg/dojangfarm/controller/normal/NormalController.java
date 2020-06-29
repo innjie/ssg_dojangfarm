@@ -132,11 +132,7 @@ public class NormalController implements ServletContextAware {
 			System.out.println("image not found");
 			this.farm.insertSale(normal);
 		}
-//
-//		if(res == 0) {
-//			return new ModelAndView(errorPage, "message", "insert Error");
-//		}
-		//insert -> list (or main)
+
 		return new ModelAndView( "redirect:/normal/list.do");
 	}
 	

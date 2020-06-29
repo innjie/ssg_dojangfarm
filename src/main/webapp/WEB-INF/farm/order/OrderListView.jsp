@@ -21,7 +21,7 @@
 	<td>주문자</td>
 	<td>배송번호</td>
 </tr>
-<c:forEach var="order" items="${orderList.pageList}" >
+<c:forEach var="order" items="${orderList.pageList}"  varStatus = "status">
 <c:if test = "${(order.state != 'Refund') }">
 	<tr>
 	<td><a href="<c:url value='/order/view.do'> 
@@ -51,17 +51,19 @@
 </c:forEach>
 </table>
 <c:if test="${!orderList.firstPage}">
-    		<a href='<c:url value="/order/list2.do">
+			<a
+				href='<c:url value="/order/list2.do">
         				<c:param name="page" value="previous"/>
         			</c:url>'>
-        	Prev</a>
-    	</c:if> 
-    	<c:if test="${!orderList.lastPage}">
-    		<a href='<c:url value="/order/list2.do">
+				Prev</a>
+		</c:if>
+		<c:if test="${!orderList.lastPage}">
+			<a
+				href='<c:url value="/order/list2.do">
         				<c:param name="page" value="next"/>
         			</c:url>'>
-        	Next</a>
-    	</c:if>
+				Next</a>
+		</c:if>
 
 
 </body>

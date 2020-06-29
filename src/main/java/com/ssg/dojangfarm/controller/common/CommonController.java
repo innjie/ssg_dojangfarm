@@ -172,7 +172,7 @@ public class CommonController implements ServletContextAware{
 	
 	//update Common
 	@RequestMapping(value = "/common/updateCommon.do", method = RequestMethod.POST)
-	public ModelAndView updateCommon(@ModelAttribute("common") Common common,
+	public ModelAndView updateCommon(@Valid@ModelAttribute("common") Common common,
 			BindingResult result, HttpServletRequest request, ModelMap model) {
 		//get user session
 		HttpSession httpSession = request.getSession();
@@ -331,20 +331,26 @@ public class CommonController implements ServletContextAware{
 	@Transactional
 	@RequestMapping(value = "/commonjoin/join.do", method = RequestMethod.POST)
 	public ModelAndView insertCommonJoin(HttpServletRequest request,
-			@ModelAttribute("cjCommand") CommonJoinCommand cjCommand, BindingResult result,
+			@Valid @ModelAttribute("cjCommand") CommonJoinCommand cjCommand, BindingResult result,
+			BindingResult bindingResult,
 			ModelMap model) {
 		// insert join actioin
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
 		Common common = this.farm.getCommonSale(cjCommand.getCommon().getSaleNo());
-		
+		System.out.println("count"+cjCommand.getCount());
 		//validate
 		if(user == null) {
 			return new ModelAndView(errorPage, "message", "Please LOGIN first");
 		}
 		if(result.hasErrors()) {
-			model.addAttribute(common);
+			model.addAttribute("common", common);
 			return new ModelAndView(insertCJForm);
+		}
+		
+		if(cjCommand.getCount().equals("0")) {
+			bindingResult.rejectValue("count", "minCount");
+			return new ModelAndView(insertCJForm, "common", common);
 		}
 		//if already exist
 		
@@ -414,10 +420,16 @@ public class CommonController implements ServletContextAware{
 	}
 	// updateCommonJoin
 	@RequestMapping(value = "/commonJoin/update.do", method = RequestMethod.POST)
-	public ModelAndView updateCommonJoin(@ModelAttribute("commonJoin") CommonJoin commonJoin, BindingResult result) {
+	public ModelAndView updateCommonJoin(
+		@Valid@ModelAttribute("commonJoin") CommonJoin commonJoin, BindingResult result) {
 		commonJoin.setCjState("신청");
 		commonJoin.setCjNo(commonJoin.getCjNo());
 		farm.updateCommonjoin(commonJoin);
+		
+		if(commonJoin.getCount().equals("0") || commonJoin.getCount() == null) {
+			result.rejectValue("count", "minCount");
+			return new ModelAndView(updateCJForm, "commonJoin", commonJoin);
+		}
 
 		return new ModelAndView("redirect:/user/myPage.do");
 	}

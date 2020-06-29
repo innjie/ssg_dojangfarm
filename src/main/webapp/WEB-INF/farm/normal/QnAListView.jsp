@@ -22,8 +22,8 @@
 		<input type="submit" value="질문하기">
 	</form>
 	<br>
-	<c:if test="${message} != null">
-		${message}<br><br>
+	<c:if test="${param.message != null}">
+		${param.message}<br><br>
 	</c:if>
 	<br>
 	<table border="1">

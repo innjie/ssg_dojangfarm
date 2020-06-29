@@ -40,7 +40,7 @@ public class QnAController {
 			@RequestParam("saleNo") int saleNo,
 			ModelMap model) throws Exception {
 		PagedListHolder<QnA> qnaList = new PagedListHolder<QnA>(this.farm.getQnAList(saleNo));
-
+		
 		qnaList.setPageSize(10);
 		model.put("qnaList", qnaList);
 		model.put("saleNo", saleNo);
@@ -95,14 +95,22 @@ public class QnAController {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 
+		User saleUser = this.farm.getNormalSale(Integer.parseInt(saleNo)).getUser();
+		
+		if(user.getUserNo() == saleUser.getUserNo()) {
+			System.out.println("can't question! ");
+
+			return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo + "&message=It is your sale";
+		}
+		
 		if(secret == null) {
 			secret = false;
 		}
 		
 		if(question.equals("")) {
 			System.out.println("no question! ");
-			model.addAttribute("message", "No Question");
-			return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo;
+
+			return "redirect:/normal/viewQnAList.do?saleNo=" + saleNo + "&message=No Question";
 		}
 		
 		QnA qna = new QnA();
@@ -143,10 +151,11 @@ public class QnAController {
 			@RequestParam("answer") String answer,
 			ModelMap model) throws Exception {
 
+		
 		if(answer.equals("")) {
 			System.out.println("no Anaswer! ");
 			model.addAttribute("message", "No Anaswer");
-			return "redirect:/normal/answerQnA.do?saleNo=" + saleNo + "&qNo=" + qNo;
+			return "redirect:/normal/answerQnA.do?saleNo=" + saleNo + "&qNo=" + qNo + "&message=No Anaswer";
 		}
 		
 		this.farm.answerQnA(qNo, answer);

@@ -34,7 +34,7 @@
 
 			<tr>
 				<td>결제번호</td>
-				<td>${order.payment.paymentNo }</td>
+				<td>${order.payment.payNo }</td>
 			</tr>
 		
 	</table>

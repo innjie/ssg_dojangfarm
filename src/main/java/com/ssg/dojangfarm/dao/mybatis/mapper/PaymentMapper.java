@@ -9,4 +9,5 @@ public interface PaymentMapper {
 	public Payment getPayment(int payNo);
 	public void insertPayment(Payment payment);
 	public int getLastPayNo();
+	public void normalPayment(Payment payment);
 }

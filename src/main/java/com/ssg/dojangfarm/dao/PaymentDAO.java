@@ -12,4 +12,5 @@ public interface PaymentDAO {
 	Payment getPayment(int payNo);
 	void insertPayment(Payment payment);
 	 int getLastPayNo();
+	void normalPayment(Payment payment);
 }

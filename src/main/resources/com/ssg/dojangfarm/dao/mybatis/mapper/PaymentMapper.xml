@@ -28,4 +28,6 @@
     		MAX(payNo)
     	FROM Payment
   	</select>
+  	
+  	
 </mapper>

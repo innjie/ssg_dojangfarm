@@ -31,8 +31,8 @@ public class MybatisOrderDAO implements OrderDAO{
 	}
 
 	@Override
-	public int insertOrder(int userNo, Order order) {
-		return orderMapper.insertOrder(userNo, order);
+	public int insertOrder(Order order) {
+		return orderMapper.insertOrder(order);
 	}
 
 	@Override

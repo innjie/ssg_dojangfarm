@@ -57,6 +57,7 @@ function getCJ(cjNo) {
 	<td>${cj.count}</td>
 	<td>${cj.cjState }
 	</tr>
+
 </c:forEach>
 </table>
 	<c:if test="${!cjList.firstPage}">

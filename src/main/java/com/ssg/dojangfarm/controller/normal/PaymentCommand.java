@@ -18,6 +18,7 @@ public class PaymentCommand {
 	@NotEmpty @Pattern(regexp = "01[01679]-\\d{3,4}-\\d{4}")
 	private String phone;
 	private String saleType;
+	private int cjNo;
 	
 	public int getPayNo() {
 		return payNo;
@@ -69,6 +70,12 @@ public class PaymentCommand {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public int getCjNo() {
+		return cjNo;
+	}
+	public void setCjNo(int cjNo) {
+		this.cjNo = cjNo;
 	}
 	
 }

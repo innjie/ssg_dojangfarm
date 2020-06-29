@@ -48,11 +48,13 @@
 					${bid.card.cardNo}</a>
 				</td>
 				<td>${bid.state}</td>		
-				<c:if test="${(bid.state == '실패') && (bid.auction.deadline < SYSDATE)}"	>
-					<a href="<c:url value='/auction/bidAuction.do'>
-								<c:param name="aNo" value="${bid.auction.aNo}"/>
-							</c:url>">
-					재입찰</</a>
+				<c:if test="${(bid.state == '입찰실패') && (bid.auction.finish == false)}"	>
+					<td>
+						<a href="<c:url value='/auction/bidAuction.do'>
+									<c:param name="aNo" value="${bid.auction.aNo}"/>
+								</c:url>">
+						재입찰</</a>
+					</td>
 				</c:if>				
 			</tr>
 		</c:forEach>

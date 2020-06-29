@@ -52,5 +52,6 @@ public interface AuctionMapper {
 	void finishAuction(int aNo);
 	void changeBidStateSuccess(int aNo);
 	Bid findSBid(int getaNo);
+	ImPur getMyImPurKakao(int imPurNo);
 	
 }

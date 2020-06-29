@@ -44,4 +44,6 @@ public interface AuctionDAO {
 	void finishAuction(int aNo);
 	
 	void successBidAuction(Auction auction);
+	void immePurchaseKakao(ImPur imPur);
+	ImPur getMyImPurKakao(int imPurNo);
 }

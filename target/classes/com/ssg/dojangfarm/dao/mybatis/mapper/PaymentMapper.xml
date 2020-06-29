@@ -23,6 +23,16 @@
     		(#{payNo}, #{card.cardNo}, #{totalPrice})
   	</insert>
   	
+  	<insert id="insertPaymentKakao" parameterType="Payment">
+  		<selectKey keyProperty="payNo" resultType="int" order="BEFORE">
+        	SELECT PAYMENTSEQ.nextval AS "payNo" FROM DUAL
+     	</selectKey>
+    	INSERT INTO Payment 
+    		(payNo, method, totalPrice)
+    	VALUES 
+    		(#{payNo}, #{method}, #{totalPrice})
+  	</insert>
+  	
   	<select id="getLastPayNo" resultType="int">
     	SELECT 
     		MAX(payNo)

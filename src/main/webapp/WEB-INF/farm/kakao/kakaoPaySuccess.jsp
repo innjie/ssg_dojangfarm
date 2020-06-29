@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+ <%@ include file="../IncludeTop.jsp" %>
  
 카카오페이 결제가 정상적으로 완료되었습니다.
 <br>

@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+ <%@ include file="../IncludeTop.jsp" %>
  
 카카오페이 결제 실패.
 <br>

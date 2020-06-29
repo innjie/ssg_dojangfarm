@@ -34,19 +34,19 @@
 </c:forEach>
 </table>
 <c:if test="${!cnList.firstPage}">
-    		<a href='<c:url value="/order/list2.do">
+    		<a href='<c:url value="/commonNotice/list2.do">
         				<c:param name="page" value="previous"/>
         			</c:url>'>
         	Prev</a>
     	</c:if> 
     	<c:if test="${!cnList.lastPage}">
-    		<a href='<c:url value="/order/list2.do">
+    		<a href='<c:url value="/commonNotice/list2.do">
         				<c:param name="page" value="next"/>
         			</c:url>'>
         	Next</a>
     	</c:if>
 <br><br>
-<a href="<c:url value='/commonNotice/insertForm.do'/>"> 등록</a> <br>
+<a href="<c:url value='/commonNotice/userList.do'/>"> 등록</a> <br>
 
 </body>
 </html>

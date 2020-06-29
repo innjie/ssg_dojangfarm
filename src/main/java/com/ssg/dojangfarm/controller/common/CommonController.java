@@ -41,7 +41,7 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 @Controller
-@SessionAttributes("commonList")
+@SessionAttributes({"commonList", "cjList"})
 public class CommonController implements ServletContextAware{
 	private static final String insertCommonForm = "common/CommonInsertFormView";
 	private static final String errorPage = "common/Error";
@@ -200,6 +200,8 @@ public class CommonController implements ServletContextAware{
 	public String getCommonList(ModelMap model) {
 		// get list.do
 		PagedListHolder<Common> commonList = new PagedListHolder<Common>(farm.getAllCommonList());
+		
+		commonList.setPageSize(1);
 		model.put("commonList", commonList);
 		return commonListView;
 	}
@@ -229,6 +231,7 @@ public class CommonController implements ServletContextAware{
 		
 		//get list
 		PagedListHolder<Common> commonList = new PagedListHolder<Common>(farm.getCommonListByUserNo(userNo));
+		commonList.setPageSize(1);
 		model.addAttribute("commonList", commonList);
 		return commonUserListView;
 	}
@@ -272,7 +275,7 @@ public class CommonController implements ServletContextAware{
 		int userNo = user.getUserNo();
 		
 		PagedListHolder<CommonJoin> cjList = new PagedListHolder<CommonJoin>(this.farm.getCommonJoinListByUserNo(userNo));
-		
+		cjList.setPageSize(1);
 		model.put("cjList", cjList);
 		return commonJoinUserListView;
 	}
@@ -288,7 +291,6 @@ public class CommonController implements ServletContextAware{
 			cjList.previousPage();
 		}
 		
-		model.addAttribute("cjList", cjList);
 		return commonJoinUserListView;
 	}
 	//commonJoin list by saleNo
@@ -296,7 +298,7 @@ public class CommonController implements ServletContextAware{
 	public String getCommonJonListBySaleNo(@RequestParam("saleNo") int saleNo, ModelMap model) {
 		
 		PagedListHolder<CommonJoin> cjList = new PagedListHolder<CommonJoin>(this.farm.getCommonJoinListBySaleNo(saleNo));
-		
+		cjList.setPageSize(1);
 		model.put("cjList", cjList);
 		return commonJoinedListView;
 	}
@@ -314,7 +316,6 @@ public class CommonController implements ServletContextAware{
 			cjList.previousPage();
 		}
 		
-		model.addAttribute("cjList", cjList);
 		return commonJoinedListView;
 	}
 	//insert CommonJoin Form

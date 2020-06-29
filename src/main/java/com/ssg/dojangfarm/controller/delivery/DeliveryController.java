@@ -60,6 +60,7 @@ public class DeliveryController {
 		System.out.println(deliveryList.size());
 		
 		PagedListHolder<Delivery> dList = new PagedListHolder<Delivery>(this.farm.getDeliveryListByUserNo(userNo));
+		dList.setPageSize(1);
 		model.put("dList", dList);
 		return deliveryListView;
 	}

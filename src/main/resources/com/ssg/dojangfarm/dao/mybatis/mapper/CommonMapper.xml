@@ -21,7 +21,9 @@
 	<update id="updateCommon" parameterType="Common">
 		UPDATE Common
 		SET info =
-		#{info}, price = #{price}, deadline = #{deadline}, min = #{min}
+		#{info}, price = #{price}, deadline = #{deadline}, min = #{min}, 
+		saleState = #{saleState}
+		where saleNo = #{saleNo}
 
 	</update>
 	<select id="getCommonSale" parameterType="int"
@@ -95,7 +97,8 @@
 
 	<select id="getCommonJoin" resultType="CommonJoin">
 		SELECT cjNo, commonjoin.userNo as "user.userNo",
-		Commonjoin.saleNo as "common.saleNo", cjState, count, common.title as "common.title"
+		Commonjoin.saleNo as "common.saleNo", cjState, count, common.title as "common.title",
+		cardNo, dNo as "delivery.dNo"
 		FROM CommonJoin, Common
 		WHERE cjNo = #{cjNo} and commonjoin.saleNo = common.saleNo
 	</select>

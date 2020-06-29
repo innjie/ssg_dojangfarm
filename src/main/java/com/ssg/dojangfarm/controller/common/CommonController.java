@@ -391,15 +391,15 @@ public class CommonController implements ServletContextAware{
 		commonJoin.setCjState("신청");
 		
 		
-		int res = this.farm.insertCommonjoin(commonJoin);
+		this.farm.insertCommonjoin(commonJoin);
 		int memberSize = this.farm.getCommonJoinListBySaleNo(cjCommand.getCommon().getSaleNo()).size();
 		//common state change	
 		if(memberSize == cjCommand.getCommon().getMin()) {
 			common.setSaleState("OK");
-			res = this.farm.updateCommon(common);
+			this.farm.updateCommon(common);
 		}
 	
-		return new ModelAndView("redirect:/commonJoin/viewList.do");
+		return new ModelAndView("redirect:/user/myPage.do");
 	}
 
 	//update CommonJoin Form
@@ -414,7 +414,7 @@ public class CommonController implements ServletContextAware{
 	// updateCommonJoin
 	@RequestMapping(value = "/commonJoin/update.do", method = RequestMethod.POST)
 	public ModelAndView updateCommonJoin(@ModelAttribute("commonJoin") CommonJoin commonJoin, BindingResult result) {
-		int res = farm.updateCommonjoin(commonJoin);
+		farm.updateCommonjoin(commonJoin);
 
 		return new ModelAndView("redirect:/" + commonJoinedListView);
 	}
@@ -452,81 +452,51 @@ public class CommonController implements ServletContextAware{
 		model.addAttribute("commonJoin", commonJoin);
 		return buyCommonForm;
 	}
-	@RequestMapping(value = "/common/buyCommon.do", method = RequestMethod.POST)
-	public ModelAndView buyCommon(@RequestParam("cjNo") int cjNo,
-			@Valid@ModelAttribute("payment") PaymentCommand paymentCommand,
-			BindingResult result, HttpServletRequest request, ModelMap model) throws Exception {
-		//userSession
-		HttpSession httpSession = request.getSession();
-		User user = (User)httpSession.getAttribute("user");
-		if (user == null) {
-			return new ModelAndView(errorPage, "message", "Please LOGIN first");
+	
+	@RequestMapping("/common/payCommon.do")
+	public ModelAndView buyCommon(@RequestParam("saleNo") int saleNo,
+			HttpServletRequest request, ModelMap model) throws Exception {
+		//get Common
+		Common common = this.farm.getCommonSale(saleNo);
+		//get joined user list
+		List<CommonJoin> cjUserList = this.farm.getCommonJoinListBySaleNo(saleNo);
+		
+		//for -> payment
+		for(int i = 0; i < cjUserList.size(); i++) {
+			int cjNo = cjUserList.get(i).getCjNo();
+			CommonJoin commonJoin = this.farm.getCommonJoin(cjNo);
+			User user = this.farm.getUser(commonJoin.getUser().getUserNo());
+		
+			Delivery delivery = this.farm.getDelivery(commonJoin.getDelivery().getdNo());
+			System.out.println(delivery.getdNo());
+			Card card = this.farm.getCard(commonJoin.getCardNo());
+			
+			Payment payment = new Payment();
+			payment.setCard(card);
+			payment.setTotalPrice(Integer.parseInt(commonJoin.getCount())* common.getPrice());
+			payment.setMethod("카드");
+			// insert normal Payment
+			this.farm.insertPayment(payment);
+			
+			//insert order
+			Order order = new Order();
+			
+			order.setDelivery(delivery);
+			order.setPayment(payment);
+			order.setQuantity(Integer.parseInt(commonJoin.getCount()));
+			order.setSaleNo(commonJoin.getCommon().getSaleNo());
+			order.setUser(user);
+			order.setSaleType("Common");
+			
+			this.farm.insertOrder(order);
+			
+			commonJoin.setCjState("결제완료");
+			
+			this.farm.updateCommonjoin(commonJoin);
 		}
-		
-		//get CommonSale
-		Common common = this.farm.getCommonSale(paymentCommand.getSaleNo());
-		CommonJoin commonJoin = this.farm.getCommonJoin(cjNo);
-		if (result.hasErrors()) {
-			model.addAttribute("common", common);
-			model.addAttribute("commonJoin", commonJoin);
-			return new ModelAndView(buyCommonForm);
-		}
-		
-		//card validation
-		Card card = this.farm.getCard(paymentCommand.getCardNo());
-		if (card == null) {
-			result.rejectValue("cardNo", "nocardNo");
-			return new ModelAndView(buyCommonForm, "payment", paymentCommand);
-		}
-		if (card.getUser().getUserNo() != user.getUserNo()) {
-			result.rejectValue("cardNo", "notMyCard");
-			return new ModelAndView(buyCommonForm, "payment", paymentCommand);
-		}
-		// Address validation
-		Address address = this.farm.getAddress(paymentCommand.getAddrNo());
-		if (address == null) {
-			result.rejectValue("addrNo", "noaddressNo");
-			return new ModelAndView(buyCommonForm, "auction", paymentCommand);
-		}
-		if (address.getUser().getUserNo() != user.getUserNo()) {
-			result.rejectValue("addrNo", "notMyAddress");
-			return new ModelAndView(buyCommonForm, "auction", paymentCommand);
-		}
-		Payment payment = new Payment();
-		payment.setCard(card);
-		payment.setTotalPrice(paymentCommand.getQuantity() * common.getPrice());
-		payment.setMethod("카드");
-		// insert normal Payment
-		this.farm.insertPayment(payment);
-		
-
-		Delivery delivery = new Delivery();
-		delivery.setAddress(address);
-		delivery.setPhone(paymentCommand.getPhone());
-		this.farm.addDelivery(delivery);
-		
-		int dNo = this.farm.getLastDNo();
-		delivery = this.farm.getDelivery(dNo);
-		
-		int pNo = this.farm.getLastPayNo();
-		payment = this.farm.getPayment(pNo);
-		
-		Order order = new Order();
-		
-		order.setDelivery(delivery);
-		order.setPayment(payment);
-		order.setQuantity(paymentCommand.getQuantity());
-		order.setSaleNo(paymentCommand.getSaleNo());
-		order.setUser(user);
-		order.setSaleType("Common");
-		
-		this.farm.insertOrder(order);
-		
-		commonJoin.setCjState("결제완료");
-		this.farm.updateCommonjoin(commonJoin);
-		
-		
-		return new ModelAndView("redirect:/commonjoin/JoinUserListView");
+		common.setSaleState("CLOSE");
+		this.farm.updateCommon(common);
+		return new ModelAndView("redirect:/user/myPage.do");
 	}
 	@RequestMapping("/common/viewDelivery.do")
 	public String deliveryView(@RequestParam("orderNo") int orderNo, ModelMap model) {

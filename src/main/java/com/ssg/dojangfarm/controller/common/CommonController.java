@@ -411,7 +411,7 @@ public class CommonController implements ServletContextAware{
 		commonJoin.setDelivery(delivery);
 		commonJoin.setCardNo(cjCommand.getCardNo());
 		commonJoin.setCommon(common);
-		commonJoin.setCjState("신청");
+		
 		
 		
 		this.farm.insertCommonjoin(commonJoin);

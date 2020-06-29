@@ -44,10 +44,6 @@
 	</c:url>"> 수정하기 </a><br>
 	<a href = "<c:url value = '/commonJoin/cancel.do'>
 	<c:param name = 'cjNo' value = ' ${commonJoin.cjNo}'/> </c:url>">취소하기</a><br>
-	<a href = "<c:url value = '/common/buyCommon.do'>
-	<c:param name = 'cjNo' value = '${commonJoin.cjNo }'/>
-	<c:param name = 'saleNo' value = '${commonJoin.common.saleNo }'/>
-	 </c:url> "> 결제하기 </a> <br>
 </c:if>
 <c:if test = "${(commonJoin.common.deadline < today) }">
 

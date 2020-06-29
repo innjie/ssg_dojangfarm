@@ -13,7 +13,7 @@ import com.ssg.dojangfarm.domain.Delivery;
 @Component
 @WebService(serviceName="DeliveryService")
 public class DeliveryServiceEndpoint {
-	//@Autowired
+	@Autowired
 	DeliveryService deliveryService; // inject deliveryServiceImpl
 	
 	@WebMethod
@@ -22,8 +22,8 @@ public class DeliveryServiceEndpoint {
 	}
 	
 	@WebMethod
-	public void changeDeliveryStatus(int dNo, String status) {
-		deliveryService.changeDeliveryStatus(dNo, status);
+	public void changeDeliveryStatus(int dNo) {
+		deliveryService.changeDeliveryStatus(dNo);
 	}
 	
 	@WebMethod

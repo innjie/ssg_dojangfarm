@@ -149,18 +149,33 @@ public class CommonController implements ServletContextAware{
 	public ModelAndView searchCommon(HttpServletRequest request,
 			@RequestParam(value = "word", required = false) String word) throws Exception {
 		// search action
-		List<Common> commonList = null;
-		System.out.println(word);
+		PagedListHolder<Common> commonList = null;
+		
 		if (word != null) {
 			if (!StringUtils.hasLength(word)) {
-				return new ModelAndView("Error", "message", "enter keword");
+				return new ModelAndView(errorPage, "message", "enter keword");
 			}
-			commonList = this.farm.searchCommon(word.toLowerCase());
+			commonList = new PagedListHolder<Common> (this.farm.searchCommon(word.toLowerCase()));
 		}
 		// search -> list
 		return new ModelAndView(commonListView, "commonList", commonList);
 	}
-
+	@RequestMapping("/normal/searchCommon2.do")
+	public String searchNormal2(@RequestParam("page") String page,
+			@ModelAttribute("commonList") PagedListHolder<Common> commonList,
+			BindingResult result, ModelMap model) throws Exception {
+		if (commonList== null) {
+			throw new IllegalStateException("Cannot find pre-loaded auction list");
+		}
+		if ("next".equals(page)) { 
+			commonList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			commonList.previousPage(); 
+		}
+		model.put("search", "search");
+		return commonListView;
+	}
 	// update common Form
 	@RequestMapping(value = "/common/updateCommon.do", method = RequestMethod.GET)
 	public String updateCommon(@RequestParam("saleNo") int saleNo, 
@@ -406,8 +421,8 @@ public class CommonController implements ServletContextAware{
 			common.setSaleState("OK");
 			this.farm.updateCommon(common);
 		}
-	
-		return new ModelAndView("redirect:/user/myPage.do");
+		int cjNo = this.farm.getLastCJNo();
+		return new ModelAndView("redirect:/commonJoin/view.do?cjNo=" + cjNo);
 	}
 
 	//update CommonJoin Form

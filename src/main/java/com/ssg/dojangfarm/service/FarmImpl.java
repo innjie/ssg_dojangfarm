@@ -472,7 +472,10 @@ public class FarmImpl implements FarmFacade{
 	public CommonJoin ExistCommonJoin(int userNo, int saleNo) {
 		return commonDAO.ExistCommonJoin(userNo, saleNo);
 	}
-
+	@Override
+	public int getLastCJNo() {
+		return commonDAO.getLastCJNo();
+	}
 	//-------------------------------------------------------------------------
 	//CommonNotice
 	//-------------------------------------------------------------------------
@@ -637,16 +640,5 @@ public class FarmImpl implements FarmFacade{
 	public int getLastRefundNo() {
 		return refundDAO.getLastRefundNo();
 	}
-	
-
-	
-	
-	
-
-	
-	
-	
-	
-	
 	
 }

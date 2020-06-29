@@ -27,15 +27,17 @@ public class DeliveryController {
 	public void setFarm(FarmFacade farm) {
 		this.farm = farm;
 	}
-	/** insert payment에서 한번에?
-	public String addDelivery(Delivery deli) {
-		this.farm.addDelivery(deli);
-		return null;
-	}
-	*/
+	
 	@RequestMapping("/delivery/turnStatus.do")
 	public String changeDeliveryStatus(@RequestParam("dNo")int dNo, 
+			@RequestParam("status") String status,
 			HttpServletRequest request) {
+		
+		if (status.equals("배송전")) {
+			this.farm.changeDeliveryStatus(dNo);
+		} else if (status.equals("배송중")) {
+			this.farm.changeDeliveryFinish(dNo);
+		}
 		 this.farm.changeDeliveryStatus(dNo);
 		 return "redirect:/delivery/list.do";
 		

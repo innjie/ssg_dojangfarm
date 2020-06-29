@@ -2,6 +2,7 @@ package com.ssg.dojangfarm.controller.order;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -14,11 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Common;
@@ -28,18 +30,18 @@ import com.ssg.dojangfarm.domain.Order;
 import com.ssg.dojangfarm.domain.Refund;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
-import com.ssg.dojangfarm.service.OrderService;
-import com.ssg.dojangfarm.service.RefundService;
+
 
 @SessionAttributes("orderList")
 @Controller
-public class OrderController {
+public class OrderController  {
 	private static final String orderView = "order/OrderView";
 	private static final String orderListView = "order/OrderListView";
 	private static final String orderListUserView = "order/OrderUserView";
 	private static final String refundForm = "refund/RefundFormView";
 	private static final String refundListView = "refund/RefundListView";
 	private static final String refundView = "refund/RefundView";
+	
 	@Autowired
 	private FarmFacade farm;
 	public void setFarm(FarmFacade farm) {
@@ -92,7 +94,9 @@ public class OrderController {
 		if( orderRes == 0 || refundRes == 0)  {//failed
 			return new ModelAndView("Error", "message", "cancel failed");
 		} else { //success 
-			return new ModelAndView(orderListView);
+			int refundNo = this.farm.getLastRefundNo();
+			refund = this.farm.getRefund(refundNo);
+			return new ModelAndView("redirect:/refund/view.do?refundNo=" + refundNo);
 		}
 		
 	}
@@ -105,7 +109,10 @@ public class OrderController {
 		User loginUser = (User) httpSession.getAttribute("user");
 		
 		Order order = this.farm.getOrder(orderNo);
+		Delivery delivery = this.farm.getDelivery(order.getDelivery().getdNo());
+		
 		System.out.println(order.getOrderNo());
+		model.addAttribute("delivery", delivery);
 		model.addAttribute("order", order);
 		model.addAttribute("loginUser", loginUser);
 		
@@ -121,12 +128,14 @@ public class OrderController {
 		
 		PagedListHolder<Order> orderList = new PagedListHolder<Order>(this.farm.getOrderList(user.getUserNo()));
 		orderList.setPageSize(1);
+
 		model.put("orderList", orderList);
 		return orderListView;
 	}
 	@RequestMapping("/order/list2.do")
-	public String orderListByUserNo(@RequestParam("page") String page,
-			@ModelAttribute("orderList") PagedListHolder<Order> orderList, ModelMap model) {
+	public String orderListByUserNo2(@RequestParam("page") String page,
+			@ModelAttribute("orderList") PagedListHolder<Order> orderList, 
+			ModelMap model) throws Exception{
 		if ("next".equals(page)) {
 			orderList.nextPage();
 		}
@@ -210,4 +219,5 @@ public class OrderController {
 		model.addAttribute("refund", refund);
 		return refundView;
 	}
+
 }

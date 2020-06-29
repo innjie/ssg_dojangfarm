@@ -130,4 +130,12 @@
 	 FROM CommonJoin
 	 WHERE userNo = #{param1} AND saleNo = #{param2}
 	</select>
+	
+	
+	<select id="getLastCJNo" resultType="int">
+    	SELECT 
+    		MAX(cjNo)
+    	FROM CommonJoin
+  	</select>
+  	
 </mapper>

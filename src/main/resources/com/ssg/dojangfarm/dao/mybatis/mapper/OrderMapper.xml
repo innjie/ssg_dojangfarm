@@ -49,5 +49,7 @@
     and ordertable.dNo = delivery.dNo
 	</select>
 	
-	
+	<select id = "getLastOrderNo" resultType = "int">
+	SELECT MAX(orderNo) FROM orderTable
+	</select>
 </mapper>

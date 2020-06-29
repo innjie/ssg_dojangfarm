@@ -12,6 +12,7 @@ public interface OrderDAO {
 	public int cancelOrder(int orderNo);
 	public int insertOrder( Order order);
 	List<Order> getOrderUserList(int orderNo);
+	public int getLastOrderNo();
 	
 
 }

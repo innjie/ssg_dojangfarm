@@ -366,7 +366,10 @@ public class FarmImpl implements FarmFacade{
 	public List<Order> getOrderUserList(int orderNo) {
 		return orderDAO.getOrderUserList(orderNo);
 	}
-
+	@Override
+	public int getLastOrderNo() {
+		return orderDAO.getLastOrderNo();
+	}
 	//-------------------------------------------------------------------------
 	//Card
 	//-------------------------------------------------------------------------
@@ -469,7 +472,10 @@ public class FarmImpl implements FarmFacade{
 	public CommonJoin ExistCommonJoin(int userNo, int saleNo) {
 		return commonDAO.ExistCommonJoin(userNo, saleNo);
 	}
-
+	@Override
+	public int getLastCJNo() {
+		return commonDAO.getLastCJNo();
+	}
 	//-------------------------------------------------------------------------
 	//CommonNotice
 	//-------------------------------------------------------------------------
@@ -630,15 +636,9 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
-
-	
-	
-	
-
-	
-	
-	
-	
-	
+	@Override
+	public int getLastRefundNo() {
+		return refundDAO.getLastRefundNo();
+	}
 	
 }

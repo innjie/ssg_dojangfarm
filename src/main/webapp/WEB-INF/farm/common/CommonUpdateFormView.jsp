@@ -43,7 +43,7 @@
 		<br>
 		
 		<form:hidden path = "saleNo" value = "${common.saleNo }"/>
-		<a href="CommonListView">[이전으로]</a>
+		<a href="<c:url value = '/common/list.do' /> ">[이전으로]</a>
 		<input type="submit" value="추가" />
 
 

@@ -227,7 +227,7 @@ public class NormalController implements ServletContextAware {
 		}
 		
 		//set attributes
-		
+		normal.setSaleState("OPEN");
 		int res = farm.updateSale(normal);
 		
 		if(res == 0)  {//failed
@@ -356,6 +356,9 @@ public class NormalController implements ServletContextAware {
 			result.rejectValue("quantity", "quantity");
 			model.addAttribute("normal", normal);
 			return new ModelAndView(buyNormalForm);
+		} 
+		if(paymentCommand.getQuantity() == normal.getCount()) {
+			this.farm.turnSaleState(normal.getSaleNo(), "CLOSE");
 		}
 				
 		if (result.hasErrors()) {
@@ -416,7 +419,7 @@ public class NormalController implements ServletContextAware {
 		order.setSaleType("Normal");
 		
 		this.farm.insertOrder(order);
-		
+		System.out.println(normal.getInfo());
 		normal.setCount(normal.getCount() - paymentCommand.getQuantity());
 		this.farm.updateSale(normal);
 		

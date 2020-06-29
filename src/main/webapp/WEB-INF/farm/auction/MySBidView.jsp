@@ -75,7 +75,5 @@
 			<td>${sBid.delivery.status}</td>
 		</tr>
 	</table>
-	<br><br>
-	<a href="<c:url value='/auction/viewMySBidList.do' />">이전</a>
 </body>
 </html>

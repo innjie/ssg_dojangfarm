@@ -25,19 +25,24 @@ function searchCard(userNo) {
 		success: function(responseJson){			
 			var str = '';
 			var index = 0;
-			
-			for(index = 0; index < responseJson.length; index++){
-				if(index == 0){
-					$("#result").html("<ol></ol>");
-				}	
-				
-				$("#result > ol").append("<li>");
-				$("#result > ol").append("CARDNO: " + responseJson[index].cardNo);
-				$("#result > ol").append("<br>BANK: " + responseJson[index].bank);
-				$("#result > ol").append("<br>TYPE: " + responseJson[index].type);
-				$("#result > ol").append("<br>CARDPAYNO: " + responseJson[index].cardPayNo);
-				$("#result > ol").append("</li>");
-			}			
+
+			if(responseJson.length == 0){
+				alert("저장된 카드가 없습니다. 카드를 먼저 추가해주세요.\n마이페이지-회원정보-나의카드-카드추가");
+			}
+			else{
+				for(index = 0; index < responseJson.length; index++){
+					if(index == 0){
+						$("#result").html("<ol></ol>");
+					}	
+					
+					$("#result > ol").append("<li>");
+					$("#result > ol").append("CARDNO: " + responseJson[index].cardNo);
+					$("#result > ol").append("<br>BANK: " + responseJson[index].bank);
+					$("#result > ol").append("<br>TYPE: " + responseJson[index].type);
+					$("#result > ol").append("<br>CARDPAYNO: " + responseJson[index].cardPayNo);
+					$("#result > ol").append("</li>");
+				}		
+			}	
 	  	},
 		error: function(){
 			alert("내용을 입력하세요");
@@ -59,17 +64,22 @@ function searchAddress(userNo) {
 			var str = '';
 			var index = 0;
 			
-			for(index = 0; index < responseJson.length; index++){
-				if(index == 0){
-					$("#result").html("<ol></ol>");
-				}	
-				
-				$("#result > ol").append("<li>");
-				$("#result > ol").append("ADDRNO: " + responseJson[index].addrNo);
-				$("#result > ol").append("<br>ADDR: " + responseJson[index].addr);
-				$("#result > ol").append("<br>ZIP: " + responseJson[index].zip);
-				$("#result > ol").append("<br>DETAIL: " + responseJson[index].detail);
-				$("#result > ol").append("</li>");
+			if(responseJson.length == 0){
+				alert("저장된 주소가 없습니다. 주소를 먼저 추가해주세요.\n마이페이지-회원정보-나의주소록-주소추가");
+			}
+			else{
+				for(index = 0; index < responseJson.length; index++){
+					if(index == 0){
+						$("#result").html("<ol></ol>");
+					}	
+					
+					$("#result > ol").append("<li>");
+					$("#result > ol").append("ADDRNO: " + responseJson[index].addrNo);
+					$("#result > ol").append("<br>ADDR: " + responseJson[index].addr);
+					$("#result > ol").append("<br>ZIP: " + responseJson[index].zip);
+					$("#result > ol").append("<br>DETAIL: " + responseJson[index].detail);
+					$("#result > ol").append("</li>");
+				}
 			}			
 	  	},
 		error: function(){

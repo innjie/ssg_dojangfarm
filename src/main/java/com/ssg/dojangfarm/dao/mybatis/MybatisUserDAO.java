@@ -43,5 +43,8 @@ public class MybatisUserDAO implements UserDAO{
 			return false;
 		}
 	}
+	public void addPoint(User user) {
+		userMapper.addPoint(user);
+	}
 
 }

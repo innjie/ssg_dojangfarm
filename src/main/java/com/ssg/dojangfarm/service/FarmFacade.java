@@ -64,7 +64,7 @@ public interface FarmFacade {
 	public User existingPhone(String phone);
 	public User checkIdPw(String id, String password);
 	public boolean confirmPassword(String password, String cPassword);
-
+	public void addPoint(User user);
 	
 	//Address
 	public Address getAddress(int addrNo);
@@ -152,6 +152,7 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	
 	
 	
 	

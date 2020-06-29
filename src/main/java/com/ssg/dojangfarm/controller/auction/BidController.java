@@ -1,5 +1,9 @@
 package com.ssg.dojangfarm.controller.auction;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -55,8 +59,17 @@ public class BidController {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
+		
+		List<Bid> list = this.farm.getMyBidList(user.getUserNo());
+		
+		DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String sDeadline;
+		for(int i = 0; i <list.size(); i++) {
+			sDeadline = dFormat.format(list.get(i).getAuction().getDeadline());
+			list.get(i).getAuction().setsDeadline(sDeadline);
+		}
 
-		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(this.farm.getMyBidList(user.getUserNo()));	//add dao
+		PagedListHolder<Bid> bidList = new PagedListHolder<Bid>(list);	
 
 		bidList.setPageSize(10);
 		model.put("bidList", bidList);
@@ -128,8 +141,13 @@ public class BidController {
 			@RequestParam("sBidNo") int sBidNo,
 			ModelMap model) throws Exception {
 			
-		SBid sBid = this.farm.getMySBid(sBidNo);	
+		SBid sBid = this.farm.getMySBid(sBidNo);
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String pDate = sdFormat.format(sBid.getPayment().getpDate());
+		
 		model.put("sBid", sBid);
+		model.put("pDate", pDate);
 			
 		return VIEWSBID;
 	}	

@@ -19,7 +19,7 @@
 			<td>순번</td>
 			<td>경매</td>
 			<td>입찰 가격</td>
-			<td>남은시간</td>
+			<td>기간</td>
 			<td>주소</td>
 			<td>카드</td>
 			<td>상태</td>
@@ -34,7 +34,7 @@
 					${bid.auction.title}</a>
 				</td>
 				<td>${bid.bidPrice}</td>
-				<td>${bid.auction.deadline}</td>
+				<td>${bid.auction.sDeadline}</td>
 				<td>
 					<a href="<c:url value='/address/getAddress.do'>
 								<c:param name='addrNo' value='${bid.address.addrNo}' />

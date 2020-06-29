@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<td>유효기간</td>
-			<td>${card.period}</td>
+			<td>${period}</td>
 		</tr>
 		<tr>
 			<td>cvc</td>

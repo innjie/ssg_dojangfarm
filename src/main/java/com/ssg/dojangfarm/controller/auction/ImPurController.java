@@ -1,5 +1,8 @@
 package com.ssg.dojangfarm.controller.auction;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -91,7 +94,12 @@ public class ImPurController {
 			ModelMap model) throws Exception {
 			
 		ImPur imPur = this.farm.getMyImPur(imPurNo);	
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String pDate = sdFormat.format(imPur.getPayment().getpDate());
+		
 		model.put("imPur", imPur);
+		model.put("pDate", pDate);
 			
 		return VIEWIMPUR;
 	}	

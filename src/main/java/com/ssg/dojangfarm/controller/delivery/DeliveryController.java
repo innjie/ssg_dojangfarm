@@ -32,13 +32,13 @@ public class DeliveryController {
 	public String changeDeliveryStatus(@RequestParam("dNo")int dNo, 
 			@RequestParam("status") String status,
 			HttpServletRequest request) {
-		
+		System.out.println(status);
 		if (status.equals("배송전")) {
 			this.farm.changeDeliveryStatus(dNo);
 		} else if (status.equals("배송중")) {
 			this.farm.changeDeliveryFinish(dNo);
 		}
-		 this.farm.changeDeliveryStatus(dNo);
+		 
 		 return "redirect:/delivery/list.do";
 		
 	}

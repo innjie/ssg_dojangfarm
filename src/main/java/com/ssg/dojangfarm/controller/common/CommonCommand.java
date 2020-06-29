@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,7 @@ public class CommonCommand  {
 	private MultipartFile image;
 	@Min(5)
 	private int min;
+	@NotNull
 	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deadline;

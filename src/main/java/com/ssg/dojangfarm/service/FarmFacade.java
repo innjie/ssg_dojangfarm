@@ -113,7 +113,7 @@ public interface FarmFacade {
 	public List<CommonJoin> getCommonJoinListByUserNo(int userNo);
 	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo);
 	public CommonJoin ExistCommonJoin(int userNo, int saleNo);
-	
+	public int getLastCJNo();
 	//CommonNotice
 	public int insertCommonNotice(CommonNotice cn);
 	public int updateCommonNotice(CommonNotice cn);
@@ -156,6 +156,7 @@ public interface FarmFacade {
 	public List<Normal> getNormalListByCateNo(int cateNo);
 	public int getLastRefundNo();
 	public int getLastOrderNo();
+	
 	
 	
 	

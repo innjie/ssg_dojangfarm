@@ -28,5 +28,10 @@ public class MybatisRefundDAO implements RefundDAO  {
 	public List<Refund> getRefundList(int userNo) {
 		return refundMapper.getRefundList(userNo);
 	}
+
+	@Override
+	public int getLastRefundNo() {
+		return refundMapper.getLastRefundNo();
+	}
 	
 }

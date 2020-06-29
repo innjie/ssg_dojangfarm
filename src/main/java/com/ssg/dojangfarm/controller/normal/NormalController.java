@@ -419,7 +419,8 @@ public class NormalController implements ServletContextAware {
 		normal.setCount(normal.getCount() - paymentCommand.getQuantity());
 		this.farm.updateSale(normal);
 		
-		return new ModelAndView(normalListView);
+		int orderNo = this.farm.getLastOrderNo();
+		return new ModelAndView("redirect:/normal/viewDelivery.do?orderNo=" + orderNo);
 
 	}
 	

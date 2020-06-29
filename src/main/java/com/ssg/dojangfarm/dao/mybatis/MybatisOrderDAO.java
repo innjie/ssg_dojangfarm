@@ -40,5 +40,10 @@ public class MybatisOrderDAO implements OrderDAO{
 		return orderMapper.getOrderUserList(orderNo);
 	}
 
+	@Override
+	public int getLastOrderNo() {
+	return orderMapper.getLastOrderNo();
+	}
+
 	
 }

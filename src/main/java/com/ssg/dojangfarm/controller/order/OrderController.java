@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ssg.dojangfarm.domain.Common;
-
+import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Order;
 import com.ssg.dojangfarm.domain.Refund;
@@ -94,7 +94,9 @@ public class OrderController  {
 		if( orderRes == 0 || refundRes == 0)  {//failed
 			return new ModelAndView("Error", "message", "cancel failed");
 		} else { //success 
-			return new ModelAndView(orderListView);
+			int refundNo = this.farm.getLastRefundNo();
+			refund = this.farm.getRefund(refundNo);
+			return new ModelAndView("redirect:/refund/view.do?refundNo=" + refundNo);
 		}
 		
 	}
@@ -107,7 +109,10 @@ public class OrderController  {
 		User loginUser = (User) httpSession.getAttribute("user");
 		
 		Order order = this.farm.getOrder(orderNo);
+		Delivery delivery = this.farm.getDelivery(order.getDelivery().getdNo());
+		
 		System.out.println(order.getOrderNo());
+		model.addAttribute("delivery", delivery);
 		model.addAttribute("order", order);
 		model.addAttribute("loginUser", loginUser);
 		

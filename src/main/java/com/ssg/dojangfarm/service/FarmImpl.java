@@ -272,6 +272,10 @@ public class FarmImpl implements FarmFacade{
 	public boolean confirmPassword(String password, String cPassword) {
 		return userDAO.confirmPassword(password, cPassword);
 	}
+	@Override
+	public void addPoint(User user) {
+		userDAO.addPoint(user);
+	}
 	
 	
 	//-------------------------------------------------------------------------
@@ -618,7 +622,7 @@ public class FarmImpl implements FarmFacade{
 	public List<Refund> getRefundList(int userNo) {
 		return refundDAO.getRefundList(userNo);
 	}
-	
+
 	
 	
 	

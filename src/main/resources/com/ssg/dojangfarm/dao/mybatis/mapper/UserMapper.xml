@@ -59,5 +59,10 @@
     		id = #{id} AND
     		password = #{password}
   	</select>
-
+  	
+  	<update id = "addPoint" parameterType = "User">
+  	Update UserTable
+  	SET point = #{point}
+  	WHERE userno =  #{userNo}
+  	</update>
  </mapper>

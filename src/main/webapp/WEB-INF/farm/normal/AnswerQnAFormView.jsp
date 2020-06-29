@@ -37,8 +37,8 @@
 		<br><br>
 		<input type="hidden" name="saleNo" value="${qna.normal.saleNo}">
 		<input type="hidden" name="qNo" value="${qna.qNo}">
-		<c:if test="${message} != null">
-			${message}<br><br>
+		<c:if test="${param.message != null}">
+			${param.message}<br><br>
 		</c:if>
 		<input type="submit" value="답변하기">&nbsp;&nbsp;
 		<a href="<c:url value='/normal/viewQnAList.do'>

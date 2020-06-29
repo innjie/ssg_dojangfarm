@@ -119,10 +119,12 @@
 	<c:param name = 'saleNo'  value = '${normal.saleNo}'/></c:url> ">장바구니</a><br>
 	</c:if>
 	<br>
-	<a href="<c:url value='/message/sendMsg.do'>
-				<c:param name='saleNo' value='${normal.saleNo}' />
-			</c:url>">
-	쪽지보내기</a>
+	<c:if test="${user.id != normal.user.id}">
+		<a href="<c:url value='/message/sendMsg.do'>
+					<c:param name='saleNo' value='${normal.saleNo}' />
+				</c:url>">
+		쪽지보내기</a>
+	</c:if>
 	<br><br>
 	
 

@@ -2,6 +2,9 @@ package com.ssg.dojangfarm.domain;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 @SuppressWarnings("serial")
 public class CommonJoin implements Serializable{
 	private int cjNo;
@@ -10,6 +13,7 @@ public class CommonJoin implements Serializable{
 	private String cjState;
 	private Delivery delivery;
 	private Payment payment;
+	@NotNull
 	private String count;
 	private int cardNo;
 	

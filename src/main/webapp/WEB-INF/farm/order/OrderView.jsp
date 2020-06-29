@@ -45,7 +45,7 @@
 		<c:param name='orderNo' value='${order.orderNo}'/>
 </c:url>"> 환불 및 주문 취소하기 </a><br>
 	</c:if>
-	<a href="<c:url value = '/order/list.do'/> ">[이전 단계로]</a>
+	
 
 </body>
 </html>

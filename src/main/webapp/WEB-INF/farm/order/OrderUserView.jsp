@@ -55,6 +55,6 @@
         	Next</a>
     	</c:if>
 	<!--  매핑 확인하고 수정 -->
-	<a href="/user/myPage.do">[이전 단계로]</a>
+	
 </body>
 </html>

@@ -124,7 +124,7 @@
 			</c:url>">
 	쪽지보내기</a>
 	<br><br>
-	<a href="<c:url value='/normal/list.do'/>">일반판매 리스트로 돌아가기</a>&nbsp;&nbsp;
+	
 
 </body>
 </html>

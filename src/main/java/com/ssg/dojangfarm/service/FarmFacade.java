@@ -39,6 +39,7 @@ public interface FarmFacade {
 	public void bidAuction(Bid bid);
 	public void successBid(SBid sBid);
 	public void immePurchase(ImPur imPur);
+	public void immePurchaseKakao(ImPur imPur);
 	public Bid getBid(int bidNo);
 	public List<Auction> getMyAuctionList(int userNo);
 	public SBid getSBidByAuction(int aNo);
@@ -53,7 +54,8 @@ public interface FarmFacade {
 	public int getLastANo();
 	public void addImage(int aNo, String image);
 	public void addImage(Auction auction, int aNo, String image);
-	
+	public ImPur getMyImPurKakao(int imPurNo);
+
 	
 	//User
 	public void createUser(User user);

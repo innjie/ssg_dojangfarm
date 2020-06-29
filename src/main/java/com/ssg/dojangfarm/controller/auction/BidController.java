@@ -185,6 +185,13 @@ public class BidController {
 		
 		Auction auction = this.farm.getAuction(aNo);
 		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		auction.setsDeadline(sdFormat.format(auction.getDeadline()));
+		
+		if(bindingResult.hasErrors()) {
+			return new ModelAndView(BIDFORM, "auction", auction);
+		}
+		
 		if(bidCommand.getBidPrice() == 0) {
 			bindingResult.rejectValue("bidPrice", "noBidPrice");
 			return new ModelAndView(BIDFORM, "auction", auction);

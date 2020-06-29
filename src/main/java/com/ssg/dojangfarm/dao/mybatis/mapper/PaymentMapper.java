@@ -10,4 +10,5 @@ public interface PaymentMapper {
 	public void insertPayment(Payment payment);
 	public int getLastPayNo();
 	public void normalPayment(Payment payment);
+	public void insertPaymentKakao(Payment payment);
 }

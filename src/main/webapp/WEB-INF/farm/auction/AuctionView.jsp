@@ -53,6 +53,10 @@
 			<td>내용</td>
 			<td>${auction.detail}</td>
 		</tr>
+		<tr>
+			<td>종료</td>
+			<td>${auction.finish}</td>
+		</tr>
 
 		
 	</table>
@@ -68,6 +72,10 @@
 						<c:param name="aNo" value="${auction.aNo}"/>
 					</c:url>'>
 			즉시구매</a>&nbsp;&nbsp;
+			<a href='<c:url value="/kakao/kakaoPay.do">
+						<c:param name="aNo" value="${auction.aNo}"/>
+					</c:url>'>
+			카카오 페이로 즉시구매</a>&nbsp;&nbsp;
 		</c:if>
 	</c:if>
 	<c:if test="${(auction.finish == true) && (user.id == auction.user.id)}">

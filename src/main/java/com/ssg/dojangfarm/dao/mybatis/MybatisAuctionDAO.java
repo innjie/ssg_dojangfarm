@@ -49,15 +49,16 @@ public class MybatisAuctionDAO implements AuctionDAO{
 	
 	@Transactional	
 	public void immePurchase(ImPur imPur) {
-		int dNo = deliveryMapper.getLastDNo();
-		int payNo = paymentMapper.getLastPayNo();
 		
 		deliveryMapper.addDelivery(imPur.getDelivery());
 		paymentMapper.insertPayment(imPur.getPayment());
 		
+		int dNo = deliveryMapper.getLastDNo();
+		int payNo = paymentMapper.getLastPayNo();
+		
 		auctionMapper.changeBidState(imPur.getAuction().getaNo());
 		
-		imPur.getDelivery().setdNo(dNo+1);
+		imPur.getDelivery().setdNo(dNo);
 		imPur.getPayment().setPayNo(payNo);
 		
 		auctionMapper.immePurchase(imPur);

@@ -163,40 +163,73 @@
   
   	<select id="getMySBidList" parameterType="int" resultType="SBid">
     	SELECT 
-    		sBidNo, payState, Auction.aNo AS "auction.aNo",
+    		SBid.sBidNo, SBid.payState, Auction.aNo AS "bid.auction.aNo",
     		Bid.bidNo AS "bid.bidNo", Bid.bidPrice AS "bid.bidPrice",
-			userNo AS "user.userNo"
+			Bid.userNo AS "bid.user.userNo", title AS "bid.auction.title"
     	FROM SBid, Auction, Bid
     	WHERE 
     		Bid.bidNo = SBid.bidNo AND
     		Auction.aNo = Bid.aNo AND
-    		SBid.userNo = #{userNo}
+    		Bid.userNo = #{userNo}
     	ORDER BY SBid.sBidNo
   	</select>
   	
   	<select id="getMySBid" parameterType="int" resultType="SBid">
     	SELECT 
-    		sBidNo, payState, Auction.aNo, title, Bid.bidNo, bid.bidPrice,
+    		sBidNo, payState, Auction.aNo AS "bid.auction.aNo", 
+    		title AS "bid.auction.title", Bid.bidNo AS "bid.bidNo", 
+    		bid.bidPrice AS "bid.bidPrice",
     		Delivery.dNo AS "delivery.dNo",
-    		Payment.payNo AS "payment.payNo"
-    	FROM SBid, Bid, Auction, Delivery, Payment
+    		Delivery.status AS "delivery.status",
+    		Delivery.phone AS "delivery.phone",
+    		Payment.payNo AS "payment.payNo",
+    		Payment.method AS "payment.method",
+    		Payment.pDate AS "payment.pDate",
+    		Payment.totalPrice AS "payment.totalPrice",
+    		Address.addrNo AS "delivery.address.addrNo", 
+    		Address.addr AS "delivery.address.addr",
+    		Card.cardNo AS "payment.card.cardNo",
+    		Card.cardPayNo AS "payment.card.cardPayNo"
+    	FROM SBid, Bid, Auction, Delivery, Payment, Address, Card
     	WHERE 
     		Bid.bidNo = SBid.bidNo AND
     		Auction.aNo = Bid.aNo AND
     		Delivery.dNo = SBid.dNo AND
     		Payment.payNo = SBid.payNo AND
+    		Delivery.addrNo = Address.addrNo AND
+    		Payment.cardNo = Card.cardNo AND
     		sBidNo = #{sBidNo}
   	</select>
   	
-  	<select id="getSBidByAuction" parameterType="int" resultType="Auction">
+  	
+  	<select id="getSBidByAuction" parameterType="int" resultType="SBid">
     	SELECT 
-    		sBidNo, Auction.aNo, title, imPurPrice, 
-    		UserTable.userNo AS "user.userNo", Bid.bidNo, id AS "user.id"
-    	FROM SBid, Bid, UserTable, Auction
+    		sBidNo, payState, Auction.aNo AS "bid.auction.aNo", 
+    		title AS "bid.auction.title", 
+    		bid.bidPrice AS "bid.bidPrice", 
+    		UserTable.userNo AS "bid.user.userNo", 
+    		Bid.bidNo AS "bid.bidNo", 
+    		id AS "bid.user.id",
+    		Payment.payNo AS "payment.payNo",
+    		Payment.method AS "payment.method",
+    		Payment.pDate AS "payment.pDate",
+		    Payment.payCheck AS "payment.payCheck",
+    		Card.cardPayNo AS "payment.card.cardPayNo",    		
+    		Delivery.dNo AS "delivery.dNo",
+    		Delivery.status AS "delivery.status",
+    		Delivery.phone AS "delivery.phone",
+    		Address.addr AS "delivery.address.addr",
+    		Address.detail AS "delivery.address.detail",
+    		Address.zip AS "delivery.address.zip"
+    	FROM SBid, Bid, UserTable, Auction, Delivery, Payment, Address, Card
     	WHERE 
     		Bid.bidNo = SBid.bidNo AND
     		Auction.aNo = Bid.aNo AND
     		Bid.userNo = UserTable.userNo AND
+    		Delivery.dNo = SBid.dNo AND
+    		Payment.payNo = SBid.payNo AND
+    		Delivery.addrNo = Address.addrNo AND
+    		Payment.cardNo = Card.cardNo AND
     		Bid.aNo = #{aNo}
   	</select>
   	
@@ -310,6 +343,14 @@
   	<update id="changeBidState" parameterType="int">
     	UPDATE Bid SET
     		state = '입찰실패'
+    	WHERE 
+    		aNo = #{aNo} AND
+    		state = '입찰성공'
+  	</update>
+  	
+  	<update id="changeBidStateSuccess" parameterType="int">
+    	UPDATE Bid SET
+    		state = '낙찰'
     	WHERE 
     		aNo = #{aNo} AND
     		state = '입찰성공'

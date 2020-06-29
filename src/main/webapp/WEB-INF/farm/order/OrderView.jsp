@@ -40,7 +40,7 @@
 	</table>
 	<!--  session확인해서 본인일 시 취소버튼 만들기 -->
 
-	<c:if test="${ (loginUser.userNo == order.user.userNo)}">
+	<c:if test="${ (loginUser.userNo == order.user.userNo) && (order.saleType == 'Normal')}">
 		<a href="<c:url value='/order/cancel.do'>
 		<c:param name='orderNo' value='${order.orderNo}'/>
 </c:url>"> 환불 및 주문 취소하기 </a><br>

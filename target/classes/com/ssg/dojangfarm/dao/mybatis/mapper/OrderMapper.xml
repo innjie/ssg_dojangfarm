@@ -6,7 +6,7 @@
 	<cache />
 	<select id="getOrder" resultType="Order">
 		SELECT
-		orderNo, dNo, saleType,
+		orderNo, dNo as "delivery.dNo", saleType,
 		quantity, saleNo, userNo as "user.userNo", saleType, payNo as "payment.payNo"
 		FROM OrderTable
 		WHERE orderNo = #{orderNo}

@@ -49,6 +49,7 @@ public class NormalController implements ServletContextAware {
 	private static final String successPage = "/normal/Success";
 	private static final String updateNormalForm = "normal/NormalUpdateFormView";
 	private static final String buyNormalForm = "normal/buyNormalFormView";
+	private static final String deliveryView = "normal/DeliveryView";
 	
 	private ServletContext context;	
 	
@@ -424,6 +425,32 @@ public class NormalController implements ServletContextAware {
 		return new ModelAndView(normalListView);
 
 	}
+	
+	@RequestMapping("/normal/viewDelivery.do")
+	public String deliveryView(@RequestParam("orderNo") int orderNo, ModelMap model) {
+		//get order
+		Order order = this.farm.getOrder(orderNo);
+		//get Delivery
+		Delivery delivery = this.farm.getDelivery(order.getDelivery().getdNo());
+		//get payment
+		Payment payment = this.farm.getPayment(order.getPayment().getPayNo());
+		//get Normal
+		Normal normal = this.farm.getNormalSale(order.getSaleNo());
+		//get Address
+		Address address = this.farm.getAddress(delivery.getAddress().getAddrNo());
+		delivery.setAddress(address);
+		
+		model.addAttribute("order", order);
+		model.addAttribute("delivery", delivery);
+		model.addAttribute("payment", payment);
+		model.addAttribute("normal", normal);
+		
+		return deliveryView;
+	}
+	
+	
+	
+	
 	//related image file
 	//upload file
 	private void uploadFile(MultipartFile image, Normal normal) {

@@ -57,6 +57,8 @@ public class CommonController implements ServletContextAware{
 	private static final String commonJoinView = "commonjoin/CommonJoinView";
 	private static final String commonJoinedListView = "commonjoin/ListBySaleView";
 	private static final String buyCommonForm = "common/buyCommonFormView";
+	private static final String deliveryView = "normal/DeliveryView";
+	
 	@Autowired
 	private FarmFacade farm;
 	public void setFarm(FarmFacade farm) {
@@ -284,8 +286,6 @@ public class CommonController implements ServletContextAware{
 		else if ("previous".equals(page)) {
 			cjList.previousPage();
 		}
-		List <Category> categoryList = farm.getCategoryList();
-		
 		
 		model.addAttribute("cjList", cjList);
 		return commonJoinUserListView;
@@ -507,6 +507,27 @@ public class CommonController implements ServletContextAware{
 		
 		
 		return new ModelAndView("redirect:/commonjoin/JoinUserListView");
+	}
+	@RequestMapping("/common/viewDelivery.do")
+	public String deliveryView(@RequestParam("orderNo") int orderNo, ModelMap model) {
+		//get order
+		Order order = this.farm.getOrder(orderNo);
+		//get Delivery
+		Delivery delivery = this.farm.getDelivery(order.getDelivery().getdNo());
+		//get payment
+		Payment payment = this.farm.getPayment(order.getPayment().getPayNo());
+		//get Normal
+		Common  common = this.farm.getCommonSale(order.getSaleNo());
+		//get Address
+		Address address = this.farm.getAddress(delivery.getAddress().getAddrNo());
+		delivery.setAddress(address);
+		
+		model.addAttribute("order", order);
+		model.addAttribute("delivery", delivery);
+		model.addAttribute("payment", payment);
+		model.addAttribute("common", common);
+		
+		return deliveryView;
 	}
 	//upload file
 		private void uploadFile(MultipartFile image, Common common) {

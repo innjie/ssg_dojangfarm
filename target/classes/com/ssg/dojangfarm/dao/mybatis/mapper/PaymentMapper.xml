@@ -7,7 +7,7 @@
 	
 	<select id="getPayment" resultType="Payment" parameterType="int">
 		SELECT
-			payNo, cardNo AS "card.cardNo"
+			payNo, cardNo AS "card.cardNo", method, pDate, totalPrice
 		FROM 
 			Payment
 		WHERE payNo = #{payNo}

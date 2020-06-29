@@ -79,12 +79,13 @@ public interface FarmFacade {
 	public void addDelivery(Delivery delivery);
 	public List<Delivery> getDeliveryListByUserNo(int userNo);
 	public void changeDeliveryFinish(int dNo);
+	public int getLastDNo();
 	
 	//Order
 	public Order getOrder(int orderNo);
 	public List<Order> getOrderList(int userNo);
 	public int cancelOrder(int orderNo);
-	public int insertOrder(int userNo, Order order);
+	public int insertOrder(Order order);
 	public List<Order> getOrderUserList(int orderNo);
 	
 	//Card
@@ -142,7 +143,8 @@ public interface FarmFacade {
 	//Payment
 	public Payment getPayment(int payNo);
 	public void insertPayment(Payment payment);
-	
+	public void normalPayment(Payment payment);
+	public int getLastPayNo();
 	//Refund
 	public int refundSale(Refund refund);
 	public Refund getRefund(int refundNo);
@@ -150,6 +152,9 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	
+	
+	
 	
 	
 

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -25,8 +26,13 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.domain.Address;
+import com.ssg.dojangfarm.domain.Card;
 import com.ssg.dojangfarm.domain.Category;
+import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.Normal;
+import com.ssg.dojangfarm.domain.Order;
+import com.ssg.dojangfarm.domain.Payment;
 import com.ssg.dojangfarm.domain.Product;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
@@ -42,6 +48,7 @@ public class NormalController implements ServletContextAware {
 	private static final String normalUserListView = "normal/NormalUserListView";
 	private static final String successPage = "/normal/Success";
 	private static final String updateNormalForm = "normal/NormalUpdateFormView";
+	private static final String buyNormalForm = "normal/buyNormalFormView";
 	
 	private ServletContext context;	
 	
@@ -59,6 +66,10 @@ public class NormalController implements ServletContextAware {
 	@ModelAttribute("normalCommand")
 	public NormalCommand formBacking(HttpServletRequest request) {
 		return new NormalCommand();
+	}
+	@ModelAttribute("payment")
+	public PaymentCommand formBacking2(HttpServletRequest request) {
+		return new PaymentCommand();
 	}
 	
 	//insert form
@@ -309,6 +320,109 @@ public class NormalController implements ServletContextAware {
 		}
 		
 		return normalUserListView;
+	}
+
+	
+	//normal pay
+	@RequestMapping(value = "/normal/buyNormal.do", method = RequestMethod.GET)
+	public String buyNormal(@RequestParam("saleNo") int saleNo, 
+			@ModelAttribute("payment") PaymentCommand paymentCommand,  ModelMap model) {
+		Normal normal = this.farm.getNormalSale(saleNo);
+		Product product = this.farm.getProduct(normal.getProduct().getpNo());
+		normal.setProduct(product);
+		
+		model.addAttribute("normal", normal);
+		return buyNormalForm;
+		
+	}
+	//normal pay
+	@Transactional
+	@RequestMapping(value = "/normal/buyNormal.do", method = RequestMethod.POST)
+	public ModelAndView buyNormal(@Valid@ModelAttribute("payment") PaymentCommand paymentCommand,
+			BindingResult result, HttpServletRequest request, ModelMap model) throws Exception{
+		//userSession
+		HttpSession httpSession = request.getSession();
+		User user = (User)httpSession.getAttribute("user");
+		if (user == null) {
+			return new ModelAndView(errorPage, "message", "Please LOGIN first");
+		}
+		//get NormalSale
+		Normal normal = this.farm.getNormalSale(paymentCommand.getSaleNo());
+		if(paymentCommand.getQuantity() > normal.getCount()) {
+			Product product = this.farm.getProduct(normal.getProduct().getpNo());
+			normal.setProduct(product);
+			result.rejectValue("quantity", "quantity");
+			model.addAttribute("normal", normal);
+			return new ModelAndView(buyNormalForm);
+		}
+				
+		if (result.hasErrors()) {
+			
+			Product product = this.farm.getProduct(normal.getProduct().getpNo());
+			normal.setProduct(product);
+			
+			model.addAttribute("normal", normal);
+			return new ModelAndView(buyNormalForm);
+		}
+		
+		//card validation
+		Card card = this.farm.getCard(paymentCommand.getCardNo());
+		if(card == null) {
+			result.rejectValue("cardNo", "nocardNo");
+			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
+		}
+		if(card.getUser().getUserNo() != user.getUserNo()) {
+			result.rejectValue("cardNo", "notMyCard");
+			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
+		}
+		//Address validation
+		Address address = this.farm.getAddress(paymentCommand.getAddrNo());
+		if(address == null) {
+			result.rejectValue("addrNo", "noaddressNo");
+			return new ModelAndView(buyNormalForm, "auction", paymentCommand);
+		}
+		if(address.getUser().getUserNo() != user.getUserNo()) {
+			result.rejectValue("addrNo", "notMyAddress");
+			return new ModelAndView(buyNormalForm, "auction", paymentCommand);
+		}
+		
+		
+		
+		//payNo, method, paycheck,cardNo, totalPrice
+		Payment payment = new Payment();
+		payment.setCard(card);
+		payment.setTotalPrice(paymentCommand.getQuantity() * normal.getPrice());
+		payment.setMethod("카드");
+		//insert normal Payment
+		this.farm.insertPayment(payment);
+		
+		Delivery delivery = new Delivery();
+		delivery.setAddress(address);
+		delivery.setPhone(paymentCommand.getPhone());
+		this.farm.addDelivery(delivery);
+		
+		int dNo = this.farm.getLastDNo();
+		delivery = this.farm.getDelivery(dNo);
+		
+		int pNo = this.farm.getLastPayNo();
+		payment = this.farm.getPayment(pNo);
+		
+		Order order = new Order();
+		
+		order.setDelivery(delivery);
+		order.setPayment(payment);
+		order.setQuantity(paymentCommand.getQuantity());
+		order.setSaleNo(paymentCommand.getSaleNo());
+		order.setUser(user);
+		order.setSaleType("Normal");
+		
+		this.farm.insertOrder(order);
+		
+		normal.setCount(normal.getCount() - paymentCommand.getQuantity());
+		this.farm.updateSale(normal);
+		
+		return new ModelAndView(normalListView);
+
 	}
 	//related image file
 	//upload file

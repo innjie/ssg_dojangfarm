@@ -40,7 +40,7 @@ public class FarmImpl implements FarmFacade{
 	private DiscountDAO discountDAO;
 	@Autowired
 	private NormalDAO normalDAO;
-//	@Autowired
+	@Autowired
 	private PaymentDAO paymentDAO;
 	@Autowired
 	private RefundDAO refundDAO;
@@ -324,7 +324,11 @@ public class FarmImpl implements FarmFacade{
 	public void changeDeliveryFinish(int dNo) {
 		deliveryDAO.changeDeliveryFinish(dNo);
 	}
-	
+	@Override
+	public int getLastDNo() {
+		return deliveryDAO.getLastDNo();
+	}
+
 	//-------------------------------------------------------------------------
 	//Order
 	//-------------------------------------------------------------------------
@@ -343,8 +347,8 @@ public class FarmImpl implements FarmFacade{
 		return orderDAO.cancelOrder(orderNo);
 	}
 	@Override
-	public int insertOrder(int userNo, Order order) {
-		return orderDAO.insertOrder(userNo, order);
+	public int insertOrder( Order order) {
+		return orderDAO.insertOrder(order);
 	}
 	@Override
 	public List<Order> getOrderUserList(int orderNo) {
@@ -587,7 +591,15 @@ public class FarmImpl implements FarmFacade{
 	public void insertPayment(Payment payment) {
 		paymentDAO.insertPayment(payment);
 	}
-	
+	@Override
+	public void normalPayment(Payment payment) {
+		paymentDAO.normalPayment(payment);
+	}
+	@Override
+	public int getLastPayNo() {
+		return paymentDAO.getLastPayNo();
+	}
+
 	//-------------------------------------------------------------------------
 	//Refund
 	//-------------------------------------------------------------------------

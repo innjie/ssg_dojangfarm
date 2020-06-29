@@ -114,6 +114,10 @@
 	<a href = "<c:url value = '/order/userView.do'>
 	<c:param name = 'saleNo' value = '${normal.saleNo}'/> </c:url> "> 주문자 내역 보기 </a> <br>
 	</c:if>
+	<c:if test="${ (loginUser.userNo != normal.user.userNo)}">
+	<a href = "<c:url value ='/normal/buyNormal.do' > 
+	<c:param name = 'saleNo'  value = '${normal.saleNo}'/></c:url> ">장바구니</a><br>
+	</c:if>
 	<br>
 	<a href="<c:url value='/message/sendMsg.do'>
 				<c:param name='saleNo' value='${normal.saleNo}' />
@@ -121,6 +125,6 @@
 	쪽지보내기</a>
 	<br><br>
 	<a href="<c:url value='/normal/list.do'/>">일반판매 리스트로 돌아가기</a>&nbsp;&nbsp;
-<input type="button" value="장바구니"/>
+
 </body>
 </html>

@@ -13,7 +13,6 @@ public class Payment implements Serializable{
 	private Card card;
 	private int totalPrice;
 	
-	
 	public int getPayNo() {
 		return payNo;
 	}
@@ -56,6 +55,5 @@ public class Payment implements Serializable{
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	
 	
 }

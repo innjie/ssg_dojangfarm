@@ -127,7 +127,8 @@ public class OrderController  {
 		User user = (User) httpSession.getAttribute("user");
 		
 		PagedListHolder<Order> orderList = new PagedListHolder<Order>(this.farm.getOrderList(user.getUserNo()));
-		orderList.setPageSize(10);
+		orderList.setPageSize(1);
+
 		model.put("orderList", orderList);
 		return orderListView;
 	}
@@ -141,6 +142,7 @@ public class OrderController  {
 		else if ("previous".equals(page)) {
 			orderList.previousPage();
 		}
+		
 		model.put("orderList", orderList);
 		return orderListView;
 	}
@@ -149,7 +151,8 @@ public class OrderController  {
 	public String orderListBysaleNo(@RequestParam("saleNo") int saleNo, ModelMap model) {
 		//get list
 		PagedListHolder<Order> orderList = new PagedListHolder<Order>( this.farm.getOrderUserList(saleNo));
-		
+		orderList.setPageSize(1);
+
 		model.put("orderList", orderList);
 		return orderListUserView;
 	}
@@ -168,13 +171,15 @@ public class OrderController  {
 	}
 	//view refund list
 	@RequestMapping("/refund/list.do")
-	public String getRefundList(HttpServletRequest request, Model model) {
+	public String getRefundList(HttpServletRequest request, ModelMap model) {
 		//get list
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		
 		PagedListHolder<Refund> refundList = new PagedListHolder<Refund>(this.farm.getRefundList(user.getUserNo()));
-		model.addAttribute("refundList", refundList);
+		refundList.setPageSize(1);
+
+		model.put("refundList", refundList);
 		return refundListView;
 	}
 	@RequestMapping("/refund/list2.do")

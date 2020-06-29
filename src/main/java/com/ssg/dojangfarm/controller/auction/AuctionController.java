@@ -187,14 +187,24 @@ public class AuctionController implements ServletContextAware{
 			ModelMap model) throws Exception {
 
 		PagedListHolder<Auction> auctionList;
+		List<Auction> list;
 		
 		if(type.equals("title")) {
-			auctionList = new PagedListHolder<Auction>(this.farm.findAuctionByTitle(text));
+			list = (this.farm.findAuctionByTitle(text));
 		}
 		else {
-			auctionList = new PagedListHolder<Auction>(this.farm.findAuctionByProduct(text));
+			list = (this.farm.findAuctionByProduct(text));
 		}
 
+		auctionList = new PagedListHolder<Auction>(list);
+		
+		DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String sDeadline;
+		for(int i = 0; i <list.size(); i++) {
+			sDeadline = dFormat.format(list.get(i).getDeadline());
+			list.get(i).setsDeadline(sDeadline);
+		}
+		
 		auctionList.setPageSize(10);
 		model.put("auctionList", auctionList);
 		model.put("find", "find");

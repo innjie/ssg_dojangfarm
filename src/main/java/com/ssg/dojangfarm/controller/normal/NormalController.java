@@ -151,6 +151,8 @@ public class NormalController implements ServletContextAware {
 			normalList = new PagedListHolder<Normal>(this.farm.searchNormal(word.toLowerCase()));
 		}
 		
+		normalList.setPageSize(10);
+		
 		//search -> list( or main)
 		model.put("normalList", normalList);
 		return normalListView;
@@ -295,20 +297,24 @@ public class NormalController implements ServletContextAware {
 	}
 	//get userNormal List
 	@RequestMapping("/normal/userList.do")
-	public String getNormalListByUserNo(HttpServletRequest request, Model model) {
+	public String getNormalListByUserNo(HttpServletRequest request, ModelMap model) {
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
 		//get list.do
 		PagedListHolder<Normal> normalList = new PagedListHolder<Normal>(farm.getNormalListByUserNo(userNo));
-		model.addAttribute("normalList", normalList);
+		
+		normalList.setPageSize(1);
+
+		model.put("normalList", normalList);
 		return normalUserListView;
 	}
 	@RequestMapping("/normal/userList2.do")
 	public String getNormalListByUserNo2(
-			@RequestParam("page") String page, 
+			@RequestParam("page") String page,
 			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
 			HttpServletRequest request, Model model) {
+
 		if ("next".equals(page)) { 
 			normalList.nextPage(); 
 		}

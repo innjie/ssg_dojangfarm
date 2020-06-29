@@ -54,6 +54,7 @@ public class CommonNoticeController {
 	@RequestMapping("/commonNotice/list.do")
 	public String getCNList(ModelMap model) {
 		PagedListHolder<CommonNotice> cnList = new PagedListHolder<CommonNotice>(this.farm.getAllNoticeList());
+		cnList.setPageSize(1);
 		model.put("cnList", cnList);
 		return commonNoticeListView;
 	}
@@ -171,18 +172,19 @@ public class CommonNoticeController {
 	}
 
 	// commonNotice by userNo
-	@RequestMapping("commonNotice/userList.do")
-	public String getCNListByUserNo(HttpServletRequest request, Model model) {
+	@RequestMapping("/commonNotice/userList.do")
+	public String getCNListByUserNo(HttpServletRequest request, ModelMap model) {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
 
 		// get list by userNo
 		PagedListHolder<CommonNotice> cnList = new PagedListHolder<CommonNotice>( farm.getCNoticeListByUserNo(userNo));
-		model.addAttribute("cnList", cnList);
+		cnList.setPageSize(1);
+		model.put("cnList", cnList);
 		return cnUserListView;
 	}
-	@RequestMapping("commonNotice/userList2.do")
+	@RequestMapping("/commonNotice/userList2.do")
 	public String getCNListByUserNo2(@RequestParam("page") String page,
 			@ModelAttribute("cnList") PagedListHolder<CommonNotice> commonList,
 			BindingResult result, ModelMap model) {

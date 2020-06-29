@@ -8,4 +8,3 @@
 
 <%@ include file="../IncludeTop.jsp" %>
 <b><c:out value="${message}" default="No further information was provided."/></b>
-<a href="<c:url value='/common/list.do'/>">공동구매 리스트로 돌아가기</a>&nbsp;&nbsp;	

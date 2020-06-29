@@ -41,7 +41,7 @@
 	<td colspan="4">${common.info }</td>
 	</tr>
 </table>
-<a href= "<c:url value = '/common/list.do'/> ">[이전 단계로]</a> <br>
+
 	<c:if test="${ (loginUser.userNo == common.user.userNo)}">
 	<a href = "<c:url value ='/common/updateCommon.do' > 
 	<c:param name = 'saleNo'  value = '${common.saleNo}'/></c:url> ">수정하기</a><br>

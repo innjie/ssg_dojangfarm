@@ -81,6 +81,6 @@
 	<br>
 	<a href="<c:url value='/normal/insertNormal.do'/>"> 등록</a>
 	<br>
-	<a href="<c:url value = '/index.do'/>">[메인으로]</a>
+	
 </body>
 </html>

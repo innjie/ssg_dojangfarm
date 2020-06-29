@@ -36,7 +36,7 @@
 
 <br>
 <c:set var="today" value="<%=new java.util.Date()%>"/>  
-<a href = "<c:url value = '/commonJoin/userList.do'/>">리스트로 돌아가기</a><br>
+
 <c:if test = "${(loginUser.userNo == commonJoin.user.userNo) && (commonJoin.common.saleState == 'OPEN')}">
 <c:if test = "${(commonJoin.common.deadline > today) && (commonJoin.cjState) == '신청' }">
 	<a href = "<c:url value = '/commonJoin/update.do'>

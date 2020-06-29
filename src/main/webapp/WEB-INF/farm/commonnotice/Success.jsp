@@ -10,4 +10,4 @@
 <b><c:out value="${message}" default="No further information was provided."/></b>
 
 <br> <br>
-<a href = "<c:url value = '/commonNotice/list.do'/> "> 목록으로 돌아가기</a>
+

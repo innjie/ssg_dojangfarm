@@ -30,8 +30,8 @@
 		
 		<input type="hidden" name="forwardAction" value="${login.forwardAction}"/>
 		
-		<input type="submit" value="로그인" />
-		
+		<input type="submit" value="로그인" />&nbsp;&nbsp;
+		<a href="<c:url value='/user/createUser.do' />">회원가입</a>
 	</form:form>
 </body>
 </html>

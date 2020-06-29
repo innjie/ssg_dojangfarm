@@ -54,7 +54,10 @@ public class UserController {
 		User user = (User)WebUtils.getSessionAttribute(request, "user");
 
 		LoginCommand loginCommand = new LoginCommand();
-		loginCommand.setId(user.getId());
+		
+		if(user != null) {
+			loginCommand.setId(user.getId());
+		}
 		
 		return loginCommand;
 	}

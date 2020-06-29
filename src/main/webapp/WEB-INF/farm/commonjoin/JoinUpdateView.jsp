@@ -28,6 +28,8 @@
 <form:input path="count"/>
 <form:errors path="count"/>
 <br>
+
+<form:hidden path = "cjNo" value = "${commonJoin.cjNo }"/>
 	<input type="submit" value="추가" />
 </form:form>
 </body>

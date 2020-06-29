@@ -185,7 +185,8 @@ public class CommonController implements ServletContextAware{
 		if(result.hasErrors()) {
 			return new ModelAndView(updateCommonForm, "common", common);
 		}
-		
+		common.setSaleNo(common.getSaleNo());
+		common.setSaleState("OPEN");
 		int res = farm.updateCommon(common);
 		if(res == 0) {
 			return new ModelAndView(errorPage, "message", "update Failed");
@@ -414,9 +415,11 @@ public class CommonController implements ServletContextAware{
 	// updateCommonJoin
 	@RequestMapping(value = "/commonJoin/update.do", method = RequestMethod.POST)
 	public ModelAndView updateCommonJoin(@ModelAttribute("commonJoin") CommonJoin commonJoin, BindingResult result) {
+		commonJoin.setCjState("신청");
+		commonJoin.setCjNo(commonJoin.getCjNo());
 		farm.updateCommonjoin(commonJoin);
 
-		return new ModelAndView("redirect:/" + commonJoinedListView);
+		return new ModelAndView("redirect:/user/myPage.do");
 	}
 
 	// view CommonJoin

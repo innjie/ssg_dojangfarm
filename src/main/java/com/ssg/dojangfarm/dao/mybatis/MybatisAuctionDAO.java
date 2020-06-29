@@ -12,7 +12,9 @@ import com.ssg.dojangfarm.dao.mybatis.mapper.DeliveryMapper;
 import com.ssg.dojangfarm.dao.mybatis.mapper.PaymentMapper;
 import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Bid;
+import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.ImPur;
+import com.ssg.dojangfarm.domain.Payment;
 import com.ssg.dojangfarm.domain.SBid;
 import com.ssg.dojangfarm.domain.User;
 
@@ -139,6 +141,37 @@ public class MybatisAuctionDAO implements AuctionDAO{
 	
 	public void finishAuction(int aNo) {
 		auctionMapper.finishAuction(aNo);
+	}
+	
+	@Transactional
+	public void successBidAuction(Auction auction) {
+		auctionMapper.finishAuction(auction.getaNo()); //finish='1'		
+		auctionMapper.changeBidStateSuccess(auction.getaNo()); //bid.state=='낙찰'
+		
+		Bid bid = auctionMapper.findSBid(auction.getaNo());
+		
+		if(bid != null) {
+			System.out.println("bid is not null " + bid.getBidNo());
+			bid = auctionMapper.getBid(bid.getBidNo());
+			Delivery delivery = new Delivery();
+			Payment payment = new Payment();
+			
+			delivery.setAddress(bid.getAddress());
+			delivery.setPhone(bid.getPhone());
+			payment.setCard(bid.getCard());
+			payment.setTotalPrice(bid.getBidPrice());
+			
+			deliveryMapper.addDelivery(delivery);
+			paymentMapper.insertPayment(payment);
+			
+			SBid sBid = new SBid();
+			sBid.setBid(bid);
+			sBid.setDelivery(delivery);
+			sBid.setPayment(payment);
+			
+			auctionMapper.successBid(sBid);
+		}
+
 	}
 
 }

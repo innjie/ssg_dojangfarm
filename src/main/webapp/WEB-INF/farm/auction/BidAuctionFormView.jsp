@@ -98,7 +98,7 @@ function searchAddress(userNo) {
 		품목  ${auction.product.pName}<br>	
 		최소 가격   ${auction.minPrice}<br>
 		현재 입찰 가격  ${auction.bidPrice}<br>
-		기간  ${auction.deadline}<br>
+		기간  ${auction.sDeadline}<br>
 		
 		<form:label path="bidPrice">가격 </form:label>
 		<form:input path="bidPrice" />

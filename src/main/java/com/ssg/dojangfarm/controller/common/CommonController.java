@@ -415,9 +415,11 @@ public class CommonController implements ServletContextAware{
 	// updateCommonJoin
 	@RequestMapping(value = "/commonJoin/update.do", method = RequestMethod.POST)
 	public ModelAndView updateCommonJoin(@ModelAttribute("commonJoin") CommonJoin commonJoin, BindingResult result) {
+		commonJoin.setCjState("신청");
+		commonJoin.setCjNo(commonJoin.getCjNo());
 		farm.updateCommonjoin(commonJoin);
 
-		return new ModelAndView("redirect:/" + commonJoinedListView);
+		return new ModelAndView("redirect:/user/myPage.do");
 	}
 
 	// view CommonJoin

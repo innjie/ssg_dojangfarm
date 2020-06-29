@@ -51,7 +51,7 @@
 						</c:url>">
 				${sBid.payment.card.cardPayNo}</a>
 			</td>
-			<td>${sBid.payment.pDate}</td>
+			<td>${pDate}</td>
 			<td>${sBid.payment.totalPrice}</td>
 		</tr>
 	</table>

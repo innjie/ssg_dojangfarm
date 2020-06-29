@@ -47,7 +47,7 @@
 						</c:url>">
 				${imPur.payment.card.cardPayNo}</a>
 			</td>
-			<td>${imPur.payment.pDate}</td>
+			<td>${pDate}</td>
 			<td>${imPur.payment.totalPrice}</td>
 		</tr>
 	</table>

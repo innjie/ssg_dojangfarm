@@ -87,7 +87,7 @@ public class CommonController implements ServletContextAware{
 		return new PaymentCommand();
 	}
 	// insert form
-	@RequestMapping("/common/insertForm.do")
+	@RequestMapping(value = "/common/insertCommon.do", method = RequestMethod.GET)
 	public String insertCommonForm(
 			HttpServletRequest request, 
 			@ModelAttribute("commonCommand") CommonCommand commonCommand, 
@@ -99,7 +99,7 @@ public class CommonController implements ServletContextAware{
 	}
 
 	// insert common
-	@RequestMapping("/common/insertCommon.do")
+	@RequestMapping(value = "/common/insertCommon.do", method = RequestMethod.POST)
 	public ModelAndView insertCommon(@Valid @ModelAttribute("commonCommand") CommonCommand commonCommand,
 			BindingResult result,  HttpServletRequest request, ModelMap model) throws Exception {
 		//get session-> user id
@@ -111,6 +111,7 @@ public class CommonController implements ServletContextAware{
 			return new ModelAndView(errorPage, "message", "Pleas LOGIN first");
 		}
 		System.out.println(user.getUserNo());
+	
 		if(result.hasErrors() ) {
 			List<Product> pList = this.farm.getProductList();
 			model.addAttribute("product", pList);

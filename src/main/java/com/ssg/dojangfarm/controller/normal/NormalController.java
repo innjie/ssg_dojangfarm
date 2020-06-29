@@ -132,11 +132,7 @@ public class NormalController implements ServletContextAware {
 			System.out.println("image not found");
 			this.farm.insertSale(normal);
 		}
-//
-//		if(res == 0) {
-//			return new ModelAndView(errorPage, "message", "insert Error");
-//		}
-		//insert -> list (or main)
+
 		return new ModelAndView( "redirect:/normal/list.do");
 	}
 	
@@ -423,7 +419,8 @@ public class NormalController implements ServletContextAware {
 		normal.setCount(normal.getCount() - paymentCommand.getQuantity());
 		this.farm.updateSale(normal);
 		
-		return new ModelAndView(normalListView);
+		int orderNo = this.farm.getLastOrderNo();
+		return new ModelAndView("redirect:/normal/viewDelivery.do?orderNo=" + orderNo);
 
 	}
 	

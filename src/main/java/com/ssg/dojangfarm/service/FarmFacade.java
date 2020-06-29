@@ -154,6 +154,8 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
+	public int getLastRefundNo();
+	public int getLastOrderNo();
 	
 	
 	

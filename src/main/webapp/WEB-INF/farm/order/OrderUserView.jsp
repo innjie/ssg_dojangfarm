@@ -30,15 +30,16 @@
 				<td>${order.quantity }</td>
 				<td>${order.user.name }</td>
 				<td>${order.delivery.dNo }</td>
-				<c:if test = "${ order.delivery.status == '배송전'}">
-				<td><a href="<c:url value='/delivery/turnStatus.do'> 
-						<c:param name='dNo' value='${order.delivery.dNo }'/>
-						</c:url>">배송전 : 배송변경하기</a>
-				</td>
-				</c:if>
-				<c:if test = "${order.delivery.status == '배송중' }">
-				<td>배송 중 </td>
-				</c:if>
+				<c:if test="${sBid.delivery.status != '배송완료'}">
+							<td>
+								<a href="<c:url value='/delivery/turnStatus.do'>
+											<c:param name='dNo'  value='${order.delivery.dNo }'/>
+											<c:param name = 'status' value = '${order.delivery.status }'/>
+										</c:url>">
+								${order.delivery.status } : 배송상태변경</a>
+							</td>
+						</c:if>
+			
 			</tr>
 		</c:forEach>
 	</table>

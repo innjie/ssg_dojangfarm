@@ -36,7 +36,8 @@ public class ImPurController {
 	private static final String VIEWIMPUR = "auction/MyImPurView";
 	private static final String IMPURFORM = "auction/ImPurFormView";
 	private static final String IMPURSUCCESS = "auction/ImPurSuccessView";
-	
+	private static final String IMPURFAIL = "auction/BidFailView";
+
 	@Autowired
 	private FarmFacade farm;
 	
@@ -113,6 +114,9 @@ public class ImPurController {
 		
 		Auction auction = this.farm.getAuction(aNo);
 		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		auction.setsDeadline(sdFormat.format(auction.getDeadline()));
+		
 		model.put("auction", auction);
 
 		return IMPURFORM;
@@ -155,6 +159,9 @@ public class ImPurController {
 			return new ModelAndView(IMPURFORM, "auction", auction);
 		}
 		
+		if(auction.getFinish()) {
+			return new ModelAndView(IMPURFAIL, "message", "경매가 종료되었습니다.");
+		}
 		
 		Payment payment = new Payment();
 		payment.setCard(card);

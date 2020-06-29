@@ -97,6 +97,7 @@ function searchAddress(userNo) {
 		제목  ${auction.title}<br>	
 		품목  ${auction.product.pName}<br>	
 		가격   ${auction.imPurPrice}<br>
+		기간  ${auction.sDeadline}<br>
 	
 		<form:label path="phone">전화번호 </form:label>
 		<form:input path="phone" />

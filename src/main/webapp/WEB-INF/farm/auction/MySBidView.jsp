@@ -34,16 +34,15 @@
 		</tr>
 	</table>
 	<br><br>
+	결제
 	<table border='1'>
 		<tr>
-			<td>결제</td>
 			<td>결제방법</td>
 			<td>카드</td>
 			<td>결제일</td>
 			<td>결제금액</td>
 		</tr>
 		<tr>
-			<td>${sBid.payment.payNo}</td>
 			<td>${sBid.payment.method}</td>
 			<td>
 				<a href="<c:url value='/card/viewCard.do'> 
@@ -56,15 +55,14 @@
 		</tr>
 	</table>
 	<br><br>
+	배송
 	<table border='1'>
 		<tr>
-			<td>배송</td>
 			<td>주소</td>
 			<td>전화번호</td>
 			<td>상태</td>
 		</tr>
 		<tr>
-			<td>${sBid.delivery.dNo}</td>
 			<td>
 				<a href="<c:url value='/address/getAddress.do'>
 							<c:param name='addrNo' value='${sBid.delivery.address.addrNo}' />

@@ -17,17 +17,19 @@
 	<table border="1">
 		<tr>
 			<td>순번</td>
+			<td>낙찰 번호</td>
 			<td>경매</td>
 			<td>입찰 가격</td>
 			<td>지불상태</td>
 		</tr>
 		<c:forEach var="sBid" items="${sBidList.pageList}" varStatus="status">
 			<tr>
+				<td>${status.count}</td>
 				<td>
 					<a href="<c:url value='/auction/viewMySBid.do'>
 								<c:param name='sBidNo' value='${sBid.sBidNo}' />
 							</c:url>">
-					${status.count}</a>
+					${sBid.sBidNo}</a>
 				</td>
 				<td>
 					<a href="<c:url value='/auction/viewAuction.do'>

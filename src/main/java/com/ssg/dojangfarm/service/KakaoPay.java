@@ -45,9 +45,9 @@ public class KakaoPay {
         params.add("quantity", "1");
         params.add("total_amount", String.valueOf(auction.getImPurPrice()));
         params.add("tax_free_amount", "100");
-        params.add("approval_url", url + "/auction/immePurchaseKaKao.do?aNo="+auction.getaNo());
-        params.add("cancel_url", url + "/auction/viewAuction.do?aNo="+auction.getaNo());
-        params.add("fail_url", url + "/auction/viewAuction.do?aNo="+auction.getaNo());
+        params.add("approval_url", "http://202.20.119.117/ssd0205/auction/immePurchaseKaKao.do?aNo="+auction.getaNo());
+        params.add("cancel_url", "http://202.20.119.117/ssd0205/auction/viewAuction.do?aNo="+auction.getaNo());
+        params.add("fail_url", "http://202.20.119.117/ssd0205/auction/viewAuction.do?aNo="+auction.getaNo());
  
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
  

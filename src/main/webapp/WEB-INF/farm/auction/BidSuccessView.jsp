@@ -19,7 +19,6 @@
 		현재 입찰 가격  ${bid.auction.bidPrice}<br>
 		기간  ${bid.auction.sDeadline}<br>
 		가격  ${bid.bidPrice}<br>
-		입찰시간  ${bid.bidTime}<br>
 		주소  ${bid.address.addrNo}<br>
 		카드  ${bid.card.cardNo}<br>
 		

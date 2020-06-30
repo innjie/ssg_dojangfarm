@@ -158,6 +158,7 @@ public class AddressController {
 		
 		//addressCommand to address
 		Address address = new Address();
+		address.setAddrNo(addressCommand.getAddrNo());
 		address.setAddr(addressCommand.getAddr());
 		address.setZip(Integer.parseInt(addressCommand.getZip()));
 		address.setaName(addressCommand.getaName());

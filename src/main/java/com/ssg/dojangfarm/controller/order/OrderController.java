@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.Normal;
@@ -32,8 +33,8 @@ import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
 
 
-@SessionAttributes("orderList")
 @Controller
+@SessionAttributes({"orderList", "refundList"})
 public class OrderController  {
 	private static final String orderView = "order/OrderView";
 	private static final String orderListView = "order/OrderListView";
@@ -63,10 +64,16 @@ public class OrderController  {
 	@RequestMapping(value = "/order/cancel.do", method = RequestMethod.POST)
 	public ModelAndView cancelOrder(
 			@Valid@ModelAttribute("refundCommand") RefundCommand refundCommand,
-			HttpServletRequest request, BindingResult result, ModelMap model) {
+			BindingResult result,
+			HttpServletRequest request, ModelMap model) {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
+		
+		//validate
+		if (result.hasErrors()) {
+			return new ModelAndView(refundForm); 
+		}
 		
 		//insert refund
 		Refund refund = new Refund();
@@ -121,27 +128,32 @@ public class OrderController  {
 	}
 	//ViewOrderList
 	@RequestMapping("/order/list.do")
-	public String orderListByUserNo(HttpServletRequest request, ModelMap model) {
+	public String orderListByUser(
+			HttpServletRequest request, ModelMap model) throws Exception{
+		
 		//get list
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		
 		PagedListHolder<Order> orderList = new PagedListHolder<Order>(this.farm.getOrderList(user.getUserNo()));
+
 		orderList.setPageSize(10);
 		model.put("orderList", orderList);
 		return orderListView;
 	}
+
 	@RequestMapping("/order/list2.do")
-	public String orderListByUserNo2(@RequestParam("page") String page,
-			@ModelAttribute("orderList") PagedListHolder<Order> orderList, 
-			ModelMap model) throws Exception{
+	public String orderListByUser2(
+			@RequestParam("page") String page,
+			@ModelAttribute("orderList") PagedListHolder<Order> orderList,
+			BindingResult result) throws Exception{
 		if ("next".equals(page)) {
 			orderList.nextPage();
 		}
 		else if ("previous".equals(page)) {
 			orderList.previousPage();
 		}
-		model.put("orderList", orderList);
+		
 		return orderListView;
 	}
 	//viewOrderUserList
@@ -149,13 +161,17 @@ public class OrderController  {
 	public String orderListBysaleNo(@RequestParam("saleNo") int saleNo, ModelMap model) {
 		//get list
 		PagedListHolder<Order> orderList = new PagedListHolder<Order>( this.farm.getOrderUserList(saleNo));
-		
+		orderList.setPageSize(10);
+
 		model.put("orderList", orderList);
 		return orderListUserView;
 	}
+	
 	@RequestMapping("/order/userView2.do")
-	public String orderListBysaleNo(@RequestParam("page") String page, 
-			@ModelAttribute("dList") PagedListHolder<Order> orderList,
+	public String orderListBysaleNo(
+			@RequestParam("page") String page,
+			@ModelAttribute("orderList") PagedListHolder<Order> orderList,
+			BindingResult result,
 			ModelMap model) {
 		//get list
 		if ("next".equals(page)) { 
@@ -168,20 +184,24 @@ public class OrderController  {
 	}
 	//view refund list
 	@RequestMapping("/refund/list.do")
-	public String getRefundList(HttpServletRequest request, Model model) {
+	public String getRefundList(HttpServletRequest request, ModelMap model) {
 		//get list
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		
 		PagedListHolder<Refund> refundList = new PagedListHolder<Refund>(this.farm.getRefundList(user.getUserNo()));
-		model.addAttribute("refundList", refundList);
+		refundList.setPageSize(10);
+
+		model.put("refundList", refundList);
 		return refundListView;
 	}
+	
 	@RequestMapping("/refund/list2.do")
-	public String getRefundList(@RequestParam("page") String page,
+	public String getRefundList(
+			@RequestParam("page") String page,
 			@ModelAttribute("refundList") PagedListHolder<Refund> refundList,
-			BindingResult result, 
-			 ModelMap model) {
+			BindingResult result,
+			ModelMap model) {
 		//get list
 		if ("next".equals(page)) {
 			refundList.nextPage();

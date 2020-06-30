@@ -46,8 +46,9 @@
 		ordertable.userNo as "user.userNo", delivery.dNo as "delivery.dNo",
     delivery.status as "delivery.status"
 		FROM OrderTable, UserTable, Delivery
-		WHERE saleNo = #{saleNo} AND OrderTable.userNo = UserTable.userNo
+		WHERE saleNo = #{seleNo} AND OrderTable.userNo = UserTable.userNo
     and ordertable.dNo = delivery.dNo
+    and orderNo not in (select orderNo from refund)
 	</select>
 	
 	<select id = "getLastOrderNo" resultType = "int">

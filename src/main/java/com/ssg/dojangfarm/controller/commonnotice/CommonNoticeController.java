@@ -54,13 +54,14 @@ public class CommonNoticeController {
 	@RequestMapping("/commonNotice/list.do")
 	public String getCNList(ModelMap model) {
 		PagedListHolder<CommonNotice> cnList = new PagedListHolder<CommonNotice>(this.farm.getAllNoticeList());
-		cnList.setPageSize(1);
+		cnList.setPageSize(10);
 		model.put("cnList", cnList);
 		return commonNoticeListView;
 	}
 	@RequestMapping("/commonNotice/list2.do")
 	public String getCNList2(@RequestParam("page") String page, 
 			@ModelAttribute("cnList") PagedListHolder<CommonNotice> cnList,
+			BindingResult result,
 			ModelMap model) {
 		if ("next".equals(page)) { 
 			cnList.nextPage(); 
@@ -180,7 +181,7 @@ public class CommonNoticeController {
 
 		// get list by userNo
 		PagedListHolder<CommonNotice> cnList = new PagedListHolder<CommonNotice>( farm.getCNoticeListByUserNo(userNo));
-		cnList.setPageSize(1);
+		cnList.setPageSize(10);
 		model.put("cnList", cnList);
 		return cnUserListView;
 	}

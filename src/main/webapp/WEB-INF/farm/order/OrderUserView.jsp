@@ -35,6 +35,7 @@
 								<a href="<c:url value='/delivery/turnStatus.do'>
 											<c:param name='dNo'  value='${order.delivery.dNo }'/>
 											<c:param name = 'status' value = '${order.delivery.status }'/>
+											<c:param name = 'saleNo' value = '${order.saleNo}'/>
 										</c:url>">
 								${order.delivery.status } : 배송상태변경</a>
 							</td>

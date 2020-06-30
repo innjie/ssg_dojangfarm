@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
@@ -31,6 +33,7 @@ public class DeliveryController {
 	@RequestMapping("/delivery/turnStatus.do")
 	public String changeDeliveryStatus(@RequestParam("dNo")int dNo, 
 			@RequestParam("status") String status,
+			@RequestParam("saleNo") int saleNo,
 			HttpServletRequest request) {
 		
 		if (status.equals("배송전")) {
@@ -39,7 +42,7 @@ public class DeliveryController {
 			this.farm.changeDeliveryFinish(dNo);
 		}
 		 this.farm.changeDeliveryStatus(dNo);
-		 return "redirect:/delivery/list.do";
+		 return "redirect:/order/userView.do?saleNo="+saleNo;
 		
 	}
 	@RequestMapping("/delivery/view.do")
@@ -62,13 +65,16 @@ public class DeliveryController {
 		System.out.println(deliveryList.size());
 		
 		PagedListHolder<Delivery> dList = new PagedListHolder<Delivery>(this.farm.getDeliveryListByUserNo(userNo));
-		dList.setPageSize(1);
+		dList.setPageSize(10);
 		model.put("dList", dList);
 		return deliveryListView;
 	}
+	
 	@RequestMapping("/delivery/list2.do")
-	public String getDeliveryListByUserNo2(@RequestParam("page") String page, 
+	public String getDeliveryListByUserNo2(
+			@RequestParam("page") String page,
 			@ModelAttribute("dList") PagedListHolder<Delivery> dList,
+			BindingResult result,
 			ModelMap model) {
 		if ("next".equals(page)) { 
 			dList.nextPage(); 

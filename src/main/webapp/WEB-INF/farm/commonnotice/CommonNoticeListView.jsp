@@ -46,7 +46,7 @@
         	Next</a>
     	</c:if>
 <br><br>
-<a href="<c:url value='/commonNotice/userList.do'/>"> 등록</a> <br>
+<a href="<c:url value='/commonNotice/insertForm.do'/>"> 등록</a> <br>
 
 </body>
 </html>

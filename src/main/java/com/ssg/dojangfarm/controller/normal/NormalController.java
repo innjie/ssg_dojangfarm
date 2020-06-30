@@ -304,7 +304,7 @@ public class NormalController implements ServletContextAware {
 		//get list.do
 		PagedListHolder<Normal> normalList = new PagedListHolder<Normal>(farm.getNormalListByUserNo(userNo));
 		
-		normalList.setPageSize(1);
+		normalList.setPageSize(10);
 
 		model.put("normalList", normalList);
 		return normalUserListView;
@@ -313,6 +313,7 @@ public class NormalController implements ServletContextAware {
 	public String getNormalListByUserNo2(
 			@RequestParam("page") String page,
 			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
+			BindingResult result, 
 			HttpServletRequest request, Model model) {
 
 		if ("next".equals(page)) { 

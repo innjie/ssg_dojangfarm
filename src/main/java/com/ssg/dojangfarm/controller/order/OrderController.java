@@ -64,10 +64,16 @@ public class OrderController  {
 	@RequestMapping(value = "/order/cancel.do", method = RequestMethod.POST)
 	public ModelAndView cancelOrder(
 			@Valid@ModelAttribute("refundCommand") RefundCommand refundCommand,
-			HttpServletRequest request, BindingResult result, ModelMap model) {
+			BindingResult result,
+			HttpServletRequest request, ModelMap model) {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
+		
+		//validate
+		if (result.hasErrors()) {
+			return new ModelAndView(refundForm); 
+		}
 		
 		//insert refund
 		Refund refund = new Refund();

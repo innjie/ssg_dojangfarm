@@ -52,7 +52,7 @@ public class AddressController {
 		if (address != null) {	
 			return new AddressCommand(address.getAddrNo(), address.getAddr(), String.valueOf(address.getZip()), address.getDetail(), address.getaName());
 		}
-		else {	// create new user
+		else {	// create new address
 			return new AddressCommand();
 		}
 	}

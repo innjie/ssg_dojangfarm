@@ -31,7 +31,7 @@ public class RestfulCardController {
 	
 	@RequestMapping(value = "/cardListBy/{userNo}", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody         
-	public List<Card> findAuctionByProduct(@PathVariable("userNo") int userNo, HttpServletResponse response) throws IOException {
+	public List<Card> findCard(@PathVariable("userNo") int userNo, HttpServletResponse response) throws IOException {
 		System.out.println("/rest/cardListBy/{userNo} request accepted: {userNo} = " + userNo);
 		List<Card> cardList = cardService.getCardList(userNo);
 		if (cardList == null) {

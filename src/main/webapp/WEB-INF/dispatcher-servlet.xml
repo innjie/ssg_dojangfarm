@@ -76,6 +76,7 @@
 			<mvc:mapping path="/auction/viewMySBidList2.do"/>
 			<mvc:mapping path="/auction/viewMySBid.do"/>
 			<mvc:mapping path="/auction/bidAuction.do"/>
+			<mvc:mapping path="/kakao/*.do"/>
 			<bean class="com.ssg.dojangfarm.controller.user.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>     

@@ -110,9 +110,9 @@ function searchAddress(userNo) {
 		<form:input path="count" />
 		<form:errors path="count" />
 		<br>
-		<form:label path="delivery.phone">전화번호 </form:label>
-		<form:input path="delivery.phone" />
-		<form:errors path="delivery.phone" />
+		<form:label path="phone">전화번호 </form:label>
+		<form:input path="phone" />
+		<form:errors path="phone" />
 		<br>
 
 		<form:label path="cardNo">cardNo </form:label>

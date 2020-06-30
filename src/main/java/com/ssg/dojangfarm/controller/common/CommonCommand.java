@@ -17,6 +17,7 @@ public class CommonCommand  {
 	private int price;
 	@NotBlank
 	private String title;
+	@NotBlank
 	private String info;
 	private Date regidDate;
 	private String saleType;
@@ -28,6 +29,7 @@ public class CommonCommand  {
 	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deadline;
+	private int saleNo;
 	
 	public int getPrice() {
 		return price;
@@ -84,6 +86,12 @@ public class CommonCommand  {
 	}
 	public void setImage(MultipartFile image) {
 		this.image = image;
+	}
+	public int getSaleNo() {
+		return saleNo;
+	}
+	public void setSaleNo(int saleNo) {
+		this.saleNo = saleNo;
 	}
 	
 }

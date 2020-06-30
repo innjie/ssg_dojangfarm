@@ -26,6 +26,7 @@ public class Normal implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regidDate;
 	private String saleState;
+	@Min(1)
 	private int count;
 	private String image;
 	

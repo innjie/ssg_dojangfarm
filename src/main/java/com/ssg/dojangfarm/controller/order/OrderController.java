@@ -78,7 +78,7 @@ public class OrderController  {
 		//insert refund
 		Refund refund = new Refund();
 		
-		Order order = new Order();
+		Order order = this.farm.getOrder(refundCommand.getOrder().getOrderNo());
 		order.setOrderNo(refundCommand.getOrder().getOrderNo());
 		refund.setAccount(refundCommand.getAccount().toString());
 		refund.setBank(refundCommand.getBank());
@@ -96,8 +96,14 @@ public class OrderController  {
 		int point = normal.getPrice();
 		user.setPoint(point);
 		
+		if(normal.getCount() == 0 ) {
+			this.farm.turnSaleState(normal.getSaleNo(), "OPEN");
+		}
+		normal.setCount(order.getQuantity() + normal.getCount());
+		
+		
 		this.farm.addPoint(user);
-				
+		this.farm.updateSale(normal);
 		if( orderRes == 0 || refundRes == 0)  {//failed
 			return new ModelAndView("Error", "message", "cancel failed");
 		} else { //success 

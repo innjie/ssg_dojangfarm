@@ -16,7 +16,7 @@
 
 <body>
 <%@ include file="../IncludeTop.jsp" %>
-	<form:form commandName="common" action="${targetUrI }" method = "POST">
+	<form:form commandName="commonCommand" action="${targetUrI }" method = "POST">
 		<form:label path="title">제목</form:label>
 		<form:input path="title" value="${common.title }" readonly = "true" />
 		<form:errors path="title" />

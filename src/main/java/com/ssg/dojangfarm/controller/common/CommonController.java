@@ -7,6 +7,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -26,12 +27,14 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.controller.commonnotice.CommonNoticeCommand;
 import com.ssg.dojangfarm.controller.normal.PaymentCommand;
 import com.ssg.dojangfarm.domain.Address;
 import com.ssg.dojangfarm.domain.Card;
 import com.ssg.dojangfarm.domain.Category;
 import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonJoin;
+import com.ssg.dojangfarm.domain.CommonNotice;
 import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.Order;
@@ -75,17 +78,63 @@ public class CommonController implements ServletContextAware{
 	
 	@ModelAttribute("commonCommand")
 	public CommonCommand formBacking(HttpServletRequest request) {
-		return new CommonCommand();
+		Common common = null;
+		int saleNo = 0;
+		if(request.getParameter("saleNo") != null) {
+			saleNo = Integer.parseInt(request.getParameter("saleNo"));
+			common = this.farm.getCommonSale(saleNo);
+		}
+		
+		// edit CommonNotice
+		if (common != null) {	
+			CommonCommand command = new CommonCommand();
+			command.setTitle(common.getTitle());
+			command.setPrice(common.getPrice());
+			command.setInfo(common.getInfo());
+			command.setMin(common.getMin());
+			command.setDeadline(common.getDeadline());
+			command.setSaleNo(saleNo);
+			
+			return command;
+		}
+		else {
+			return new CommonCommand();
+		}
 	}
+	
 	
 	@ModelAttribute("cjCommand")
 	public CommonJoinCommand formBacking2(HttpServletRequest request) {
-		return new CommonJoinCommand();
+		CommonJoin commonJoin = null;
+		int cjNo = 0;
+		
+		if(request.getParameter("cjNo") != null) {
+			cjNo = Integer.parseInt(request.getParameter("cjNo"));
+			commonJoin = this.farm.getCommonJoin(cjNo);
+		}
+		
+		// edit CommonNotice
+		if (commonJoin != null) {	
+			CommonJoinCommand command = new CommonJoinCommand();
+			command.setCount(commonJoin.getCount());
+			command.setCommon(commonJoin.getCommon());
+			command.setCjNo(cjNo);
+			
+			return command;
+		}
+		else {
+			return new CommonJoinCommand();
+		}
+		
 	}
+	
+	
 	@ModelAttribute("payment")
 	public PaymentCommand formBacking3(HttpServletRequest request) {
 		return new PaymentCommand();
 	}
+	
+	
 	// insert form
 	@RequestMapping(value = "/common/insertCommon.do", method = RequestMethod.GET)
 	public String insertCommonForm(
@@ -100,7 +149,8 @@ public class CommonController implements ServletContextAware{
 
 	// insert common
 	@RequestMapping(value = "/common/insertCommon.do", method = RequestMethod.POST)
-	public ModelAndView insertCommon(@Valid @ModelAttribute("commonCommand") CommonCommand commonCommand,
+	public ModelAndView insertCommon(
+			@Valid @ModelAttribute("commonCommand") CommonCommand commonCommand,
 			BindingResult result,  HttpServletRequest request, ModelMap model) throws Exception {
 		//get session-> user id
 		HttpSession httpSession = request.getSession();
@@ -179,7 +229,9 @@ public class CommonController implements ServletContextAware{
 	}
 	// update common Form
 	@RequestMapping(value = "/common/updateCommon.do", method = RequestMethod.GET)
-	public String updateCommon(@RequestParam("saleNo") int saleNo, 
+	public String updateCommon(
+			@ModelAttribute("commonCommand") CommonCommand commonCommand,
+			@RequestParam("saleNo") int saleNo, 
 			ModelMap model) throws Exception {
 		Common common = this.farm.getCommonSale(saleNo);
 		model.addAttribute(common);
@@ -189,7 +241,8 @@ public class CommonController implements ServletContextAware{
 	
 	//update Common
 	@RequestMapping(value = "/common/updateCommon.do", method = RequestMethod.POST)
-	public ModelAndView updateCommon(@Valid@ModelAttribute("common") Common common,
+	public ModelAndView updateCommon(
+			@Valid@ModelAttribute("commonCommand") CommonCommand commonCommand,
 			BindingResult result, HttpServletRequest request, ModelMap model) {
 		//get user session
 		HttpSession httpSession = request.getSession();
@@ -200,9 +253,17 @@ public class CommonController implements ServletContextAware{
 			return new ModelAndView(errorPage, "message", "Please LOGIN first");
 		}
 		if(result.hasErrors()) {
-			return new ModelAndView(updateCommonForm, "common", common);
+			return new ModelAndView(updateCommonForm);
 		}
-		common.setSaleNo(common.getSaleNo());
+		
+		Common common = new Common();
+		common.setTitle(commonCommand.getTitle());
+		common.setPrice(commonCommand.getPrice());
+		common.setInfo(commonCommand.getInfo());
+		common.setMin(commonCommand.getMin());
+		common.setDeadline(commonCommand.getDeadline());
+		
+		common.setSaleNo(commonCommand.getSaleNo());
 		common.setSaleState("OPEN");
 		int res = farm.updateCommon(common);
 		if(res == 0) {
@@ -351,7 +412,8 @@ public class CommonController implements ServletContextAware{
 	@Transactional
 	@RequestMapping(value = "/commonjoin/join.do", method = RequestMethod.POST)
 	public ModelAndView insertCommonJoin(HttpServletRequest request,
-			@Valid @ModelAttribute("cjCommand") CommonJoinCommand cjCommand, BindingResult result,
+			@Valid @ModelAttribute("cjCommand") CommonJoinCommand cjCommand, 
+			BindingResult result,
 			BindingResult bindingResult,
 			ModelMap model) {
 		// insert join actioin
@@ -368,12 +430,8 @@ public class CommonController implements ServletContextAware{
 			return new ModelAndView(insertCJForm);
 		}
 		
-		if(cjCommand.getCount().equals("0")) {
-			bindingResult.rejectValue("count", "minCount");
-			return new ModelAndView(insertCJForm, "common", common);
-		}
-		//if already exist
 		
+		//if already exist
 		CommonJoin existJoin = this.farm.ExistCommonJoin(user.getUserNo(), common.getSaleNo());
 		if(existJoin != null) {
 			model.addAttribute("common", common);
@@ -402,7 +460,7 @@ public class CommonController implements ServletContextAware{
 		
 		Delivery delivery = new Delivery();
 		delivery.setAddress(address);
-		delivery.setPhone(cjCommand.getDelivery().getPhone());
+		delivery.setPhone(cjCommand.getPhone());
 		this.farm.addDelivery(delivery);
 		
 		int dNo = this.farm.getLastDNo();
@@ -431,7 +489,9 @@ public class CommonController implements ServletContextAware{
 
 	//update CommonJoin Form
 	@RequestMapping(value = "/commonJoin/update.do", method = RequestMethod.GET)
-	public String updateCommonJoin(@RequestParam("cjNo") int cjNo, 
+	public String updateCommonJoin(
+			@ModelAttribute("cjCommand") CommonJoinCommand cjCommand, 
+			@RequestParam("cjNo") int cjNo, 
 			ModelMap model) throws Exception {
 		CommonJoin commonJoin = this.farm.getCommonJoin(cjNo);
 		
@@ -441,17 +501,23 @@ public class CommonController implements ServletContextAware{
 	// updateCommonJoin
 	@RequestMapping(value = "/commonJoin/update.do", method = RequestMethod.POST)
 	public ModelAndView updateCommonJoin(
-		@Valid@ModelAttribute("commonJoin") CommonJoin commonJoin, BindingResult result) {
+		@Valid@ModelAttribute("cjCommand") CommonJoinCommand cjCommand, 
+		BindingResult result) {
+		System.out.println("p"+cjCommand.getPhone());
+		if(cjCommand.getCount() < 1) {
+			return new ModelAndView(updateCJForm);
+		}
+		
+		CommonJoin commonJoin = new CommonJoin();
 		commonJoin.setCjState("신청");
-		commonJoin.setCjNo(commonJoin.getCjNo());
+		commonJoin.setCjNo(cjCommand.getCjNo());
+		commonJoin.setCount(cjCommand.getCount());
+		
 		farm.updateCommonjoin(commonJoin);
 		
-		if(commonJoin.getCount().equals("0") || commonJoin.getCount() == null) {
-			result.rejectValue("count", "minCount");
-			return new ModelAndView(updateCJForm, "commonJoin", commonJoin);
-		}
+		
 
-		return new ModelAndView("redirect:/user/myPage.do");
+		return new ModelAndView("redirect:/commonJoin/userList.do");
 	}
 
 	// view CommonJoin
@@ -508,7 +574,7 @@ public class CommonController implements ServletContextAware{
 			
 			Payment payment = new Payment();
 			payment.setCard(card);
-			payment.setTotalPrice(Integer.parseInt(commonJoin.getCount())* common.getPrice());
+			payment.setTotalPrice(commonJoin.getCount()* common.getPrice());
 			payment.setMethod("카드");
 			// insert normal Payment
 			this.farm.insertPayment(payment);
@@ -518,7 +584,7 @@ public class CommonController implements ServletContextAware{
 			
 			order.setDelivery(delivery);
 			order.setPayment(payment);
-			order.setQuantity(Integer.parseInt(commonJoin.getCount()));
+			order.setQuantity(commonJoin.getCount());
 			order.setSaleNo(commonJoin.getCommon().getSaleNo());
 			order.setUser(user);
 			order.setSaleType("Common");

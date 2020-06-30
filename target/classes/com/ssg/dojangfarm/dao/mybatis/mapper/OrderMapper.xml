@@ -18,7 +18,8 @@
 		ordertable.userNo as "user.userNo", ordertable.state
 		FROM OrderTable, usertable
 		WHERE OrderTable.userNo = Usertable.userNo
-    and usertable.userno = #{userNo}
+    and usertable.userno = #{userNo} and 
+    	ordertable.state != 'Refund'
 	</select>
 
 	<delete id="cancelOrder" parameterType="int">

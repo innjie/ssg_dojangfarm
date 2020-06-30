@@ -157,10 +157,11 @@ public class CommonController implements ServletContextAware{
 			}
 			commonList = new PagedListHolder<Common> (this.farm.searchCommon(word.toLowerCase()));
 		}
+		commonList.setPageSize(10);
 		// search -> list
 		return new ModelAndView(commonListView, "commonList", commonList);
 	}
-	@RequestMapping("/normal/searchCommon2.do")
+	@RequestMapping("/common/searchCommon2.do")
 	public String searchNormal2(@RequestParam("page") String page,
 			@ModelAttribute("commonList") PagedListHolder<Common> commonList,
 			BindingResult result, ModelMap model) throws Exception {
@@ -217,7 +218,7 @@ public class CommonController implements ServletContextAware{
 		// get list.do
 		PagedListHolder<Common> commonList = new PagedListHolder<Common>(farm.getAllCommonList());
 		
-		commonList.setPageSize(1);
+		commonList.setPageSize(10);
 		model.put("commonList", commonList);
 		return commonListView;
 	}
@@ -247,7 +248,7 @@ public class CommonController implements ServletContextAware{
 		
 		//get list
 		PagedListHolder<Common> commonList = new PagedListHolder<Common>(farm.getCommonListByUserNo(userNo));
-		commonList.setPageSize(1);
+		commonList.setPageSize(10);
 		model.addAttribute("commonList", commonList);
 		return commonUserListView;
 	}
@@ -256,6 +257,7 @@ public class CommonController implements ServletContextAware{
 		public String getCommonListByUserNo2(
 				@RequestParam("page") String page,
 				@ModelAttribute("commonList") PagedListHolder<Common> commonList,
+				BindingResult result,
 				HttpServletRequest request, Model model) {
 			if ("next".equals(page)) { 
 				commonList.nextPage(); 
@@ -291,7 +293,7 @@ public class CommonController implements ServletContextAware{
 		int userNo = user.getUserNo();
 		
 		PagedListHolder<CommonJoin> cjList = new PagedListHolder<CommonJoin>(this.farm.getCommonJoinListByUserNo(userNo));
-		cjList.setPageSize(1);
+		cjList.setPageSize(10);
 		model.put("cjList", cjList);
 		return commonJoinUserListView;
 	}
@@ -299,6 +301,7 @@ public class CommonController implements ServletContextAware{
 	public String getCommonJoinUserList2(
 			@RequestParam("page") String page,
 			@ModelAttribute("cjList") PagedListHolder<CommonJoin> cjList,
+			BindingResult result,
 			HttpServletRequest request, ModelMap model) {
 		if ("next".equals(page)) {
 			cjList.nextPage();
@@ -314,7 +317,7 @@ public class CommonController implements ServletContextAware{
 	public String getCommonJonListBySaleNo(@RequestParam("saleNo") int saleNo, ModelMap model) {
 		
 		PagedListHolder<CommonJoin> cjList = new PagedListHolder<CommonJoin>(this.farm.getCommonJoinListBySaleNo(saleNo));
-		cjList.setPageSize(1);
+		cjList.setPageSize(10);
 		model.put("cjList", cjList);
 		return commonJoinedListView;
 	}

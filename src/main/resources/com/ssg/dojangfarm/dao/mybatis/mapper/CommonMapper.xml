@@ -78,9 +78,9 @@
 			SELECT CommonJoinSeq.nextval as "cjNo" FROM DUAL
 		</selectKey>
 		INSERT INTO CommonJoin
-		(cjNo, userNo, saleNo, cjState, count, dNo, cardNo)
+		(cjNo, userNo, saleNo, count, dNo, cardNo)
 		VALUES
-		(#{cjNo}, #{user.userNo}, #{common.saleNo},#{cjState}, #{count},
+		(#{cjNo}, #{user.userNo}, #{common.saleNo}, #{count},
 		#{delivery.dNo}, #{cardNo})
 
 	</insert>
@@ -130,4 +130,12 @@
 	 FROM CommonJoin
 	 WHERE userNo = #{param1} AND saleNo = #{param2}
 	</select>
+	
+	
+	<select id="getLastCJNo" resultType="int">
+    	SELECT 
+    		MAX(cjNo)
+    	FROM CommonJoin
+  	</select>
+  	
 </mapper>

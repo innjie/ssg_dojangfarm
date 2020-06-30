@@ -24,9 +24,7 @@
 <td> <a href = "<c:url value = '/commonJoin/view.do'>
 <c:param name = 'cjNo' value = '${commonJoin.cjNo }'/>
 </c:url>"> ${commonJoin.cjNo }</a></td>
-<td><a href = "<c:url value = ''>
-<c:param name = 'userNo'  value = '${commonJoin.user.userNo }'/>
-</c:url>">${commonJoin.user.name }</a></td>
+<td>${commonJoin.user.name }</td>
 <td>${commonJoin.count }</td>
 </tr>
 </c:forEach>

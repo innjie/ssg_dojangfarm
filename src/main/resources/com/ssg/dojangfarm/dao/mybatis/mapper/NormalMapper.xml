@@ -117,4 +117,13 @@
     	WHERE 
     		saleNo = #{param1}
   	</update>
+  	
+  	<select id="getUserByNormal" parameterType="int" resultType="int">
+  		SELECT
+  			userNo
+  		FROM
+  			NORMAL
+  		WHERE
+  			saleNo = #{saleNo}
+  	</select>
 </mapper>

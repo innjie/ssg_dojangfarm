@@ -51,13 +51,42 @@ function searchAddress(userNo) {
 	
 }
 
+function addAddress() {
+
+	var reqUrl = "../rest/address";
+	var form = document.getElementById("form");
+	var address = {
+			'addr':form.addr.value, 
+			'detail':form.detail.value, 
+			'zip':form.zip.value
+	};
+		
+	$.ajax({			
+		type: "POST",
+		url: reqUrl,
+		contentType: "application/json",
+		processData: false,
+		data: JSON.stringify(address),
+		success: function(responseJson){			
+			//$("#detail").html("<ul></ul>");
+			//$("#detail > ul").append("<li>addr: " + responseJson.addr + "</li>");
+			//$("#detail > ul").append("<li>detail: " + responseJson.detail + "</li>");
+			//$("#detail > ul").append("<li>zip: " + responseJson.zip + "</li>");
+			alert("Success Add New Address");		
+	  	},
+		error: function(){
+			alert("제대로 입력하세요");
+		}
+	});
+}
+
 
 </script>
 </head>
 <body>
 	<c:set var="targetUrl"><c:url value="/auction/immePurchaseKaKao.do" /></c:set>
 	
-	<form:form id="form" modelAttribute="imPurCommand" action="${targetUrl}">	
+	<form:form modelAttribute="imPurCommand" action="${targetUrl}">	
 		제목  ${auction.title}<br>	
 		품목  ${auction.product.pName}<br>	
 		가격   ${auction.imPurPrice}<br>
@@ -77,12 +106,19 @@ function searchAddress(userNo) {
 		<input type="hidden" name="aNo" value="${auction.aNo}" />
     	<input type="image" src="../images/payment_icon_yellow_medium.png" />
 	</form:form>
-	<br>
+	<br><br>
+	<form id="form">
+		주소<input type="text" name="addr">
+		상세주소<input type="text" name="detail">
+		우편번호<input type="text" name="zip">
+		<input type="button" value="주소등록" onClick="addAddress()" />
+	</form>
+	<br><br>
+	<div id="result"></div>
+	<br><br>
 	<a href="<c:url value='/auction/viewAuction.do'>
 				<c:param name="aNo" value="${auction.aNo}" />
 			</c:url>">
 	이전</a>	
-	<br><br>
-	<div id="result"></div>
 </body>
 </html>

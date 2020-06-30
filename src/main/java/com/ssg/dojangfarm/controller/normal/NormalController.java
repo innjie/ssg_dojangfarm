@@ -422,7 +422,7 @@ public class NormalController implements ServletContextAware {
 		order.setSaleType("Normal");
 		
 		this.farm.insertOrder(order);
-		System.out.println(normal.getInfo());
+		
 		normal.setCount(normal.getCount() - paymentCommand.getQuantity());
 		this.farm.updateSale(normal);
 		

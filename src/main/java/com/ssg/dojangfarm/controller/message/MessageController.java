@@ -278,7 +278,7 @@ public class MessageController {
 		}
 		else {
 			Normal normal = this.farm.getNormalSale(Integer.parseInt(saleNo));
-			rUserNo = this.farm.getUserByNormal(Integer.parseInt(saleNo));	//add dao
+			rUserNo = this.farm.getUserByNormal(Integer.parseInt(saleNo));	
 			User rUser = new User();
 			rUser.setUserNo(rUserNo);
 			msg.setsUser(user);

@@ -16,6 +16,19 @@
  <td>신청번호</td>
  <td>${commonJoin.cjNo }</td>
  </tr>
+<tr>
+<td>참가자명</td>
+<td>${commonJoin.user.name }</td>
+</tr>
+
+<tr>
+<td>연락처</td>
+<td>${commonJoin.delivery.phone }</td>
+</tr>
+<tr>
+<td>주소</td>
+<td>${commonJoin.delivery.address.addr }</td>
+</tr>
 
 <tr>
 <td>신청품목</td>
@@ -42,8 +55,6 @@
 	<a href = "<c:url value = '/commonJoin/update.do'>
 	<c:param name = 'cjNo' value = '${commonJoin.cjNo }'/>
 	</c:url>"> 수정하기 </a><br>
-	<a href = "<c:url value = '/commonJoin/cancel.do'>
-	<c:param name = 'cjNo' value = ' ${commonJoin.cjNo}'/> </c:url>">취소하기</a><br>
 </c:if>
 <c:if test = "${(commonJoin.common.deadline < today) }">
 

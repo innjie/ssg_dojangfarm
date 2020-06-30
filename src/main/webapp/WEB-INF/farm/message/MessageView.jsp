@@ -69,11 +69,11 @@
 		답장</a>&nbsp;&nbsp;
 	</c:if>
 	
-	<a href="<c:url value='/message/deleteMsg.do'>
+<!--  	<a href="<c:url value='/message/deleteMsg.do'>
 				<c:param name='msgNo' value='${message.msgNo}' />
 				<c:param name='type' value='${param.type}' />
 			</c:url>">
-	삭제</a>
+	삭제</a>-->
 	
 </body>
 </html>

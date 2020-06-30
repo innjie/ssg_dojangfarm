@@ -111,7 +111,7 @@ public class BidController {
 
 		PagedListHolder<SBid> sBidList = new PagedListHolder<SBid>(this.farm.getMySBidList(user.getUserNo()));	//add dao
 
-		sBidList.setPageSize(4);
+		sBidList.setPageSize(10);
 		model.put("sBidList", sBidList);
 		return LISTSBID;
 	}

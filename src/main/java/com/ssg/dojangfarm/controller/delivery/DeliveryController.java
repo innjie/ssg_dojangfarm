@@ -42,9 +42,8 @@ public class DeliveryController {
 			this.farm.changeDeliveryFinish(dNo);
 		}
 
-		 
-		 //return "redirect:/delivery/list.do";
 		 return "redirect:/order/userView.do?saleNo="+saleNo;
+
 	}
 	@RequestMapping("/delivery/view.do")
 	public String getDelivery(@RequestParam("dNo") int dNo, ModelMap model,

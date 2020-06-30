@@ -24,7 +24,12 @@
 
 			<tr>
 			<td>판매번호</td>
-			<td>${order.saleNo }</td>
+			<td>
+				<a href="<c:url value='/normal/viewNormal.do'>
+							<c:param name="saleNo" value="${order.saleNo}"/>
+						</c:url>">
+				${order.saleNo }</a>
+			</td>
 			</tr>
 			
 			<tr>

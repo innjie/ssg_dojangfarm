@@ -163,15 +163,6 @@ public class CommonNoticeController {
 		}
 	}
 
-	// delete CN
-	@ModelAttribute("commonnotice")
-	@RequestMapping("/commonNotice/delete.do")
-	public String deleteCN(@ModelAttribute("cn") CommonNotice commonnotice, BindingResult result) {
-		// delete function
-		// after -> list
-		return "redirect:/commonNotice/list";
-	}
-
 	// commonNotice by userNo
 	@RequestMapping("/commonNotice/userList.do")
 	public String getCNListByUserNo(HttpServletRequest request, ModelMap model) {

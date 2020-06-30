@@ -19,10 +19,6 @@
 		SET title = #{title}, info = #{info}
 	</update>
 
-	<delete id="deleteCommonNotice" parameterType="CommonNotice">
-		DELETE FROM CommonNotice
-		WHERE CNNO = CommonNotice.CNNO
-	</delete>
 
 	<select id="viewCommonNotice" parameterType="int"
 		resultType="CommonNotice">

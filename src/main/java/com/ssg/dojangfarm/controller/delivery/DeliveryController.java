@@ -35,14 +35,15 @@ public class DeliveryController {
 			@RequestParam("status") String status,
 			@RequestParam("saleNo") int saleNo,
 			HttpServletRequest request) {
-		
+		System.out.println(status);
 		if (status.equals("배송전")) {
 			this.farm.changeDeliveryStatus(dNo);
 		} else if (status.equals("배송중")) {
 			this.farm.changeDeliveryFinish(dNo);
 		}
-		 this.farm.changeDeliveryStatus(dNo);
-		 return "redirect:/order/userView.do?saleNo="+saleNo;
+
+		 
+		 return "redirect:/delivery/list.do";
 		
 	}
 	@RequestMapping("/delivery/view.do")

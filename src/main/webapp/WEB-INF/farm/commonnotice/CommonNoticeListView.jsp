@@ -12,10 +12,7 @@
 </head>
 <body>
 <%@ include file="../IncludeTop.jsp" %>
-<form action = "<c:url value = '/commonNotice/searchCN.do'/>">
-<input type = "text" name = "word"> &nbsp;
-<input type = "submit" value = "검색">
-</form>
+
 <table border="1">
 <tr>
 	<td>번호</td>

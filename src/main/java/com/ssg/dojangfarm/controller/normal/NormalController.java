@@ -210,7 +210,7 @@ public class NormalController implements ServletContextAware {
 	
 	//update normal
 	@RequestMapping(value = "/normal/updateNormal.do", method = RequestMethod.POST)
-	public ModelAndView updateNormal(@ModelAttribute("normal") Normal normal, 
+	public ModelAndView updateNormal(@Valid@ModelAttribute("normal") Normal normal, 
 			BindingResult result, HttpServletRequest request, ModelMap model) {
 		//get user session
 		HttpSession httpSession = request.getSession();

@@ -214,12 +214,21 @@ public class BidController {
 			return new ModelAndView(BIDFORM, "auction", auction);
 		}
 		
+		if(card.getUser().getUserNo() != user.getUserNo()) {
+			bindingResult.rejectValue("cardNo", "notMyCard");
+			return new ModelAndView(BIDFORM, "auction", auction);
+		}
+		
 		Address address = this.farm.getAddress(bidCommand.getAddrNo());
 		
 		if(address == null) {
 			bindingResult.rejectValue("addrNo", "noaddressNo");
 			return new ModelAndView(BIDFORM, "auction", auction);
+		}
 		
+		if(address.getUser().getUserNo() != user.getUserNo()) {
+			bindingResult.rejectValue("addrNo", "notMyAddress");
+			return new ModelAndView(BIDFORM, "auction", auction);
 		}
 		
 		Date now = new Date();

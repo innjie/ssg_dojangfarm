@@ -19,7 +19,7 @@
 	</tr>
 
 	<tr >
-	<td rowspan="4"><img src = "../${common.image }"/></td>
+	<td rowspan="5"><img src = "../${common.image }"/></td>
 	</tr>
 	
 	<tr>
@@ -36,7 +36,10 @@
 	<td>마감일시</td>
 	<td>${common.deadline }</td>
 	</tr>
-
+	<tr>
+	<td>상태</td>
+	<td>${common.saleState }</td>
+	</tr>
 	<tr>
 	<td colspan="4">${common.info }</td>
 	</tr>

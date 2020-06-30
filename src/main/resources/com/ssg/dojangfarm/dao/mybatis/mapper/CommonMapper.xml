@@ -98,9 +98,13 @@
 	<select id="getCommonJoin" resultType="CommonJoin">
 		SELECT cjNo, commonjoin.userNo as "user.userNo",
 		Commonjoin.saleNo as "common.saleNo", cjState, count, common.title as "common.title",
-		cardNo, dNo as "delivery.dNo"
-		FROM CommonJoin, Common
+		cardNo, commonJoin.dNo as "delivery.dNo", delivery.phone as "delivery.phone",
+		Usertable.name as "user.name", Address.addr as "delivery.address.addr"
+		FROM CommonJoin, Common, Delivery, Address, UserTable
 		WHERE cjNo = #{cjNo} and commonjoin.saleNo = common.saleNo
+		and CommonJoin.dNo = Delivery.dNo
+		and delivery.addrNo = Address.addrNo
+		and commonJoin.userNo = userTable.userNo
 	</select>
 	<select id="getCJList" resultType="CommonJoin">
 		SELECT(cjNo, saleNo, userNo)
@@ -117,11 +121,15 @@
 
 	<select id = "getCommonJoinListBySaleNo" resultType = "CommonJoin">
 		SELECT cjNo, common.title as "common.title", count, cjState, 
-		CommonJoin.userNo as "user.userNo", UserTable.name as "user.name"
-		FROM CommonJoin, Common, UserTable
+		CommonJoin.userNo as "user.userNo", UserTable.name as "user.name", 
+		commonjoin.dNo as "delivery.dNo", delivery.phone as "delivery.phone",
+		address.addr as "delivery.address.addr"
+		FROM CommonJoin, Common, UserTable, Delivery, address
 		WHERE CommonJoin.saleNo = #{saleNo}
 		AND common.saleNo = CommonJoin.saleNo
 		AND CommonJoin.userNo = UserTable.userNo
+		AND CommonJoin.dNo = Delivery.dNo
+		and Delivery.addrNo = address.addrNo
 		ORDER BY cjNo
 	</select>
 	

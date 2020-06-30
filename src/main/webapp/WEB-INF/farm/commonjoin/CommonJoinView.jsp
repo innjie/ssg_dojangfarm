@@ -16,6 +16,19 @@
  <td>신청번호</td>
  <td>${commonJoin.cjNo }</td>
  </tr>
+<tr>
+<td>참가자명</td>
+<td>${commonJoin.user.name }</td>
+</tr>
+
+<tr>
+<td>연락처</td>
+<td>${commonJoin.delivery.phone }</td>
+</tr>
+<tr>
+<td>주소</td>
+<td>${commonJoin.delivery.address.addr }</td>
+</tr>
 
 <tr>
 <td>신청품목</td>

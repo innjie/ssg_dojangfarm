@@ -16,7 +16,9 @@
 <tr>
 <td>번호</td>
 <td>신청자</td>
+<td>연락처</td>
 <td>개수</td>
+<td>주소</td>
 </tr>
 
 <c:forEach var = "commonJoin" items = "${cjList.pageList }">
@@ -25,7 +27,10 @@
 <c:param name = 'cjNo' value = '${commonJoin.cjNo }'/>
 </c:url>"> ${commonJoin.cjNo }</a></td>
 <td>${commonJoin.user.name }</td>
+<td> ${commonJoin.delivery.phone }</td>
 <td>${commonJoin.count }</td>
+<td>${commonJoin.delivery.address.addr }</td>
+
 </tr>
 </c:forEach>
 <c:if test="${!cjList.firstPage}">

@@ -39,6 +39,7 @@ public class DeliveryController {
 			this.farm.changeDeliveryFinish(dNo);
 		}
 		 
+		
 		 return "redirect:/delivery/list.do";
 		
 	}

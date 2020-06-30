@@ -30,7 +30,12 @@
 	</td>
 	<td>${order.quantity }</td>
 	<td>${order.saleType}</td>
-	<td>${order.saleNo} </td>
+	<td>
+		<a href="<c:url value='/normal/viewNormal.do'>
+					<c:param name="saleNo" value="${order.saleNo}"/>
+				</c:url>">
+		${order.saleNo}</a>
+	</td>
 	<td>${order.user.name}</td>
 	<td>
 	<c:if test = "${(order.saleType == 'Normal') }">

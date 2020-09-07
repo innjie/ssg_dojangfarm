@@ -26,9 +26,11 @@ public class RestfulCommonJoinController {
 		this.commonService = commonService;
 	}
 	
-	@RequestMapping(value= "/commonjoinBy/{cjNo}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value= "/commonjoinBy/{cjNo}", 
+			method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public CommonJoin getCommonJoin(@PathVariable("cjNo")int cjNo, HttpServletResponse response) throws IOException {
+	public CommonJoin getCommonJoin(@PathVariable("cjNo")int cjNo, 
+			HttpServletResponse response) throws IOException {
 		System.out.println("/rest/commonjoinBy/{cjNo} request accepted = {cjNo} : " + cjNo);
 		CommonJoin commonJoin = commonService.getCommonJoin(cjNo);
 		

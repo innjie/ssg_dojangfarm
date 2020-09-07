@@ -205,7 +205,8 @@ public class CommonController implements ServletContextAware{
 			if (!StringUtils.hasLength(word)) {
 				return new ModelAndView(errorPage, "message", "enter keword");
 			}
-			commonList = new PagedListHolder<Common> (this.farm.searchCommon(word.toLowerCase()));
+			commonList = 
+					new PagedListHolder<Common> (this.farm.searchCommon(word.toLowerCase()));
 		}
 		commonList.setPageSize(10);
 		// search -> list
@@ -473,8 +474,6 @@ public class CommonController implements ServletContextAware{
 		commonJoin.setDelivery(delivery);
 		commonJoin.setCardNo(cjCommand.getCardNo());
 		commonJoin.setCommon(common);
-		
-		
 		
 		this.farm.insertCommonjoin(commonJoin);
 		int memberSize = this.farm.getCommonJoinListBySaleNo(cjCommand.getCommon().getSaleNo()).size();

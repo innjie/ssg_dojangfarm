@@ -117,7 +117,8 @@ public class CommonNoticeController {
 	@ModelAttribute("commonnotice")
 	@RequestMapping("/commonNotice/insertCN.do")
 	public ModelAndView insertCN(
-			@Valid @ModelAttribute("commonNoticeCommand") CommonNoticeCommand commonNoticeCommand, 
+			@Valid @ModelAttribute("commonNoticeCommand") 
+			CommonNoticeCommand commonNoticeCommand, 
 			BindingResult result,
 			HttpServletRequest request, ModelMap model) {
 
@@ -133,8 +134,6 @@ public class CommonNoticeController {
 		if (result.hasErrors()) {
 			return new ModelAndView(insertCNForm);
 		}
-		
-		
 		
 		// no errors, insert cn
 		CommonNotice cn = new CommonNotice();

@@ -148,7 +148,8 @@ public class NormalController implements ServletContextAware {
 				model.put("message", "enter keword");
 				return errorPage;
 			}
-			normalList = new PagedListHolder<Normal>(this.farm.searchNormal(word.toLowerCase()));
+			normalList = 
+					new PagedListHolder<Normal>(this.farm.searchNormal(word.toLowerCase()));
 		}
 		
 		normalList.setPageSize(10);
@@ -270,9 +271,11 @@ public class NormalController implements ServletContextAware {
 	}
 	//get NormalList by categoryNo
 	@RequestMapping("/normal/cateList.do")
-	public String getNormalListByCategoryNo(@RequestParam(value="cateNo", required = false) int cateNo, Model model) {
+	public String getNormalListByCategoryNo(
+			@RequestParam(value="cateNo", required = false) int cateNo, Model model) {
 		//get category list
-		PagedListHolder<Normal> normalList =new PagedListHolder<Normal> (farm.getNormalListByCateNo(cateNo));
+		PagedListHolder<Normal> normalList =
+				new PagedListHolder<Normal> (farm.getNormalListByCateNo(cateNo));
 		normalList.setPageSize(10);
 		
 		List <Category> categoryList = farm.getCategoryList();
@@ -342,7 +345,8 @@ public class NormalController implements ServletContextAware {
 	//normal pay
 	@Transactional
 	@RequestMapping(value = "/normal/buyNormal.do", method = RequestMethod.POST)
-	public ModelAndView buyNormal(@Valid@ModelAttribute("payment") PaymentCommand paymentCommand,
+	public ModelAndView buyNormal(
+			@Valid@ModelAttribute("payment") PaymentCommand paymentCommand,
 			BindingResult result, HttpServletRequest request, ModelMap model) throws Exception{
 		//userSession
 		HttpSession httpSession = request.getSession();
@@ -460,8 +464,6 @@ public class NormalController implements ServletContextAware {
 	//upload file
 	private void uploadFile(MultipartFile image, Normal normal) {
 		this.farm.insertSale(normal);
-		System.out.println(image.getOriginalFilename());
-		
 		int saleNo = this.farm.getLastSaleNo();
 		String path = context.getRealPath("/images/normal");
 		File file = new File(path, saleNo + ".jpg");
@@ -472,8 +474,6 @@ public class NormalController implements ServletContextAware {
 			e.printStackTrace();
 		}
 		
-		System.out.println("path: " + path);
-		System.out.println("path: " + file.getPath());
 		this.farm.addNormalImage(saleNo, "images/normal/" + file.getName());
 	}
 }

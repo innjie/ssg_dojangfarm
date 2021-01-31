@@ -52,9 +52,8 @@ function searchCard(userNo) {
 }
 
 function searchAddress(userNo) {
-
 	var reqUrl = "../rest/addressListBy/" + userNo;
-	
+
 	$.ajax({			
 		type: "GET",
 		url: reqUrl,

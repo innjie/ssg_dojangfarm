@@ -136,8 +136,7 @@ public class UserController {
 	@RequestMapping(value="/user/modifyUser.do", method=RequestMethod.POST)
 	public String update(
 			@Valid @ModelAttribute("userCommand") UserCommand userCommand, 
-			BindingResult result,
-			HttpServletRequest request) throws Exception {
+			BindingResult result, HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");

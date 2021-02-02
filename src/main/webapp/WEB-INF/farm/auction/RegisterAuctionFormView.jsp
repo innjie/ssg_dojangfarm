@@ -40,8 +40,7 @@
 		<form:label path="deadline">기간 </form:label>
 		<form:input path="deadline" />
 		<form:errors path="deadline" />
-		<br>*기간은 YYYY-MM-DD HH:mm포맷으로 입력해주세요
-		<br><br>   
+		<br>
 		
 		<form:label path="imPurAva">즉시구매 가능 여부 </form:label>
 		<form:checkbox path="imPurAva" />
@@ -53,7 +52,7 @@
 		<form:errors path="imPurPrice" />
 		<br>
 				
-		사진 <input type="file" name="image" value="${auctionCommand.image}" />
+		사진 <input type="file" name="image" />
 		<br><br>	
 		
 		<input type="submit" value="추가" />&nbsp;&nbsp;

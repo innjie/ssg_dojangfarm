@@ -17,12 +17,12 @@
 		품목  ${bid.auction.product.pName}<br>	
 		최소 가격   ${bid.auction.minPrice}<br>
 		현재 입찰 가격  ${bid.auction.bidPrice}<br>
-		기간  ${bid.auction.sDeadline}<br>
+		기간  ${bid.auction.deadline}<br>
 		가격  ${bid.bidPrice}<br>
-		주소  ${bid.address.addrNo}<br>
-		카드  ${bid.card.cardNo}<br>
+		입찰시간  ${bid.bidTime}<br>
 		
-		<input type="submit" value="확인" />&nbsp;&nbsp;
+		<input type="submit" value="확인" />
+		
 	</form>
 </body>
 </html>

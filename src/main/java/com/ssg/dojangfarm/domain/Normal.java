@@ -2,31 +2,21 @@ package com.ssg.dojangfarm.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 @SuppressWarnings("serial")
 public class Normal implements Serializable{
 	private int saleNo;
 	private Product product;
-	@Min(1000)
 	private int price;
-	@NotBlank
 	private String title;
 	private User user;
 	private String state;
 	private String saleType;
 	private String info;
-	@NotNull
-	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regidDate;
 	private String saleState;
-	@Min(1)
 	private int count;
 	private String image;
 	

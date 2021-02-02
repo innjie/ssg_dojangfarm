@@ -39,7 +39,6 @@ public interface FarmFacade {
 	public void bidAuction(Bid bid);
 	public void successBid(SBid sBid);
 	public void immePurchase(ImPur imPur);
-	public void immePurchaseKakao(ImPur imPur);
 	public Bid getBid(int bidNo);
 	public List<Auction> getMyAuctionList(int userNo);
 	public SBid getSBidByAuction(int aNo);
@@ -54,8 +53,7 @@ public interface FarmFacade {
 	public int getLastANo();
 	public void addImage(int aNo, String image);
 	public void addImage(Auction auction, int aNo, String image);
-	public ImPur getMyImPurKakao(int imPurNo);
-
+	
 	
 	//User
 	public void createUser(User user);
@@ -66,7 +64,7 @@ public interface FarmFacade {
 	public User existingPhone(String phone);
 	public User checkIdPw(String id, String password);
 	public boolean confirmPassword(String password, String cPassword);
-	public void addPoint(User user);
+
 	
 	//Address
 	public Address getAddress(int addrNo);
@@ -77,17 +75,14 @@ public interface FarmFacade {
 	
 	//Delivery
 	public Delivery getDelivery(int dNo);
-	public void changeDeliveryStatus(int dNo);
+	public void changeDeliveryStatus(int dNo, String status);
 	public void addDelivery(Delivery delivery);
-	public List<Delivery> getDeliveryListByUserNo(int userNo);
-	public void changeDeliveryFinish(int dNo);
-	public int getLastDNo();
 	
 	//Order
 	public Order getOrder(int orderNo);
 	public List<Order> getOrderList(int userNo);
 	public int cancelOrder(int orderNo);
-	public int insertOrder(Order order);
+	public int insertOrder(int userNo, Order order);
 	public List<Order> getOrderUserList(int orderNo);
 	
 	//Card
@@ -113,7 +108,7 @@ public interface FarmFacade {
 	public List<CommonJoin> getCommonJoinListByUserNo(int userNo);
 	public List<CommonJoin> getCommonJoinListBySaleNo(int saleNo);
 	public CommonJoin ExistCommonJoin(int userNo, int saleNo);
-	public int getLastCJNo();
+	
 	//CommonNotice
 	public int insertCommonNotice(CommonNotice cn);
 	public int updateCommonNotice(CommonNotice cn);
@@ -145,8 +140,7 @@ public interface FarmFacade {
 	//Payment
 	public Payment getPayment(int payNo);
 	public void insertPayment(Payment payment);
-	public void normalPayment(Payment payment);
-	public int getLastPayNo();
+	
 	//Refund
 	public int refundSale(Refund refund);
 	public Refund getRefund(int refundNo);
@@ -154,14 +148,6 @@ public interface FarmFacade {
 	public Card checkCardPayNo(String cardPayNo);
 	public Product getProduct(int pNo);
 	public List<Normal> getNormalListByCateNo(int cateNo);
-	public int getLastRefundNo();
-	public int getLastOrderNo();
-	
-	
-	
-	
-	
-	
 	
 
 	

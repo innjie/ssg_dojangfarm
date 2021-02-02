@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +19,6 @@ public class NormalCommand {
 	private String title;
 	private String state;
 	private String info;
-	@NotNull
 	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regidDate;

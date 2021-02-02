@@ -11,6 +11,5 @@ public interface RefundDAO {
 	int refundSale(Refund refund);
 	Refund getRefund(int refundNo);
 	List<Refund> getRefundList(int userNo);
-	int getLastRefundNo();
 
 }

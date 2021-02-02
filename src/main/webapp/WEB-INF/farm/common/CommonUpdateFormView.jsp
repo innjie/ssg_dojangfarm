@@ -16,7 +16,7 @@
 
 <body>
 <%@ include file="../IncludeTop.jsp" %>
-	<form:form commandName="commonCommand" action="${targetUrI }" method = "POST">
+	<form:form commandName="common" action="${targetUrI }" method = "POST">
 		<form:label path="title">제목</form:label>
 		<form:input path="title" value="${common.title }" readonly = "true" />
 		<form:errors path="title" />
@@ -42,8 +42,7 @@
 		<form:errors path = "deadline"/>
 		<br>
 		
-		<form:hidden path = "saleNo" value = "${common.saleNo }"/>
-		<a href="<c:url value = '/common/userList.do' /> ">[이전으로]</a>
+		<a href="CommonListView">[이전으로]</a>
 		<input type="submit" value="추가" />
 
 

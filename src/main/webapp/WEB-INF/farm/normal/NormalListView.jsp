@@ -34,7 +34,6 @@
 		</tr>
 		<c:forEach var="normal" items="${normalList.pageList}"
 			varStatus="status">
-			<c:if test = "${(normal.saleState != 'CLOSE') }" >
 			<tr>
 				<td><a
 					href="<c:url value='/normal/viewNormal.do'> 
@@ -43,7 +42,6 @@
 				<td>${normal.title}</td>
 				<td>${normal.user.name}</td>
 			</tr>
-			</c:if>
 		</c:forEach>
 
 	</table>
@@ -83,6 +81,6 @@
 	<br>
 	<a href="<c:url value='/normal/insertNormal.do'/>"> 등록</a>
 	<br>
-	
+	<a href="<c:url value = '/index.do'/>">[메인으로]</a>
 </body>
 </html>

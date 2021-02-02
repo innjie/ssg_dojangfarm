@@ -30,7 +30,7 @@
   	
   	<select id="getCard" parameterType="int" resultType="Card">
     	SELECT 
-    		cardNo, cardPayNo, bank, period, cvc, type, userNo AS "user.userNo"
+    		cardNo, cardPayNo, bank, period, cvc, type
     	FROM Card
     	WHERE 
     		cardNo = #{cardNo}

@@ -15,7 +15,7 @@
 <c:set var="targetUrI">
 		<c:url value="/commonNotice/insertCN.do" />
 	</c:set>
-	<form:form commandName="commonNoticeCommand"
+	<form:form commandName="CNCommand"
 		action="${targetUrI }">
 
 		<form:label path="title">제목</form:label>

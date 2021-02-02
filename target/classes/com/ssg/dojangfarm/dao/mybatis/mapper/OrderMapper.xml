@@ -6,20 +6,19 @@
 	<cache />
 	<select id="getOrder" resultType="Order">
 		SELECT
-		orderNo, dNo as "delivery.dNo", saleType,
-		quantity, saleNo, userNo as "user.userNo", saleType, payNo as "payment.payNo"
+		orderNo, dNo,
+		quantity, saleNo, userNo as "user.userNo", saleType, payNo as "payment.paymentNo"
 		FROM OrderTable
 		WHERE orderNo = #{orderNo}
 	</select>
 	<select id="getOrderList" resultType="Order">
 		SELECT
-		orderNo, quantity, saleType, 
+		orderNo, quantity,
 		saleNo, usertable.Name as "user.Name", saleType, dNo as "delivery.dNo",
 		ordertable.userNo as "user.userNo", ordertable.state
 		FROM OrderTable, usertable
 		WHERE OrderTable.userNo = Usertable.userNo
-    and usertable.userno = #{userNo} and 
-    	ordertable.state != 'Refund'
+    and usertable.userno = #{userNo}
 	</select>
 
 	<delete id="cancelOrder" parameterType="int">
@@ -28,30 +27,25 @@
 		WHERE orderNo = #{orderNo}
 	</delete>
 
-	<insert id="insertOrder" parameterType="Order">
+	<insert id="insertOrder" parameterType="int">
 		<selectKey keyProperty="orderNo" resultType="int"
 			order="BEFORE">
-			SELECT OrderSeq.nextval AS "orderNo" FROM DUAL
+			SELECT OrderTableSeq.nextval AS "orderNo" FROM DUAL
 		</selectKey>
 		INSERT INTO OrderTable
-		(orderNo, dNo, payNo, quantity, saleNo, userNo, saleType)
-		VALUES (#{orderNo}, #{delivery.dNo}, #{payment.payNo}, #{quantity}, #{saleNo},
-		#{user.userNo}, #{saleType})
+		(orderNo, dNo, payNo, quantity, saleNo, userNo)
+		VALUES (#{orderNo}, #{dNo}, #{payNo}, #{quantity}, #{saleNo},
+		#{userNo})
 	</insert>
 
 
 	<select id="getOrderUserList" resultType="Order">
 		SELECT orderNo,
 		quantity, saleNo, ordertable.userNo, ordertable.saletype, usertable.name as "user.name",
-		ordertable.userNo as "user.userNo", delivery.dNo as "delivery.dNo",
-    delivery.status as "delivery.status"
-		FROM OrderTable, UserTable, Delivery
-		WHERE saleNo = #{seleNo} AND OrderTable.userNo = UserTable.userNo
-    and ordertable.dNo = delivery.dNo
-    and orderNo not in (select orderNo from refund)
+		ordertable.userNo as "user.userNo", dNo as "delivery.dNo"
+		FROM OrderTable, UserTable
+		WHERE saleNo = #{saleNo} AND OrderTable.userNo = UserTable.userNo
 	</select>
 	
-	<select id = "getLastOrderNo" resultType = "int">
-	SELECT MAX(orderNo) FROM orderTable
-	</select>
+	
 </mapper>

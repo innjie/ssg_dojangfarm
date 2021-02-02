@@ -13,7 +13,7 @@
 <body>
 <%@ include file="../IncludeTop.jsp" %>
 <c:set var = "targetUrI"> <c:url value = "/commonNotice/update.do"/> </c:set>
-<form:form modelAttribute="commonNoticeCommand"
+<form:form modelAttribute="commonNotice"
 		method = "POST">
 
 		<form:label path="title">제목</form:label>

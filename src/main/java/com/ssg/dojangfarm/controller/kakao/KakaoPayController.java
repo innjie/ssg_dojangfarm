@@ -1,8 +1,5 @@
 package com.ssg.dojangfarm.controller.kakao;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ssg.dojangfarm.domain.Auction;
-import com.ssg.dojangfarm.domain.User;
-import com.ssg.dojangfarm.service.FarmFacade;
 import com.ssg.dojangfarm.service.KakaoPay;
  
  
@@ -23,28 +17,40 @@ public class KakaoPayController {
 	@Autowired
     private KakaoPay kakaopay;
     
-	@Autowired
-	private FarmFacade farm;
-	
-	public void setFarm(FarmFacade  farm) {
-		this.farm = farm;
-	}
-	
-	@RequestMapping("/kakaoPay.do")
-    public String imPurkakaoPay(HttpServletRequest request) {
-    	System.out.println("imPurkakaoPay post............................................");
+    
+	@RequestMapping(value="/kakaoPay.do", method=RequestMethod.GET)
+    public void kakaoPayGet() {
         
-    	HttpSession httpSession = request.getSession();
-		User user = (User) httpSession.getAttribute("user");
-    	
-		int aNo = Integer.parseInt(request.getParameter("aNo"));
-		Auction auction = this.farm.getAuction(aNo);
-    	String url = request.getRequestURL().toString();
-    	String[] urls = url.split("/k");
-    	
-        return "redirect:" + kakaopay.kakaoPayReady(auction, user, urls[0]);
+    }
+    
+	@RequestMapping(value="/kakaoPay.do", method=RequestMethod.POST)
+    public String kakaoPay() {
+    	System.out.println("kakaoPay post............................................");
+        
+        return "redirect:" + kakaopay.kakaoPayReady();
  
     }
     
+	@RequestMapping("/kakaoPaySuccess.do")
+    public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
+        System.out.println("kakaoPaySuccess get............................................");
+        System.out.println("kakaoPaySuccess pg_token : " + pg_token);
+        
+        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
+    }
+	
+	@RequestMapping("/kakaoPayCancel.do")
+    public void kakaoPayCancel(@RequestParam("pg_token") String pg_token, Model model) {
+        System.out.println("kakaoPayCancel get............................................");
+        System.out.println("kakaoPayCancel pg_token : " + pg_token);
+        
+    }
+	
+	@RequestMapping("/kakaoPayFail.do")
+    public void kakaoPayFail(@RequestParam("pg_token") String pg_token, Model model) {
+        System.out.println("kakaoPayFail get............................................");
+        System.out.println("kakaoPayFail pg_token : " + pg_token);
+        
+    }
     
 }

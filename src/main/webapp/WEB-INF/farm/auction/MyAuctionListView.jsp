@@ -37,7 +37,7 @@
 				<td>${auc.minPrice}</td>
 				<td>${auc.bidPrice}</td>
 				<td>${auc.imPurPrice}</td>
-				<td>${auc.sDeadline}</td>
+				<td>${auc.deadline}</td>
 				<td>${auc.finish}</td>							
 			</tr>
 		</c:forEach>

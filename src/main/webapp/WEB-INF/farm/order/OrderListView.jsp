@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -21,8 +21,8 @@
 	<td>주문자</td>
 	<td>배송번호</td>
 </tr>
-<c:forEach var="order" items="${orderList.pageList}"  varStatus = "status">
-
+<c:forEach var="order" items="${orderList.pageList}" >
+<c:if test = "${(order.state != 'Refund') }">
 	<tr>
 	<td><a href="<c:url value='/order/view.do'> 
 						<c:param name='orderNo' value='${order.orderNo}'/>
@@ -30,42 +30,27 @@
 	</td>
 	<td>${order.quantity }</td>
 	<td>${order.saleType}</td>
-	<td>
-		<a href="<c:url value='/normal/viewNormal.do'>
-					<c:param name="saleNo" value="${order.saleNo}"/>
-				</c:url>">
-		${order.saleNo}</a>
-	</td>
+	<td>${order.saleNo} </td>
 	<td>${order.user.name}</td>
-	<td>
-	<c:if test = "${(order.saleType == 'Normal') }">
-	 <a href = "<c:url value ='/normal/viewDelivery.do'>
-	 <c:param name = 'orderNo' value = '${order.orderNo }'/>
-	 </c:url>"> ${order.delivery.dNo }</a>
-	</c:if>
-	
-	<c:if test = "${(order.saleType == 'Common') }">
-	<a href = "<c:url value ='/common/viewDelivery.do'>
-	 <c:param name = 'orderNo' value = '${order.orderNo }'/>
-	 </c:url>"> ${order.delivery.dNo }</a>
-	</c:if>
-	</td>
+	<td> <a href = "<c:url value =''><c:param name = 'dNo'
+	value = '${order.delivery.dNo}'/></c:url>"> ${order.delivery.dNo }</a></td> 
 	</tr>
+	</c:if>
 </c:forEach>
 </table>
 <c:if test="${!orderList.firstPage}">
-			<a href='<c:url value="/order/list2.do">
+    		<a href='<c:url value="/order/list2.do">
         				<c:param name="page" value="previous"/>
         			</c:url>'>
-				Prev</a>
-		</c:if>
-		<c:if test="${!orderList.lastPage}">
-			<a href='<c:url value="/order/list2.do">
+        	Prev</a>
+    	</c:if> 
+    	<c:if test="${!orderList.lastPage}">
+    		<a href='<c:url value="/order/list2.do">
         				<c:param name="page" value="next"/>
         			</c:url>'>
-				Next</a>
-		</c:if>
+        	Next</a>
+    	</c:if>
 
-
+<a href="/index" >[메인으로]</a>
 </body>
 </html>

@@ -52,7 +52,7 @@ public class AddressController {
 		if (address != null) {	
 			return new AddressCommand(address.getAddrNo(), address.getAddr(), String.valueOf(address.getZip()), address.getDetail(), address.getaName());
 		}
-		else {	// create new address
+		else {	// create new user
 			return new AddressCommand();
 		}
 	}
@@ -158,7 +158,6 @@ public class AddressController {
 		
 		//addressCommand to address
 		Address address = new Address();
-		address.setAddrNo(addressCommand.getAddrNo());
 		address.setAddr(addressCommand.getAddr());
 		address.setZip(Integer.parseInt(addressCommand.getZip()));
 		address.setaName(addressCommand.getaName());

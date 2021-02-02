@@ -1,7 +1,6 @@
 package com.ssg.dojangfarm.restclient;
 
 import java.util.Iterator;
-import java.util.Scanner;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -17,22 +16,11 @@ public class AuctionServiceClient_rest {
 	private static String port = "8081";
 	private static String auctionSvcUrl = "http://" + host + ":" + port + "/dojangfarm/rest";				
 
-	public static void main(String[] args) {	
-		Scanner scan = new Scanner(System.in);
-
-		System.out.print("유저번호를 입력하세요: "); 
-		int userNo = scan.nextInt();
-		System.out.print("경매번호를 입력하세요: ");
-		int aNo = scan.nextInt();
-		System.out.print("품목을 입력하세요: "); 
-		String pName = scan.next();
-		System.out.print("제목을 입력하세요: ");
-		String title = scan.next();
-		
-		getAuctionListByUser(userNo);
-		getAuction(aNo);
-		findAuctionByProduct(pName);
-		findAuctionByTitle(title);
+	public static void main(String[] args) {		
+		getAuctionListByUser(99999);
+		getAuction(9999);
+		findAuctionByProduct("수박");
+		findAuctionByTitle("수박");
 	}
 
 	private static void getAuction(int aNo) {

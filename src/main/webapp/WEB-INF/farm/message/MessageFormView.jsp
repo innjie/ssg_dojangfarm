@@ -37,11 +37,7 @@
 		<c:if test="${cMsg == null}">
 			<textarea name="content"></textarea>
 		</c:if>
-		<br>
-		<c:if test="${param.message != null}">
-			${param.message}
-		</c:if>
-		<br>
+		<br><br>
 
 		<input type="hidden" name="cMsgNo" value="${cMsg.msgNo}" />
 		<input type="hidden" name="saleNo" value="${normal.saleNo}" />

@@ -41,7 +41,7 @@
 	
 	
 </table>
-
+<a href=" <c:url value = '/refund/list.do'/> " >[이전 페이지로]</a>
 
 </body>
 </html>

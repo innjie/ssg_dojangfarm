@@ -1,4 +1,4 @@
-﻿
+
 /* Drop Tables */
 
 DROP TABLE CommonJoin CASCADE CONSTRAINTS;

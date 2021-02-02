@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -26,13 +25,8 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ssg.dojangfarm.domain.Address;
-import com.ssg.dojangfarm.domain.Card;
 import com.ssg.dojangfarm.domain.Category;
-import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.Normal;
-import com.ssg.dojangfarm.domain.Order;
-import com.ssg.dojangfarm.domain.Payment;
 import com.ssg.dojangfarm.domain.Product;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
@@ -48,8 +42,6 @@ public class NormalController implements ServletContextAware {
 	private static final String normalUserListView = "normal/NormalUserListView";
 	private static final String successPage = "/normal/Success";
 	private static final String updateNormalForm = "normal/NormalUpdateFormView";
-	private static final String buyNormalForm = "normal/buyNormalFormView";
-	private static final String deliveryView = "normal/DeliveryView";
 	
 	private ServletContext context;	
 	
@@ -67,10 +59,6 @@ public class NormalController implements ServletContextAware {
 	@ModelAttribute("normalCommand")
 	public NormalCommand formBacking(HttpServletRequest request) {
 		return new NormalCommand();
-	}
-	@ModelAttribute("payment")
-	public PaymentCommand formBacking2(HttpServletRequest request) {
-		return new PaymentCommand();
 	}
 	
 	//insert form
@@ -132,7 +120,11 @@ public class NormalController implements ServletContextAware {
 			System.out.println("image not found");
 			this.farm.insertSale(normal);
 		}
-
+//
+//		if(res == 0) {
+//			return new ModelAndView(errorPage, "message", "insert Error");
+//		}
+		//insert -> list (or main)
 		return new ModelAndView( "redirect:/normal/list.do");
 	}
 	
@@ -148,11 +140,8 @@ public class NormalController implements ServletContextAware {
 				model.put("message", "enter keword");
 				return errorPage;
 			}
-			normalList = 
-					new PagedListHolder<Normal>(this.farm.searchNormal(word.toLowerCase()));
+			normalList = new PagedListHolder<Normal>(this.farm.searchNormal(word.toLowerCase()));
 		}
-		
-		normalList.setPageSize(10);
 		
 		//search -> list( or main)
 		model.put("normalList", normalList);
@@ -211,7 +200,7 @@ public class NormalController implements ServletContextAware {
 	
 	//update normal
 	@RequestMapping(value = "/normal/updateNormal.do", method = RequestMethod.POST)
-	public ModelAndView updateNormal(@Valid@ModelAttribute("normal") Normal normal, 
+	public ModelAndView updateNormal(@ModelAttribute("normal") Normal normal, 
 			BindingResult result, HttpServletRequest request, ModelMap model) {
 		//get user session
 		HttpSession httpSession = request.getSession();
@@ -226,7 +215,7 @@ public class NormalController implements ServletContextAware {
 		}
 		
 		//set attributes
-		normal.setSaleState("OPEN");
+		
 		int res = farm.updateSale(normal);
 		
 		if(res == 0)  {//failed
@@ -271,11 +260,9 @@ public class NormalController implements ServletContextAware {
 	}
 	//get NormalList by categoryNo
 	@RequestMapping("/normal/cateList.do")
-	public String getNormalListByCategoryNo(
-			@RequestParam(value="cateNo", required = false) int cateNo, Model model) {
+	public String getNormalListByCategoryNo(@RequestParam(value="cateNo", required = false) int cateNo, Model model) {
 		//get category list
-		PagedListHolder<Normal> normalList =
-				new PagedListHolder<Normal> (farm.getNormalListByCateNo(cateNo));
+		PagedListHolder<Normal> normalList =new PagedListHolder<Normal> (farm.getNormalListByCateNo(cateNo));
 		normalList.setPageSize(10);
 		
 		List <Category> categoryList = farm.getCategoryList();
@@ -300,25 +287,20 @@ public class NormalController implements ServletContextAware {
 	}
 	//get userNormal List
 	@RequestMapping("/normal/userList.do")
-	public String getNormalListByUserNo(HttpServletRequest request, ModelMap model) {
+	public String getNormalListByUserNo(HttpServletRequest request, Model model) {
 		HttpSession httpSession = request.getSession();
 		User user = (User)httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
 		//get list.do
 		PagedListHolder<Normal> normalList = new PagedListHolder<Normal>(farm.getNormalListByUserNo(userNo));
-		
-		normalList.setPageSize(10);
-
-		model.put("normalList", normalList);
+		model.addAttribute("normalList", normalList);
 		return normalUserListView;
 	}
 	@RequestMapping("/normal/userList2.do")
 	public String getNormalListByUserNo2(
-			@RequestParam("page") String page,
+			@RequestParam("page") String page, 
 			@ModelAttribute("normalList") PagedListHolder<Normal> normalList,
-			BindingResult result, 
 			HttpServletRequest request, Model model) {
-
 		if ("next".equals(page)) { 
 			normalList.nextPage(); 
 		}
@@ -328,142 +310,12 @@ public class NormalController implements ServletContextAware {
 		
 		return normalUserListView;
 	}
-
-	
-	//normal pay
-	@RequestMapping(value = "/normal/buyNormal.do", method = RequestMethod.GET)
-	public String buyNormal(@RequestParam("saleNo") int saleNo, 
-			@ModelAttribute("payment") PaymentCommand paymentCommand,  ModelMap model) {
-		Normal normal = this.farm.getNormalSale(saleNo);
-		Product product = this.farm.getProduct(normal.getProduct().getpNo());
-		normal.setProduct(product);
-		
-		model.addAttribute("normal", normal);
-		return buyNormalForm;
-		
-	}
-	//normal pay
-	@Transactional
-	@RequestMapping(value = "/normal/buyNormal.do", method = RequestMethod.POST)
-	public ModelAndView buyNormal(
-			@Valid@ModelAttribute("payment") PaymentCommand paymentCommand,
-			BindingResult result, HttpServletRequest request, ModelMap model) throws Exception{
-		//userSession
-		HttpSession httpSession = request.getSession();
-		User user = (User)httpSession.getAttribute("user");
-		if (user == null) {
-			return new ModelAndView(errorPage, "message", "Please LOGIN first");
-		}
-		//get NormalSale
-		Normal normal = this.farm.getNormalSale(paymentCommand.getSaleNo());
-		Product product = this.farm.getProduct(normal.getProduct().getpNo());
-		normal.setProduct(product);
-		
-		if(paymentCommand.getQuantity() > normal.getCount()) {
-			result.rejectValue("quantity", "quantity");
-			model.addAttribute("normal", normal);
-			return new ModelAndView(buyNormalForm);
-		} 
-		if(paymentCommand.getQuantity() == normal.getCount()) {
-			this.farm.turnSaleState(normal.getSaleNo(), "CLOSE");
-		}
-				
-		if (result.hasErrors()) {
-			model.addAttribute("normal", normal);
-			return new ModelAndView(buyNormalForm);
-		}
-		
-		//card validation
-		Card card = this.farm.getCard(paymentCommand.getCardNo());
-		if(card == null) {
-			model.addAttribute("normal", normal);
-			result.rejectValue("cardNo", "nocardNo");
-			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
-		}
-		if(card.getUser().getUserNo() != user.getUserNo()) {
-			model.addAttribute("normal", normal);
-			result.rejectValue("cardNo", "notMyCard");
-			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
-		}
-		//Address validation
-		Address address = this.farm.getAddress(paymentCommand.getAddrNo());
-		if(address == null) {
-			model.addAttribute("normal", normal);
-			result.rejectValue("addrNo", "noaddressNo");
-			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
-		}
-		if(address.getUser().getUserNo() != user.getUserNo()) {
-			model.addAttribute("normal", normal);
-			result.rejectValue("addrNo", "notMyAddress");
-			return new ModelAndView(buyNormalForm, "payment", paymentCommand);
-		}
-		//payNo, method, paycheck,cardNo, totalPrice
-		Payment payment = new Payment();
-		payment.setCard(card);
-		payment.setTotalPrice(paymentCommand.getQuantity() * normal.getPrice());
-		payment.setMethod("카드");
-		//insert normal Payment
-		this.farm.insertPayment(payment);
-		
-		Delivery delivery = new Delivery();
-		delivery.setAddress(address);
-		delivery.setPhone(paymentCommand.getPhone());
-		this.farm.addDelivery(delivery);
-		
-		int dNo = this.farm.getLastDNo();
-		delivery = this.farm.getDelivery(dNo);
-		
-		int pNo = this.farm.getLastPayNo();
-		payment = this.farm.getPayment(pNo);
-		
-		Order order = new Order();
-		
-		order.setDelivery(delivery);
-		order.setPayment(payment);
-		order.setQuantity(paymentCommand.getQuantity());
-		order.setSaleNo(paymentCommand.getSaleNo());
-		order.setUser(user);
-		order.setSaleType("Normal");
-		
-		this.farm.insertOrder(order);
-		
-		normal.setCount(normal.getCount() - paymentCommand.getQuantity());
-		this.farm.updateSale(normal);
-		
-		int orderNo = this.farm.getLastOrderNo();
-		return new ModelAndView("redirect:/normal/viewDelivery.do?orderNo=" + orderNo);
-
-	}
-	
-	@RequestMapping("/normal/viewDelivery.do")
-	public String deliveryView(@RequestParam("orderNo") int orderNo, ModelMap model) {
-		//get order
-		Order order = this.farm.getOrder(orderNo);
-		//get Delivery
-		Delivery delivery = this.farm.getDelivery(order.getDelivery().getdNo());
-		//get payment
-		Payment payment = this.farm.getPayment(order.getPayment().getPayNo());
-		//get Normal
-		Normal normal = this.farm.getNormalSale(order.getSaleNo());
-		//get Address
-		Address address = this.farm.getAddress(delivery.getAddress().getAddrNo());
-		delivery.setAddress(address);
-		
-		model.addAttribute("order", order);
-		model.addAttribute("delivery", delivery);
-		model.addAttribute("payment", payment);
-		model.addAttribute("normal", normal);
-		
-		return deliveryView;
-	}
-	
-	
-	
-	
 	//related image file
 	//upload file
 	private void uploadFile(MultipartFile image, Normal normal) {
 		this.farm.insertSale(normal);
+		System.out.println(image.getOriginalFilename());
+		
 		int saleNo = this.farm.getLastSaleNo();
 		String path = context.getRealPath("/images/normal");
 		File file = new File(path, saleNo + ".jpg");
@@ -474,6 +326,8 @@ public class NormalController implements ServletContextAware {
 			e.printStackTrace();
 		}
 		
+		System.out.println("path: " + path);
+		System.out.println("path: " + file.getPath());
 		this.farm.addNormalImage(saleNo, "images/normal/" + file.getName());
 	}
 }

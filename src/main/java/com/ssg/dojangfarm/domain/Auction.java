@@ -18,7 +18,6 @@ public class Auction implements Serializable{
 	private Boolean finish;
 	private int bidPrice;
 	private String image;
-	private String sDeadline;
 	
 	public int getaNo() {
 		return aNo;
@@ -97,12 +96,6 @@ public class Auction implements Serializable{
 	}
 	public void setImage(String image) {
 		this.image = image;
-	}
-	public String getsDeadline() {
-		return sDeadline;
-	}
-	public void setsDeadline(String sDeadline) {
-		this.sDeadline = sDeadline;
 	}
 	
 	

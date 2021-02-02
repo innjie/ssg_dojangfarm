@@ -18,9 +18,8 @@
 			<td>수량</td>
 			<td>주문자</td>
 			<td>배송</td>
-			<td>배송현황</td>
 		</tr>
-		<c:forEach var="order" items="${orderList.pageList}">
+		<c:forEach var="order" items="${orderUserList.pageList}">
 			<tr>
 				<td><a
 					href="<c:url value='/order/view.do'>
@@ -30,22 +29,6 @@
 				<td>${order.quantity }</td>
 				<td>${order.user.name }</td>
 				<td>${order.delivery.dNo }</td>
-				<c:if test="${order.delivery.status != '배송완료'}">
-							<td>
-								<a href="<c:url value='/delivery/turnStatus.do'>
-											<c:param name='dNo'  value='${order.delivery.dNo }'/>
-											<c:param name = 'status' value = '${order.delivery.status }'/>
-											<c:param name = 'saleNo' value = '${order.saleNo}'/>
-										</c:url>">
-								${order.delivery.status } : 배송상태변경</a>
-							</td>
-						</c:if>
-				<c:if test="${order.delivery.status == '배송완료'}">
-							<td>
-								${order.delivery.status }
-							</td>
-						</c:if>		
-			
 			</tr>
 		</c:forEach>
 	</table>
@@ -62,6 +45,6 @@
         	Next</a>
     	</c:if>
 	<!--  매핑 확인하고 수정 -->
-	
+	<a href="/user/myPage.do">[이전 단계로]</a>
 </body>
 </html>

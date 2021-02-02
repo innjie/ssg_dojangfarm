@@ -9,39 +9,10 @@
 <head>
 <meta charset="UTF-8">
 <title>참여한 공동구매 리스트</title>
-<script type = "text/javascript" src = "../js/jquery-3.4.1.min.js"></script>
-<script type = "text/javascript">
-
-
-function getCJ(cjNo) {
-	var reqUrl = "../rest/commonjoinBy/" + cjNo;
-
-	alert("select cjNo: " + cjNo);
-	
-	$.ajax({
-		type: "GET",
-		url: reqUrl,
-		processData: false,
-		success: function(responseJson){	// object parsed from JSON text				
-			$("#detail").html("<ul></ul>");
-			$("#detail > ul").append("<li> CJ No : " +  responseJson.cjNo + "</li>");
-			$("#detail > ul").append("<li> CJ userNo : " +  responseJson.user.userNo + "</li>");
-			$("#detail > ul").append("<li> CJ state : " +  responseJson.state + "</li>");
-			$("#detail > ul").append("<li> CJ count : " +  responseJson.count + "</li>");
-			$("#detail > ul").append("<li> CJ title : " +  responseJson.common.title + "</li>");
-		},
-		error: function(){
-			alert("ERROR", arguments);
-		}
-	});
-};
-</script>
 </head>
 <body>
 <%@ include file="../IncludeTop.jsp" %>
-<div id = "detail"></div>
 <table border="1">
-
 <tr>
 	<td>번호</td>
 	<td>제목</td>
@@ -50,18 +21,18 @@ function getCJ(cjNo) {
 </tr>
 <c:forEach var="cj" items="${cjList.pageList}" >
 	<tr>
-	<td onClick = "getCJ(${cj.cjNo});">${cj.cjNo}</td>
 	<td><a href="<c:url value='/commonJoin/view.do'> 
 						<c:param name='cjNo' value='${cj.cjNo}'/>
-						</c:url>">${cj.common.title}</a></td>
+						</c:url>">${cj.cjNo}</a></td>
+	<td>${cj.common.title}</td>
 	<td>${cj.count}</td>
 	<td>${cj.cjState }
 	</tr>
-
 </c:forEach>
 </table>
 	<c:if test="${!cjList.firstPage}">
-		<a href='<c:url value="/commonJoin/userList2.do">
+		<a
+			href='<c:url value="/commonJoin/userList2.do">
         				<c:param name="page" value="previous"/>
         			</c:url>'>
 			Prev</a>
@@ -73,6 +44,6 @@ function getCJ(cjNo) {
         			</c:url>'>
 			Next</a>
 	</c:if>
-	
+	<a href="/index" >[메인으로]</a>
 </body>
 </html>

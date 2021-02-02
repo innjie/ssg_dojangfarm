@@ -29,7 +29,7 @@
 	<select id="getNormalSale" parameterType="int"
 		resultType="Normal">
 		SELECT
-		saleNo, saleType, title, saleState, info, price, image, price,
+		saleNo, saleType, title, saleState, info, price, image,
 		count, state, pNo as "product.pNo", Normal.userNo as "user.userNo",
 		regidDate, id as "user.id"
 		FROM Normal, UserTable
@@ -41,7 +41,7 @@
 	<select id="getAllNormalList" resultType="Normal">
 		SELECT
 		saleNo, title,
-		Usertable.name as "user.name", regidDate, saleState 
+		Usertable.name as "user.name", regidDate
 		From Normal, UserTable
 		WHERE
 		Normal.userNo = UserTable.userNo
@@ -117,13 +117,4 @@
     	WHERE 
     		saleNo = #{param1}
   	</update>
-  	
-  	<select id="getUserByNormal" parameterType="int" resultType="int">
-  		SELECT
-  			userNo
-  		FROM
-  			NORMAL
-  		WHERE
-  			saleNo = #{saleNo}
-  	</select>
 </mapper>

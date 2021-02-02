@@ -54,10 +54,7 @@ public class UserController {
 		User user = (User)WebUtils.getSessionAttribute(request, "user");
 
 		LoginCommand loginCommand = new LoginCommand();
-		
-		if(user != null) {
-			loginCommand.setId(user.getId());
-		}
+		loginCommand.setId(user.getId());
 		
 		return loginCommand;
 	}
@@ -136,7 +133,8 @@ public class UserController {
 	@RequestMapping(value="/user/modifyUser.do", method=RequestMethod.POST)
 	public String update(
 			@Valid @ModelAttribute("userCommand") UserCommand userCommand, 
-			BindingResult result, HttpServletRequest request) throws Exception {
+			BindingResult result,
+			HttpServletRequest request) throws Exception {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");

@@ -34,13 +34,15 @@
 			href="<c:url value = '/commonNotice/update.do'>
 	<c:param name = 'CNNO'  value = '${cn.CNNO }'/></c:url>">수정하기</a>
 		<br>
+	</c:if>
+	<a href="<c:url value = '/commonNotice/list.do'/>">[이전 단계로]</a>
+	<c:if test="${(session.id == commonNotice.user.id)} ">
 		<a
 			href='<c:url value="/commonNotice/delete.do">
-					<c:param name="CNNO" value="${commonNotice.CNNO}"/>
+					<c:param name="CNNo" value="${commonNotice.CNNo}"/>
 					</c:url>'>
 			삭제</a>
-	</c:if>
-	
 
+	</c:if>
 </body>
 </html>

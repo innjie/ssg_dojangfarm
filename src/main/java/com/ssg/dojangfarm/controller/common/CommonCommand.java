@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +16,6 @@ public class CommonCommand  {
 	private int price;
 	@NotBlank
 	private String title;
-	@NotBlank
 	private String info;
 	private Date regidDate;
 	private String saleType;
@@ -25,11 +23,9 @@ public class CommonCommand  {
 	private MultipartFile image;
 	@Min(5)
 	private int min;
-	@NotNull
 	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date deadline;
-	private int saleNo;
 	
 	public int getPrice() {
 		return price;
@@ -86,12 +82,6 @@ public class CommonCommand  {
 	}
 	public void setImage(MultipartFile image) {
 		this.image = image;
-	}
-	public int getSaleNo() {
-		return saleNo;
-	}
-	public void setSaleNo(int saleNo) {
-		this.saleNo = saleNo;
 	}
 	
 }

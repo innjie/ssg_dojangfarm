@@ -72,8 +72,4 @@ public class MybatisCommonDAO implements CommonDAO{
 	public int getLastCommonSaleNo() {
 		return commonMapper.getLastCommonSaleNo();
 	}
-	@Override
-	public int getLastCJNo() {
-		return commonMapper.getLastCJNo();
-	}
 }

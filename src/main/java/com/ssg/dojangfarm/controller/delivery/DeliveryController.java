@@ -1,89 +1,32 @@
 package com.ssg.dojangfarm.controller.delivery;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Delivery;
-import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
-@SessionAttributes("dList")
 @Controller
 public class DeliveryController {
-	private static final String deliveryListView = "delivery/deliveryList";
-	private static final String deliveryView = "delivery/deliveryView";
 	@Autowired
 	private FarmFacade farm;
 	public void setFarm(FarmFacade farm) {
 		this.farm = farm;
 	}
 	
-	@RequestMapping("/delivery/turnStatus.do")
-	public String changeDeliveryStatus(@RequestParam("dNo")int dNo, 
-			@RequestParam("status") String status,
-			@RequestParam("saleNo") int saleNo,
-			HttpServletRequest request) {
-		System.out.println(status);
-		if (status.equals("배송전")) {
-			this.farm.changeDeliveryStatus(dNo);
-		} else if (status.equals("배송중")) {
-			this.farm.changeDeliveryFinish(dNo);
-		}
-
-		 return "redirect:/order/userView.do?saleNo="+saleNo;
-
-	}
-	@RequestMapping("/delivery/view.do")
-	public String getDelivery(@RequestParam("dNo") int dNo, ModelMap model,
-			HttpServletRequest request) {
-		Delivery delivery = this.farm.getDelivery(dNo);
+	public String addDelivery(Delivery deli) {
 		
-		model.addAttribute("delivery", delivery);
-		return deliveryView;
+		return null;
 	}
-	@RequestMapping("/delivery/list.do")
-	public String getDeliveryListByUserNo(HttpServletRequest request,
-			ModelMap model) {
-		HttpSession httpSession = request.getSession();
-		User user = (User)httpSession.getAttribute("user");
-		int userNo = user.getUserNo();
-		System.out.println(userNo);
-		List<Delivery> deliveryList =  null;
-		deliveryList = this.farm.getDeliveryListByUserNo(userNo);
-		System.out.println(deliveryList.size());
-		
-		PagedListHolder<Delivery> dList = new PagedListHolder<Delivery>(this.farm.getDeliveryListByUserNo(userNo));
-		dList.setPageSize(10);
-		model.put("dList", dList);
-		return deliveryListView;
+	public String changeDeliveryStatus(int dNo, String status) {
+		return null;
 	}
-	
-	@RequestMapping("/delivery/list2.do")
-	public String getDeliveryListByUserNo2(
-			@RequestParam("page") String page,
-			@ModelAttribute("dList") PagedListHolder<Delivery> dList,
-			BindingResult result,
-			ModelMap model) {
-		if ("next".equals(page)) { 
-			dList.nextPage(); 
-		}
-		else if ("previous".equals(page)) { 
-			dList.previousPage(); 
-		}
-		
-		return deliveryListView;
+	public String getDelivery(int dNo) {
+		return null;
 	}
-
+	public String getDeliveryListByUserNo() {
+		return null;
+	}
+	public String getDeliveryListBySaleNo() {
+		return null;
+	}
 }

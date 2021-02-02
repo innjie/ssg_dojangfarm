@@ -19,6 +19,10 @@
 		SET title = #{title}, info = #{info}
 	</update>
 
+	<delete id="deleteCommonNotice" parameterType="CommonNotice">
+		DELETE FROM CommonNotice
+		WHERE CNNO = CommonNotice.CNNO
+	</delete>
 
 	<select id="viewCommonNotice" parameterType="int"
 		resultType="CommonNotice">
@@ -38,10 +42,9 @@
 
 	<select id="getCNoticeListByUserNo" parameterType="int"
 		resultType="CommonNotice">
-		SELECT CNNO, title, info, usertable.name as "user.Name" 
-		FROM CommonNotice, usertable
-		WHERE CommonNotice.userNo = #{userNo}
-		and commonNotice.userNo = usertable.userNo
+		SELECT CNNO, title, info, userNo
+		FROM CommonNotice
+		WHERE userNo = #{userNo}
 	</select>
 
 	<select id="searchCommonNotice" resultType="CommonNotice">

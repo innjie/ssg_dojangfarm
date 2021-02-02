@@ -50,14 +50,19 @@ public class LoginController {
 			HttpServletRequest request,
 			@Valid @ModelAttribute("login") LoginCommand loginCommand,
 			BindingResult result) throws Exception {
+		
+		System.out.println("login   " + loginCommand.getForwardAction());
+				
 		//validate
 		if (result.hasErrors()) {
 			return new ModelAndView(LOGINFORM);
 		}
+		
 		User user = farm.checkIdPw(loginCommand.getId(), loginCommand.getPassword());
 
 		if (user == null) {
 			result.rejectValue("id", "idpwErr", new Object[] {loginCommand.getId()}, null);
+
 			return new ModelAndView(LOGINFORM);
 		}
 		else {
@@ -69,6 +74,7 @@ public class LoginController {
 			if (loginCommand.getForwardAction() != null && !loginCommand.getForwardAction().equals("")) {
 				System.out.println("login" + loginCommand.getForwardAction() + "!!");
 				return new ModelAndView("redirect:" + loginCommand.getForwardAction());
+			
 			}
 			else {
 				return new ModelAndView("redirect:/");

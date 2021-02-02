@@ -11,6 +11,5 @@ public interface UserDAO {
 	public User existingPhone(String phone);
 	public User checkIdPw(String id, String password);
 	public boolean confirmPassword(String password, String cPassword);
-	public void addPoint(User user);
 
 }

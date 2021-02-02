@@ -30,59 +30,24 @@
 		</tr>
 	</table>
 	<br><br>
-	결제
 	<table border='1'>
-		<c:if test="${imPur.payment.method == '카드'}">
-			<tr>
-				<td>결제방법</td>
-				<td>카드</td>
-				<td>결제일</td>
-				<td>결제금액</td>
-			</tr>
-			<tr>
-				<td>${imPur.payment.method}</td>
-				<td>
-					<a href="<c:url value='/card/viewCard.do'> 
-								<c:param name='cardNo' value='${imPur.payment.card.cardNo}' />
-							</c:url>">
-					${imPur.payment.card.cardPayNo}</a>
-				</td>
-				<td>${pDate}</td>
-				<td>${imPur.payment.totalPrice}</td>
-			</tr>
-		</c:if>
-		<c:if test="${imPur.payment.method == '카카오페이'}">
-			<tr>
-				<td>결제방법</td>
-				<td>결제일</td>
-				<td>결제금액</td>
-			</tr>
-			<tr>
-				<td>${imPur.payment.method}</td>
-				<td>${pDate}</td>
-				<td>${imPur.payment.totalPrice}</td>
-			</tr>
-		</c:if>
+		<tr>
+			<td>배송</td>
+			
+		</tr>
+		<tr>
+			
+		</tr>
 	</table>
 	<br><br>
-	배송
 	<table border='1'>
 		<tr>
-			<td>주소</td>
-			<td>전화번호</td>
-			<td>상태</td>
+			<td>결제</td>
+			
 		</tr>
 		<tr>
-			<td>
-				<a href="<c:url value='/address/getAddress.do'>
-							<c:param name='addrNo' value='${imPur.delivery.address.addrNo}' />
-						</c:url>">
-				${imPur.delivery.address.addr}</a>
-			</td>
-			<td>${imPur.delivery.phone}</td>
-			<td>${imPur.delivery.status}</td>
+			
 		</tr>
 	</table>
-	
 </body>
 </html>

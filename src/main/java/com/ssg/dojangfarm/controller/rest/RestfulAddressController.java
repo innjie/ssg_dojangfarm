@@ -34,7 +34,7 @@ public class RestfulAddressController {
 	
 	@RequestMapping(value = "/addressListBy/{userNo}", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody         
-	public List<Address> findAddress(@PathVariable("userNo") int userNo, HttpServletResponse response) throws IOException {
+	public List<Address> searchAddress(@PathVariable("userNo") int userNo, HttpServletResponse response) throws IOException {
 		System.out.println("/rest/addressListBy/{userNo} request accepted: {userNo} = " + userNo);
 		List<Address> addressList = addressService.getAddressList(userNo);
 		if (addressList == null) {
@@ -44,20 +44,28 @@ public class RestfulAddressController {
 		return addressList;  // convert list of orders to JSON text in response body
 	}
 	
-	@RequestMapping(value = "/address", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/address/create", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody         
-	public Address addAddress(@RequestBody Address address , HttpServletRequest request,
+	public String createAddress(@RequestBody Address address , HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		System.out.println("/rest/address request accepted");
+			
+		String result;
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		
 		address.setaName("");
 		address.setUser(user);
-		addressService.createAddress(address);
 		
-		return address;  // convert list of orders to JSON text in response body
+		if(addressService.getAddrNo(address) == null) {
+			addressService.createAddress(address);
+			result = "Success to Add";
+		} else {
+			result = "Fail to Add... Address exist";
+		}
+		
+		return "\"" + result + "\"";  
 	}
 	
 }

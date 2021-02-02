@@ -29,5 +29,7 @@ public class MybatisAddressDAO implements AddressDAO{
 	public List<Address> getAddressList(int userNo) {
 		return addressMapper.getAddressList(userNo);
 	}
-
+	public Address getAddrNo(Address address) {
+		return addressMapper.getAddrNo(address);
+	}
 }

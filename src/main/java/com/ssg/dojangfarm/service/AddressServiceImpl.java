@@ -33,4 +33,9 @@ public class AddressServiceImpl implements AddressService {
 	public List<Address> getAddressList(int userNo) {
 		return addressDAO.getAddressList(userNo);
 	}
+	
+	public Address getAddrNo(Address address) {
+		return addressDAO.getAddrNo(address);
+	}
+
 }

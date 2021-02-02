@@ -43,4 +43,15 @@
     	WHERE 
     		addrNo = #{addrNo}
   	</select>
+  	
+  	<select id="getAddrNo" parameterType="Address" resultType="Address">
+    	SELECT 
+    		addrNo
+    	FROM Address
+    	WHERE 
+    		addr = #{addr} and
+    		zip = #{zip} and
+    		detail = #{detail}
+  	</select>
+  	
  </mapper>

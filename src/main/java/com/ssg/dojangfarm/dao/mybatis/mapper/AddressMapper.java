@@ -12,5 +12,6 @@ public interface AddressMapper {
 	public void modifyAddress(Address address);
 	public void deletAddress(int addrNo);
 	public List<Address> getAddressList(int userNo);
+	public Address getAddrNo(Address address);
 
 }

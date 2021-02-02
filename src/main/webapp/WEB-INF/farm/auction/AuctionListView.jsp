@@ -173,5 +173,6 @@ function getAuction(aNo) {
 	<div id="result"></div>
 </td></tr>
 </table>
+
 </body>
 </html>

@@ -219,17 +219,43 @@ public class BidController {
 			return new ModelAndView(BIDFORM, "auction", auction);
 		}
 		
-		Address address = this.farm.getAddress(bidCommand.getAddrNo());
+		//Address address = this.farm.getAddress(bidCommand.getAddrNo());
+		Address address = new Address();
+		address.setZip(bidCommand.getZip());
+		address.setAddr(bidCommand.getAddr());
+		address.setDetail(bidCommand.getDetail());
 		
-		if(address == null) {
-			bindingResult.rejectValue("addrNo", "noaddressNo");
-			return new ModelAndView(BIDFORM, "auction", auction);
+		if(address.getZip() == 0 ) {
+			bindingResult.rejectValue("zip", "noZip");
+			return new ModelAndView(BIDFORM, "auction", auction);		
 		}
 		
-		if(address.getUser().getUserNo() != user.getUserNo()) {
-			bindingResult.rejectValue("addrNo", "notMyAddress");
-			return new ModelAndView(BIDFORM, "auction", auction);
+		if(address.getAddr().equals("")) {
+			bindingResult.rejectValue("addr", "noAddr");
+			return new ModelAndView(BIDFORM, "auction", auction);		
 		}
+		
+		if(address.getDetail().equals("")) {
+			bindingResult.rejectValue("detail", "noDetail");
+			return new ModelAndView(BIDFORM, "auction", auction);		
+		}
+				
+		if(this.farm.getAddrNo(address) == null) {
+			bindingResult.rejectValue("zip", "noRegisteredAddr");
+			return new ModelAndView(BIDFORM, "auction", auction);		
+		}
+		address.setAddrNo(this.farm.getAddrNo(address).getAddrNo());
+		
+		
+//		if(address == null) {
+//			bindingResult.rejectValue("addrNo", "noaddressNo");
+//			return new ModelAndView(BIDFORM, "auction", auction);
+//		}
+		
+//		if(address.getUser().getUserNo() != user.getUserNo()) {
+//			bindingResult.rejectValue("addrNo", "notMyAddress");
+//			return new ModelAndView(BIDFORM, "auction", auction);
+//		}
 		
 		Date now = new Date();
 		if(auction.getDeadline().before(now)) {

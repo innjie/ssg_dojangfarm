@@ -136,7 +136,6 @@
   	</select>
   	
   	
-  	
   	<insert id="bidAuction" parameterType="Bid">
   		<selectKey keyProperty="bidNo" resultType="int" order="BEFORE">
         	SELECT BidSeq.nextval AS "bidNo" FROM DUAL
@@ -147,6 +146,17 @@
     		(#{bidNo}, #{bidPrice}, #{user.userNo}, #{auction.aNo}, #{address.addrNo}, #{card.cardNo}, #{phone})
   	</insert>
   	
+<!--  
+  	<insert id="bidAuction" parameterType="Bid">
+  		<selectKey keyProperty="bidNo" resultType="int" order="BEFORE">
+        	SELECT BidSeq.nextval AS "bidNo" FROM DUAL
+     	</selectKey>
+    	INSERT INTO Bid 
+    		(bidNo, bidPrice, userNo, aNo, zip, addr, detail, cardNo, phone)
+    	VALUES 
+    		(#{bidNo}, #{bidPrice}, #{user.userNo}, #{auction.aNo}, #{address.zip}, #{address.addr}, #{address.detail}, #{card.cardNo}, #{phone})
+  	</insert>
+-->	
   	
   	
 <!-- 

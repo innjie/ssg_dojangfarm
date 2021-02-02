@@ -39,5 +39,10 @@ public class AddressServiceEndpoint {
 	public List<Address> getAddressList(int userNo) {
 		return addressService.getAddressList(userNo);
 	}
+	
+	@WebMethod
+	public Address getAddrNo(Address address) {
+		return addressService.getAddrNo(address);
+	}
 
 }

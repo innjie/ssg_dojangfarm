@@ -14,7 +14,6 @@
 <script type="text/javascript">
 
 function searchAddress(userNo) {
-
 	var reqUrl = "../rest/addressListBy/" + userNo;
 	
 	$.ajax({			
@@ -34,50 +33,66 @@ function searchAddress(userNo) {
 					if(index == 0){
 						$("#result").html("<ol></ol>");
 					}	
+
+					var zip = responseJson[index].zip;
+					var addr = responseJson[index].addr;
+					var detail = responseJson[index].detail;
 					
-					$("#result > ol").append("<li>");
-					$("#result > ol").append("ADDRNO: " + responseJson[index].addrNo);
-					$("#result > ol").append("<br>ADDR: " + responseJson[index].addr);
-					$("#result > ol").append("<br>ZIP: " + responseJson[index].zip);
-					$("#result > ol").append("<br>DETAIL: " + responseJson[index].detail);
+					//$("#result > ol").append("<li onClick=setAddress("+zip+",41,41);>");
+					$("#result > ol").append("<li onClick=setAddress("+zip+",'"+addr+"','"+detail+"');>");
+					$("#result > ol").append("ZIP: " + zip);
+					$("#result > ol").append("<br>ADDR: " + addr);
+					$("#result > ol").append("<br>DETAIL: " + detail);
 					$("#result > ol").append("</li>");
-				}		
+				}	
 			}		
 	  	},
 		error: function(){
 			alert("내용을 입력하세요");
 		}
 	});
-	
 }
 
-function addAddress() {
+function setAddress(zip, addr, detail) {
+	alert("select addr " + addr);
+	
+	$("#zip").val(zip);
+	$("#addr").val(addr);
+	$("#detail").val(detail);
+	$("#result").html("");
+};
 
-	var reqUrl = "../rest/address";
-	var form = document.getElementById("form");
+function createAddress() {
+	var reqUrl = "../rest/address/create";
 	var address = {
-			'addr':form.addr.value, 
-			'detail':form.detail.value, 
-			'zip':form.zip.value
+			zip:$("#zip").val(),
+			addr:$("#addr").val(),
+			detail:$("#detail").val()
 	};
-		
-	$.ajax({			
-		type: "POST",
-		url: reqUrl,
-		contentType: "application/json",
-		processData: false,
-		data: JSON.stringify(address),
-		success: function(responseJson){			
-			//$("#detail").html("<ul></ul>");
-			//$("#detail > ul").append("<li>addr: " + responseJson.addr + "</li>");
-			//$("#detail > ul").append("<li>detail: " + responseJson.detail + "</li>");
-			//$("#detail > ul").append("<li>zip: " + responseJson.zip + "</li>");
-			alert("Success Add New Address");		
-	  	},
-		error: function(){
-			alert("제대로 입력하세요");
-		}
-	});
+
+	if(address.zip == 0){
+		$("#result").html("우편번호를 입력하세요");
+	}
+	else if(address.addr == ""){
+		$("#result").html("주소를 입력하세요");
+	}
+	else if(address.detail == ""){
+		$("#result").html("상세주소를 입력하세요");
+	}
+	else{
+		$.ajax({			
+			type: "POST",
+			url: reqUrl,
+			contentType: "application/json",
+			data: JSON.stringify(address),
+			success: function(responseJson){	
+				$("#result").text(responseJson);
+		  	},
+			error: function(){
+				alert("내용을 입력하세요");
+			}
+		});
+	}
 }
 
 
@@ -95,24 +110,24 @@ function addAddress() {
 		<form:label path="phone">전화번호 </form:label>
 		<form:input path="phone" />
 		<form:errors path="phone" />
-		<br>
-	
-		<form:label path="addrNo">addrNo </form:label>
-		<form:input path="addrNo" />
-		<input type="button" value="Search!" onClick="searchAddress(${user.userNo})" />
-		<form:errors path="addrNo" />
 		<br><br>
+	
+		<form:label path="zip">우편번호 </form:label>
+		<form:input id="zip" path="zip" />
+		&nbsp;&nbsp;<form:errors path="zip" /><br>
+		<form:label path="addr">주소 </form:label>
+		<form:input id="addr" path="addr" />
+		&nbsp;&nbsp;<form:errors path="addr" /><br>
+		<form:label path="detail">상세주소 </form:label>
+		<form:input id="detail" path="detail" />			
+		&nbsp;&nbsp;<form:errors path="detail" /><br>
+ 		<input type="button" value="찾기" onClick="searchAddress(${user.userNo})" />
+		<input type="button" value="추가" onClick="createAddress()" />   		
+		<br><br><br><br>
 		 
 		<input type="hidden" name="aNo" value="${auction.aNo}" />
     	<input type="image" src="../images/payment_icon_yellow_medium.png" />
 	</form:form>
-	<br><br>
-	<form id="form">
-		주소<input type="text" name="addr">
-		상세주소<input type="text" name="detail">
-		우편번호<input type="text" name="zip">
-		<input type="button" value="주소등록" onClick="addAddress()" />
-	</form>
 	<br><br>
 	<div id="result"></div>
 	<br><br>

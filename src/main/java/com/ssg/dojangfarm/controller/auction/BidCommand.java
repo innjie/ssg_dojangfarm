@@ -4,29 +4,47 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 public class BidCommand {
-	private int bidPrice;
-	private int addrNo;
+	private int zip;
+	private String addr;
+	private String detail;
+	
 	private int cardNo;
+	private int bidPrice;
 	@NotEmpty @Pattern(regexp = "01[01679]-\\d{3,4}-\\d{4}")
 	private String phone;
 	
-	public int getBidPrice() {
-		return bidPrice;
+	
+	
+	public int getZip() {
+		return zip;
 	}
-	public void setBidPrice(int bidPrice) {
-		this.bidPrice = bidPrice;
+	public void setZip(int zip) {
+		this.zip = zip;
 	}
-	public int getAddrNo() {
-		return addrNo;
+	public String getAddr() {
+		return addr;
 	}
-	public void setAddrNo(int addrNo) {
-		this.addrNo = addrNo;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+	
 	public int getCardNo() {
 		return cardNo;
 	}
 	public void setCardNo(int cardNo) {
 		this.cardNo = cardNo;
+	}
+	public int getBidPrice() {
+		return bidPrice;
+	}
+	public void setBidPrice(int bidPrice) {
+		this.bidPrice = bidPrice;
 	}
 	public String getPhone() {
 		return phone;

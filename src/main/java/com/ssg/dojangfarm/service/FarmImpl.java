@@ -310,7 +310,10 @@ public class FarmImpl implements FarmFacade{
 	public List<Address> getAddressList(int userNo) {
 		return addressDAO.getAddressList(userNo);
 	}
-	
+	@Override
+	public Address getAddrNo(Address address) {
+		return addressDAO.getAddrNo(address);
+	}
 	
 	//-------------------------------------------------------------------------
 	//Delivery

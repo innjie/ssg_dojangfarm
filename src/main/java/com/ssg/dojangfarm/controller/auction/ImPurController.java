@@ -155,17 +155,48 @@ public class ImPurController {
 			return IMPURKAKAOFORM;
 		}
 		
-		Address address = this.farm.getAddress(imPurCommand.getAddrNo());
+		//Address address = this.farm.getAddress(imPurCommand.getAddrNo());
+		Address address = new Address();
+		address.setZip(imPurCommand.getZip());
+		address.setAddr(imPurCommand.getAddr());
+		address.setDetail(imPurCommand.getDetail());	
 		
-		if(address == null) {
-			bindingResult.rejectValue("addrNo", "noaddressNo");
+		if(address.getZip() == 0 ) {
+			bindingResult.rejectValue("zip", "noZip");
 			model.put("auction", auction);
-			return IMPURKAKAOFORM;		}
+			return IMPURKAKAOFORM;			
+		}
 		
-		if(address.getUser().getUserNo() != user.getUserNo()) {
-			bindingResult.rejectValue("addrNo", "notMyAddress");
+		if(address.getAddr().equals("")) {
+			bindingResult.rejectValue("addr", "noAddr");
 			model.put("auction", auction);
-			return IMPURKAKAOFORM;		}
+			return IMPURKAKAOFORM;			
+		}
+		
+		if(address.getDetail().equals("")) {
+			bindingResult.rejectValue("detail", "noDetail");
+			model.put("auction", auction);
+			return IMPURKAKAOFORM;			
+		}
+				
+		if(this.farm.getAddrNo(address) == null) {
+			bindingResult.rejectValue("zip", "noRegisteredAddr");
+			model.put("auction", auction);
+			return IMPURKAKAOFORM;		
+		}
+		address.setAddrNo(this.farm.getAddrNo(address).getAddrNo());
+			
+//		if(address == null) {
+//			bindingResult.rejectValue("addrNo", "noaddressNo");
+//			model.put("auction", auction);
+//			return IMPURKAKAOFORM;		
+//		}
+//		
+//		if(address.getUser().getUserNo() != user.getUserNo()) {
+//			bindingResult.rejectValue("addrNo", "notMyAddress");
+//			model.put("auction", auction);
+//			return IMPURKAKAOFORM;		
+//		}
 			
 		if(auction.getFinish()) {
 			model.put("message", "경매가 종료되었습니다.");
@@ -244,17 +275,42 @@ public class ImPurController {
 			return new ModelAndView(IMPURFORM, "auction", auction);
 		}
 		
-		Address address = this.farm.getAddress(imPurCommand.getAddrNo());
+		//Address address = this.farm.getAddress(imPurCommand.getAddrNo());
+		Address address = new Address();
+		address.setZip(imPurCommand.getZip());
+		address.setAddr(imPurCommand.getAddr());
+		address.setDetail(imPurCommand.getDetail());	
 		
-		if(address == null) {
-			bindingResult.rejectValue("addrNo", "noaddressNo");
-			return new ModelAndView(IMPURFORM, "auction", auction);
+		if(address.getZip() == 0 ) {
+			bindingResult.rejectValue("zip", "noZip");
+			return new ModelAndView(IMPURFORM, "auction", auction);			
 		}
 		
-		if(address.getUser().getUserNo() != user.getUserNo()) {
-			bindingResult.rejectValue("addrNo", "notMyAddress");
-			return new ModelAndView(IMPURFORM, "auction", auction);
+		if(address.getAddr().equals("")) {
+			bindingResult.rejectValue("addr", "noAddr");
+			return new ModelAndView(IMPURFORM, "auction", auction);		
 		}
+		
+		if(address.getDetail().equals("")) {
+			bindingResult.rejectValue("detail", "noDetail");
+			return new ModelAndView(IMPURFORM, "auction", auction);			
+		}
+				
+		if(this.farm.getAddrNo(address) == null) {
+			bindingResult.rejectValue("zip", "noRegisteredAddr");
+			return new ModelAndView(IMPURFORM, "auction", auction);	
+		}
+		address.setAddrNo(this.farm.getAddrNo(address).getAddrNo());		
+		
+//		if(address == null) {
+//			bindingResult.rejectValue("addrNo", "noaddressNo");
+//			return new ModelAndView(IMPURFORM, "auction", auction);
+//		}
+//		
+//		if(address.getUser().getUserNo() != user.getUserNo()) {
+//			bindingResult.rejectValue("addrNo", "notMyAddress");
+//			return new ModelAndView(IMPURFORM, "auction", auction);
+//		}
 		
 		if(auction.getFinish()) {
 			return new ModelAndView(IMPURFAIL, "message", "경매가 종료되었습니다.");

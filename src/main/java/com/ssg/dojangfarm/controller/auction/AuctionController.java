@@ -1,6 +1,8 @@
 package com.ssg.dojangfarm.controller.auction;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,7 @@ import com.ssg.dojangfarm.domain.ImPur;
 import com.ssg.dojangfarm.domain.SBid;
 import com.ssg.dojangfarm.domain.User;
 import com.ssg.dojangfarm.service.FarmFacade;
-
+ 
 @Controller
 @SessionAttributes("auctionList")
 public class AuctionController implements ServletContextAware{
@@ -40,8 +42,6 @@ public class AuctionController implements ServletContextAware{
 	private static final String VIEWAUCTION = "auction/AuctionView";
 	private static final String LISTMYAUCTION = "auction/MyAuctionListView";
 	private static final String AUCTIONFORM = "auction/RegisterAuctionFormView";
-	private static final String ADDIMAGE = "auction/AddImage";
-	private static final String CONFIRMAUCTION = "auction/RegisterAuctionConfirmView";
 	
 	private ServletContext context;	
 
@@ -97,8 +97,17 @@ public class AuctionController implements ServletContextAware{
 	public String listAuction(
 			ModelMap model) throws Exception {
 
-		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getAuctionList());
-
+		List<Auction> list = this.farm.getAuctionList();
+		
+		DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String sDeadline;
+		for(int i = 0; i <list.size(); i++) {
+			sDeadline = dFormat.format(list.get(i).getDeadline());
+			list.get(i).setsDeadline(sDeadline);
+		}
+		
+		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(list);
+		
 		auctionList.setPageSize(10);
 		model.put("auctionList", auctionList);
 		return LISTAUCTION;
@@ -133,8 +142,17 @@ public class AuctionController implements ServletContextAware{
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 
-		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(this.farm.getMyAuctionList(user.getUserNo()));
-
+		List<Auction> list = this.farm.getMyAuctionList(user.getUserNo());
+		
+		DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String sDeadline;
+		for(int i = 0; i <list.size(); i++) {
+			sDeadline = dFormat.format(list.get(i).getDeadline());
+			list.get(i).setsDeadline(sDeadline);
+		}
+		
+		PagedListHolder<Auction> auctionList = new PagedListHolder<Auction>(list);
+		
 		auctionList.setPageSize(10);
 		model.put("auctionList", auctionList);
 		
@@ -169,14 +187,24 @@ public class AuctionController implements ServletContextAware{
 			ModelMap model) throws Exception {
 
 		PagedListHolder<Auction> auctionList;
+		List<Auction> list;
 		
 		if(type.equals("title")) {
-			auctionList = new PagedListHolder<Auction>(this.farm.findAuctionByTitle(text));
+			list = (this.farm.findAuctionByTitle(text));
 		}
 		else {
-			auctionList = new PagedListHolder<Auction>(this.farm.findAuctionByProduct(text));
+			list = (this.farm.findAuctionByProduct(text));
 		}
 
+		auctionList = new PagedListHolder<Auction>(list);
+		
+		DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String sDeadline;
+		for(int i = 0; i <list.size(); i++) {
+			sDeadline = dFormat.format(list.get(i).getDeadline());
+			list.get(i).setsDeadline(sDeadline);
+		}
+		
 		auctionList.setPageSize(10);
 		model.put("auctionList", auctionList);
 		model.put("find", "find");
@@ -215,7 +243,12 @@ public class AuctionController implements ServletContextAware{
 		int auctionUserNo = this.farm.getUserByAuction(aNo).getUserNo();	
 		
 		Auction auction = this.farm.getAuction(aNo);
+		
+		DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String deadline = dFormat.format(auction.getDeadline());
+		
 		model.put("auction", auction);
+		model.put("deadline", deadline);
 		model.put("my", my);
 		
 		//check this user is auction's user
@@ -224,13 +257,44 @@ public class AuctionController implements ServletContextAware{
 				SBid sBid = this.farm.getSBidByAuction(aNo);	
 				ImPur imPur = this.farm.getImPurByAuction(aNo);	
 				
+				DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+				String pDate = null;
+				if(sBid != null) {
+					pDate = sdFormat.format(sBid.getPayment().getpDate());
+				}
+				else if(imPur != null) {
+					pDate = sdFormat.format(imPur.getPayment().getpDate());
+				}
+				
 				model.put("sBid", sBid);
 				model.put("imPur", imPur);
+				model.put("pDate", pDate);
 			}
 		}
 		
 		return VIEWAUCTION;
 	}
+	
+	
+	//delivery 
+	@RequestMapping("/auction/auctionDeliveryStateChange.do")
+	public String auctionDeliveryPayment(
+		@RequestParam("dNo") int dNo,	
+		@RequestParam("aNo") int aNo,
+		@RequestParam("status") String status,
+		ModelMap model) throws Exception {
+		
+		if(status.equals("배송전")) {
+			this.farm.changeDeliveryStatus(dNo);
+		}
+		else if(status.equals("배송중")) {
+			this.farm.changeDeliveryFinish(dNo);
+		}
+		model.put("aNo", aNo);
+		
+		return "redirect:/auction/viewAuction.do";
+	}
+	
 
 	//register auction ... auction form
 	@RequestMapping("/auction/registerAuctionForm.do")
@@ -241,33 +305,31 @@ public class AuctionController implements ServletContextAware{
 	}
 	
 	
-	//confirm auction
-	@RequestMapping("/auction/confirmAuction.do")
-	public String confirm(
+	//register auction ... insert auction
+	@RequestMapping("/auction/registerAuction.do")
+	public String register(
 			@Valid @ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			BindingResult bindingResult) throws Exception {
+			BindingResult bindingResult,
+			HttpServletRequest request) throws Exception {
+		
+		System.out.println("register auction!!");
 		
 		//validate
 		if (bindingResult.hasErrors()) {
 			return AUCTIONFORM; 
 		}
-		
+				
 		if (auctionCommand.getProduct() == null) {
 			bindingResult.rejectValue("product.pName", "NotNull");
 			return AUCTIONFORM; 
 		}
 		
-		return CONFIRMAUCTION;
-	}
-
-	
-	//register auction ... insert auction
-	@RequestMapping("/auction/registerAuction.do")
-	public String register(
-			@ModelAttribute("auctionCommand") AuctionCommand auctionCommand,
-			HttpServletRequest request) throws Exception {
-		
-		System.out.println("register auction!!");
+		if (auctionCommand.getImPurAva() == true && auctionCommand.getImPurPrice() != 0) {
+			if(auctionCommand.getMinPrice() >= auctionCommand.getImPurPrice()) {
+				bindingResult.rejectValue("imPurPrice", "hastoHighThanMinPrice");
+				return AUCTIONFORM; 
+			}
+		}
 		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
@@ -283,7 +345,9 @@ public class AuctionController implements ServletContextAware{
 		auction.setMinPrice(auctionCommand.getMinPrice());	
 		auction.setDeadline(auctionCommand.getDeadline());
 		auction.setImPurAva(auctionCommand.getImPurAva());
-		auction.setImPurPrice(auctionCommand.getImPurPrice());
+		if(auctionCommand.getImPurAva()) {
+			auction.setImPurPrice(auctionCommand.getImPurPrice());
+		}
 		
 		MultipartFile image = auctionCommand.getImage();
 		if(image != null) {

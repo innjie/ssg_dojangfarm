@@ -8,9 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssg.dojangfarm.dao.AuctionDAO;
 import com.ssg.dojangfarm.dao.mybatis.mapper.AuctionMapper;
+import com.ssg.dojangfarm.dao.mybatis.mapper.DeliveryMapper;
+import com.ssg.dojangfarm.dao.mybatis.mapper.PaymentMapper;
 import com.ssg.dojangfarm.domain.Auction;
 import com.ssg.dojangfarm.domain.Bid;
+import com.ssg.dojangfarm.domain.Delivery;
 import com.ssg.dojangfarm.domain.ImPur;
+import com.ssg.dojangfarm.domain.Payment;
 import com.ssg.dojangfarm.domain.SBid;
 import com.ssg.dojangfarm.domain.User;
 
@@ -18,6 +22,10 @@ import com.ssg.dojangfarm.domain.User;
 public class MybatisAuctionDAO implements AuctionDAO{
 	@Autowired
 	private AuctionMapper auctionMapper;
+	@Autowired
+	private DeliveryMapper deliveryMapper;
+	@Autowired
+	private PaymentMapper paymentMapper;
 	
 	public List<Auction> getAuctionList() {
 		return auctionMapper.getAuctionList();
@@ -41,9 +49,23 @@ public class MybatisAuctionDAO implements AuctionDAO{
 		return auctionMapper.getUserNoByAuction(aNo);
 	}
 	
-	
+	@Transactional	
 	public void immePurchase(ImPur imPur) {
+		
+		deliveryMapper.addDelivery(imPur.getDelivery());
+		paymentMapper.insertPayment(imPur.getPayment());
+		
+		int dNo = deliveryMapper.getLastDNo();
+		int payNo = paymentMapper.getLastPayNo();
+		
+		auctionMapper.changeBidState(imPur.getAuction().getaNo());
+		
+		imPur.getDelivery().setdNo(dNo);
+		imPur.getPayment().setPayNo(payNo);
+		
 		auctionMapper.immePurchase(imPur);
+		
+		auctionMapper.finishAuction(imPur.getAuction().getaNo());
 	} 
 	public ImPur getImPurByAuction(int aNo) {
 		return auctionMapper.getImPurByAuction(aNo);
@@ -58,6 +80,7 @@ public class MybatisAuctionDAO implements AuctionDAO{
 	@Transactional	
 	public void bidAuction(Bid bid) {
 		auctionMapper.updateBidPrice(bid.getAuction().getaNo(), bid.getBidPrice());
+		auctionMapper.changeBidState(bid.getAuction().getaNo());
 		auctionMapper.bidAuction(bid);
 	}  
 	public Bid getBid(int bidNo) {
@@ -114,6 +137,66 @@ public class MybatisAuctionDAO implements AuctionDAO{
 		auctionMapper.registerAuction(auction);
 		auctionMapper.addImage(aNo, image);
 		
+	}
+	
+	public void finishAuction(int aNo) {
+		auctionMapper.finishAuction(aNo);
+	}
+	
+	@Transactional
+	public void successBidAuction(Auction auction) {
+		auctionMapper.finishAuction(auction.getaNo()); //finish='1'		
+		auctionMapper.changeBidStateSuccess(auction.getaNo()); //bid.state=='낙찰'
+		
+		Bid bid = auctionMapper.findSBid(auction.getaNo());
+		
+		if(bid != null) {
+			System.out.println("bid is not null " + bid.getBidNo());
+			bid = auctionMapper.getBid(bid.getBidNo());
+			Delivery delivery = new Delivery();
+			Payment payment = new Payment();
+			
+			delivery.setAddress(bid.getAddress());
+			delivery.setPhone(bid.getPhone());
+			payment.setCard(bid.getCard());
+			payment.setTotalPrice(bid.getBidPrice());
+			
+			deliveryMapper.addDelivery(delivery);
+			paymentMapper.insertPayment(payment);
+			
+			SBid sBid = new SBid();
+			sBid.setBid(bid);
+			sBid.setDelivery(delivery);
+			sBid.setPayment(payment);
+			
+			auctionMapper.successBid(sBid);
+		}
+
+	}
+	
+	
+	@Transactional
+	public void immePurchaseKakao(ImPur imPur) {
+		deliveryMapper.addDelivery(imPur.getDelivery());
+		paymentMapper.insertPaymentKakao(imPur.getPayment());
+		
+		int dNo = deliveryMapper.getLastDNo();
+		int payNo = paymentMapper.getLastPayNo();
+		
+		auctionMapper.changeBidState(imPur.getAuction().getaNo());
+		
+		imPur.getDelivery().setdNo(dNo);
+		imPur.getPayment().setPayNo(payNo);
+		
+		auctionMapper.immePurchase(imPur);
+		
+		auctionMapper.finishAuction(imPur.getAuction().getaNo());
+		
+	}
+	
+	@Override
+	public ImPur getMyImPurKakao(int imPurNo) {
+		return auctionMapper.getMyImPurKakao(imPurNo);
 	}
 
 }

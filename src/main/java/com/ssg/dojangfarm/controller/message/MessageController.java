@@ -249,12 +249,20 @@ public class MessageController {
 		
 		if(title.equals("")) {
 			System.out.println("no title! ");
-			model.addAttribute("message", "No title");
 			
 			if(!cMsgNo.equals(""))
-				return "redirect:/message/sendMsg.do?msgNo=" + Integer.parseInt(cMsgNo);
+				return "redirect:/message/sendMsg.do?msgNo=" + Integer.parseInt(cMsgNo) + "&message=No title";
 			else
-				return "redirect:/message/sendMsg.do?saleNo=" + Integer.parseInt(saleNo);
+				return "redirect:/message/sendMsg.do?saleNo=" + Integer.parseInt(saleNo) + "&message=No title";
+		}
+		
+		if(content.equals("")) {
+			System.out.println("no title! ");
+			
+			if(!cMsgNo.equals(""))
+				return "redirect:/message/sendMsg.do?msgNo=" + Integer.parseInt(cMsgNo) + "&message=No content";
+			else
+				return "redirect:/message/sendMsg.do?saleNo=" + Integer.parseInt(saleNo) + "&message=No content";
 		}
 		
 		if(!cMsgNo.equals("")) {
@@ -270,7 +278,7 @@ public class MessageController {
 		}
 		else {
 			Normal normal = this.farm.getNormalSale(Integer.parseInt(saleNo));
-			rUserNo = this.farm.getUserByNormal(Integer.parseInt(saleNo));	//add dao
+			rUserNo = this.farm.getUserByNormal(Integer.parseInt(saleNo));	
 			User rUser = new User();
 			rUser.setUserNo(rUserNo);
 			msg.setsUser(user);

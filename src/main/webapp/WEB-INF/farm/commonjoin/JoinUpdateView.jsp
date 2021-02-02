@@ -17,7 +17,7 @@
 <c:set var="targetUrI">
 		<c:url value="/commonJoin/update.do" />
 	</c:set>
-	<form:form action = '${targetUrI }' commandName = "commonJoin" method = "POST">
+	<form:form action = '${targetUrI }' commandName = "cjCommand" method = "POST">
 <form:label path="common.saleNo">상품번호</form:label>
 <form:input path="common.saleNo" value="${common.saleNo }" readonly = "true" />
 <form:errors path="common.saleNo"/>
@@ -28,6 +28,8 @@
 <form:input path="count"/>
 <form:errors path="count"/>
 <br>
+
+<form:hidden path = "cjNo" value = "${commonJoin.cjNo }"/>
 	<input type="submit" value="추가" />
 </form:form>
 </body>

@@ -38,8 +38,8 @@
 		<br>
 
 		<form:label path="refundType">환불종류</form:label>
-		<form:input path="refundType" />
-		<form:errors path="refundType" />
+		<form:input path="refundType"  value = "계좌"  readonly = "true"/>
+		
 		<br>
 		
 

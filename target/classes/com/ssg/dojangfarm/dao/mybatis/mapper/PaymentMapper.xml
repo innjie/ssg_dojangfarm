@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ssg.dojangfarm.dao.mybatis.mapper.PaymentMapper">
+	<cache />
+	
+	<select id="getPayment" resultType="Payment" parameterType="int">
+		SELECT
+			payNo, cardNo AS "card.cardNo", method, pDate, totalPrice
+		FROM 
+			Payment
+		WHERE payNo = #{payNo}
+	</select>
+	
+	<insert id="insertPayment" parameterType="Payment">
+  		<selectKey keyProperty="payNo" resultType="int" order="BEFORE">
+        	SELECT PAYMENTSEQ.nextval AS "payNo" FROM DUAL
+     	</selectKey>
+    	INSERT INTO Payment 
+    		(payNo, cardNo, totalPrice)
+    	VALUES 
+    		(#{payNo}, #{card.cardNo}, #{totalPrice})
+  	</insert>
+  	
+  	<insert id="insertPaymentKakao" parameterType="Payment">
+  		<selectKey keyProperty="payNo" resultType="int" order="BEFORE">
+        	SELECT PAYMENTSEQ.nextval AS "payNo" FROM DUAL
+     	</selectKey>
+    	INSERT INTO Payment 
+    		(payNo, method, totalPrice)
+    	VALUES 
+    		(#{payNo}, #{method}, #{totalPrice})
+  	</insert>
+  	
+  	<select id="getLastPayNo" resultType="int">
+    	SELECT 
+    		MAX(payNo)
+    	FROM Payment
+  	</select>
+  	
+  	
+</mapper>

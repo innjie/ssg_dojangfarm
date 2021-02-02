@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ include file="../IncludeTop.jsp" %>
-
+<head>
+<title>Success!</title>
+</head>
 <b><c:out value="${message}" default="No further information was provided."/></b>
-<a href="<c:url value='/commonNotice/list.do'/>">공동구매 리스트로 돌아가기</a>&nbsp;&nbsp;	

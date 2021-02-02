@@ -6,7 +6,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ include file="../IncludeTop.jsp" %>
+<head>
+<title>Error!</title>
+</head>
+<body>
 <h3><font color="red">Error!</font></h3>
 
 <b><c:out value="${message}" default="No further information was provided."/></b>
-<a href="<c:url value='/commonNotice/list.do'/>">공지 리스트로 돌아가기</a>&nbsp;&nbsp;
+</body>

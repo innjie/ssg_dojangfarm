@@ -66,6 +66,17 @@
 			<mvc:mapping path="/refund/RefundFormView"/>
 			<mvc:mapping path="/refund/RefundListView"/>
 			<mvc:mapping path="/refund/RefundView"/>
+			<mvc:mapping path="/auction/viewMyImPurList.do"/>
+			<mvc:mapping path="/auction/viewMyImPurList2.do"/>
+			<mvc:mapping path="/auction/viewMyImPur.do"/>
+			<mvc:mapping path="/auction/immePurchase.do"/>
+			<mvc:mapping path="/auction/viewMyBidList.do"/>
+			<mvc:mapping path="/auction/viewMyBidList2.do"/>
+			<mvc:mapping path="/auction/viewMySBidList.do"/>
+			<mvc:mapping path="/auction/viewMySBidList2.do"/>
+			<mvc:mapping path="/auction/viewMySBid.do"/>
+			<mvc:mapping path="/auction/bidAuction.do"/>
+			<mvc:mapping path="/kakao/*.do"/>
 			<bean class="com.ssg.dojangfarm.controller.user.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>     

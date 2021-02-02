@@ -5,9 +5,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
+<head>
+<title>Success!</title>
+</head>
+<body>
 <%@ include file="../IncludeTop.jsp" %>
 <b><c:out value="${message}" default="No further information was provided."/></b>
 
 <br> <br>
-<a href = "<c:url value = '/commonNotice/list.do'/> "> 목록으로 돌아가기</a>
+
+</body>

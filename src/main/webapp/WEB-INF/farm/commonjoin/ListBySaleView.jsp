@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>공동구매 신청자 리스트</title>
 </head>
 <body>
@@ -16,7 +16,9 @@
 <tr>
 <td>번호</td>
 <td>신청자</td>
+<td>연락처</td>
 <td>개수</td>
+<td>주소</td>
 </tr>
 
 <c:forEach var = "commonJoin" items = "${cjList.pageList }">
@@ -24,10 +26,11 @@
 <td> <a href = "<c:url value = '/commonJoin/view.do'>
 <c:param name = 'cjNo' value = '${commonJoin.cjNo }'/>
 </c:url>"> ${commonJoin.cjNo }</a></td>
-<td><a href = "<c:url value = ''>
-<c:param name = 'userNo'  value = '${commonJoin.user.userNo }'/>
-</c:url>">${commonJoin.user.name }</a></td>
+<td>${commonJoin.user.name }</td>
+<td> ${commonJoin.delivery.phone }</td>
 <td>${commonJoin.count }</td>
+<td>${commonJoin.delivery.address.addr }</td>
+
 </tr>
 </c:forEach>
 <c:if test="${!cjList.firstPage}">

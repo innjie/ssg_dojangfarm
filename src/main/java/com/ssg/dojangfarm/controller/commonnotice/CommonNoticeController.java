@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ssg.dojangfarm.controller.user.AddressCommand;
+import com.ssg.dojangfarm.domain.Common;
 import com.ssg.dojangfarm.domain.CommonNotice;
 import com.ssg.dojangfarm.domain.Normal;
 import com.ssg.dojangfarm.domain.User;
@@ -38,27 +41,47 @@ public class CommonNoticeController {
 	private static final String cnUserListView = "commonnotice/CNUserListView";
 	@Autowired
 	private FarmFacade farm;
+	
 
 	public void setFarm(FarmFacade farm) {
 		this.farm = farm;
 	}
 
 	// CN Command
-	@ModelAttribute("CNCommand")
+	@ModelAttribute("commonNoticeCommand")
 	public CommonNoticeCommand formBacking(HttpServletRequest request) {
-		return new CommonNoticeCommand();
+		CommonNotice commonNotice = null;
+		
+		if(request.getParameter("CNNO") != null) {
+			int CNNO = Integer.parseInt(request.getParameter("CNNO"));
+			commonNotice = this.farm.viewCommonNotice(CNNO);
+		}
+		
+		// edit CommonNotice
+		if (commonNotice != null) {	
+			CommonNoticeCommand command = new CommonNoticeCommand();
+			command.setTitle(commonNotice.getTitle());
+			command.setInfo(commonNotice.getInfo());
+			return command;
+		}
+		else {	// create new CommonNotice
+			return new CommonNoticeCommand();
+		}
+		
 	}
 
 	// get CN List
 	@RequestMapping("/commonNotice/list.do")
 	public String getCNList(ModelMap model) {
 		PagedListHolder<CommonNotice> cnList = new PagedListHolder<CommonNotice>(this.farm.getAllNoticeList());
+		cnList.setPageSize(10);
 		model.put("cnList", cnList);
 		return commonNoticeListView;
 	}
 	@RequestMapping("/commonNotice/list2.do")
 	public String getCNList2(@RequestParam("page") String page, 
 			@ModelAttribute("cnList") PagedListHolder<CommonNotice> cnList,
+			BindingResult result,
 			ModelMap model) {
 		if ("next".equals(page)) { 
 			cnList.nextPage(); 
@@ -93,7 +116,10 @@ public class CommonNoticeController {
 	// insert CN
 	@ModelAttribute("commonnotice")
 	@RequestMapping("/commonNotice/insertCN.do")
-	public ModelAndView insertCN(@ModelAttribute("cn") CommonNoticeCommand commonNoticeCommand, BindingResult result,
+	public ModelAndView insertCN(
+			@Valid @ModelAttribute("commonNoticeCommand") 
+			CommonNoticeCommand commonNoticeCommand, 
+			BindingResult result,
 			HttpServletRequest request, ModelMap model) {
 
 		// insert action
@@ -108,6 +134,7 @@ public class CommonNoticeController {
 		if (result.hasErrors()) {
 			return new ModelAndView(insertCNForm);
 		}
+		
 		// no errors, insert cn
 		CommonNotice cn = new CommonNotice();
 		cn.setTitle(commonNoticeCommand.getTitle());
@@ -128,7 +155,9 @@ public class CommonNoticeController {
 
 	// update CN
 	@RequestMapping(value = "/commonNotice/update.do", method = RequestMethod.GET)
-	public String updateCN(@RequestParam("CNNO") int CNNO, ModelMap model) throws Exception {
+	public String updateCN(
+			@ModelAttribute("commonNoticeCommand") CommonNoticeCommand commonNoticeCommand,
+			@RequestParam("CNNO") int CNNO, ModelMap model) throws Exception {
 		CommonNotice cn = this.farm.viewCommonNotice(CNNO);
 		model.addAttribute(cn);
 		// update -> list
@@ -137,7 +166,9 @@ public class CommonNoticeController {
 
 	// update CN
 	@RequestMapping(value = "/commonNotice/update.do", method = RequestMethod.POST)
-	public ModelAndView updateCN(@ModelAttribute("cn") CommonNotice commonNotice, ModelMap model, BindingResult result,
+	public ModelAndView updateCN(
+			@Valid @ModelAttribute("commonNoticeCommand") CommonNoticeCommand commonNoticeCommand,
+			BindingResult result, ModelMap model, 
 			HttpServletRequest request) throws Exception {
 		// get user session
 		HttpSession httpSession = request.getSession();
@@ -150,6 +181,11 @@ public class CommonNoticeController {
 		if (result.hasErrors()) {
 			return new ModelAndView(updateCNForm);
 		}
+		
+		CommonNotice commonNotice = new CommonNotice();
+		commonNotice.setTitle(commonNoticeCommand.getTitle());
+		commonNotice.setInfo(commonNoticeCommand.getInfo());
+		commonNotice.setUser(user);
 
 		int res = farm.updateCommonNotice(commonNotice);
 
@@ -160,25 +196,30 @@ public class CommonNoticeController {
 		}
 	}
 
-	// delete CN
-	@ModelAttribute("commonnotice")
-	@RequestMapping("/commonNotice/delete.do")
-	public String deleteCN(@ModelAttribute("cn") CommonNotice commonnotice, BindingResult result) {
-		// delete function
-		// after -> list
-		return "redirect:/commonNotice/list";
-	}
-
 	// commonNotice by userNo
-	@RequestMapping("commonNotice/userList.do")
-	public String getCNListByUserNo(HttpServletRequest request, Model model) {
+	@RequestMapping("/commonNotice/userList.do")
+	public String getCNListByUserNo(HttpServletRequest request, ModelMap model) {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("user");
 		int userNo = user.getUserNo();
 
 		// get list by userNo
-		List<CommonNotice> cnList = farm.getCNoticeListByUserNo(userNo);
-		model.addAttribute("cnList", cnList);
+		PagedListHolder<CommonNotice> cnList = new PagedListHolder<CommonNotice>( farm.getCNoticeListByUserNo(userNo));
+		cnList.setPageSize(10);
+		model.put("cnList", cnList);
+		return cnUserListView;
+	}
+	@RequestMapping("/commonNotice/userList2.do")
+	public String getCNListByUserNo2(@RequestParam("page") String page,
+			@ModelAttribute("cnList") PagedListHolder<CommonNotice> commonList,
+			BindingResult result, ModelMap model) {
+		if ("next".equals(page)) { 
+			commonList.nextPage(); 
+		}
+		else if ("previous".equals(page)) { 
+			commonList.previousPage(); 
+		}
+		
 		return cnUserListView;
 	}
 

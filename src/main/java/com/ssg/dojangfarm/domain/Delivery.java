@@ -8,6 +8,7 @@ public class Delivery implements Serializable{
 	private Address address;
 	private String phone;
 	private String status;
+	private int userNo;
 	
 	
 	public int getdNo() {
@@ -33,6 +34,12 @@ public class Delivery implements Serializable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public int getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 	
 	

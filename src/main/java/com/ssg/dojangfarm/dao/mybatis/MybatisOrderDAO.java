@@ -31,13 +31,18 @@ public class MybatisOrderDAO implements OrderDAO{
 	}
 
 	@Override
-	public int insertOrder(int userNo, Order order) {
-		return orderMapper.insertOrder(userNo, order);
+	public int insertOrder(Order order) {
+		return orderMapper.insertOrder(order);
 	}
 
 	@Override
 	public List<Order> getOrderUserList(int orderNo) {
 		return orderMapper.getOrderUserList(orderNo);
+	}
+
+	@Override
+	public int getLastOrderNo() {
+	return orderMapper.getLastOrderNo();
 	}
 
 	

@@ -19,7 +19,7 @@
 	</tr>
 
 	<tr >
-	<td rowspan="4"><img src = "../${common.image }"/></td>
+	<td rowspan="5"><img src = "../${common.image }"/></td>
 	</tr>
 	
 	<tr>
@@ -36,17 +36,26 @@
 	<td>마감일시</td>
 	<td>${common.deadline }</td>
 	</tr>
-
+	<tr>
+	<td>상태</td>
+	<td>${common.saleState }</td>
+	</tr>
 	<tr>
 	<td colspan="4">${common.info }</td>
 	</tr>
 </table>
-<a href= "<c:url value = '/common/list.do'/> ">[이전 단계로]</a> <br>
+
 	<c:if test="${ (loginUser.userNo == common.user.userNo)}">
-	<a href = "<c:url value ='/common/updateCommon.do' > 
-	<c:param name = 'saleNo'  value = '${common.saleNo}'/></c:url> ">수정하기</a><br>
-	<a href = "<c:url value = '/commonJoin/viewList.do'><c:param name = 'saleNo' value = '${common.saleNo }'/>
-	</c:url>"> 신청자 목록보기</a><br>
+	<c:if test = "${(common.saleState == 'OPEN') }">
+		<a href = "<c:url value ='/common/updateCommon.do' > 
+		<c:param name = 'saleNo'  value = '${common.saleNo}'/>
+		</c:url> ">수정하기</a><br>
+		<a href = "<c:url value ='/common/payCommon.do' > 
+		<c:param name = 'saleNo'  value = '${common.saleNo}'/>
+		</c:url> ">공동구매 진행하기</a><br>
+	</c:if>
+		<a href = "<c:url value = '/commonJoin/viewList.do'><c:param name = 'saleNo' value = '${common.saleNo }'/>
+		</c:url>"> 신청자 목록보기</a><br>
 	</c:if>
 
 	<br><br>

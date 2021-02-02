@@ -1,5 +1,7 @@
 package com.ssg.dojangfarm.controller.user;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -90,12 +92,19 @@ public class CardController {
 
 	//view card
 	@RequestMapping("/card/viewCard.do")
-	public ModelAndView viewCard(
-			@RequestParam("cardNo") int cardNo) throws Exception {
+	public String viewCard(
+			@RequestParam("cardNo") int cardNo,
+			ModelMap model) throws Exception {
 		
 		Card card = this.farm.getCard(cardNo);
+		
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String period = sdFormat.format(card.getPeriod());
+		
+		model.put("card", card);
+		model.put("period", period);
 
-		return new ModelAndView(VIEWCARD, "card", card);
+		return VIEWCARD;
 	}
 	
 	//create card ... 

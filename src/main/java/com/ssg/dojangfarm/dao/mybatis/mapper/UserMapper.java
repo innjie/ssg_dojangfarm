@@ -12,5 +12,6 @@ public interface UserMapper {
 	public User existingId(String id);
 	public User existingPhone(String phone);
 	public User checkIdPw(@Param("id") String id, @Param("password") String password);
+	public void addPoint(User user);
 
 }

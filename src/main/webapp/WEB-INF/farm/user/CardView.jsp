@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<td>유효기간</td>
-			<td>${card.period}</td>
+			<td>${period}</td>
 		</tr>
 		<tr>
 			<td>cvc</td>
@@ -41,6 +41,5 @@
 				<c:param name='cardNo' value='${card.cardNo}' />
 			</c:url>">
 	삭제</a>&nbsp;&nbsp;
-	<a href="<c:url value='/card/viewCardList.do' />">이전</a>
 </body>
 </html>

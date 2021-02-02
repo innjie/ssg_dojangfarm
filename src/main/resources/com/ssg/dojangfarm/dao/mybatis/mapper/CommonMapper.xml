@@ -21,7 +21,9 @@
 	<update id="updateCommon" parameterType="Common">
 		UPDATE Common
 		SET info =
-		#{info}, price = #{price}, deadline = #{deadline}, min = #{min}
+		#{info}, price = #{price}, deadline = #{deadline}, min = #{min}, 
+		saleState = #{saleState}
+		where saleNo = #{saleNo}
 
 	</update>
 	<select id="getCommonSale" parameterType="int"
@@ -76,9 +78,10 @@
 			SELECT CommonJoinSeq.nextval as "cjNo" FROM DUAL
 		</selectKey>
 		INSERT INTO CommonJoin
-		(cjNo, userNo, saleNo, cjState, count)
+		(cjNo, userNo, saleNo, count, dNo, cardNo)
 		VALUES
-		(#{cjNo}, #{user.userNo}, #{common.saleNo},#{cjState}, #{count})
+		(#{cjNo}, #{user.userNo}, #{common.saleNo}, #{count},
+		#{delivery.dNo}, #{cardNo})
 
 	</insert>
 	<delete id="cancelCommonjoin" parameterType="int">
@@ -88,14 +91,20 @@
 	</delete>
 	<update id="updateCommonjoin" parameterType="CommonJoin">
 		UPDATE CommonJoin
-		SET count=#{count}
+		SET count=#{count}, cjState = #{cjState}
+		where cjNo = #{cjNo}
 	</update>
 
 	<select id="getCommonJoin" resultType="CommonJoin">
 		SELECT cjNo, commonjoin.userNo as "user.userNo",
-		Commonjoin.saleNo as "common.saleNo", cjState, count, common.title as "common.title"
-		FROM CommonJoin, Common
-		WHERE cjNo = #{cjNo}
+		Commonjoin.saleNo as "common.saleNo", cjState, count, common.title as "common.title",
+		cardNo, commonJoin.dNo as "delivery.dNo", delivery.phone as "delivery.phone",
+		Usertable.name as "user.name", Address.addr as "delivery.address.addr"
+		FROM CommonJoin, Common, Delivery, Address, UserTable
+		WHERE cjNo = #{cjNo} and commonjoin.saleNo = common.saleNo
+		and CommonJoin.dNo = Delivery.dNo
+		and delivery.addrNo = Address.addrNo
+		and commonJoin.userNo = userTable.userNo
 	</select>
 	<select id="getCJList" resultType="CommonJoin">
 		SELECT(cjNo, saleNo, userNo)
@@ -112,11 +121,15 @@
 
 	<select id = "getCommonJoinListBySaleNo" resultType = "CommonJoin">
 		SELECT cjNo, common.title as "common.title", count, cjState, 
-		CommonJoin.userNo as "user.userNo", UserTable.name as "user.name"
-		FROM CommonJoin, Common, UserTable
+		CommonJoin.userNo as "user.userNo", UserTable.name as "user.name", 
+		commonjoin.dNo as "delivery.dNo", delivery.phone as "delivery.phone",
+		address.addr as "delivery.address.addr"
+		FROM CommonJoin, Common, UserTable, Delivery, address
 		WHERE CommonJoin.saleNo = #{saleNo}
 		AND common.saleNo = CommonJoin.saleNo
 		AND CommonJoin.userNo = UserTable.userNo
+		AND CommonJoin.dNo = Delivery.dNo
+		and Delivery.addrNo = address.addrNo
 		ORDER BY cjNo
 	</select>
 	
@@ -125,4 +138,12 @@
 	 FROM CommonJoin
 	 WHERE userNo = #{param1} AND saleNo = #{param2}
 	</select>
+	
+	
+	<select id="getLastCJNo" resultType="int">
+    	SELECT 
+    		MAX(cjNo)
+    	FROM CommonJoin
+  	</select>
+  	
 </mapper>

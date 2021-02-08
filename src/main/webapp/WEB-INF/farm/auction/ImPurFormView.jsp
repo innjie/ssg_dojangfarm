@@ -9,6 +9,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="../templated-vegetable/style.css" rel="stylesheet"
+	type="text/css" media="screen" />
 <title>입찰</title>
 <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -136,8 +141,12 @@ function createAddress() {
 </script>
 </head>
 <body>
+
 	<c:set var="targetUrl"><c:url value="/auction/immePurchase.do" /></c:set>
-	
+		<%@ include file="../IncludeTop.jsp" %>
+<div id="page">
+		<div id="content">
+		<div class = "post">
 	<form:form id="form" modelAttribute="imPurCommand" action="${targetUrl}">	
 		제목  ${auction.title}<br>	
 		품목  ${auction.product.pName}<br>	
@@ -180,5 +189,21 @@ function createAddress() {
 	이전</a>	
 	<br><br>
 	<div id="result"></div>
+			</div>
+	</div>
+	<div style="clear: both;">&nbsp;</div>
+	</div>
+	<div id="footer-menu">
+	<ul>
+		<li class="current_page_item"><a href="#">Homepage</a></li>
+		<li><a href="#">Blog</a></li>
+		<li><a href="#">Photos</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+</div>
+<div id="footer">
+	<p>&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
 </body>
 </html>

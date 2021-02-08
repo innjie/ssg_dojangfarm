@@ -10,9 +10,17 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="../templated-vegetable/style.css" rel="stylesheet"
+	type="text/css" media="screen" />
 </head>
 <body>
 	<%@ include file="../IncludeTop.jsp" %>
+	<div id="page">
+	<div id="content">
+		<div class="post">
 	<a href="<c:url value='/user/myPage.do'><c:param name="type" value="user" /></c:url>">회원 정보</a>&nbsp;&nbsp;&nbsp;&nbsp;		
 	<c:if test="${param.type == 'user'}">
 		<a href="<c:url value='/user/getUser.do' />">나의 정보</a>&nbsp;&nbsp;
@@ -43,5 +51,24 @@
 		<a href="<c:url value = '/commonNotice/userList.do'/>" >나의 공지</a>&nbsp;&nbsp;
 	</c:if>
 	<br><br>
+		</div>
+		</div>
+	<!-- end #sidebar -->
+	<div style="clear: both;">&nbsp;</div>
+</div>
+<!-- end #page -->
+<div id="footer-menu">
+	<ul>
+		<li class="current_page_item"><a href="#">Homepage</a></li>
+		<li><a href="#">Blog</a></li>
+		<li><a href="#">Photos</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+</div>
+<div id="footer">
+	<p>&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
+<!-- end #footer -->
 </body>
 </html>

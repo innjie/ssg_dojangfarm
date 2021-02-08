@@ -8,6 +8,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="../templated-vegetable/style.css" rel="stylesheet"
+	type="text/css" media="screen" />
 <title>공동구매 참여</title>
 <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -134,54 +139,80 @@ function selectedAddress(userNo) {
 </head>
 <body>
 	<%@ include file="../IncludeTop.jsp"%>
-	<h2>${common.title }신청 폼</h2>
+	<div id="page">
+		<div id="content">
+			<div class="post">
+				<h2>${common.title }신청폼</h2>
 
-	<c:set var="targetUrI">
-		<c:url value="/commonjoin/join.do" />
-	</c:set>
-	<form:form action=' ${targetUrI }' commandName="cjCommand"
-		method="POST">
+				<c:set var="targetUrI">
+					<c:url value="/commonjoin/join.do" />
+				</c:set>
+				<form:form action=' ${targetUrI }' commandName="cjCommand"
+					method="POST">
 
-		<form:label path="common.saleNo">상품번호</form:label>
-		<form:input path="common.saleNo" value="${common.saleNo }"
-			readonly="true" />
-		<form:errors path="common.saleNo" />
-		<br>
+					<form:label path="common.saleNo">상품번호</form:label>
+					<form:input path="common.saleNo" value="${common.saleNo }"
+						readonly="true" />
+					<form:errors path="common.saleNo" />
+					<br>
 
 
-		<form:label path="count">개수</form:label>
-		<form:input path="count" />
-		<form:errors path="count" />
-		<br>
-		<form:label path="phone">전화번호 </form:label>
-		<form:input path="phone" />
-		<form:errors path="phone" />
-		<br>
+					<form:label path="count">개수</form:label>
+					<form:input path="count" />
+					<form:errors path="count" />
+					<br>
+					<form:label path="phone">전화번호 </form:label>
+					<form:input path="phone" />
+					<form:errors path="phone" />
+					<br>
 
-		<form:label path="cardNo">cardNo </form:label>
-		<form:select id = "cardResult" path = "cardNo" onchange="selectedCard(${user.userNo })">
-		</form:select>
-		<input type="button" value="Load my Card"
-			onClick="searchCard(${user.userNo})" />
-		<form:errors path="cardNo" />
-		<br>
+					<form:label path="cardNo">cardNo </form:label>
+					<form:select id="cardResult" path="cardNo"
+						onchange="selectedCard(${user.userNo })">
+					</form:select>
+					<input type="button" value="Load my Card"
+						onClick="searchCard(${user.userNo})" />
+					<form:errors path="cardNo" />
+					<br>
 
-		<form:label path="addrNo">addrNo </form:label>
-		<form:select id = "addrResult" path = "addrNo" onchange = "selectedAddress(${user.userNo })">
-		</form:select>
-		<input type="button" value="Load My Address"
-			onClick="searchAddress(${user.userNo})" />
-		<form:errors path="addrNo" />
-		<br>
-		<br>
-		<form:hidden path="common.saleNo" value="${common.saleNo }" />
-		<form:hidden path="common.saleType" value="Common" />
-		
-		<input type="submit" value="추가" />
-	</form:form>
-	<p> 선택한 카드</p>
-<div id = "selectedCard"></div> <br>
-<p> 선택한 배송지 </p>
-<div id = "selectedAddress"></div> <br>
+					<form:label path="addrNo">addrNo </form:label>
+					<form:select id="addrResult" path="addrNo"
+						onchange="selectedAddress(${user.userNo })">
+					</form:select>
+					<input type="button" value="Load My Address"
+						onClick="searchAddress(${user.userNo})" />
+					<form:errors path="addrNo" />
+					<br>
+					<br>
+					<form:hidden path="common.saleNo" value="${common.saleNo }" />
+					<form:hidden path="common.saleType" value="Common" />
+
+					<input type="submit" value="추가" />
+				</form:form>
+				<p>선택한 카드</p>
+				<div id="selectedCard"></div>
+				<br>
+				<p>선택한 배송지</p>
+				<div id="selectedAddress"></div>
+				<br>
+			</div>
+		</div>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<div id="footer-menu">
+		<ul>
+			<li class="current_page_item"><a href="#">Homepage</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Photos</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</div>
+	<div id="footer">
+		<p>
+			&copy; Untitled. All rights reserved. Design by <a
+				href="http://templated.co" rel="nofollow">TEMPLATED</a>.
+		</p>
+	</div>
 </body>
 </html>

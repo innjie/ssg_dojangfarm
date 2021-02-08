@@ -9,6 +9,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="../templated-vegetable/style.css" rel="stylesheet"
+	type="text/css" media="screen" />
 <title>비밀번호확인</title>
 </head>
 <body>

@@ -61,6 +61,6 @@
   </filter-mapping>
   
   <welcome-file-list>
-    <welcome-file>/WEB-INF/farm/Main.jsp</welcome-file>
+    <welcome-file>/WEB-INF/farm/main/Main.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

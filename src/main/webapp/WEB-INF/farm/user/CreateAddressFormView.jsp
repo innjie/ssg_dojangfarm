@@ -12,6 +12,10 @@
 <title>주소 추가</title>
 </head>
 <body>
+	<%@ include file="../IncludeTop.jsp" %>
+<div id="page">
+		<div id="content">
+		<div class = "post">
 	<form:form modelAttribute="addressCommand" >
 		
 		<form:label path="aName">주소 이름 </form:label>
@@ -39,5 +43,21 @@
 		<a href="<c:url value='/address/getAddressList.do' />">이전</a>
 		
 	</form:form>
+		</div>
+	</div>
+	<div style="clear: both;">&nbsp;</div>
+	</div>
+	<div id="footer-menu">
+	<ul>
+		<li class="current_page_item"><a href="#">Homepage</a></li>
+		<li><a href="#">Blog</a></li>
+		<li><a href="#">Photos</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+</div>
+<div id="footer">
+	<p>&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
 </body>
 </html>

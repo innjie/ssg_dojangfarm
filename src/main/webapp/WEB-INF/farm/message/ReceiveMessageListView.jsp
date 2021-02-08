@@ -9,11 +9,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>받은 메세지</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="../templated-vegetable/style.css" rel="stylesheet"
+	type="text/css" media="screen" />
+	<title>받은 메세지</title>
 </head>
 <body>
-	<%@ include file="../IncludeTop.jsp" %>
-
+<%@ include file="../IncludeTop.jsp"%>
+	<div id="page">
+		<div id="content">
+			<div class="post">
 	<a href="<c:url value='/message/viewSendMessageList.do' />">전송함</a>&nbsp;
 	<a href="<c:url value='/message/viewReceiveMessageList.do' />">수신함</a>
 	<br>
@@ -65,5 +72,24 @@
 		제목 <input type="text" name="title">&nbsp;
 		<input type="submit" value="찾기">
 	</form>
+				</div>
+		</div>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<div id="footer-menu">
+		<ul>
+			<li class="current_page_item"><a href="#">Homepage</a></li>
+			<li><a href="#">Blog</a></li>
+			<li><a href="#">Photos</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</div>
+	<div id="footer">
+		<p>
+			&copy; Untitled. All rights reserved. Design by <a
+				href="http://templated.co" rel="nofollow">TEMPLATED</a>.
+		</p>
+	</div>
 </body>
 </html>

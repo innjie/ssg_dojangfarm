@@ -9,9 +9,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="../templated-vegetable/style.css" rel="stylesheet"
+	type="text/css" media="screen" />
 <title>회원 정보 수정</title>
 </head>
 <body>
+<%@ include file="../IncludeTop.jsp" %>
+<div id="page">
+		<div id="content">
+		<div class = "post">
 	<form:form modelAttribute="userCommand" >
 		ID - ${userCommand.id}
 		<br><br>
@@ -40,5 +49,21 @@
 		<a href="<c:url value='/user/getUser.do' />">이전</a>
 		
 	</form:form>
+		</div>
+	</div>
+	<div style="clear: both;">&nbsp;</div>
+	</div>
+	<div id="footer-menu">
+	<ul>
+		<li class="current_page_item"><a href="#">Homepage</a></li>
+		<li><a href="#">Blog</a></li>
+		<li><a href="#">Photos</a></li>
+		<li><a href="#">About</a></li>
+		<li><a href="#">Contact</a></li>
+	</ul>
+</div>
+<div id="footer">
+	<p>&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
 </body>
 </html>

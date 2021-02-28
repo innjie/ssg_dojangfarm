@@ -20,8 +20,6 @@
 				<h3>
 					<font color="red">Error!</font>
 				</h3>
-
-				<%@ include file="../IncludeTop.jsp"%>
 				<b><c:out value="${message}"
 						default="No further information was provided." /></b>
 			</div>
